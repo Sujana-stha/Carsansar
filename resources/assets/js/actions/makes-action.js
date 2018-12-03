@@ -25,10 +25,18 @@ export function getMakesSuccess(makes) {
     }
 }
 
-export function addMakesSuccess(values) {
+export function addMakesSuccess(values, message) {
     return {
         type: types.ADD_MAKES_SUCCESS,
-        values
+        values,
+        message
+    }
+}
+
+export function requestDeleteMakes(makeId) {
+    return {
+        type: types.REQUEST_DELETE,
+        makeId
     }
 }
 
@@ -47,10 +55,11 @@ export function requestUpdateMakes(makeId, values) {
     }
 }
 
-export function updateMakesSuccess(makeId, values) {
+export function updateMakesSuccess(makeId, values, message) {
     return {
         type: types.UPDATE_MAKES_SUCCESS,
         values,
-        makeId
+        makeId,
+        message
     }
 }

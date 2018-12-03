@@ -5496,10 +5496,11 @@ function getMakesSuccess(makes) {
     };
 }
 
-function addMakesSuccess(values) {
+function addMakesSuccess(values, message) {
     return {
         type: __WEBPACK_IMPORTED_MODULE_0__actions_action_types__["a" /* ADD_MAKES_SUCCESS */],
-        values: values
+        values: values,
+        message: message
     };
 }
 
@@ -5518,11 +5519,12 @@ function requestUpdateMakes(makeId, values) {
     };
 }
 
-function updateMakesSuccess(makeId, values) {
+function updateMakesSuccess(makeId, values, message) {
     return {
         type: __WEBPACK_IMPORTED_MODULE_0__actions_action_types__["i" /* UPDATE_MAKES_SUCCESS */],
         values: values,
-        makeId: makeId
+        makeId: makeId,
+        message: message
     };
 }
 
@@ -60316,7 +60318,8 @@ var makeReducer = function makeReducer() {
             console.log('action', action);
             // console.log('ini', initialState)
             return Object.assign({}, state, {
-                makes: [].concat(_toConsumableArray(state), [action.resp])
+                makes: [].concat(_toConsumableArray(state), [action.resp]),
+                message: action.message
             });
         // return {...state, fetching: true};
 
@@ -60329,13 +60332,19 @@ var makeReducer = function makeReducer() {
             var updateMake = __WEBPACK_IMPORTED_MODULE_1_lodash___default.a.filter(state.makes, function (make) {
                 return make.id !== action.makeId;
             });
-            return Object.assign({}, state, { makes: updateMake });
+            return Object.assign({}, state, {
+                makes: updateMake,
+                message: action.message
+            });
 
         case __WEBPACK_IMPORTED_MODULE_0__actions_action_types__["b" /* DELETE_MAKES_SUCCESS */]:
             var newMake = __WEBPACK_IMPORTED_MODULE_1_lodash___default.a.filter(state.makes, function (make) {
                 return make.id !== action.makeId;
             });
-            return Object.assign({}, state, { makes: newMake });
+            return Object.assign({}, state, {
+                makes: newMake
+
+            });
 
         default:
             return state;
@@ -77921,7 +77930,7 @@ function callSubmit(action) {
 
                 case 16:
                     _context4.next = 18;
-                    return Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["c" /* put */])({ type: __WEBPACK_IMPORTED_MODULE_4__actions_action_types__["a" /* ADD_MAKES_SUCCESS */], resp: resp });
+                    return Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["c" /* put */])({ type: __WEBPACK_IMPORTED_MODULE_4__actions_action_types__["a" /* ADD_MAKES_SUCCESS */], resp: resp, message: result.statusText });
 
                 case 18:
                     _context4.next = 20;
@@ -77993,7 +78002,7 @@ function callEditMake(action) {
 
                 case 16:
                     _context6.next = 18;
-                    return Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["c" /* put */])({ type: __WEBPACK_IMPORTED_MODULE_4__actions_action_types__["i" /* UPDATE_MAKES_SUCCESS */], resp: resp });
+                    return Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["c" /* put */])({ type: __WEBPACK_IMPORTED_MODULE_4__actions_action_types__["i" /* UPDATE_MAKES_SUCCESS */], resp: resp, message: result.statusText });
 
                 case 18:
                     _context6.next = 20;
@@ -101447,12 +101456,58 @@ var MakesListContainer = function (_Component) {
         key: 'render',
         value: function render() {
             console.log('app', this.props.makes);
-            var _props$makes$makes = this.props.makes.makes,
-                makes = _props$makes$makes === undefined ? [] : _props$makes$makes;
-
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
                 null,
+                this.props.message.trim().length ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { id: 'card-alert', className: 'card green' },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'card-content white-text' },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'p',
+                            null,
+                            this.props.message
+                        )
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'button',
+                        { type: 'button', className: 'close white-text', 'data-dismiss': 'alert', 'aria-label': 'Close' },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'span',
+                            { 'aria-hidden': 'true' },
+                            '\xD7'
+                        )
+                    )
+                ) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', null),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { id: 'confirm-box', className: 'modal' },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'modal-content' },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'p',
+                            null,
+                            'Do you want to permanently delete this item?'
+                        )
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'modal-footer' },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'a',
+                            { href: '#!', className: 'modal-action modal-close waves-effect waves-green btn-flat' },
+                            'Delete'
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'a',
+                            { href: '#!', className: 'modal-action modal-close waves-effect waves-green btn-flat' },
+                            'close'
+                        )
+                    )
+                ),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'div',
                     { className: 'row' },
@@ -101535,8 +101590,10 @@ var MakesListContainer = function (_Component) {
 ;
 
 function mapStateToProps(store) {
+    console.log('mae', store.makeState);
     return {
-        makes: store.makeState.makes
+        makes: store.makeState.makes,
+        message: store.makeState.message
     };
 }
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
@@ -101582,7 +101639,7 @@ var MakesList = function MakesList(props) {
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'td',
                     null,
-                    make.created_by.name
+                    make.created_by
                 ),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'td',
@@ -101597,8 +101654,8 @@ var MakesList = function MakesList(props) {
                         )
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'span',
-                        { onClick: props.deleteMake.bind(null, make.id), className: 'tooltipped', 'data-position': 'top', 'data-delay': '50', 'data-tooltip': 'Delete' },
+                        'a',
+                        { className: 'modal-trigger', href: '#confirm-box', 'data-position': 'top', 'data-delay': '50', 'data-tooltip': 'Edit' },
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             'i',
                             { className: 'material-icons' },

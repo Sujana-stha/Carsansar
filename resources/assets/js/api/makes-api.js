@@ -33,10 +33,10 @@ export function addMakes(values) {
 export function deleteMake(makeId) {
     
     return axios.delete(`${URL}/api/makes/`+makeId)
-    .then(response => {
-        store.dispatch(deleteMakesSuccess(makeId))
-        return response;
-    })
+    // .then(response => {
+    //     store.dispatch(deleteMakesSuccess(makeId))
+    //     return response;
+    // })
 }
 
 export function updateMake(makeId, values) {

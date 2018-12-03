@@ -12,6 +12,8 @@ WE WILL RELEASE FUTURE UPDATES SO IN ORDER TO NOT OVERWRITE YOUR CUSTOM SCRIPT I
 
 $(document).ready(function(){
 	$(".ql-header").material_select("destroy");
+	$('.modal').modal();
+	
 	//$('.tabs').tabs();
 	//$('select').formSelect();
 	

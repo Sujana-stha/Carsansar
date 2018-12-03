@@ -33,7 +33,7 @@ function* callSubmit(action) {
         error = result.error;
         console.log('err', error)
     } else {
-        yield put({type: types.ADD_MAKES_SUCCESS, resp});
+        yield put({type: types.ADD_MAKES_SUCCESS, resp, message: result.statusText});
     }
     yield put(stopSubmit('PostMakes', error));
     yield put(push('/makes'));
@@ -56,17 +56,34 @@ function* callEditMake (action) {
         error = result.error;
         console.log('err', error)
     } else {
-        yield put({type: types.UPDATE_MAKES_SUCCESS, resp});
+        yield put({type: types.UPDATE_MAKES_SUCCESS, resp, message: result.statusText});
     }
     yield put(stopSubmit('EditMakes', error));
     yield put(push('/makes'));
 }
 
+// delete makes data from table
+function* deleteSaga() {
+    yield takeLatest(types.REQUEST_DELETE, callDeleteMake)
+}
+
+function* callDeleteMake(action) {
+    const result = yield call(api.deleteMake, action.makeId);
+    const resp =  result.data;
+    if(result.errors) {
+        yield put({ type: types.REQUEST_FAILED, errors: result.error});
+        error = result.error;
+        console.log('err', error)
+    } else {
+        yield put({type: types.DELETE_MAKES_SUCCESS, resp})
+    }
+} 
 //root saga containing all sagas
 export function* rootSaga() {
     yield  [
         fork(MakeWatcher),
         fork(submitSaga),
-        fork(editSaga)
+        fork(editSaga),
+        fork(deleteSaga)
     ]
 }

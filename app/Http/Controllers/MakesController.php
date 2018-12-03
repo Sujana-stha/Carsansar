@@ -9,7 +9,7 @@ class MakesController extends Controller
 {
     public function index()
     {
-        return Make::with('createdBy:user_id,name')->get();
+        return Make::all();
     }
  
     public function show(Make $make)

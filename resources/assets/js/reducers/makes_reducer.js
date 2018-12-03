@@ -29,7 +29,8 @@ const makeReducer =  function(state = initialState, action) {
             console.log('action', action)
             // console.log('ini', initialState)
             return  Object.assign({}, state, {
-                makes:[...state, action.resp]
+                makes:[...state, action.resp],
+                message: action.message
             })
             // return {...state, fetching: true};
 
@@ -40,11 +41,17 @@ const makeReducer =  function(state = initialState, action) {
             // return [...state.makes.filter(make => make.id !== action.makeId), 
             //     Object.assign({}, action.values)]
             const updateMake = _.filter(state.makes, make => make.id !== action.makeId);
-            return Object.assign({}, state, {makes: updateMake});
+            return Object.assign({}, state, {
+                makes: updateMake,
+                message: action.message
+            });
 
         case types.DELETE_MAKES_SUCCESS:
             const newMake = _.filter(state.makes, make => make.id !== action.makeId);
-            return Object.assign({}, state, {makes: newMake});
+            return Object.assign({}, state, {
+                makes: newMake,
+                
+            });
 
         default: 
         return state;

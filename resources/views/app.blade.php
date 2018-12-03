@@ -30,7 +30,7 @@
 	    <!-- jQuery Library -->
 	    <script type="text/javascript" src="{{asset('vendors/jquery-3.2.1.min.js')}}"></script>
 	    <!--materialize js-->
-	    <script type="text/javascript" src="{{asset('js/materialize.min.js')}}"></script>
+		<script type="text/javascript" src="{{asset('js/materialize.min.js')}}"></script>
 	    <!--scrollbar-->
 	    <script type="text/javascript" src="{{asset('vendors/perfect-scrollbar/perfect-scrollbar.min.js')}}"></script>
 	    <!-- chartjs -->
