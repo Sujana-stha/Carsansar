@@ -13,6 +13,9 @@ class MakesListContainer extends Component {
         // makeApi.getMakes();
         this.props.requestMakes();
     }
+    deleteMakeAction(makeId) {
+        // this.props.requestDeleteMakes(makeId);
+    }
     
     render() {
         console.log('app',this.props.makes)
@@ -37,7 +40,7 @@ class MakesListContainer extends Component {
                         <p>Do you want to permanently delete this item?</p>
                     </div>
                     <div className="modal-footer">
-                        <a href="#!" className="modal-action modal-close waves-effect waves-green btn-flat">Delete</a>
+                        <a  onClick={this.props.requestDeleteMakes} href="#!" className="modal-action modal-close waves-effect waves-green btn-flat">Delete</a>
                         <a href="#!" className="modal-action modal-close waves-effect waves-green btn-flat">close</a>
                     </div>
                 </div>
@@ -57,7 +60,7 @@ class MakesListContainer extends Component {
                         </tr>
                     </thead>
                     {this.props.makes.length ? (
-                        <MakesList makes= {this.props.makes} deleteMake = {makeApi.deleteMake}/>
+                        <MakesList makes= {this.props.makes} deleteMake = {this.deleteMakeAction}/>
 
                     ) : (
                         <tbody>

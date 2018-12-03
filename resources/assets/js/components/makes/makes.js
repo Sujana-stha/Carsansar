@@ -19,7 +19,7 @@ const MakesList = (props) => {
                                 {/* <a className="tooltipped" data-position="top" data-delay="50" data-tooltip="Edit"><i className="material-icons">edit</i></a> */}
                                 <NavLink to={`/edit-make/${make.id}`} data-position="top" data-delay="50" data-tooltip="Edit"><i className="material-icons">edit</i></NavLink>
                                 {/* <span onClick={props.deleteMake.bind(null, make.id)} className="tooltipped" data-position="top" data-delay="50" data-tooltip="Delete"><i className="material-icons">delete</i></span> */}
-                                <a className="modal-trigger" href="#confirm-box" data-position="top" data-delay="50" data-tooltip="Edit"><i className="material-icons">delete</i></a>
+                                <a onClick = {props.deleteMake.bind(null, make.id)} className="modal-trigger" href="#confirm-box" data-position="top" data-delay="50" data-tooltip="Edit"><i className="material-icons">delete</i></a>
                             </td>
                                     
                         </tr>

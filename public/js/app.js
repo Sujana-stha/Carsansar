@@ -3242,15 +3242,15 @@ function isArrayLike(value) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return GET_COLORS_SUCCESS; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return REQUEST_MAKES; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return REQUEST_SUBMIT; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return REQUEST_FAILED; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return REQUEST_MAKES; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "h", function() { return REQUEST_SUBMIT; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return REQUEST_FAILED; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return GET_MAKES_SUCCESS; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ADD_MAKES_SUCCESS; });
-/* unused harmony export REQUEST_DELETE */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return REQUEST_DELETE; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return DELETE_MAKES_SUCCESS; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "h", function() { return REQUEST_UPDATE; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "i", function() { return UPDATE_MAKES_SUCCESS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "i", function() { return REQUEST_UPDATE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "j", function() { return UPDATE_MAKES_SUCCESS; });
 
 // Colors
 var GET_COLORS_SUCCESS = 'GET_COLORS_SUCCESS';
@@ -5466,7 +5466,8 @@ var buffers = {
 /* unused harmony export requestFailed */
 /* unused harmony export getMakesSuccess */
 /* unused harmony export addMakesSuccess */
-/* harmony export (immutable) */ __webpack_exports__["a"] = deleteMakesSuccess;
+/* harmony export (immutable) */ __webpack_exports__["a"] = requestDeleteMakes;
+/* unused harmony export deleteMakesSuccess */
 /* harmony export (immutable) */ __webpack_exports__["d"] = requestUpdateMakes;
 /* unused harmony export updateMakesSuccess */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__actions_action_types__ = __webpack_require__(37);
@@ -5474,19 +5475,19 @@ var buffers = {
 
 function requestMakes(values) {
     return {
-        type: __WEBPACK_IMPORTED_MODULE_0__actions_action_types__["f" /* REQUEST_MAKES */],
+        type: __WEBPACK_IMPORTED_MODULE_0__actions_action_types__["g" /* REQUEST_MAKES */],
         values: values
     };
 }
 function requestSubmitMakes(values) {
     return {
-        type: __WEBPACK_IMPORTED_MODULE_0__actions_action_types__["g" /* REQUEST_SUBMIT */],
+        type: __WEBPACK_IMPORTED_MODULE_0__actions_action_types__["h" /* REQUEST_SUBMIT */],
         values: values
     };
 }
 function requestFailed() {
     return {
-        type: __WEBPACK_IMPORTED_MODULE_0__actions_action_types__["e" /* REQUEST_FAILED */]
+        type: __WEBPACK_IMPORTED_MODULE_0__actions_action_types__["f" /* REQUEST_FAILED */]
     };
 }
 function getMakesSuccess(makes) {
@@ -5504,6 +5505,13 @@ function addMakesSuccess(values, message) {
     };
 }
 
+function requestDeleteMakes(makeId) {
+    return {
+        type: __WEBPACK_IMPORTED_MODULE_0__actions_action_types__["e" /* REQUEST_DELETE */],
+        makeId: makeId
+    };
+}
+
 function deleteMakesSuccess(makeId) {
     return {
         type: __WEBPACK_IMPORTED_MODULE_0__actions_action_types__["b" /* DELETE_MAKES_SUCCESS */],
@@ -5513,7 +5521,7 @@ function deleteMakesSuccess(makeId) {
 
 function requestUpdateMakes(makeId, values) {
     return {
-        type: __WEBPACK_IMPORTED_MODULE_0__actions_action_types__["h" /* REQUEST_UPDATE */],
+        type: __WEBPACK_IMPORTED_MODULE_0__actions_action_types__["i" /* REQUEST_UPDATE */],
         makeId: makeId,
         values: values
     };
@@ -5521,7 +5529,7 @@ function requestUpdateMakes(makeId, values) {
 
 function updateMakesSuccess(makeId, values, message) {
     return {
-        type: __WEBPACK_IMPORTED_MODULE_0__actions_action_types__["i" /* UPDATE_MAKES_SUCCESS */],
+        type: __WEBPACK_IMPORTED_MODULE_0__actions_action_types__["j" /* UPDATE_MAKES_SUCCESS */],
         values: values,
         makeId: makeId,
         message: message
@@ -6812,10 +6820,11 @@ function addMakes(values) {
 
 function deleteMake(makeId) {
 
-    return __WEBPACK_IMPORTED_MODULE_0_axios___default.a.delete(URL + '/api/makes/' + makeId).then(function (response) {
-        __WEBPACK_IMPORTED_MODULE_1__store__["a" /* default */].dispatch(Object(__WEBPACK_IMPORTED_MODULE_2__actions_makes_action__["a" /* deleteMakesSuccess */])(makeId));
-        return response;
-    });
+    return __WEBPACK_IMPORTED_MODULE_0_axios___default.a.delete(URL + '/api/makes/' + makeId);
+    // .then(response => {
+    //     store.dispatch(deleteMakesSuccess(makeId))
+    //     return response;
+    // })
 }
 
 function updateMake(makeId, values) {
@@ -60298,10 +60307,10 @@ var makeReducer = function makeReducer() {
     var action = arguments[1];
 
     switch (action.type) {
-        case __WEBPACK_IMPORTED_MODULE_0__actions_action_types__["f" /* REQUEST_MAKES */]:
+        case __WEBPACK_IMPORTED_MODULE_0__actions_action_types__["g" /* REQUEST_MAKES */]:
             return _extends({}, state, { fetching: true });
 
-        case __WEBPACK_IMPORTED_MODULE_0__actions_action_types__["g" /* REQUEST_SUBMIT */]:
+        case __WEBPACK_IMPORTED_MODULE_0__actions_action_types__["h" /* REQUEST_SUBMIT */]:
         // return {...state, fetching: true};
         // console.log('action', action)
         // return  Object.assign({}, state, {
@@ -60325,7 +60334,7 @@ var makeReducer = function makeReducer() {
 
         // return [...state.filter(make => make.id !== action.payload.id ),
         // Object.assign({}, action.payload)]
-        case __WEBPACK_IMPORTED_MODULE_0__actions_action_types__["i" /* UPDATE_MAKES_SUCCESS */]:
+        case __WEBPACK_IMPORTED_MODULE_0__actions_action_types__["j" /* UPDATE_MAKES_SUCCESS */]:
 
             // return [...state.makes.filter(make => make.id !== action.makeId), 
             //     Object.assign({}, action.values)]
@@ -77827,7 +77836,9 @@ var _marked = /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator
     _marked4 = /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(callSubmit),
     _marked5 = /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(editSaga),
     _marked6 = /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(callEditMake),
-    _marked7 = /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(rootSaga);
+    _marked7 = /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(deleteSaga),
+    _marked8 = /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(callDeleteMake),
+    _marked9 = /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(rootSaga);
 
 
 
@@ -77842,7 +77853,7 @@ function MakeWatcher() {
             switch (_context.prev = _context.next) {
                 case 0:
                     _context.next = 2;
-                    return Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["e" /* takeLatest */])(__WEBPACK_IMPORTED_MODULE_4__actions_action_types__["f" /* REQUEST_MAKES */], MakeSaga);
+                    return Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["e" /* takeLatest */])(__WEBPACK_IMPORTED_MODULE_4__actions_action_types__["g" /* REQUEST_MAKES */], MakeSaga);
 
                 case 2:
                 case 'end':
@@ -77884,7 +77895,7 @@ function submitSaga() {
             switch (_context3.prev = _context3.next) {
                 case 0:
                     _context3.next = 2;
-                    return Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["d" /* takeEvery */])(__WEBPACK_IMPORTED_MODULE_4__actions_action_types__["g" /* REQUEST_SUBMIT */], callSubmit);
+                    return Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["d" /* takeEvery */])(__WEBPACK_IMPORTED_MODULE_4__actions_action_types__["h" /* REQUEST_SUBMIT */], callSubmit);
 
                 case 2:
                 case 'end':
@@ -77920,7 +77931,7 @@ function callSubmit(action) {
                     }
 
                     _context4.next = 12;
-                    return Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["c" /* put */])({ type: __WEBPACK_IMPORTED_MODULE_4__actions_action_types__["e" /* REQUEST_FAILED */], errors: result.error });
+                    return Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["c" /* put */])({ type: __WEBPACK_IMPORTED_MODULE_4__actions_action_types__["f" /* REQUEST_FAILED */], errors: result.error });
 
                 case 12:
                     error = result.error;
@@ -77955,7 +77966,7 @@ function editSaga() {
             switch (_context5.prev = _context5.next) {
                 case 0:
                     _context5.next = 2;
-                    return Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["e" /* takeLatest */])(__WEBPACK_IMPORTED_MODULE_4__actions_action_types__["h" /* REQUEST_UPDATE */], callEditMake);
+                    return Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["e" /* takeLatest */])(__WEBPACK_IMPORTED_MODULE_4__actions_action_types__["i" /* REQUEST_UPDATE */], callEditMake);
 
                 case 2:
                 case 'end':
@@ -77992,7 +78003,7 @@ function callEditMake(action) {
                     }
 
                     _context6.next = 12;
-                    return Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["c" /* put */])({ type: __WEBPACK_IMPORTED_MODULE_4__actions_action_types__["e" /* REQUEST_FAILED */], errors: result.error });
+                    return Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["c" /* put */])({ type: __WEBPACK_IMPORTED_MODULE_4__actions_action_types__["f" /* REQUEST_FAILED */], errors: result.error });
 
                 case 12:
                     error = result.error;
@@ -78002,7 +78013,7 @@ function callEditMake(action) {
 
                 case 16:
                     _context6.next = 18;
-                    return Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["c" /* put */])({ type: __WEBPACK_IMPORTED_MODULE_4__actions_action_types__["i" /* UPDATE_MAKES_SUCCESS */], resp: resp, message: result.statusText });
+                    return Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["c" /* put */])({ type: __WEBPACK_IMPORTED_MODULE_4__actions_action_types__["j" /* UPDATE_MAKES_SUCCESS */], resp: resp, message: result.statusText });
 
                 case 18:
                     _context6.next = 20;
@@ -78020,14 +78031,14 @@ function callEditMake(action) {
     }, _marked6, this);
 }
 
-//root saga containing all sagas
-function rootSaga() {
-    return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function rootSaga$(_context7) {
+// delete makes data from table
+function deleteSaga() {
+    return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function deleteSaga$(_context7) {
         while (1) {
             switch (_context7.prev = _context7.next) {
                 case 0:
                     _context7.next = 2;
-                    return [Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["b" /* fork */])(MakeWatcher), Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["b" /* fork */])(submitSaga), Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["b" /* fork */])(editSaga)];
+                    return Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["e" /* takeLatest */])(__WEBPACK_IMPORTED_MODULE_4__actions_action_types__["e" /* REQUEST_DELETE */], callDeleteMake);
 
                 case 2:
                 case 'end':
@@ -78035,6 +78046,61 @@ function rootSaga() {
             }
         }
     }, _marked7, this);
+}
+
+function callDeleteMake(action) {
+    var result, resp;
+    return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function callDeleteMake$(_context8) {
+        while (1) {
+            switch (_context8.prev = _context8.next) {
+                case 0:
+                    _context8.next = 2;
+                    return Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["a" /* call */])(__WEBPACK_IMPORTED_MODULE_5__api_makes_api__["b" /* deleteMake */], action.makeId);
+
+                case 2:
+                    result = _context8.sent;
+                    resp = result.data;
+
+                    if (!result.errors) {
+                        _context8.next = 11;
+                        break;
+                    }
+
+                    _context8.next = 7;
+                    return Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["c" /* put */])({ type: __WEBPACK_IMPORTED_MODULE_4__actions_action_types__["f" /* REQUEST_FAILED */], errors: result.error });
+
+                case 7:
+                    error = result.error;
+                    console.log('err', error);
+                    _context8.next = 13;
+                    break;
+
+                case 11:
+                    _context8.next = 13;
+                    return Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["c" /* put */])({ type: __WEBPACK_IMPORTED_MODULE_4__actions_action_types__["b" /* DELETE_MAKES_SUCCESS */], resp: resp });
+
+                case 13:
+                case 'end':
+                    return _context8.stop();
+            }
+        }
+    }, _marked8, this);
+}
+//root saga containing all sagas
+function rootSaga() {
+    return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function rootSaga$(_context9) {
+        while (1) {
+            switch (_context9.prev = _context9.next) {
+                case 0:
+                    _context9.next = 2;
+                    return [Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["b" /* fork */])(MakeWatcher), Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["b" /* fork */])(submitSaga), Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["b" /* fork */])(editSaga), Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["b" /* fork */])(deleteSaga)];
+
+                case 2:
+                case 'end':
+                    return _context9.stop();
+            }
+        }
+    }, _marked9, this);
 }
 
 /***/ }),
@@ -101453,6 +101519,11 @@ var MakesListContainer = function (_Component) {
             this.props.requestMakes();
         }
     }, {
+        key: 'deleteMakeAction',
+        value: function deleteMakeAction(makeId) {
+            // this.props.requestDeleteMakes(makeId);
+        }
+    }, {
         key: 'render',
         value: function render() {
             console.log('app', this.props.makes);
@@ -101498,7 +101569,7 @@ var MakesListContainer = function (_Component) {
                         { className: 'modal-footer' },
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             'a',
-                            { href: '#!', className: 'modal-action modal-close waves-effect waves-green btn-flat' },
+                            { onClick: this.props.requestDeleteMakes, href: '#!', className: 'modal-action modal-close waves-effect waves-green btn-flat' },
                             'Delete'
                         ),
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -101566,7 +101637,7 @@ var MakesListContainer = function (_Component) {
                             )
                         )
                     ),
-                    this.props.makes.length ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__components_makes_makes__["a" /* default */], { makes: this.props.makes, deleteMake: __WEBPACK_IMPORTED_MODULE_3__api_makes_api__["b" /* deleteMake */] }) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    this.props.makes.length ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__components_makes_makes__["a" /* default */], { makes: this.props.makes, deleteMake: this.deleteMakeAction }) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'tbody',
                         null,
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -101597,7 +101668,7 @@ function mapStateToProps(store) {
     };
 }
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
-    return Object(__WEBPACK_IMPORTED_MODULE_7_redux__["b" /* bindActionCreators */])({ requestMakes: __WEBPACK_IMPORTED_MODULE_6__actions_makes_action__["b" /* requestMakes */] }, dispatch);
+    return Object(__WEBPACK_IMPORTED_MODULE_7_redux__["b" /* bindActionCreators */])({ requestMakes: __WEBPACK_IMPORTED_MODULE_6__actions_makes_action__["b" /* requestMakes */], requestDeleteMakes: __WEBPACK_IMPORTED_MODULE_6__actions_makes_action__["a" /* requestDeleteMakes */] }, dispatch);
 };
 /* harmony default export */ __webpack_exports__["a"] = (Object(__WEBPACK_IMPORTED_MODULE_2_react_redux__["connect"])(mapStateToProps, mapDispatchToProps)(MakesListContainer));
 
@@ -101655,7 +101726,7 @@ var MakesList = function MakesList(props) {
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'a',
-                        { className: 'modal-trigger', href: '#confirm-box', 'data-position': 'top', 'data-delay': '50', 'data-tooltip': 'Edit' },
+                        { onClick: props.deleteMake.bind(null, make.id), className: 'modal-trigger', href: '#confirm-box', 'data-position': 'top', 'data-delay': '50', 'data-tooltip': 'Edit' },
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             'i',
                             { className: 'material-icons' },
