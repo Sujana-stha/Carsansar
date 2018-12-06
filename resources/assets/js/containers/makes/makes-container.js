@@ -2,23 +2,27 @@ import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 
 import { connect } from 'react-redux';
+import * as makeAction from '../../actions/makes-action';
 import * as makeApi from '../../api/makes-api';
 import MakesList from '../../components/makes/makes';
 import store from '../../store';
 import { requestMakes, requestDeleteMakes } from  '../../actions/makes-action';
 import { bindActionCreators } from 'redux';
 
+
 class MakesListContainer extends Component {
+
     componentDidMount() {
         // makeApi.getMakes();
         this.props.requestMakes();
     }
+    
     deleteMakeAction(makeId) {
-        // this.props.requestDeleteMakes(makeId);
+        this.props.requestDeleteMakes(makeId);
     }
     
     render() {
-        console.log('app',this.props.makes)
+        console.log('app',this.props)
         return (
             <div>
                 {this.props.message.trim().length ? (
@@ -34,7 +38,7 @@ class MakesListContainer extends Component {
                 ): (
                     <div></div>
                 )}
-                <div id="confirm-box" className="modal">
+                {/* <div id="confirm-box" className="modal">
                     <div className="modal-content">
                         
                         <p>Do you want to permanently delete this item?</p>
@@ -43,7 +47,7 @@ class MakesListContainer extends Component {
                         <a  onClick={this.props.requestDeleteMakes} href="#!" className="modal-action modal-close waves-effect waves-green btn-flat">Delete</a>
                         <a href="#!" className="modal-action modal-close waves-effect waves-green btn-flat">close</a>
                     </div>
-                </div>
+                </div> */}
                 <div className="row">
                     <div className="col s12 mt-2 mb-2 right-align">
                         <NavLink to="/add-make" className="btn waves-effect waves-light"><i className="material-icons left">add</i><span> Add Makes</span></NavLink>
@@ -60,7 +64,7 @@ class MakesListContainer extends Component {
                         </tr>
                     </thead>
                     {this.props.makes.length ? (
-                        <MakesList makes= {this.props.makes} deleteMake = {this.deleteMakeAction}/>
+                        <MakesList makes= {this.props.makes} deleteMake = {this.props.requestDeleteMakes}/>
 
                     ) : (
                         <tbody>

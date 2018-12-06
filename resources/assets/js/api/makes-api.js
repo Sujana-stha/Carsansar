@@ -31,12 +31,15 @@ export function addMakes(values) {
 }
 
 export function deleteMake(makeId) {
-    
-    return axios.delete(`${URL}/api/makes/`+makeId)
+    // console.log('msssm',makeId);
+    return axios.delete(`${URL}/api/makes/`+ makeId)
     // .then(response => {
-    //     store.dispatch(deleteMakesSuccess(makeId))
+    //     // store.dispatch(deleteMakesSuccess(makeId))
+    //     console.log(response)
     //     return response;
     // })
+    .catch(error=>console.log(error));
+
 }
 
 export function updateMake(makeId, values) {

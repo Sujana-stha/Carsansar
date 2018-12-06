@@ -3,7 +3,7 @@ import { startSubmit, stopSubmit } from 'redux-form';
 import { push } from 'connected-react-router';
 import * as types from '../actions/action-types';
 import * as api from '../api/makes-api';
-
+import * as makeAction from '../actions/makes-action'
 
 //Get makes data in table
 function* MakeWatcher() {
@@ -68,14 +68,17 @@ function* deleteSaga() {
 }
 
 function* callDeleteMake(action) {
+    console.log('act', action)
     const result = yield call(api.deleteMake, action.makeId);
+    console.log('res',result);
     const resp =  result.data;
+    const makeId = action.makeId
     if(result.errors) {
         yield put({ type: types.REQUEST_FAILED, errors: result.error});
         error = result.error;
         console.log('err', error)
     } else {
-        yield put({type: types.DELETE_MAKES_SUCCESS, resp})
+        yield put(makeAction.deleteMakesSuccess(action.makeId));
     }
 } 
 //root saga containing all sagas
