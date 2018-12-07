@@ -50,7 +50,7 @@ const makeReducer =  function(state = initialState, action) {
             const newMake = _.filter(state.makes, make => make.id !== action.makeId);
             return Object.assign({}, state, {
                 makes: newMake,
-                
+                message: action.message
             });
 
         default: 

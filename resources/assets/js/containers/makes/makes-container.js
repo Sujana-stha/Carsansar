@@ -1,17 +1,30 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
-
 import { connect } from 'react-redux';
-import * as makeAction from '../../actions/makes-action';
-import * as makeApi from '../../api/makes-api';
+// import * as makeAction from '../../actions/makes-action';
+// import * as makeApi from '../../api/makes-api';
 import MakesList from '../../components/makes/makes';
 import store from '../../store';
 import { requestMakes, requestDeleteMakes } from  '../../actions/makes-action';
 import { bindActionCreators } from 'redux';
 
 
-class MakesListContainer extends Component {
+//COMPONENT
+import MakeForm from './makes-form';
 
+class MakesListContainer extends Component {
+    constructor() {
+        super();
+        this.state= {
+            hide: true
+        }
+    }
+    hideMessage (e) {
+        e.preventDefault();
+        this.setState ({
+            hide: false
+        })
+    }
     componentDidMount() {
         // makeApi.getMakes();
         this.props.requestMakes();
@@ -25,32 +38,24 @@ class MakesListContainer extends Component {
         console.log('app',this.props)
         return (
             <div>
-                {this.props.message.trim().length ? (
+                {this.props.message.trim().length && this.state.hide ? (
                    
                     <div id="card-alert" className="card green">
                         <div className="card-content white-text">
                             <p>{this.props.message}</p>
                         </div>
                         <button type="button" className="close white-text" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">×</span>
+                            <span onClick={this.hideMessage.bind(this)} aria-hidden="true">×</span>
                         </button>
                     </div>
                 ): (
                     <div></div>
                 )}
-                {/* <div id="confirm-box" className="modal">
-                    <div className="modal-content">
-                        
-                        <p>Do you want to permanently delete this item?</p>
-                    </div>
-                    <div className="modal-footer">
-                        <a  onClick={this.props.requestDeleteMakes} href="#!" className="modal-action modal-close waves-effect waves-green btn-flat">Delete</a>
-                        <a href="#!" className="modal-action modal-close waves-effect waves-green btn-flat">close</a>
-                    </div>
-                </div> */}
+                
                 <div className="row">
-                    <div className="col s12 mt-2 mb-2 right-align">
-                        <NavLink to="/add-make" className="btn waves-effect waves-light"><i className="material-icons left">add</i><span> Add Makes</span></NavLink>
+                    <div className="col s12 mt-2 mb-2 ">
+                        {/* <NavLink to="/add-make" className="btn waves-effect waves-light"><i className="material-icons left">add</i><span> Add Makes</span></NavLink> */}
+                        <MakeForm/>
                     </div>
                 </div>
                 <table>

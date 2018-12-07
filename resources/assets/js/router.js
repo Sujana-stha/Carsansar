@@ -64,7 +64,7 @@ export default (
 							<Route path="/insert-user" component={InsertUser}></Route>
 							<Route path="/user-profile" component={UserProfile}></Route>
 							<Route path="/makes" component={MakesListContainer}></Route>
-							<Route path="/add-make" component={MakeForm}></Route>
+							{/* <Route path="/add-make" component={MakeForm}></Route> */}
 							<Route path="/edit-make/:id" component={EditMake}/>
  					</div>
             

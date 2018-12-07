@@ -36,7 +36,7 @@ function* callSubmit(action) {
         yield put({type: types.ADD_MAKES_SUCCESS, resp, message: result.statusText});
     }
     yield put(stopSubmit('PostMakes', error));
-    yield put(push('/makes'));
+    // yield put(push('/makes'));
 }
 
 //edit form data of makes
@@ -78,7 +78,7 @@ function* callDeleteMake(action) {
         error = result.error;
         console.log('err', error)
     } else {
-        yield put(makeAction.deleteMakesSuccess(action.makeId));
+        yield put(makeAction.deleteMakesSuccess(action.makeId, result.statusText));
     }
 } 
 //root saga containing all sagas

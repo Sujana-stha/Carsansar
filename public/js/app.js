@@ -2775,10 +2775,10 @@ function requestDeleteMakes(makeId) {
     };
 }
 
-function deleteMakesSuccess(makeId) {
+function deleteMakesSuccess(makeId, message) {
     return {
         type: __WEBPACK_IMPORTED_MODULE_0__actions_action_types__["b" /* DELETE_MAKES_SUCCESS */],
-        makeId: makeId
+        makeId: makeId, message: message
     };
 }
 
@@ -60355,8 +60355,8 @@ var makeReducer = function makeReducer() {
                 return make.id !== action.makeId;
             });
             return Object.assign({}, state, {
-                makes: newMake
-
+                makes: newMake,
+                message: action.message
             });
 
         default:
@@ -77954,10 +77954,6 @@ function callSubmit(action) {
                     return Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["c" /* put */])(Object(__WEBPACK_IMPORTED_MODULE_2_redux_form__["e" /* stopSubmit */])('PostMakes', error));
 
                 case 20:
-                    _context4.next = 22;
-                    return Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["c" /* put */])(Object(__WEBPACK_IMPORTED_MODULE_3_connected_react_router__["push"])('/makes'));
-
-                case 22:
                 case 'end':
                     return _context4.stop();
             }
@@ -78087,7 +78083,7 @@ function callDeleteMake(action) {
 
                 case 14:
                     _context8.next = 16;
-                    return Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["c" /* put */])(__WEBPACK_IMPORTED_MODULE_6__actions_makes_action__["a" /* deleteMakesSuccess */](action.makeId));
+                    return Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["c" /* put */])(__WEBPACK_IMPORTED_MODULE_6__actions_makes_action__["a" /* deleteMakesSuccess */](action.makeId, result.statusText));
 
                 case 16:
                 case 'end':
@@ -80606,7 +80602,6 @@ var isExtraneousPopstateEvent = exports.isExtraneousPopstateEvent = function isE
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Route */], { path: '/insert-user', component: __WEBPACK_IMPORTED_MODULE_12__components_users_insert_user__["a" /* default */] }),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Route */], { path: '/user-profile', component: __WEBPACK_IMPORTED_MODULE_13__components_users_user_profile__["a" /* default */] }),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Route */], { path: '/makes', component: __WEBPACK_IMPORTED_MODULE_18__containers_makes_makes_container__["a" /* default */] }),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Route */], { path: '/add-make', component: __WEBPACK_IMPORTED_MODULE_19__containers_makes_makes_form__["a" /* default */] }),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Route */], { path: '/edit-make/:id', component: __WEBPACK_IMPORTED_MODULE_20__components_makes_makes_edit__["a" /* default */] })
                 )
             ),
@@ -101490,11 +101485,11 @@ var InsertColorContainer = function (_Component) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_router_dom__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_redux__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__actions_makes_action__ = __webpack_require__(28);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__api_makes_api__ = __webpack_require__(96);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_makes_makes__ = __webpack_require__(637);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__store__ = __webpack_require__(25);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_redux__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_makes_makes__ = __webpack_require__(637);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__store__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__actions_makes_action__ = __webpack_require__(28);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_redux__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__makes_form__ = __webpack_require__(638);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -101506,12 +101501,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
 
+// import * as makeAction from '../../actions/makes-action';
+// import * as makeApi from '../../api/makes-api';
 
 
 
 
 
-
+//COMPONENT
 
 
 var MakesListContainer = function (_Component) {
@@ -101520,10 +101517,23 @@ var MakesListContainer = function (_Component) {
     function MakesListContainer() {
         _classCallCheck(this, MakesListContainer);
 
-        return _possibleConstructorReturn(this, (MakesListContainer.__proto__ || Object.getPrototypeOf(MakesListContainer)).apply(this, arguments));
+        var _this = _possibleConstructorReturn(this, (MakesListContainer.__proto__ || Object.getPrototypeOf(MakesListContainer)).call(this));
+
+        _this.state = {
+            hide: true
+        };
+        return _this;
     }
 
     _createClass(MakesListContainer, [{
+        key: 'hideMessage',
+        value: function hideMessage(e) {
+            e.preventDefault();
+            this.setState({
+                hide: false
+            });
+        }
+    }, {
         key: 'componentDidMount',
         value: function componentDidMount() {
             // makeApi.getMakes();
@@ -101541,7 +101551,7 @@ var MakesListContainer = function (_Component) {
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
                 null,
-                this.props.message.trim().length ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                this.props.message.trim().length && this.state.hide ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'div',
                     { id: 'card-alert', className: 'card green' },
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -101558,7 +101568,7 @@ var MakesListContainer = function (_Component) {
                         { type: 'button', className: 'close white-text', 'data-dismiss': 'alert', 'aria-label': 'Close' },
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             'span',
-                            { 'aria-hidden': 'true' },
+                            { onClick: this.hideMessage.bind(this), 'aria-hidden': 'true' },
                             '\xD7'
                         )
                     )
@@ -101568,21 +101578,8 @@ var MakesListContainer = function (_Component) {
                     { className: 'row' },
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'div',
-                        { className: 'col s12 mt-2 mb-2 right-align' },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["a" /* NavLink */],
-                            { to: '/add-make', className: 'btn waves-effect waves-light' },
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                'i',
-                                { className: 'material-icons left' },
-                                'add'
-                            ),
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                'span',
-                                null,
-                                ' Add Makes'
-                            )
-                        )
+                        { className: 'col s12 mt-2 mb-2 ' },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_7__makes_form__["a" /* default */], null)
                     )
                 ),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -101621,7 +101618,7 @@ var MakesListContainer = function (_Component) {
                             )
                         )
                     ),
-                    this.props.makes.length ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__components_makes_makes__["a" /* default */], { makes: this.props.makes, deleteMake: this.props.requestDeleteMakes }) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    this.props.makes.length ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_makes_makes__["a" /* default */], { makes: this.props.makes, deleteMake: this.props.requestDeleteMakes }) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'tbody',
                         null,
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -101652,7 +101649,7 @@ function mapStateToProps(store) {
     };
 }
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
-    return Object(__WEBPACK_IMPORTED_MODULE_7_redux__["b" /* bindActionCreators */])({ requestMakes: __WEBPACK_IMPORTED_MODULE_3__actions_makes_action__["c" /* requestMakes */], requestDeleteMakes: __WEBPACK_IMPORTED_MODULE_3__actions_makes_action__["b" /* requestDeleteMakes */] }, dispatch);
+    return Object(__WEBPACK_IMPORTED_MODULE_6_redux__["b" /* bindActionCreators */])({ requestMakes: __WEBPACK_IMPORTED_MODULE_5__actions_makes_action__["c" /* requestMakes */], requestDeleteMakes: __WEBPACK_IMPORTED_MODULE_5__actions_makes_action__["b" /* requestDeleteMakes */] }, dispatch);
 };
 /* harmony default export */ __webpack_exports__["a"] = (Object(__WEBPACK_IMPORTED_MODULE_2_react_redux__["connect"])(mapStateToProps, mapDispatchToProps)(MakesListContainer));
 
@@ -101687,9 +101684,9 @@ var MakesList = function (_Component) {
 
         _this.state = {
             confirm: false,
-            showItem: false
+            showItem: null
         };
-        _this.deleteItem = _this.deleteItem.bind(_this);
+        // this.deleteItem = this.deleteItem.bind(this);
         return _this;
     }
 
@@ -101709,7 +101706,7 @@ var MakesList = function (_Component) {
             console.log(id);
             // return false;
 
-            this.setState({ showItem: true });
+            this.setState({ showItem: id });
         }
     }, {
         key: 'componentDidMount',
@@ -101722,7 +101719,7 @@ var MakesList = function (_Component) {
         key: 'hideDiv',
         value: function hideDiv(e) {
             e.preventDefault();
-            this.setState({ confirm: false });
+            this.setState({ showItem: null });
         }
     }, {
         key: 'render',
@@ -101770,25 +101767,27 @@ var MakesList = function (_Component) {
                             ),
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                 'a',
-                                { 'data-makeid': make.id, onClick: _this2.deleteItem, 'data-tooltip': 'Delete' },
+                                { href: 'javascript:void(0);', onClick: function onClick() {
+                                        return _this2.deleteItem(make.id);
+                                    }, 'data-tooltip': 'Delete' },
                                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                     'i',
                                     { className: 'material-icons' },
                                     'delete'
                                 )
                             ),
-                            _this2.state.showItem ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            _this2.state.showItem == make.id ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                 'span',
                                 { className: 'red-text confirm' },
                                 'Are you sure? ',
                                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                     'a',
-                                    { href: 'javascript:void();' },
+                                    { onClick: _this2.props.deleteMake.bind(null, make.id), href: 'javascript:void(0);' },
                                     'Yes'
                                 ),
                                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                     'a',
-                                    { href: 'javascript:void();' },
+                                    { href: 'javascript:void(0);', onClick: _this2.hideDiv.bind(_this2) },
                                     'No'
                                 )
                             ) : null

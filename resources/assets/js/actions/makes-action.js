@@ -40,10 +40,10 @@ export function requestDeleteMakes(makeId) {
     }
 }
 
-export function deleteMakesSuccess(makeId) {
+export function deleteMakesSuccess(makeId, message) {
     return {
         type: types.DELETE_MAKES_SUCCESS,
-        makeId
+        makeId, message
     }
 }
 
