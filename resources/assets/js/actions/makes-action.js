@@ -7,7 +7,7 @@ export function requestMakes(values) {
         values
     }
 }
-export function requestSubmitMakes(values) {
+export function requestSubmitMake(values) {
     return {
         type: types.REQUEST_SUBMIT,
         values

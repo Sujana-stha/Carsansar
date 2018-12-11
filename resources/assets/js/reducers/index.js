@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 import { reducer as formReducer } from 'redux-form';
 import { connectRouter } from 'connected-react-router'
-
+// import { createPaginator } from 'violet-paginator';
 
 //REDUCER
 import colorReducer from './colors_reducer';
@@ -11,7 +11,10 @@ const rootReducer = (history) => combineReducers({
     colorState: colorReducer,
     makeState: makeReducer,
     form: formReducer,
-    router: connectRouter(history)
+    router: connectRouter(history),
+    // makeList: createPaginator({
+    //     listId: 'makeList'
+    // })
 });
 
 export default rootReducer;

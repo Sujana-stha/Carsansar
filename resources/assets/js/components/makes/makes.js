@@ -50,14 +50,17 @@ class MakesList extends Component {
                                 <td>{make.make_desc}</td>
                                 <td>{make.status}</td>
                                 <td>{make.created_by}</td>
-                                <td className={`action-col-${make.id}`}>
+                                <td className="action">
                                     {/* <a className="tooltipped" data-position="top" data-delay="50" data-tooltip="Edit"><i className="material-icons">edit</i></a> */}
                                     <NavLink to={`/edit-make/${make.id}`} data-position="top" data-delay="50" data-tooltip="Edit"><i className="material-icons">edit</i></NavLink>
                                     {/* <span onClick={()=> window.confirm('Are you sure you want to delete this item?') && this.props.deleteMake.bind(null, make.id)} className="tooltipped" data-position="top" data-delay="50" data-tooltip="Delete"><i className="material-icons">delete</i></span> */}
                                     {/* <a data-makeid={make.id} onClick={this.onClicked.bind(this, make.id)} data-tooltip="Delete"><i className="material-icons">delete</i></a> */}
-                                    <a href="javascript:void(0);" onClick={()=>this.deleteItem(make.id)} data-tooltip="Delete"><i className="material-icons">delete</i></a>
+                                    <a className="tooltip" href="javascript:void(0);" onClick={()=>this.deleteItem(make.id)} data-tooltip="Delete"><i className="material-icons">delete</i></a>
                                     {this.state.showItem==make.id ? (
-                                    <span className="red-text confirm">Are you sure? <a onClick={this.props.deleteMake.bind(null, make.id)} href="javascript:void(0);">Yes</a><a href="javascript:void(0);" onClick={this.hideDiv.bind(this)}>No</a></span>
+                                        <span className="confirm tooltip-text">Are you sure?&nbsp; 
+                                            <a onClick={this.props.deleteMake.bind(null, make.id)} href="javascript:void(0);">Yes</a> &nbsp;
+                                            <a href="javascript:void(0);" onClick={this.hideDiv.bind(this)}>No</a>
+                                        </span>
                                     ): null}
                                 </td>
                                     
@@ -65,15 +68,7 @@ class MakesList extends Component {
                     )
                 })
             }
-            {this.state.confirm ? (
-                <tr>
-                    <td>
-                        Are you sure you want to permanently delete this item ?
-                        <span onClick={this.props.deleteMake.bind(null, makeId)}>Yes</span> &nbsp;&nbsp; 
-                        <span onClick={this.hideDiv.bind(this)}>No</span>
-                    </td>
-                </tr>  
-            ): null }
+            
         </tbody>
     );
     }

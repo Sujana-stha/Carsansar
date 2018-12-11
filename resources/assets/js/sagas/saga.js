@@ -19,7 +19,7 @@ function* MakeSaga() {
 
 // Submit form data of makes
 function* submitSaga() {
-    yield takeEvery(types.REQUEST_SUBMIT, callSubmit)
+    yield takeLatest(types.REQUEST_SUBMIT, callSubmit)
 }
 function* callSubmit(action) {
     console.log('addd',action);

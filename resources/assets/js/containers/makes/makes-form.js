@@ -32,16 +32,17 @@ class MakeForm extends Component {
     //     //     this.props.history.push('/makes')
     //     // })
     // }
-    onSubmit(values) {
+    // onSubmit(values) {
         // this.props.requestSubmitMakes(values, ()=> {
         //     this.props.history.push('/makes');
         // })
-        this.props.requestSubmitMakes(values);
+        // this.props.requestSubmitMakes(values);
         // this.props.addMakesSuccess(values);
         // console.log(values)
-    }
+    // }
     
     render() {
+        const { handleSubmit } = this.props;
         return (
             <div>
                 <div className="row">
@@ -52,7 +53,8 @@ class MakeForm extends Component {
                 <h4 className="header2">Add New Make</h4>
                 <div className="card-panel">
 					<div className="row">
-                        <form className="col s12" onSubmit={this.props.handleSubmit((event)=>this.onSubmit(event))}>
+                        {/* <form className="col s12" onSubmit={this.props.handleSubmit((event)=>this.props.submitMake.bind(event))}> */}
+                        <form className="col s12" onSubmit= { handleSubmit  } >
                             <Field 
                                 label="Make Desciption"
                                 name="make_desc"
@@ -100,7 +102,11 @@ function mapStateToProps(store) {
 // const mapDispatchToProps = dispatch => {
 //     bindActionCreators( {addMakesSuccess} , dispatch);
 // } 
+// export default reduxForm({
+//     validate,
+//     form: 'PostMakes'
+// })(connect(mapStateToProps, {requestSubmitMakes})(MakeForm));
 export default reduxForm({
     validate,
     form: 'PostMakes'
-})(connect(mapStateToProps, {requestSubmitMakes})(MakeForm));
+})(MakeForm);

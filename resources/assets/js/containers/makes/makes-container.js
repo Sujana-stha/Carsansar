@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 // import * as makeApi from '../../api/makes-api';
 import MakesList from '../../components/makes/makes';
 import store from '../../store';
-import { requestMakes, requestDeleteMakes } from  '../../actions/makes-action';
+import { requestMakes, requestDeleteMakes, requestSubmitMake } from  '../../actions/makes-action';
 import { bindActionCreators } from 'redux';
 
 
@@ -29,13 +29,16 @@ class MakesListContainer extends Component {
         // makeApi.getMakes();
         this.props.requestMakes();
     }
-    
+    submitMake(values) {
+        console.log('vaaa',values);
+        
+        this.props.requestSubmitMake(values);
+    }
     deleteMakeAction(makeId) {
         this.props.requestDeleteMakes(makeId);
     }
     
     render() {
-        console.log('app',this.props)
         return (
             <div>
                 {this.props.message.trim().length && this.state.hide ? (
@@ -55,7 +58,7 @@ class MakesListContainer extends Component {
                 <div className="row">
                     <div className="col s12 mt-2 mb-2 ">
                         {/* <NavLink to="/add-make" className="btn waves-effect waves-light"><i className="material-icons left">add</i><span> Add Makes</span></NavLink> */}
-                        <MakeForm/>
+                        <MakeForm onSubmit = { this.submitMake.bind(this) }/>
                     </div>
                 </div>
                 <table>
@@ -85,12 +88,11 @@ class MakesListContainer extends Component {
 };
 
 function mapStateToProps(store) {
-    console.log('mae', store.makeState)
     return {
         makes: store.makeState.makes,
         message: store.makeState.message
     }
 }
-const mapDispatchToProps = dispatch =>
-  bindActionCreators({ requestMakes, requestDeleteMakes }, dispatch);
-export default connect(mapStateToProps, mapDispatchToProps)(MakesListContainer);
+// const mapDispatchToProps = dispatch =>
+//   bindActionCreators({ requestMakes, requestDeleteMakes, requestSubmitMakes }, dispatch);
+export default connect(mapStateToProps, {requestMakes, requestDeleteMakes, requestSubmitMake})(MakesListContainer);

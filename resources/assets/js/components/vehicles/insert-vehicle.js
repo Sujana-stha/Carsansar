@@ -9,13 +9,21 @@ import { Button, Card, Row, Col, Input, CardPanel } from 'react-materialize';
 import 'react-web-tabs/dist/react-web-tabs.css';
 //import ReactQuill, { Quill, Mixin, Toolbar } from 'react-quill';
 //import 'react-quill/dist/quill.snow.css';
+import { connect } from 'react-redux';
+import store from '../../store';
+import { bindActionCreators } from 'redux';
+import { requestMakes } from  '../../actions/makes-action';
+
 class InsertVehicle extends React.Component {
 	constructor(props) {
 	  super(props)
 	  this.state = { text: 'Vehicle Description' } // You can also pass a Quill Delta here
 	  this.handleChange = this.handleChange.bind(this)
 	}
-   
+	componentDidMount() {
+        // makeApi.getMakes();
+        this.props.requestMakes();
+    }
 	handleChange(value) {
 	  this.setState({ text: value })
 	}
@@ -274,10 +282,11 @@ class InsertVehicle extends React.Component {
 											<div className="input-field col s12">
 												<select name="make">
 													<option value="" disabled>Choose your option</option>
-													<option value="1">Honda</option>
-													<option value="2">BMW</option>
-													<option value="3">Hyundai</option>
-													<option value="3">Ford</option>
+													{this.props.makes.map((make)=> {
+														return (
+															<option key={make.id} value={make.id}>{make.make_desc}</option>
+														)
+													})}
 												</select>
 												<label>Make</label>
 											</div>
@@ -484,5 +493,13 @@ class InsertVehicle extends React.Component {
 	}
 }
 
-
-export default InsertVehicle;
+function mapStateToProps(store) {
+    console.log('ins', store.makeState)
+    return {
+        makes: store.makeState.makes
+    }
+}
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({ requestMakes }, dispatch);
+export default connect(mapStateToProps, mapDispatchToProps)(InsertVehicle);
+// export default InsertVehicle;

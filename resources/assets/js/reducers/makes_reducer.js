@@ -12,7 +12,6 @@ const makeReducer =  function(state = initialState, action) {
         case types.REQUEST_MAKES: 
             return {...state, fetching: true};
            
-        case types.REQUEST_SUBMIT:   
             // return {...state, fetching: true};
             // console.log('action', action)
             // return  Object.assign({}, state, {
@@ -27,9 +26,8 @@ const makeReducer =  function(state = initialState, action) {
 
         case types.ADD_MAKES_SUCCESS:
             console.log('action', action)
-            // console.log('ini', initialState)
             return  Object.assign({}, state, {
-                makes:[...state, action.resp],
+                makes:  [...makes, action.resp],
                 message: action.message
             })
             // return {...state, fetching: true};
