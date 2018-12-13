@@ -13,6 +13,7 @@ export function requestSubmitMake(values) {
         values
     }
 }
+
 export function requestFailed() {
     return {
         type: types.REQUEST_FAILED
@@ -24,7 +25,18 @@ export function getMakesSuccess(makes) {
         makes
     }
 }
-
+export function requestMakesPages(pageNumber) {
+    return {
+        type: types.REQUEST_MAKES_PAGES,
+        pageNumber
+    }
+}
+export function getMakesPages(makes) {
+    return {
+        type: types.GET_MAKES_PAGES,
+        makes
+    }
+}
 export function addMakesSuccess(values, message) {
     return {
         type: types.ADD_MAKES_SUCCESS,

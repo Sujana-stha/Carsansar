@@ -39,6 +39,7 @@ class MakesList extends Component {
         this.setState({showItem: null})
     }
     render() {
+        console.log('tab', this.props.makes)
     return (
         <tbody>
             {

@@ -17,6 +17,25 @@ function* MakeSaga() {
     yield put({type: types.GET_MAKES_SUCCESS, makes});
 }
 
+// Get Makes pagination in table
+function* MakesPagesWatcher() {
+    yield takeLatest(types.REQUEST_MAKES_PAGES, callMakesPages)
+}
+function* callMakesPages(action) {
+    console.log('acti', action);
+    const result =  yield call(api.getMakesPages, action.pageNumber);
+    console.log('res', result);
+    const resp = result.data
+    if (result.errors) {
+        yield put({ type: types.REQUEST_FAILED, errors: result.error});
+        error = result.error;
+        console.log('err', error)
+    } else {
+        yield put({type: types.GET_MAKES_PAGES, resp});
+    }
+}
+
+
 // Submit form data of makes
 function* submitSaga() {
     yield takeLatest(types.REQUEST_SUBMIT, callSubmit)
@@ -87,6 +106,7 @@ export function* rootSaga() {
         fork(MakeWatcher),
         fork(submitSaga),
         fork(editSaga),
-        fork(deleteSaga)
+        fork(deleteSaga),
+        fork(MakesPagesWatcher)
     ]
 }

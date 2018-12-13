@@ -9,7 +9,9 @@ class MakesController extends Controller
 {
     public function index()
     {
-        return Make::all();
+        
+        $make = Make::paginate(3);
+        return $make;
     }
  
     public function show(Make $make)

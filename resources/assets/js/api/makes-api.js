@@ -13,7 +13,9 @@ export function getMakes() {
     //     return response;
     // })
 }
-
+export function getMakesPages(pageNumber) {
+    return axios.get(`${URL}/api/makes?page=${pageNumber}`)
+}
 export function addMakes(values) {
     console.log('val',values);
     values.created_by = 1;

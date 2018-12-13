@@ -4,7 +4,11 @@ import _ from 'lodash';
 const initialState = {
     makes: [],
     fetching: false,
-    message: ''
+    message: '',
+    activePage: 1,
+    itemsCountPerPage: 3,
+    totalItemsCount: 1,
+    pageRangeDisplayed: 3
 }
 
 const makeReducer =  function(state = initialState, action) {
@@ -18,12 +22,23 @@ const makeReducer =  function(state = initialState, action) {
             //     makes:[...state, action.values]
             // })
         case types.GET_MAKES_SUCCESS:
-            console.log('actionlist', action);
+            // console.log('actionlist', action);
             return Object.assign({}, state, {
-                makes: action.makes,
-                fetching: false
+                makes: action.makes.data,
+                fetching: false,
+                itemsCountPerPage: action.makes.per_page,
+                totalItemsCount: action.makes.total,
+                activePage: action.makes.current_page
             })
-
+        
+        case types.GET_MAKES_PAGES:
+            console.log('actpage', action);
+            return Object.assign({}, state, {
+                makes: action.resp.data,
+                itemsCountPerPage: action.resp.per_page,
+                totalItemsCount: action.resp.total,
+                activePage: action.resp.current_page
+            })
         case types.ADD_MAKES_SUCCESS:
             console.log('action', action)
             return  Object.assign({}, state, {

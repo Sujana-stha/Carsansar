@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
+import Pagination from "react-js-pagination";
 // import * as makeAction from '../../actions/makes-action';
+import axios from 'axios';
 // import * as makeApi from '../../api/makes-api';
 import MakesList from '../../components/makes/makes';
 import store from '../../store';
-import { requestMakes, requestDeleteMakes, requestSubmitMake } from  '../../actions/makes-action';
+import { requestMakes, requestDeleteMakes, requestSubmitMake, requestMakesPages } from  '../../actions/makes-action';
 import { bindActionCreators } from 'redux';
 
 
@@ -16,8 +18,10 @@ class MakesListContainer extends Component {
     constructor() {
         super();
         this.state= {
-            hide: true
+            hide: true,
+            
         }
+        this.handlePageChange = this.handlePageChange.bind(this)
     }
     hideMessage (e) {
         e.preventDefault();
@@ -37,8 +41,22 @@ class MakesListContainer extends Component {
     deleteMakeAction(makeId) {
         this.props.requestDeleteMakes(makeId);
     }
+    handlePageChange(pageNumber) {
+        console.log(`active page is ${pageNumber}`);
+        this.props.requestMakesPages(pageNumber)
+        // this.setState({activePage: pageNumber});
+        // axios.get('http://127.0.0.1:8000/api/makes?page='+pageNumber)
+        // .then(response => {
+        //     this.setState({
+        //         itemsCountPerPage: response.data.per_page,
+        //         totalItemsCount: response.data.total,
+        //         activePage: response.data.current_page
+        //     })
+        // })
+    }
     
     render() {
+        console.log('prop', this.props.makes)
         return (
             <div>
                 {this.props.message.trim().length && this.state.hide ? (
@@ -82,17 +100,33 @@ class MakesListContainer extends Component {
                         </tbody>
                     )}
                 </table>
+                <div className="col s12 mt-2 mb-2 left-align">
+                    <Pagination
+                    activePage={this.props.activePage}
+                    itemsCountPerPage={this.props.itemsCountPerPage}
+                    totalItemsCount={this.props.totalItemsCount}
+                    pageRangeDisplayed={this.props.pageRangeDisplayed}
+                    onChange={this.handlePageChange}
+                    firstPageText='First'
+                    lastPageText='Last'
+                    />
+                </div>
             </div>
         );
     }
 };
 
 function mapStateToProps(store) {
+    console.log('sss', store.makeState)
     return {
         makes: store.makeState.makes,
-        message: store.makeState.message
+        message: store.makeState.message,
+        activePage: store.makeState.activePage,
+        itemsCountPerPage: store.makeState.itemsCountPerPage,
+        totalItemsCount: store.makeState.totalItemsCount,
+        pageRangeDisplayed: store.makeState.pageRangeDisplayed
     }
 }
 // const mapDispatchToProps = dispatch =>
 //   bindActionCreators({ requestMakes, requestDeleteMakes, requestSubmitMakes }, dispatch);
-export default connect(mapStateToProps, {requestMakes, requestDeleteMakes, requestSubmitMake})(MakesListContainer);
+export default connect(mapStateToProps, {requestMakes, requestMakesPages, requestDeleteMakes, requestSubmitMake})(MakesListContainer);
