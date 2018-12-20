@@ -3,7 +3,7 @@ import { Field, reduxForm } from 'redux-form';
 import store from '../../store';
 
 
-class MakeForm extends Component {
+class ModelForm extends Component {
     renderInputField({input, label, type, meta: {touched, error}}) {
         return (
             <div>
@@ -24,14 +24,14 @@ class MakeForm extends Component {
         const { handleSubmit } = this.props;
         return (
             <div>
-                <h4 className="header2">Add New Make</h4>
+                <h4 className="header2">Add New Model</h4>
 
                 <div className="card-panel">
 					<div className="row">
                         <form className="col s12" onSubmit= { handleSubmit  } >
                             <Field 
                                 label="Make Desciption"
-                                name="make_desc"
+                                name="model_desc"
                                 type="text"
                                 component={this.renderInputField} 
                             />
@@ -53,8 +53,8 @@ class MakeForm extends Component {
 
 function validate(values) {
     const errors = {}
-    if(!values.make_desc) {
-        errors.make_desc = "The Field is empty"
+    if(!values.model_desc) {
+        errors.model_desc = "The Field is empty"
     }
     return errors;
 }
@@ -62,5 +62,5 @@ function validate(values) {
 
 export default reduxForm({
     validate,
-    form: 'PostMakes'
-})(MakeForm);
+    form: 'PostModels'
+})(ModelForm);

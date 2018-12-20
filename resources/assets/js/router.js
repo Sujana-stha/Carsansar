@@ -31,9 +31,7 @@ import VehicleAttributes from './components/vehicles/vehicle-attributes'
 import ColorListContainer from './containers/color/color-container'
 import InsertColor from './containers/color/insert-color-container'
 import MakesListContainer from './containers/makes/makes-container'
-// import MakeForm from './containers/makes/create'
-import MakeForm from './containers/makes/makes-form'
-import EditMake from './components/makes/makes-edit';
+import ModelListContainer from './containers/model/model-container'
 
 export default (
   
@@ -65,7 +63,8 @@ export default (
 							<Route path="/user-profile" component={UserProfile}></Route>
 							<Route path="/makes" component={MakesListContainer}></Route>
 							{/* <Route path="/add-make" component={MakeForm}></Route> */}
-							<Route path="/edit-make/:id" component={EditMake}/>
+							{/* <Route path="/edit-make/:id" component={EditMake}/> */}
+							<Route path="/models" component={ModelListContainer}></Route>
  					</div>
             
           

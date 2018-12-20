@@ -1,18 +1,18 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Pagination from "react-js-pagination";
-import MakesList from '../../components/makes/makes';
+import ModelList from '../../components/models/models';
 import store from '../../store';
-import { requestMakes, requestDeleteMakes, requestSubmitMake, requestMakesPages,requestUpdateMakes } from  '../../actions/makes-action';
+import { requestModel, requestModelPages, requestDeleteModel, requestSubmitModel, requestUpdateModel } from  '../../actions/model-action';
 
 
 //COMPONENT
-import MakeForm from './makes-form';
-import EditMake from '../../components/makes/makes-edit';
+import ModelForm from '../../components/models/models-form';
+import EditModel from '../../components/models/models-edit';
 
 var globalId = null
 
-class MakesListContainer extends Component {
+class ModelsListContainer extends Component {
     constructor() {
         super();
         this.state= {
@@ -20,7 +20,7 @@ class MakesListContainer extends Component {
             isEditing: false
         }
         this.handlePageChange = this.handlePageChange.bind(this)
-        this.editMakes = this.editMakes.bind(this)
+        this.editModels = this.editModels.bind(this)
     }
 
     hideMessage (e) {
@@ -32,20 +32,20 @@ class MakesListContainer extends Component {
 
     componentDidMount() {
         // call action to run the relative saga
-        this.props.requestMakes();
+        this.props.requestModel();
     }
 
     // submit function for new data
-    submitMake(values) {
-        this.props.requestSubmitMake(values);
+    submitModel(values) {
+        this.props.requestSubmitModel(values);
         this.setState ({
             hide: true
         })
     }
 
     // submit function to update data
-    submitEditMake(values) {
-        this.props.requestUpdateMakes(values);
+    submitEditModel(values) {
+        this.props.requestUpdateModel(values);
         this.setState({
             isEditing : false,
             hide: true
@@ -53,7 +53,7 @@ class MakesListContainer extends Component {
     }
 
     //function to call form of edit
-    editMakes(values) {
+    editModels(values) {
         globalId = values
         this.setState ({
             isEditing : true
@@ -61,19 +61,19 @@ class MakesListContainer extends Component {
         
     }
 
-    deleteMakeAction(makeId) {
-        this.props.requestDeleteMakes(makeId);
+    deleteModelAction(modelId) {
+        this.props.requestDeleteModel(modelId);
     }
 
     // pagination function
     handlePageChange(pageNumber) {
         console.log(`active page is ${pageNumber}`);
-        this.props.requestMakesPages(pageNumber)
+        this.props.requestModelPages(pageNumber)
         
     }
     
     render() {
-        console.log('prop', this.props.makes)
+        console.log('prop', this.props.models)
         return (
             <div>
                 {this.props.message.trim().length && this.state.hide ? (
@@ -93,9 +93,9 @@ class MakesListContainer extends Component {
                 <div className="row">
                     <div className="col s12 m3 l3">
                         {this.state.isEditing ? (
-                            <EditMake onSubmit = {this.submitEditMake.bind(this)} editId = {globalId} />
+                            <EditModel onSubmit = {this.submitEditModel.bind(this)} editId = {globalId} />
                         ): (
-                            <MakeForm onSubmit = { this.submitMake.bind(this) }/>
+                            <ModelForm onSubmit = { this.submitModel.bind(this) }/>
                         )}
                        
                     </div>
@@ -110,8 +110,8 @@ class MakesListContainer extends Component {
                                     <th>Status</th>
                                 </tr>
                             </thead>
-                            {this.props.makes.length ? (
-                                <MakesList makes= {this.props.makes} onEdit = {this.editMakes} deleteMake = {this.props.requestDeleteMakes}/>
+                            {this.props.models.length ? (
+                                <MakesList models= {this.props.models} onEdit = {this.editModels} deleteModel = {this.props.requestDeleteModel}/>
 
                             ) : (
                                 <tbody>
@@ -141,13 +141,13 @@ class MakesListContainer extends Component {
 
 function mapStateToProps(store) {
     return {
-        makes: store.makeState.makes,
-        message: store.makeState.message,
-        activePage: store.makeState.activePage,
-        itemsCountPerPage: store.makeState.itemsCountPerPage,
-        totalItemsCount: store.makeState.totalItemsCount,
-        pageRangeDisplayed: store.makeState.pageRangeDisplayed,
+        models: store.modelState.models,
+        message: store.modelState.message,
+        activePage: store.modelState.activePage,
+        itemsCountPerPage: store.modelState.itemsCountPerPage,
+        totalItemsCount: store.modelState.totalItemsCount,
+        pageRangeDisplayed: store.modelState.pageRangeDisplayed,
     }
 }
 
-export default connect(mapStateToProps, {requestMakes, requestMakesPages, requestDeleteMakes, requestSubmitMake, requestUpdateMakes})(MakesListContainer);
+export default connect(mapStateToProps, {requestModel, requestModelPages, requestDeleteModel, requestSubmitModel, requestUpdateModel })(ModelsListContainer);

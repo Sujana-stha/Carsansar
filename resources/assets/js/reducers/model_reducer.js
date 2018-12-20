@@ -2,7 +2,7 @@ import * as types from '../actions/action-types';
 import _ from 'lodash';
 
 const initialState = {
-    makes: [],
+    models: [],
     fetching: false,
     message: '',
     activePage: 1,
@@ -11,50 +11,50 @@ const initialState = {
     pageRangeDisplayed: 3,
 }
 
-const makeReducer =  function(state = initialState, action) {
+const modelReducer =  function(state = initialState, action) {
     switch(action.type) {
-        case types.REQUEST_MAKES: 
+        case types.REQUEST_MODEL: 
             return {...state, fetching: true};
            
-        case types.GET_MAKES_SUCCESS:
+        case types.GET_MODEL_SUCCESS:
             return Object.assign({}, state, {
-                makes: action.makes.data,
+                models: action.models.data,
                 fetching: false,
-                itemsCountPerPage: action.makes.per_page,
-                totalItemsCount: action.makes.total,
-                activePage: action.makes.current_page
+                itemsCountPerPage: action.models.per_page,
+                totalItemsCount: action.models.total,
+                activePage: action.models.current_page
             })
         
-        case types.GET_MAKES_PAGES:
+        case types.GET_MODEL_PAGES:
             return Object.assign({}, state, {
-                makes: action.resp.data,
+                models: action.resp.data,
                 itemsCountPerPage: action.resp.per_page,
                 totalItemsCount: action.resp.total,
                 activePage: action.resp.current_page
             })
 
-        case types.ADD_MAKES_SUCCESS:
+        case types.ADD_MODEL_SUCCESS:
             return  Object.assign({}, state, {
-                makes:  [...state.makes],
+                models:  [...state.models],
                 message: action.message
             })
         
-        case types.UPDATE_MAKES_SUCCESS:
+        case types.UPDATE_MODEL_SUCCESS:
             return {
                 ...state, 
-                makes: state.makes.map(make => {
-                    if (make.id === action.resp.id) {
+                models: state.models.map(model => {
+                    if (model.id === action.resp.id) {
                     return action.resp;
                     }
-                    return make;
+                    return model;
                 }),
                 message: action.message
             };
         
-        case types.DELETE_MAKES_SUCCESS:
-            const newMake = _.filter(state.makes, make => make.id !== action.makeId);
+        case types.DELETE_MODEL_SUCCESS:
+            const newModel = _.filter(state.models, model => model.id !== action.modelId);
             return Object.assign({}, state, {
-                makes: newMake,
+                models: newModel,
                 message: action.message
             });
 
@@ -63,4 +63,4 @@ const makeReducer =  function(state = initialState, action) {
     }
 }
 
-export default makeReducer;
+export default modelReducer;

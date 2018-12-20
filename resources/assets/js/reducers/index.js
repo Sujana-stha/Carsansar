@@ -6,15 +6,14 @@ import { connectRouter } from 'connected-react-router'
 //REDUCER
 import colorReducer from './colors_reducer';
 import makeReducer from './makes_reducer';
+import modelReducer from './model_reducer'
 
 const rootReducer = (history) => combineReducers({
     colorState: colorReducer,
     makeState: makeReducer,
+    modelState: modelReducer,
     form: formReducer,
     router: connectRouter(history),
-    // makeList: createPaginator({
-    //     listId: 'makeList'
-    // })
 });
 
 export default rootReducer;

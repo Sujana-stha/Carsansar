@@ -59,10 +59,9 @@ export function deleteMakesSuccess(makeId, message) {
     }
 }
 
-export function requestUpdateMakes(makeId, values) {
+export function requestUpdateMakes( values) {
     return {
         type: types.REQUEST_UPDATE,
-        makeId,
         values
     }
 }

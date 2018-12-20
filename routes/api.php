@@ -117,15 +117,15 @@ Route::delete('makes/{make}', 'MakesController@delete');
 
 //models
 
-Route::get('models', 'ModelsController@index');
+Route::get('models', 'VehicleModelsController@index');
  
-Route::get('models/{model}', 'ModelsController@show');
+Route::get('models/{model}', 'VehicleModelsController@show');
  
-Route::post('models','ModelsController@store');
+Route::post('models','VehicleModelsController@store');
  
-Route::put('models/{model}','ModelsController@update');
+Route::put('models/{model}','VehicleModelsController@update');
  
-Route::delete('models/{model}', 'ModelsController@delete');
+Route::delete('models/{model}', 'VehicleModelsController@delete');
 
 //options
 

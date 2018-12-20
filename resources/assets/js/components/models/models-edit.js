@@ -2,25 +2,25 @@ import React, { Component } from 'react';
 import store from '../../store';
 import { Field, reduxForm } from 'redux-form';
 import {connect} from 'react-redux';
-import * as makeApi from '../../api/makes-api';
+import * as modelApi from '../../api/model-api';
 
 
 var globalData = null;
 
 
-class EditMake extends Component {
+class EditModel extends Component {
     componentDidMount() {
         this.handleInitialize();
-        makeApi.getMakes();
+        modelApi.getModel();
     }
     
     handleInitialize() {
         const id = this.props.editId;
         
-        console.log('length',this.props.makes[0].id);
-        for (var i = 0; i < this.props.makes.length; i++ ) {
-            if(this.props.makes[i].id == id) {
-                globalData = this.props.makes[i]
+        console.log('length',this.props.models[0].id);
+        for (var i = 0; i < this.props.models.length; i++ ) {
+            if(this.props.models[i].id == id) {
+                globalData = this.props.models[i]
             }
         }
         this.props.initialize(globalData);
@@ -46,13 +46,13 @@ class EditMake extends Component {
         return (
             <div>
                 
-                <h4 className="header2">Update Make</h4>
+                <h4 className="header2">Update Model</h4>
                 <div className="card-panel">
 					<div className="row">
                         <form className="col s12" onSubmit= { handleSubmit  }>
                         <Field 
                             label="Make Desciption"
-                            name="make_desc"
+                            name="model_desc"
                             type="text"
                             component={this.renderInputField} 
                         />
@@ -74,18 +74,18 @@ class EditMake extends Component {
 function validate(values) {
     const errors = {}
 
-    if(!values.make_desc) {
-        errors.make_desc = "The Field is empty"
+    if(!values.model_desc) {
+        errors.model_desc = "The Field is empty"
     }
     
     return errors;
 }
 function mapStateToProps(store) {
     return {
-        makes: store.makeState.makes
+        models: store.modelState.models
     }
 }
 export default reduxForm({
     validate,
-    form: 'EditMakes'
-})(connect(mapStateToProps, null)(EditMake));
+    form: 'EditModels'
+})(connect(mapStateToProps, null)(EditModel));

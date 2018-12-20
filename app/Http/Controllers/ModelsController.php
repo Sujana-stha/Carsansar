@@ -3,35 +3,35 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Model;
+use App\VehicleModel;
 
-class ModelsController extends Controller
+class VehicleModelsController extends Controller
 {
     public function index()
     {
-        return Model::all();
+        return VehicleModel::all();
     }
  
-    public function show(Model $model)
+    public function show(VehicleModel $model)
     {
         return $model;
     }
  
     public function store(Request $request)
     {
-        $model = Model::create($request->all());
+        $model = VehicleModel::create($request->all());
  
         return response()->json($model, 201);
     }
  
-    public function update(Request $request, Model $model)
+    public function update(Request $request, VehicleModel $model)
     {
         $model->update($request->all());
  
         return response()->json($model, 200);
     }
  
-    public function delete(Model $model)
+    public function delete(VehicleModel $model)
     {
         $model->delete();
  
