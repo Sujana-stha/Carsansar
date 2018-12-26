@@ -50,7 +50,18 @@ const makeReducer =  function(state = initialState, action) {
                 }),
                 message: action.message
             };
-        
+        case types.MAKES_STATUS_SUCCESS:
+          console.log('tion', action)
+            return {
+                ...state,
+                makes: state.makes.map(make => {
+                    if(make.id === action.resp.id) {
+                        return action.resp;
+                    }
+                    return make;
+                }),
+                message: action.message
+            }
         case types.DELETE_MAKES_SUCCESS:
             const newMake = _.filter(state.makes, make => make.id !== action.makeId);
             return Object.assign({}, state, {

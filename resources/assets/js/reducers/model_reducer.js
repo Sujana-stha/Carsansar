@@ -50,7 +50,18 @@ const modelReducer =  function(state = initialState, action) {
                 }),
                 message: action.message
             };
-        
+        case types.MODEL_STATUS_SUCCESS:
+            console.log('tion', action)
+            return {
+                ...state,
+                models: state.models.map(model => {
+                    if(model.id === action.resp.id) {
+                        return action.resp;
+                    }
+                    return model;
+                }),
+                message: action.message
+            }
         case types.DELETE_MODEL_SUCCESS:
             const newModel = _.filter(state.models, model => model.id !== action.modelId);
             return Object.assign({}, state, {

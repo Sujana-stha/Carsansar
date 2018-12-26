@@ -1,18 +1,18 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Pagination from "react-js-pagination";
-import ModelList from '../../components/models/models';
+import OptionCategoryList from '../../components/OptionCategory/optionCategory';
 import store from '../../store';
-import { requestModel, requestModelPages, requestDeleteModel, requestSubmitModel, requestUpdateModel, requestModelStatus } from  '../../actions/model-action';
+import { requestOptionCategories, requestOptionCategoriesPages, requestDeleteOptionCategories, requestSubmitOptionCategories, requestUpdateOptionCategories, requestOptionCategoriesStatus } from  '../../actions/option_cat-action';
 
 
 //COMPONENT
-import ModelForm from '../../components/models/models-form';
-import EditModel from '../../components/models/models-edit';
+import OptionCategoryForm from '../../components/OptionCategory/optionCategory-form';
+import EditOptionCategory from '../../components/OptionCategory/optionCategory-edit';
 
 var globalId = null
 
-class ModelsListContainer extends Component {
+class OptionCategoryListContainer extends Component {
     constructor() {
         super();
         this.state= {
@@ -20,7 +20,7 @@ class ModelsListContainer extends Component {
             isEditing: false
         }
         this.handlePageChange = this.handlePageChange.bind(this)
-        this.editModels = this.editModels.bind(this)
+        this.editOptionCategory = this.editOptionCategory.bind(this)
     }
 
     hideMessage (e) {
@@ -32,20 +32,20 @@ class ModelsListContainer extends Component {
 
     componentDidMount() {
         // call action to run the relative saga
-        this.props.requestModel();
+        this.props.requestOptionCategories();
     }
 
     // submit function for new data
-    submitModel(values) {
-        this.props.requestSubmitModel(values);
+    submitOptionCategory(values) {
+        this.props.requestSubmitOptionCategories(values);
         this.setState ({
             hide: true
         })
     }
 
     // submit function to update data
-    submitEditModel(values) {
-        this.props.requestUpdateModel(values);
+    submitEditOptionCategory(values) {
+        this.props.requestUpdateOptionCategories(values);
         this.setState({
             isEditing : false,
             hide: true
@@ -53,7 +53,7 @@ class ModelsListContainer extends Component {
     }
 
     //function to call form of edit
-    editModels(values) {
+    editOptionCategory(values) {
         globalId = values
         this.setState ({
             isEditing : true
@@ -61,26 +61,25 @@ class ModelsListContainer extends Component {
         
     }
 
-    deleteModelAction(modelId) {
-        this.props.requestDeleteModel(modelId);
+    deleteOptionCategoryAction(optCatId) {
+        this.props.requestDeleteOptionCategories(optCatId);
     }
 
     // pagination function
     handlePageChange(pageNumber) {
         console.log(`active page is ${pageNumber}`);
-        this.props.requestModelPages(pageNumber)
+        this.props.requestOptionCategoriesPages(pageNumber)
         
     }
     // toggle status value
-    toggleStatus(modelId, status) {
-        const newModelStatus = {
+    toggleStatus(optCatId, status) {
+        const newOptCatStatus = {
             status: !status
         }
-        this.props.requestModelStatus(modelId, newModelStatus)
+        this.props.requestOptionCategoriesStatus(optCatId, newOptCatStatus)
     }
-
     render() {
-        console.log('prop', this.props.models)
+        console.log('prop', this.props.optionCategories)
         return (
             <div>
                 {this.props.message.trim().length && this.state.hide ? (
@@ -100,9 +99,9 @@ class ModelsListContainer extends Component {
                 <div className="row">
                     <div className="col s12 m3 l3">
                         {this.state.isEditing ? (
-                            <EditModel onSubmit = {this.submitEditModel.bind(this)} editId = {globalId} />
+                            <EditOptionCategory onSubmit = {this.submitEditOptionCategory.bind(this)} editId = {globalId} />
                         ): (
-                            <ModelForm onSubmit = { this.submitModel.bind(this) }/>
+                            <OptionCategoryForm onSubmit = { this.submitOptionCategory.bind(this) }/>
                         )}
                        
                     </div>
@@ -117,8 +116,8 @@ class ModelsListContainer extends Component {
                                     <th>Status</th>
                                 </tr>
                             </thead>
-                            {this.props.models.length ? (
-                                <ModelList models= {this.props.models} onEditModel = {this.editModels} deleteModel = {this.props.requestDeleteModel} modelStatus = {this.toggleStatus}/>
+                            {this.props.optionCategories.length ? (
+                                <OptionCategoryList optionCategories= {this.props.optionCategories} onEditOptionCategory = {this.editOptionCategory} deleteOptionCategory = {this.props.requestDeleteOptionCategories} optionCategoryStatus={this.props.toggleStatus}/>
 
                             ) : (
                                 <tbody>
@@ -148,13 +147,13 @@ class ModelsListContainer extends Component {
 
 function mapStateToProps(store) {
     return {
-        models: store.modelState.models,
-        message: store.modelState.message,
-        activePage: store.modelState.activePage,
-        itemsCountPerPage: store.modelState.itemsCountPerPage,
-        totalItemsCount: store.modelState.totalItemsCount,
-        pageRangeDisplayed: store.modelState.pageRangeDisplayed,
+        optionCategories: store.OptCatState.optionCategories,
+        message: store.OptCatState.message,
+        activePage: store.OptCatState.activePage,
+        itemsCountPerPage: store.OptCatState.itemsCountPerPage,
+        totalItemsCount: store.OptCatState.totalItemsCount,
+        pageRangeDisplayed: store.OptCatState.pageRangeDisplayed,
     }
 }
 
-export default connect(mapStateToProps, {requestModel, requestModelPages, requestDeleteModel, requestSubmitModel, requestUpdateModel })(ModelsListContainer);
+export default connect(mapStateToProps, {requestOptionCategories, requestOptionCategoriesPages, requestDeleteOptionCategories, requestSubmitOptionCategories, requestUpdateOptionCategories, requestOptionCategoriesStatus })(OptionCategoryListContainer);

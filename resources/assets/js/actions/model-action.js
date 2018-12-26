@@ -19,10 +19,10 @@ export function requestModelFailed() {
         type: types.REQUEST_MODEL_FAILED
     }
 }
-export function getModelSuccess(model) {
+export function getModelSuccess(models) {
     return {
         type: types.GET_MODEL_SUCCESS,
-        model
+        models
     }
 }
 export function requestModelPages(pageNumber) {
@@ -31,10 +31,10 @@ export function requestModelPages(pageNumber) {
         pageNumber
     }
 }
-export function getModelPages(model) {
+export function getModelPages(models) {
     return {
         type: types.GET_MODEL_PAGES,
-        model
+        models
     }
 }
 export function addModelSuccess(values, message) {
@@ -69,6 +69,23 @@ export function requestUpdateModel( values) {
 export function updateModelSuccess(modelId, values, message) {
     return {
         type: types.UPDATE_MODEL_SUCCESS,
+        values,
+        modelId,
+        message
+    }
+}
+
+export function requestModelStatus (modelId,values) {
+    return {
+        type: types.REQUEST_MODEL_STATUS,
+        values,
+        modelId  
+    }
+}
+
+export function ModelStatusSuccess (modelId, values, message) {
+    return {
+        type: types.MODEL_STATUS_SUCCESS,
         values,
         modelId,
         message

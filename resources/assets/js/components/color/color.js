@@ -18,7 +18,12 @@ export default function(props) {
                  <a className="tooltipped" data-position="top" data-delay="50" data-tooltip="Delete" href="#"><i className="material-icons">delete</i></a>
               </td>
               <td>
-                <div className="switch"><label>Inactive<input defaultChecked type="checkbox" /><span className="lever"></span>Active</label></div>
+                <div className="switch">
+                  <label>Inactive
+                    <input defaultChecked type="checkbox" />
+                    <span className="lever"></span>Active
+                  </label>
+                </div>
               </td>
                
         </tr>           

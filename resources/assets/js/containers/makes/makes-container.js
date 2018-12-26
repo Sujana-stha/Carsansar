@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Pagination from "react-js-pagination";
 import MakesList from '../../components/makes/makes';
 import store from '../../store';
-import { requestMakes, requestDeleteMakes, requestSubmitMake, requestMakesPages,requestUpdateMakes } from  '../../actions/makes-action';
+import { requestMakes, requestDeleteMakes, requestSubmitMake, requestMakesPages,requestUpdateMakes, requestMakesStatus } from  '../../actions/makes-action';
 
 
 //COMPONENT
@@ -21,6 +21,7 @@ class MakesListContainer extends Component {
         }
         this.handlePageChange = this.handlePageChange.bind(this)
         this.editMakes = this.editMakes.bind(this)
+        this.toggleStatus = this.toggleStatus.bind(this)
     }
 
     hideMessage (e) {
@@ -72,6 +73,15 @@ class MakesListContainer extends Component {
         
     }
     
+    toggleStatus (makeId, status) {
+        console.log('id', makeId)
+        console.log('val', status)
+        const newMakesStatus = {
+            status: !status
+        }
+        this.props.requestMakesStatus(makeId, newMakesStatus)
+    }
+
     render() {
         console.log('prop', this.props.makes)
         return (
@@ -111,7 +121,7 @@ class MakesListContainer extends Component {
                                 </tr>
                             </thead>
                             {this.props.makes.length ? (
-                                <MakesList makes= {this.props.makes} onEdit = {this.editMakes} deleteMake = {this.props.requestDeleteMakes}/>
+                                <MakesList makes= {this.props.makes} onEdit = {this.editMakes} deleteMake = {this.props.requestDeleteMakes} makeStatus = {this.toggleStatus}/>
 
                             ) : (
                                 <tbody>
@@ -150,4 +160,4 @@ function mapStateToProps(store) {
     }
 }
 
-export default connect(mapStateToProps, {requestMakes, requestMakesPages, requestDeleteMakes, requestSubmitMake, requestUpdateMakes})(MakesListContainer);
+export default connect(mapStateToProps, {requestMakes, requestMakesPages, requestDeleteMakes, requestSubmitMake, requestUpdateMakes, requestMakesStatus})(MakesListContainer);

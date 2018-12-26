@@ -72,6 +72,26 @@ function* callEditMake (action) {
     yield put(stopSubmit('EditMakes', error));
 }
 
+// change status value
+export function* toggleStatusSaga() {
+    yield takeLatest(types.REQUEST_MAKES_STATUS, callToggleStatus);
+}
+
+function* callToggleStatus(action) {
+    let error = {};
+    console.log('action', action)
+    const result =  yield call(api.updateMakeStatus, action.makeId, action.values);
+    const resp = result.data;
+
+    if (result.errors) {
+        yield put({ type: types.REQUEST_FAILED, errors: result.error});
+        error = result.error;
+    } else {
+        yield put({type: types.MAKES_STATUS_SUCCESS, resp, message: result.statusText});
+    }
+}
+
+
 // delete makes data from table
 export function* deleteSaga() {
     yield takeLatest(types.REQUEST_DELETE, callDeleteMake)
@@ -88,13 +108,3 @@ function* callDeleteMake(action) {
     }
 } 
 
-// //root saga containing all sagas
-// export function* rootSaga() {
-//     yield  [
-//         fork(MakeWatcher),
-//         fork(submitSaga),
-//         fork(editSaga),
-//         fork(deleteSaga),
-//         fork(MakesPagesWatcher)
-//     ]
-// }

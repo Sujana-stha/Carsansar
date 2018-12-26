@@ -74,3 +74,20 @@ export function updateMakesSuccess(makeId, values, message) {
         message
     }
 }
+
+export function requestMakesStatus (makeId,values) {
+    return {
+        type: types.REQUEST_MAKES_STATUS,
+        values,
+        makeId  
+    }
+}
+
+export function MakesStatusSuccess (makeId, values, message) {
+    return {
+        type: types.MAKES_STATUS_SUCCESS,
+        values,
+        makeId,
+        message
+    }
+}

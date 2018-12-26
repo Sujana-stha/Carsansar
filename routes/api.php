@@ -127,6 +127,18 @@ Route::put('models/{model}','VehicleModelsController@update');
  
 Route::delete('models/{model}', 'VehicleModelsController@delete');
 
+//vehicle options
+
+Route::get('vehicle-options', 'VehicleOptionsController@index');
+ 
+Route::get('vehicle-options/{vehicle_option}', 'VehicleOptionsController@show');
+ 
+Route::post('vehicle-options','VehicleOptionsController@store');
+ 
+Route::put('vehicle-options/{vehicle_option}','VehicleOptionsController@update');
+ 
+Route::delete('vehicle-options/{vehicle_option}', 'VehicleOptionsController@delete');
+
 //options
 
 Route::get('options', 'OptionsController@index');
@@ -138,6 +150,18 @@ Route::post('options','OptionsController@store');
 Route::put('options/{option}','OptionsController@update');
  
 Route::delete('options/{option}', 'OptionsController@delete');
+
+
+// option categories
+Route::get('optionsCategories', 'OptionsCategoriesController@index');
+ 
+Route::get('optionsCategories/{optionCategories}', 'OptionsCategoriesController@show');
+ 
+Route::post('optionsCategories','OptionsCategoriesController@store');
+ 
+Route::put('optionsCategories/{optionCategories}','OptionsCategoriesController@update');
+ 
+Route::delete('optionsCategories/{optionCategories}', 'OptionsCategoriesController@delete');
 
 //transmissons
 

@@ -2,25 +2,25 @@ import React, { Component } from 'react';
 import store from '../../store';
 import { Field, reduxForm } from 'redux-form';
 import {connect} from 'react-redux';
-import * as makeApi from '../../api/makes-api';
+import * as optionCatApi from '../../api/option_cat-api';
 
 
 var globalData = null;
 
 
-class EditMake extends Component {
+class EditOptionCategory extends Component {
     componentDidMount() {
         this.handleInitialize();
-        makeApi.getMakes();
+        optionCatApi.getOptionsCategories();
     }
     
     handleInitialize() {
         const id = this.props.editId;
         
-        console.log('length',this.props.makes[0].id);
-        for (var i = 0; i < this.props.makes.length; i++ ) {
-            if(this.props.makes[i].id == id) {
-                globalData = this.props.makes[i]
+        console.log('length',this.props.optionCategories[0].oc_id);
+        for (var i = 0; i < this.props.optionCategories.length; i++ ) {
+            if(this.props.optionCategories[i].oc_id == id) {
+                globalData = this.props.optionCategories[i]
             }
         }
         this.props.initialize(globalData);
@@ -46,15 +46,14 @@ class EditMake extends Component {
         return (
             <div>
                 
-                <h4 className="header2">Update Make</h4>
+                <h4 className="header2">Update Option Categories</h4>
                 <div className="card-panel">
 					<div className="row">
                         <form className="col s12" onSubmit= { handleSubmit  }>
                         <Field 
                             label="Make Desciption"
-                            name="make_desc"
+                            name="oc_desc"
                             type="text"
-                            value="make_desc"
                             component={this.renderInputField} 
                         />
                         
@@ -75,18 +74,18 @@ class EditMake extends Component {
 function validate(values) {
     const errors = {}
 
-    if(!values.make_desc) {
-        errors.make_desc = "The Field is empty"
+    if(!values.oc_desc) {
+        errors.oc_desc = "The Field is empty"
     }
     
     return errors;
 }
 function mapStateToProps(store) {
     return {
-        makes: store.makeState.makes
+        optionCategories: store.OptCatState.optionCategories
     }
 }
 export default reduxForm({
     validate,
-    form: 'EditMakes'
-})(connect(mapStateToProps, null)(EditMake));
+    form: 'EditOptionCategory'
+})(connect(mapStateToProps, null)(EditOptionCategory));

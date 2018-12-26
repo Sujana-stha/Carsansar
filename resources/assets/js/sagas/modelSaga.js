@@ -54,7 +54,7 @@ function* callModelSubmit(action) {
 
 //edit form data of makes
 export function* editModelSaga() {
-    yield takeLatest(types.REQUEST_UPDATE, callModelEdit);
+    yield takeLatest(types.REQUEST_MODEL_UPDATE, callModelEdit);
 }
 
 function* callModelEdit (action) {

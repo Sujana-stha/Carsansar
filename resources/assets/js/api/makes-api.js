@@ -31,3 +31,9 @@ export function updateMake(makeId, values) {
     return axios.put(`${URL}/api/makes/`+ makeId, values)
     .catch(error=>console.log(error));
 }
+
+// TOGGLE STATUS API
+export function updateMakeStatus (makeId, values) {
+    return axios.put(`${URL}/api/makes/`+ makeId, values)
+    .catch(error => console.log(error));
+}

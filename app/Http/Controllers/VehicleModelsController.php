@@ -9,7 +9,8 @@ class VehicleModelsController extends Controller
 {
     public function index()
     {
-        return VehicleModel::all();
+        $model = VehicleModel::paginate(3);
+        return $model;
     }
  
     public function show(VehicleModel $model)

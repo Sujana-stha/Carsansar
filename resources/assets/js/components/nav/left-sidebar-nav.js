@@ -89,6 +89,11 @@ const LeftSidebarNav = () => {
                 </li>
                 <li className="bold">
                 <NavLink to="/models" className="waves-effect waves-cyan"><i className="material-icons">keyboard_arrow_right</i><span> Models</span></NavLink>
+
+                </li>
+                <li className="bold">
+                <NavLink to="/options-categories" className="waves-effect waves-cyan"><i className="material-icons">keyboard_arrow_right</i><span> Options Categories</span></NavLink>
+                
                 </li>
                 <li className="bold">
                   <a className="collapsible-header waves-effect waves-cyan active">
