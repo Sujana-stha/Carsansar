@@ -54,13 +54,13 @@ function* callOptCatSubmit(action) {
 
 //edit form data of makes
 export function* editOptCatSaga() {
-    yield takeLatest(types.REQUEST_UPDATE, callEditOptCat);
+    yield takeLatest(types.REQUEST_OPT_CAT_UPDATE, callEditOptCat);
 }
 
 function* callEditOptCat (action) {
     yield put(startSubmit('EditOptionCategory'));
     let error = {};
-    const result =  yield call(api.updateOptionsCategories, action.values.id, action.values);
+    const result =  yield call(api.updateOptionsCategories, action.values.oc_id, action.values);
     const resp = result.data;
 
     if (result.errors) {

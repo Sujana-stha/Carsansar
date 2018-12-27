@@ -40,11 +40,12 @@ const optionCategoriesReducer =  function(state = initialState, action) {
             })
         
         case types.UPDATE_OPT_CAT_SUCCESS:
+            console.log('op', action)
             return {
                 ...state, 
                 optionCategories: state.optionCategories.map(optionCategory => {
-                    if (optionCategory.oc_id === action.resp.id) {
-                    return action.resp;
+                    if (optionCategory.oc_id === action.resp.oc_id) {
+                        return action.resp;
                     }
                     return optionCategory;
                 }),

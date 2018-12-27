@@ -7,13 +7,15 @@ import { connectRouter } from 'connected-react-router'
 import colorReducer from './colors_reducer';
 import makeReducer from './makes_reducer';
 import modelReducer from './model_reducer';
-import optionCatReducer from './optionCat_reducer'
+import optionCatReducer from './optionCat_reducer';
+import categoriesReducer from './categories_reducer';
 
 const rootReducer = (history) => combineReducers({
     colorState: colorReducer,
     makeState: makeReducer,
     modelState: modelReducer,
     OptCatState: optionCatReducer,
+    categoryState: categoriesReducer,
     form: formReducer,
     router: connectRouter(history),
 });

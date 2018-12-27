@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import { NavLink } from 'react-router-dom';
 
 var makeId = null
 
@@ -63,7 +62,12 @@ class MakesList extends Component {
                             <td>
                                 <div className="switch">
                                     <label>Inactive
-                                        <input onClick = {()=> this.props.makeStatus(make.id, make.status) } defaultChecked type="checkbox" value={make.status}/>
+                                        {make.status== 1 ? (
+                                            <input onClick = {()=> this.props.makeStatus(make.id, make.status) } defaultChecked type="checkbox" value={make.status}/>
+
+                                        ):
+                                            <input onClick = {()=> this.props.makeStatus(make.id, make.status) }  type="checkbox" value={make.status}/>
+                                        }
                                         <span className="lever"></span>Active
                                     </label>
                                 </div>

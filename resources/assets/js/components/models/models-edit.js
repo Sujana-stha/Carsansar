@@ -31,7 +31,7 @@ class EditModel extends Component {
                 <div className="row">
 					<div className="input-field col s12">
                         <input type={type} {...input}/>
-                        <label>{label}</label>
+                        <label className="active">{label}</label>
                         <div className="error">
                             {touched ? error: ''}
                         </div>

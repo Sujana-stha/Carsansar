@@ -56,7 +56,12 @@ class OptionCategoryList extends Component {
                             <td>
                                 <div className="switch">
                                     <label>Inactive
-                                        <input onClick = {()=> this.props.optionCategoryStatus(optionCategory.id, optionCategory.status) } defaultChecked type="checkbox" value={optionCategory.status}/>
+                                        {optionCategory.status== 1 ? (
+                                            <input onClick = {()=> this.props.optionCategoryStatus(optionCategory.oc_id, optionCategory.status) } defaultChecked type="checkbox" value={optionCategory.status}/>
+
+                                        ):
+                                            <input onClick = {()=> this.props.optionCategoryStatus(optionCategory.oc_id, optionCategory.status) }  type="checkbox" value={optionCategory.status}/>
+                                        }
                                         <span className="lever"></span>Active
                                     </label>
                                 </div>

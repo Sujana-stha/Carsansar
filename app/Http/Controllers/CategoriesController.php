@@ -8,8 +8,9 @@ use App\Category;
 class CategoriesController extends Controller
 {
     public function index()
-    {
-        return Category::all();
+    {   
+        $category = Category::paginate(3);
+        return $category;
     }
  
     public function show(Category $category)

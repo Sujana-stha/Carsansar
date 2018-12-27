@@ -5,7 +5,7 @@ import * as api from '../api/model-api';
 import * as modelAction from '../actions/model-action'
 
 
-//Get makes data in table
+//Get models data in table
 export function* ModelWatcher() {
     yield takeLatest(types.REQUEST_MODEL, ModelSaga)
 }
@@ -15,7 +15,7 @@ function* ModelSaga() {
     yield put({type: types.GET_MODEL_SUCCESS, models});
 }
 
-// Get Makes pagination in table
+// Get Models pagination in table
 export function* ModelPagesWatcher() {
     yield takeLatest(types.REQUEST_MODEL_PAGES, callModelPages)
 }
@@ -32,7 +32,7 @@ function* callModelPages(action) {
 }
 
 
-// Submit form data of makes
+// Submit form data of models
 export function* submitModelSaga() {
     yield takeLatest(types.REQUEST_MODEL_SUBMIT, callModelSubmit)
 }
@@ -52,7 +52,7 @@ function* callModelSubmit(action) {
     yield put(stopSubmit('PostModels', error));
 }
 
-//edit form data of makes
+//edit form data of models
 export function* editModelSaga() {
     yield takeLatest(types.REQUEST_MODEL_UPDATE, callModelEdit);
 }
@@ -71,6 +71,26 @@ function* callModelEdit (action) {
     }
     yield put(stopSubmit('EditModels', error));
 }
+
+// change status value
+export function* toggleModelsStatusSaga() {
+    yield takeLatest(types.REQUEST_MODEL_STATUS, callModelToggleStatus);
+}
+
+function* callModelToggleStatus(action) {
+    let error = {};
+    console.log('action', action)
+    const result =  yield call(api.updateModel, action.modelId, action.values);
+    const resp = result.data;
+
+    if (result.errors) {
+        yield put({ type: types.REQUEST_MODEL_FAILED, errors: result.error});
+        error = result.error;
+    } else {
+        yield put({type: types.MODEL_STATUS_SUCCESS, resp, message: result.statusText});
+    }
+}
+
 
 // delete makes data from table
 export function* deleteModelSaga() {

@@ -1,18 +1,19 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Pagination from "react-js-pagination";
-import OptionCategoryList from '../../components/OptionCategory/optionCategory';
+import MakesList from '../../components/categories/categories';
 import store from '../../store';
-import { requestOptionCategories, requestOptionCategoriesPages, requestDeleteOptionCategories, requestSubmitOptionCategories, requestUpdateOptionCategories, requestOptionCategoriesStatus } from  '../../actions/option_cat-action';
+import { requestCategories, requestDeleteCategories, requestSubmitCategories, requestCategoriesPages,requestUpdateCategories, requestCategoriesStatus } from  '../../actions/categories-action';
 
 
 //COMPONENT
-import OptionCategoryForm from '../../components/OptionCategory/optionCategory-form';
-import EditOptionCategory from '../../components/OptionCategory/optionCategory-edit';
+import CategoryForm from '../../components/categories/categories-form';
+import EditCategory from '../../components/categories/categories-edit';
+import CategoriesList from '../../components/categories/categories';
 
 var globalId = null
 
-class OptionCategoryListContainer extends Component {
+class CategoriesListContainer extends Component {
     constructor() {
         super();
         this.state= {
@@ -20,9 +21,8 @@ class OptionCategoryListContainer extends Component {
             isEditing: false
         }
         this.handlePageChange = this.handlePageChange.bind(this)
-        this.editOptionCategory = this.editOptionCategory.bind(this)
+        this.editCategories = this.editCategories.bind(this)
         this.toggleStatus = this.toggleStatus.bind(this)
-
     }
 
     hideMessage (e) {
@@ -34,21 +34,20 @@ class OptionCategoryListContainer extends Component {
 
     componentDidMount() {
         // call action to run the relative saga
-        this.props.requestOptionCategories();
+        this.props.requestCategories();
     }
 
     // submit function for new data
-    submitOptionCategory(values) {
-        this.props.requestSubmitOptionCategories(values);
+    submitCategory(values) {
+        this.props.requestSubmitCategories(values);
         this.setState ({
             hide: true
         })
     }
 
     // submit function to update data
-    submitEditOptionCategory(values) {
-        console.log('vvv', values)
-        this.props.requestUpdateOptionCategories(values);
+    submitEditCategory(values) {
+        this.props.requestUpdateCategories(values);
         this.setState({
             isEditing : false,
             hide: true
@@ -56,7 +55,7 @@ class OptionCategoryListContainer extends Component {
     }
 
     //function to call form of edit
-    editOptionCategory(values) {
+    editCategories(values) {
         globalId = values
         this.setState ({
             isEditing : true
@@ -64,25 +63,24 @@ class OptionCategoryListContainer extends Component {
         
     }
 
-    deleteOptionCategoryAction(optCatId) {
-        this.props.requestDeleteOptionCategories(optCatId);
+    deleteCategoryAction(makeId) {
+        this.props.requestDeleteCategories(categoryId);
     }
 
     // pagination function
     handlePageChange(pageNumber) {
         console.log(`active page is ${pageNumber}`);
-        this.props.requestOptionCategoriesPages(pageNumber)
+        this.props.requestCategoriesPages(pageNumber)
         
     }
-    // toggle status value
-    toggleStatus (optCatId, status) {
-        console.log('id', optCatId)
-        console.log('val', status)
-        const newOptCatStatus = {
+    
+    toggleStatus (categoryId, status) {
+        const newCategoriesStatus = {
             status: !status
         }
-        this.props.requestOptionCategoriesStatus(optCatId, newOptCatStatus)
+        this.props.requestCategoriesStatus(categoryId, newCategoriesStatus)
     }
+
     render() {
         console.log('prop', this.props)
         return (
@@ -104,9 +102,9 @@ class OptionCategoryListContainer extends Component {
                 <div className="row">
                     <div className="col s12 m3 l3">
                         {this.state.isEditing ? (
-                            <EditOptionCategory onSubmit = {this.submitEditOptionCategory.bind(this)} editId = {globalId} />
+                            <EditCategory onSubmit = {this.submitEditCategory.bind(this)} editId = {globalId} />
                         ): (
-                            <OptionCategoryForm onSubmit = { this.submitOptionCategory.bind(this) }/>
+                            <CategoryForm onSubmit = { this.submitCategory.bind(this) }/>
                         )}
                        
                     </div>
@@ -121,8 +119,8 @@ class OptionCategoryListContainer extends Component {
                                     <th>Status</th>
                                 </tr>
                             </thead>
-                            {this.props.optionCategories.length ? (
-                                <OptionCategoryList optionCategories= {this.props.optionCategories} onEditOptionCategory = {this.editOptionCategory} deleteOptionCategory = {this.props.requestDeleteOptionCategories} optionCategoryStatus={this.toggleStatus}/>
+                            {this.props.categories.length ? (
+                                <CategoriesList categories= {this.props.categories} onEditCategory = {this.editCategories} deleteCategory = {this.props.requestDeleteCategories} categoryStatus = {this.toggleStatus}/>
 
                             ) : (
                                 <tbody>
@@ -152,13 +150,13 @@ class OptionCategoryListContainer extends Component {
 
 function mapStateToProps(store) {
     return {
-        optionCategories: store.OptCatState.optionCategories,
-        message: store.OptCatState.message,
-        activePage: store.OptCatState.activePage,
-        itemsCountPerPage: store.OptCatState.itemsCountPerPage,
-        totalItemsCount: store.OptCatState.totalItemsCount,
-        pageRangeDisplayed: store.OptCatState.pageRangeDisplayed,
+        categories: store.categoryState.categories,
+        message: store.categoryState.message,
+        activePage: store.categoryState.activePage,
+        itemsCountPerPage: store.categoryState.itemsCountPerPage,
+        totalItemsCount: store.categoryState.totalItemsCount,
+        pageRangeDisplayed: store.categoryState.pageRangeDisplayed,
     }
 }
 
-export default connect(mapStateToProps, {requestOptionCategories, requestOptionCategoriesPages, requestDeleteOptionCategories, requestSubmitOptionCategories, requestUpdateOptionCategories, requestOptionCategoriesStatus })(OptionCategoryListContainer);
+export default connect(mapStateToProps, { requestCategories, requestDeleteCategories, requestSubmitCategories, requestCategoriesPages,requestUpdateCategories, requestCategoriesStatus})(CategoriesListContainer);

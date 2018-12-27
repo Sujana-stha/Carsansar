@@ -33,6 +33,7 @@ import InsertColor from './containers/color/insert-color-container'
 import MakesListContainer from './containers/makes/makes-container'
 import ModelListContainer from './containers/model/model-container'
 import OptionCategoriesContainer from './containers/optionCategories/optionCat-container'
+import CategoriesContainer from './containers/categories/categories-container'
 
 export default (
   
@@ -67,6 +68,8 @@ export default (
 							{/* <Route path="/edit-make/:id" component={EditMake}/> */}
 							<Route path="/models" component={ModelListContainer}></Route>
 							<Route path="/options-categories" component={OptionCategoriesContainer}></Route>
+							<Route path="/categories" component={CategoriesContainer}></Route>
+
 
  					</div>
             

@@ -78,8 +78,7 @@ export function updateOptionCategoriesSuccess(optCatId, values, message) {
 export function requestOptionCategoriesStatus (optCatId,values) {
     return {
         type: types.REQUEST_OPT_CAT_STATUS,
-        values,
-        optCatId  
+        optCatId, values
     }
 }
 

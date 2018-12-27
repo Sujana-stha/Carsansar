@@ -12,4 +12,6 @@ class OptionCategory extends Model
     {
         return $this->belongsTo('App\User', 'created_by', 'user_id');
     }
+    protected $table = 'option_categories';
+    protected $primaryKey ='oc_id';
 }

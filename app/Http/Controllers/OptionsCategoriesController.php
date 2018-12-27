@@ -37,7 +37,8 @@ class OptionsCategoriesController extends Controller
     public function delete(OptionCategory $optionCategories)
     {
         $optionCategories->delete();
- 
+       
         return response()->json(null, 204);
+
     }
 }
