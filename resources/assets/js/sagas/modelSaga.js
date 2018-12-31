@@ -50,6 +50,8 @@ function* callModelSubmit(action) {
         yield put({type: types.ADD_MODEL_SUCCESS, resp, message: result.statusText});
     }
     yield put(stopSubmit('PostModels', error));
+    yield put(reset('PostModels'));
+
 }
 
 //edit form data of models
@@ -70,6 +72,8 @@ function* callModelEdit (action) {
         yield put({type: types.UPDATE_MODEL_SUCCESS, resp, message: result.statusText});
     }
     yield put(stopSubmit('EditModels', error));
+    yield put(reset('EditModels'));
+
 }
 
 // change status value

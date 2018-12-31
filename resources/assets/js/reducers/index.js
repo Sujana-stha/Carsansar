@@ -9,6 +9,10 @@ import makeReducer from './makes_reducer';
 import modelReducer from './model_reducer';
 import optionCatReducer from './optionCat_reducer';
 import categoriesReducer from './categories_reducer';
+import optionReducer from './options_reducer';
+import driveReducer from './drives_reducer';
+import bodyReducer from './bodies_reducer';
+import enginesizeReducer from './enginesize_reducer';
 
 const rootReducer = (history) => combineReducers({
     colorState: colorReducer,
@@ -16,8 +20,12 @@ const rootReducer = (history) => combineReducers({
     modelState: modelReducer,
     OptCatState: optionCatReducer,
     categoryState: categoriesReducer,
+    optionState: optionReducer,
     form: formReducer,
     router: connectRouter(history),
+    driveState: driveReducer,
+    bodyState: bodyReducer,
+    enginesizeState: enginesizeReducer
 });
 
 export default rootReducer;

@@ -51,6 +51,8 @@ function* callCategoriesSubmit(action) {
         yield put({type: types.ADD_CATEGORIES_SUCCESS, resp, message: result.statusText});
     }
     yield put(stopSubmit('PostCategories', error));
+    yield put(reset('PostCategories'));
+    
 }
 
 //edit form data of makes
@@ -71,6 +73,7 @@ function* callEditCategory (action) {
         yield put({type: types.UPDATE_CATEGORIES_SUCCESS, resp, message: result.statusText});
     }
     yield put(stopSubmit('EditCategories', error));
+    yield put(reset('EditCategories'));
 }
 
 // change status value

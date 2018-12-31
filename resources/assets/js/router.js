@@ -34,6 +34,9 @@ import MakesListContainer from './containers/makes/makes-container'
 import ModelListContainer from './containers/model/model-container'
 import OptionCategoriesContainer from './containers/optionCategories/optionCat-container'
 import CategoriesContainer from './containers/categories/categories-container'
+import DrivesContainer from './containers/drives/drives-container'
+import BodiesContainer from './containers/bodies/bodies-container'
+import EnginesizesContainer from './containers/enginesizes/enginesizes-container'
 
 export default (
   
@@ -69,6 +72,9 @@ export default (
 							<Route path="/models" component={ModelListContainer}></Route>
 							<Route path="/options-categories" component={OptionCategoriesContainer}></Route>
 							<Route path="/categories" component={CategoriesContainer}></Route>
+							<Route path="/drives" component={DrivesContainer}></Route>
+							<Route path="/bodies" component={BodiesContainer}></Route>
+							<Route path="/enginesizes" component={EnginesizesContainer}></Route>
 
 
  					</div>

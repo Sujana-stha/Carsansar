@@ -2,7 +2,7 @@ import * as types from '../actions/action-types';
 import _ from 'lodash';
 
 const initialState = {
-    options: [],
+    enginesizes: [],
     fetching: false,
     message: '',
     activePage: 1,
@@ -11,61 +11,62 @@ const initialState = {
     pageRangeDisplayed: 3,
 }
 
-const optionReducer =  function(state = initialState, action) {
+const enginesizeReducer =  function(state = initialState, action) {
     switch(action.type) {
-        case types.REQUEST_OPTIONS: 
+        case types.REQUEST_ENGINESIZES: 
             return {...state, fetching: true};
            
-        case types.GET_OPTIONS_SUCCESS:
+        case types.GET_ENGINESIZES_SUCCESS:
             return Object.assign({}, state, {
-                options: action.options.data,
+                enginesizes: action.enginesizes.data,
                 fetching: false,
-                itemsCountPerPage: action.options.per_page,
-                totalItemsCount: action.options.total,
-                activePage: action.options.current_page
+                itemsCountPerPage: action.enginesizes.per_page,
+                totalItemsCount: action.enginesizes.total,
+                activePage: action.enginesizes.current_page
             })
         
-        case types.GET_OPTIONS_PAGES:
+        case types.GET_ENGINESIZES_PAGES:
             return Object.assign({}, state, {
-                options: action.resp.data,
+                enginesizes: action.resp.data,
                 itemsCountPerPage: action.resp.per_page,
                 totalItemsCount: action.resp.total,
                 activePage: action.resp.current_page
             })
 
-        case types.ADD_OPTIONS_SUCCESS:
+        case types.ADD_ENGINESIZES_SUCCESS:
             return  Object.assign({}, state, {
-                options:  [...state.options],
+                enginesizes:  [...state.enginesizes],
                 message: action.message
             })
         
-        case types.UPDATE_OPTIONS_SUCCESS:
+        case types.UPDATE_ENGINESIZES_SUCCESS:
             return {
                 ...state, 
-                options: state.options.map(option => {
-                    if (option.id === action.resp.id) {
+                enginesizes: state.enginesizes.map(enginesize => {
+                    if (enginesize.id === action.resp.id) {
                     return action.resp;
                     }
-                    return option;
+                    return enginesize;
                 }),
                 message: action.message
             };
-        case types.OPTIONS_STATUS_SUCCESS:
+        case types.ENGINESIZES_STATUS_SUCCESS:
           console.log('tion', action)
             return {
                 ...state,
-                options: state.options.map(option => {
-                    if(option.id === action.resp.id) {
+                enginesize: state.enginesizes.map(enginesize => {
+                    if(enginesize.id === action.resp.id) {
                         return action.resp;
                     }
-                    return option;
+                    return enginesize;
                 }),
                 message: action.message
             }
-        case types.DELETE_OPTIONS_SUCCESS:
-            const newOption = _.filter(state.options, option => option.id !== action.optionId);
+        case types.DELETE_ENGINESIZES_SUCCESS:
+        console.log('aa', action)
+            const newEnginesize = _.filter(state.enginesizes, enginesize => enginesize.id !== action.enginesizeId);
             return Object.assign({}, state, {
-                options: newOption,
+                enginesizes: newEnginesize,
                 message: action.message
             });
 
@@ -74,4 +75,4 @@ const optionReducer =  function(state = initialState, action) {
     }
 }
 
-export default optionReducer;
+export default enginesizeReducer;

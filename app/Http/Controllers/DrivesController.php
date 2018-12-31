@@ -9,7 +9,8 @@ class DrivesController extends Controller
 {
     public function index()
     {
-        return Drive::all();
+        $drive = Drive::paginate(3);
+        return $drive;
     }
  
     public function show(Drive $drive)

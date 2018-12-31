@@ -50,6 +50,8 @@ function* callOptCatSubmit(action) {
         yield put({type: types.ADD_OPT_CAT_SUCCESS, resp, message: result.statusText});
     }
     yield put(stopSubmit('PostOptionCategory', error));
+    yield put(reset('PostOptionCategory'));
+
 }
 
 //edit form data of makes
@@ -70,6 +72,8 @@ function* callEditOptCat (action) {
         yield put({type: types.UPDATE_OPT_CAT_SUCCESS, resp, message: result.statusText});
     }
     yield put(stopSubmit('EditOptionCategory', error));
+    yield put(reset('EditOptionCategory'));
+
 }
 
 // change status value

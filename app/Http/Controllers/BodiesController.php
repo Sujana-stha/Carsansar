@@ -9,7 +9,8 @@ class BodiesController extends Controller
 {
     public function index()
     {
-        return Body::all();
+        $body= Body::paginate(3);
+        return $body;
     }
  
     public function show(Body $body)
@@ -19,9 +20,9 @@ class BodiesController extends Controller
  
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'title' => 'required|unique:bodies|max:255',        
-        ]);
+        // $this->validate($request, [
+        //     'title' => 'required|unique:bodies|max:255',        
+        // ]);
         $body = Body::create($request->all());
  
         return response()->json($body, 201);

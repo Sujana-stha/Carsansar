@@ -2,7 +2,7 @@ import * as types from '../actions/action-types';
 import _ from 'lodash';
 
 const initialState = {
-    options: [],
+    bodies: [],
     fetching: false,
     message: '',
     activePage: 1,
@@ -11,61 +11,61 @@ const initialState = {
     pageRangeDisplayed: 3,
 }
 
-const optionReducer =  function(state = initialState, action) {
+const bodyReducer =  function(state = initialState, action) {
     switch(action.type) {
-        case types.REQUEST_OPTIONS: 
+        case types.REQUEST_BODIES: 
             return {...state, fetching: true};
            
-        case types.GET_OPTIONS_SUCCESS:
+        case types.GET_BODIES_SUCCESS:
             return Object.assign({}, state, {
-                options: action.options.data,
+                bodies: action.bodies.data,
                 fetching: false,
-                itemsCountPerPage: action.options.per_page,
-                totalItemsCount: action.options.total,
-                activePage: action.options.current_page
+                itemsCountPerPage: action.bodies.per_page,
+                totalItemsCount: action.bodies.total,
+                activePage: action.bodies.current_page
             })
         
-        case types.GET_OPTIONS_PAGES:
+        case types.GET_BODIES_PAGES:
             return Object.assign({}, state, {
-                options: action.resp.data,
+                bodies: action.resp.data,
                 itemsCountPerPage: action.resp.per_page,
                 totalItemsCount: action.resp.total,
                 activePage: action.resp.current_page
             })
 
-        case types.ADD_OPTIONS_SUCCESS:
+        case types.ADD_BODIES_SUCCESS:
             return  Object.assign({}, state, {
-                options:  [...state.options],
+                bodies:  [...state.bodies],
                 message: action.message
             })
         
-        case types.UPDATE_OPTIONS_SUCCESS:
+        case types.UPDATE_BODIES_SUCCESS:
             return {
                 ...state, 
-                options: state.options.map(option => {
-                    if (option.id === action.resp.id) {
+                bodies: state.bodies.map(body => {
+                    if (body.id === action.resp.id) {
                     return action.resp;
                     }
-                    return option;
+                    return body;
                 }),
                 message: action.message
             };
-        case types.OPTIONS_STATUS_SUCCESS:
+        case types.BODIES_STATUS_SUCCESS:
           console.log('tion', action)
             return {
                 ...state,
-                options: state.options.map(option => {
-                    if(option.id === action.resp.id) {
+                bodies: state.bodies.map(body => {
+                    if(body.id === action.resp.id) {
                         return action.resp;
                     }
-                    return option;
+                    return body;
                 }),
                 message: action.message
             }
-        case types.DELETE_OPTIONS_SUCCESS:
-            const newOption = _.filter(state.options, option => option.id !== action.optionId);
+        case types.DELETE_BODIES_SUCCESS:
+            const newBody = _.filter(state.bodies, body => body.id !== action.bodyId);
             return Object.assign({}, state, {
-                options: newOption,
+                bodies: newBody,
                 message: action.message
             });
 
@@ -74,4 +74,4 @@ const optionReducer =  function(state = initialState, action) {
     }
 }
 
-export default optionReducer;
+export default bodyReducer;

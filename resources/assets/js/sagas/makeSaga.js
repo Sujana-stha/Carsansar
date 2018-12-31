@@ -1,5 +1,5 @@
 import {takeLatest, call, put, fork, takeEvery } from 'redux-saga/effects';
-import { startSubmit, stopSubmit } from 'redux-form';
+import { startSubmit, stopSubmit, reset } from 'redux-form';
 import * as types from '../actions/action-types';
 import * as api from '../api/makes-api';
 import * as makeAction from '../actions/makes-action'
@@ -50,6 +50,7 @@ function* callSubmit(action) {
         yield put({type: types.ADD_MAKES_SUCCESS, resp, message: result.statusText});
     }
     yield put(stopSubmit('PostMakes', error));
+    yield put(reset('PostMakes'));
 }
 
 //edit form data of makes
@@ -70,6 +71,7 @@ function* callEditMake (action) {
         yield put({type: types.UPDATE_MAKES_SUCCESS, resp, message: result.statusText});
     }
     yield put(stopSubmit('EditMakes', error));
+    yield put(reset('EditMakes'));
 }
 
 // change status value

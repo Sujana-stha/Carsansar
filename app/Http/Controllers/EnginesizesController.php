@@ -9,7 +9,9 @@ class EnginesizesController extends Controller
 {
     public function index()
     {
-        return Enginesize::all();
+        // return Enginesize::all();
+        $enginesize = Enginesize::paginate(3);
+        return $enginesize;
     }
  
     public function show(Enginesize $enginesize)

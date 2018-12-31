@@ -98,6 +98,15 @@ const LeftSidebarNav = () => {
                 <NavLink to="/categories" className="waves-effect waves-cyan"><i className="material-icons">keyboard_arrow_right</i><span>Categories</span></NavLink>
                 </li>
                 <li className="bold">
+                <NavLink to="/drives" className="waves-effect waves-cyan"><i className="material-icons">keyboard_arrow_right</i><span>Drives</span></NavLink>
+                </li>
+                <li className="bold">
+                <NavLink to="/bodies" className="waves-effect waves-cyan"><i className="material-icons">keyboard_arrow_right</i><span>Bodies</span></NavLink>
+                </li>
+                <li className="bold">
+                <NavLink to="/enginesizes" className="waves-effect waves-cyan"><i className="material-icons">keyboard_arrow_right</i><span>Enginesizes</span></NavLink>
+                </li>
+                <li className="bold">
                   <a className="collapsible-header waves-effect waves-cyan active">
                     <i className="material-icons">account_circle</i>
                     <span className="nav-text">Users</span>
