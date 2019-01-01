@@ -165,14 +165,14 @@ Route::delete('optionsCategories/{optionCategories}', 'OptionsCategoriesControll
 
 //transmissons
 
-Route::get('transmissons', 'TransmissonsController@index');
+Route::get('transmissions', 'TransmissionsController@index');
  
-Route::get('transmissons/{transmisson}', 'TransmissonsController@show');
+Route::get('transmissions/{transmission}', 'TransmissionsController@show');
  
-Route::post('transmissons','TransmissonsController@store');
+Route::post('transmissions','TransmissionsController@store');
  
-Route::put('transmissons/{transmisson}','TransmissonsController@update');
+Route::put('transmissions/{transmission}','TransmissionsController@update');
  
-Route::delete('transmissons/{transmisson}', 'TransmissonsController@delete');
+Route::delete('transmissions/{transmission}', 'TransmissionsController@delete');
 
 

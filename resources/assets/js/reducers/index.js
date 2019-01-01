@@ -13,6 +13,8 @@ import optionReducer from './options_reducer';
 import driveReducer from './drives_reducer';
 import bodyReducer from './bodies_reducer';
 import enginesizeReducer from './enginesize_reducer';
+import fueltypeReducer from './fueltype_reducer';
+import transmissionReducer from './transmission_reducer'
 
 const rootReducer = (history) => combineReducers({
     colorState: colorReducer,
@@ -25,7 +27,9 @@ const rootReducer = (history) => combineReducers({
     router: connectRouter(history),
     driveState: driveReducer,
     bodyState: bodyReducer,
-    enginesizeState: enginesizeReducer
+    enginesizeState: enginesizeReducer,
+    fueltypeState: fueltypeReducer,
+    transmissionState: transmissionReducer
 });
 
 export default rootReducer;

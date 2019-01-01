@@ -9,7 +9,9 @@ class FueltypesController extends Controller
 {
     public function index()
     {
-        return Fueltype::all();
+        // return Fueltype::all();
+        $fueltype = Fueltype::paginate(3);
+        return $fueltype;
     }
  
     public function show(Fueltype $fueltype)

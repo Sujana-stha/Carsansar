@@ -9,7 +9,9 @@ class TransmissionsController extends Controller
 {
     public function index()
     {
-        return Transmission::all();
+        // return Transmission::all();
+        $transmission = Transmission::paginate(3);
+        return $transmission;
     }
  
     public function show(Transmission $transmission)

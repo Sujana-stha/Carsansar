@@ -37,6 +37,8 @@ import CategoriesContainer from './containers/categories/categories-container'
 import DrivesContainer from './containers/drives/drives-container'
 import BodiesContainer from './containers/bodies/bodies-container'
 import EnginesizesContainer from './containers/enginesizes/enginesizes-container'
+import FueltypesContainer from './containers/fueltypes/fueltypes-container'
+import TransmissionContainer from './containers/transmissions/transmission-container'
 
 export default (
   
@@ -75,7 +77,8 @@ export default (
 							<Route path="/drives" component={DrivesContainer}></Route>
 							<Route path="/bodies" component={BodiesContainer}></Route>
 							<Route path="/enginesizes" component={EnginesizesContainer}></Route>
-
+							<Route path="/fueltypes" component={FueltypesContainer}></Route>
+							<Route path="/transmissions" component={TransmissionContainer}></Route>
 
  					</div>
             
