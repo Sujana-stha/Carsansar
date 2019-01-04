@@ -16,10 +16,11 @@ class CreateEnginesizesTable extends Migration
         Schema::create('enginesizes', function (Blueprint $table) {
             $table->increments('id');
             $table->string('enginesize_desc',30);
-            $table->tinyInteger('status');
+            $table->tinyInteger('status')->default('1');
             $table->integer('created_by');
-            $table->integer('updated_by');
-            $table->timestamps();
+            $table->integer('updated_by')->nullable();
+            $table->timestamp('created_at');
+            $table->timestamp('updated_at')->nullable();
         });
     }
 

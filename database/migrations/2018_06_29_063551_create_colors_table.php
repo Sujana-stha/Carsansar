@@ -14,13 +14,14 @@ class CreateColorsTable extends Migration
     public function up()
     {
         Schema::create('colors', function (Blueprint $table) {
-            $table->increments('color_id');
+            $table->increments('id');
             $table->string('color_cd',20);
             $table->string('color_desc',20);
-            $table->tinyInteger('status');
+            $table->tinyInteger('status')->default('1');
             $table->integer('created_by');
-            $table->integer('updated_by');
-            $table->timestamps();
+            $table->integer('updated_by')->nullable();
+            $table->timestamp('created_at');
+            $table->timestamp('updated_at')->nullable();
         });
     }
 
