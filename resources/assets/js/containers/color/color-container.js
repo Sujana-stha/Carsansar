@@ -25,7 +25,7 @@ class ColorListContainer extends Component {
                 </div>
                 
                         
-                 <table>
+                <table>
                     <thead>
                         <tr>
                             <th>#</th>

@@ -4,7 +4,7 @@ import _ from 'lodash';
 const initialState = {
     makes: [],
     fetching: false,
-    message: '',
+    singleMake: [],
     activePage: 1,
     itemsCountPerPage: 3,
     totalItemsCount: 1,
@@ -25,6 +25,11 @@ const makeReducer =  function(state = initialState, action) {
                 activePage: action.makes.current_page
             })
         
+        case types.MAKES_SINGLE_SUCCESS: 
+            console.log('single', action)
+            return Object.assign({}, state, {
+                singleMake: action.makes
+            })
         case types.GET_MAKES_PAGES:
             return Object.assign({}, state, {
                 makes: action.resp.data,
@@ -36,7 +41,7 @@ const makeReducer =  function(state = initialState, action) {
         case types.ADD_MAKES_SUCCESS:
             return  Object.assign({}, state, {
                 makes:  [...state.makes],
-                message: action.message
+                // message: action.message
             })
         
         case types.UPDATE_MAKES_SUCCESS:
@@ -48,7 +53,7 @@ const makeReducer =  function(state = initialState, action) {
                     }
                     return make;
                 }),
-                message: action.message
+                // message: action.message
             };
         case types.MAKES_STATUS_SUCCESS:
           console.log('tion', action)
@@ -60,13 +65,13 @@ const makeReducer =  function(state = initialState, action) {
                     }
                     return make;
                 }),
-                message: action.message
+                // message: action.message
             }
         case types.DELETE_MAKES_SUCCESS:
             const newMake = _.filter(state.makes, make => make.id !== action.makeId);
             return Object.assign({}, state, {
                 makes: newMake,
-                message: action.message
+                // message: action.message
             });
 
         default: 

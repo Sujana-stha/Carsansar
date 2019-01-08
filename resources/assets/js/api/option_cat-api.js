@@ -8,9 +8,9 @@ export function getOptionsCategories() {
 }
 
 //GET OPTION CATEGORIES BY PAGINATION API
-export function getOptionsCategoriesPages(pageNumber) {
-    return axios.get(`${URL}/api/optionsCategories?page=${pageNumber}`)
-}
+// export function getOptionsCategoriesPages(pageNumber) {
+//     return axios.get(`${URL}/api/optionsCategories?page=${pageNumber}`)
+// }
 
 // ADD NEW OPTION CATEGORIES API
 export function addOptionsCategories(values) {

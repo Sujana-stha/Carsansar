@@ -17,9 +17,9 @@ class EditOptionCategory extends Component {
     handleInitialize() {
         const id = this.props.editId;
         
-        console.log('length',this.props.optionCategories[0].oc_id);
+        console.log('length',this.props.optionCategories[0].id);
         for (var i = 0; i < this.props.optionCategories.length; i++ ) {
-            if(this.props.optionCategories[i].oc_id == id) {
+            if(this.props.optionCategories[i].id == id) {
                 globalData = this.props.optionCategories[i]
             }
         }
@@ -52,7 +52,7 @@ class EditOptionCategory extends Component {
                         <form className="col s12" onSubmit= { handleSubmit  }>
                             <Field 
                                 label="Make Desciption"
-                                name="oc_desc"
+                                name="optioncategory_desc"
                                 type="text"
                                 component={this.renderInputField} 
                             />
@@ -74,8 +74,8 @@ class EditOptionCategory extends Component {
 function validate(values) {
     const errors = {}
 
-    if(!values.oc_desc) {
-        errors.oc_desc = "The Field is empty"
+    if(!values.optioncategory_desc) {
+        errors.optioncategory_desc = "The Field is empty"
     }
     
     return errors;

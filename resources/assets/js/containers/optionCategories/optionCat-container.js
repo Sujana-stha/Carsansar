@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Pagination from "react-js-pagination";
 import OptionCategoryList from '../../components/OptionCategory/optionCategory';
 import store from '../../store';
-import { requestOptionCategories, requestOptionCategoriesPages, requestDeleteOptionCategories, requestSubmitOptionCategories, requestUpdateOptionCategories, requestOptionCategoriesStatus } from  '../../actions/option_cat-action';
+import { requestOptionCategories, requestDeleteOptionCategories, requestSubmitOptionCategories, requestUpdateOptionCategories, requestOptionCategoriesStatus } from  '../../actions/option_cat-action';
 
 
 //COMPONENT
@@ -19,7 +19,7 @@ class OptionCategoryListContainer extends Component {
             hide: true,
             isEditing: false
         }
-        this.handlePageChange = this.handlePageChange.bind(this)
+        // this.handlePageChange = this.handlePageChange.bind(this)
         this.editOptionCategory = this.editOptionCategory.bind(this)
         this.toggleStatus = this.toggleStatus.bind(this)
 
@@ -69,11 +69,11 @@ class OptionCategoryListContainer extends Component {
     }
 
     // pagination function
-    handlePageChange(pageNumber) {
-        console.log(`active page is ${pageNumber}`);
-        this.props.requestOptionCategoriesPages(pageNumber)
+    // handlePageChange(pageNumber) {
+    //     console.log(`active page is ${pageNumber}`);
+    //     this.props.requestOptionCategoriesPages(pageNumber)
         
-    }
+    // }
     // toggle status value
     toggleStatus (optCatId, status) {
         console.log('id', optCatId)
@@ -87,20 +87,6 @@ class OptionCategoryListContainer extends Component {
         console.log('prop', this.props)
         return (
             <div>
-                {this.props.message.trim().length && this.state.hide ? (
-                   
-                    <div id="card-alert" className="card green">
-                        <div className="card-content white-text">
-                            <p>{this.props.message}</p>
-                        </div>
-                        <button type="button" className="close white-text" data-dismiss="alert" aria-label="Close">
-                            <span onClick={this.hideMessage.bind(this)} aria-hidden="true">×</span>
-                        </button>
-                    </div>
-                ): (
-                    <div></div>
-                )}
-                
                 <div className="row">
                     <div className="col s12 m3 l3">
                         {this.state.isEditing ? (
@@ -132,7 +118,7 @@ class OptionCategoryListContainer extends Component {
                                 </tbody>
                             )}
                         </table>
-                        <div className="col s12 mt-2 mb-2 left-align">
+                        {/* <div className="col s12 mt-2 mb-2 left-align">
                             <Pagination
                             activePage={this.props.activePage}
                             itemsCountPerPage={this.props.itemsCountPerPage}
@@ -142,7 +128,7 @@ class OptionCategoryListContainer extends Component {
                             firstPageText='First'
                             lastPageText='Last'
                             />
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </div>
@@ -154,11 +140,11 @@ function mapStateToProps(store) {
     return {
         optionCategories: store.OptCatState.optionCategories,
         message: store.OptCatState.message,
-        activePage: store.OptCatState.activePage,
-        itemsCountPerPage: store.OptCatState.itemsCountPerPage,
-        totalItemsCount: store.OptCatState.totalItemsCount,
-        pageRangeDisplayed: store.OptCatState.pageRangeDisplayed,
+        // activePage: store.OptCatState.activePage,
+        // itemsCountPerPage: store.OptCatState.itemsCountPerPage,
+        // totalItemsCount: store.OptCatState.totalItemsCount,
+        // pageRangeDisplayed: store.OptCatState.pageRangeDisplayed,
     }
 }
 
-export default connect(mapStateToProps, {requestOptionCategories, requestOptionCategoriesPages, requestDeleteOptionCategories, requestSubmitOptionCategories, requestUpdateOptionCategories, requestOptionCategoriesStatus })(OptionCategoryListContainer);
+export default connect(mapStateToProps, {requestOptionCategories, requestDeleteOptionCategories, requestSubmitOptionCategories, requestUpdateOptionCategories, requestOptionCategoriesStatus })(OptionCategoryListContainer);

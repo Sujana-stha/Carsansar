@@ -9,7 +9,9 @@ class CompaniesController extends Controller
 {
     public function index()
     {
-        return Company::all();
+        // return Company::all();
+        $company = Company::paginate(3);
+        return $company;
     }
  
     public function show(Company $company)

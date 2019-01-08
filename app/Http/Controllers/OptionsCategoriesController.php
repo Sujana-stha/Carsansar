@@ -10,8 +10,8 @@ class OptionsCategoriesController extends Controller
     public function index()
     {
         
-        $optionCategories = OptionCategory::paginate(3);
-        return $optionCategories;
+        return OptionCategory::all();
+        
     }
  
     public function show(OptionCategory $optionCategories)

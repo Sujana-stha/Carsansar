@@ -1,9 +1,9 @@
-import {takeLatest, call, put, fork, takeEvery } from 'redux-saga/effects';
+import {takeLatest, call, put } from 'redux-saga/effects';
 import { startSubmit, stopSubmit, reset } from 'redux-form';
 import * as types from '../actions/action-types';
 import * as api from '../api/makes-api';
 import * as makeAction from '../actions/makes-action'
-
+import {notify} from 'react-notify-toast';
 
 //Get makes data in table
 export function* MakeWatcher() {
@@ -28,26 +28,32 @@ function* callMakesPages(action) {
         error = result.error;
     } else {
         yield put({type: types.GET_MAKES_PAGES, resp});
+        
     }
 }
 
 
 // Submit form data of makes
-export function* submitSaga() {
-    yield takeLatest(types.REQUEST_SUBMIT, callSubmit)
+export function* submitMakesSaga() {
+    yield takeLatest(types.REQUEST_SUBMIT, callMakesSubmit)
 }
-function* callSubmit(action) {
+function* callMakesSubmit(action) {
     yield put(startSubmit('PostMakes'));
     let error = {};
     const result =  yield call(api.addMakes, action.values);
     const resp = result.data
-
+    console.log(result);
     if (result.errors) {
         yield put({ type: types.REQUEST_FAILED, errors: result.error});
         error = result.error;
         console.log('err', error)
+        notify.show("Cannot Add Makes!","error", 5000);
+
     } else {
-        yield put({type: types.ADD_MAKES_SUCCESS, resp, message: result.statusText});
+        // yield put({type: types.ADD_MAKES_SUCCESS, resp, message: result.statusText});
+        yield put({type: types.REQUEST_MAKES});
+        notify.show("Makes Added Successfully!", "success", 5000);
+
     }
     yield put(stopSubmit('PostMakes', error));
     yield put(reset('PostMakes'));
@@ -60,18 +66,22 @@ export function* editSaga() {
 
 function* callEditMake (action) {
     yield put(startSubmit('EditMakes'));
+
     let error = {};
     const result =  yield call(api.updateMake, action.values.id, action.values);
     const resp = result.data;
-
     if (result.errors) {
         yield put({ type: types.REQUEST_FAILED, errors: result.error});
         error = result.error;
     } else {
-        yield put({type: types.UPDATE_MAKES_SUCCESS, resp, message: result.statusText});
+        // yield put({type: types.UPDATE_MAKES_SUCCESS, resp, message: result.statusText});
+        yield put ({type: types.REQUEST_MAKES_PAGES})
+        notify.show("Makes Updated Successfully!", "success", 5000);
+
     }
     yield put(stopSubmit('EditMakes', error));
     yield put(reset('EditMakes'));
+
 }
 
 // change status value
@@ -90,7 +100,9 @@ function* callToggleStatus(action) {
         error = result.error;
     } else {
         yield put({type: types.MAKES_STATUS_SUCCESS, resp, message: result.statusText});
+        notify.show(`Status of ${resp.make_desc} Updated!`, "success",5000);
     }
+
 }
 
 
@@ -107,6 +119,23 @@ function* callDeleteMake(action) {
         error = result.error;
     } else {
         yield put(makeAction.deleteMakesSuccess(action.makeId, result.statusText));
+        notify.show("Makes Deleted Successfully!", "error", 5000);
+
     }
 } 
 
+export function* singleMakeWatch () {
+    yield takeLatest(types.REQUEST_MAKES_SINGLE, callMakeSingle)
+}
+
+function* callMakeSingle(action) {
+    const result = yield call(api.getSingleMakes, action.makeId);
+    const makes = result.data
+    console.log('result', makes)
+    if(result.errors) {
+        yield put({ type: types.REQUEST_FAILED, errors: result.error});
+        error = result.error;
+    } else {
+        yield put({ type: types.MAKES_SINGLE_SUCCESS, makes})
+    }
+}

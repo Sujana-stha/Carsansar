@@ -1,8 +1,9 @@
-import {takeLatest, call, put, fork, takeEvery } from 'redux-saga/effects';
-import { startSubmit, stopSubmit } from 'redux-form';
+import {takeLatest, call, put } from 'redux-saga/effects';
+import { startSubmit, stopSubmit, reset } from 'redux-form';
 import * as types from '../actions/action-types';
 import * as api from '../api/categories-api';
 import * as categoryAction from '../actions/categories-action';
+import {notify} from 'react-notify-toast';
 
 
 //Get makes data in table
@@ -49,6 +50,8 @@ function* callCategoriesSubmit(action) {
         console.log('err', error)
     } else {
         yield put({type: types.ADD_CATEGORIES_SUCCESS, resp, message: result.statusText});
+        notify.show("Categories Added Successfully!", "success", 5000)
+
     }
     yield put(stopSubmit('PostCategories', error));
     yield put(reset('PostCategories'));
@@ -71,9 +74,11 @@ function* callEditCategory (action) {
         error = result.error;
     } else {
         yield put({type: types.UPDATE_CATEGORIES_SUCCESS, resp, message: result.statusText});
+        notify.show("Categories Updated Successfully!", "success", 5000)
     }
     yield put(stopSubmit('EditCategories', error));
     yield put(reset('EditCategories'));
+
 }
 
 // change status value
@@ -92,7 +97,10 @@ function* callCategoryToggleStatus(action) {
         error = result.error;
     } else {
         yield put({type: types.CATEGORIES_STATUS_SUCCESS, resp, message: result.statusText});
+        notify.show("Status Updated Successfully!", "success", 5000)
+        
     }
+
 }
 
 
@@ -109,6 +117,9 @@ function* callDeleteCategory(action) {
         error = result.error;
     } else {
         yield put(categoryAction.deleteCategoriesSuccess(action.categoryId, result.statusText));
+        notify.show("Categories Deleted Successfully!", "error", 5000)
+        
     }
+
 } 
 

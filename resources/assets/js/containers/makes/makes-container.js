@@ -11,7 +11,7 @@ import MakeForm from './makes-form';
 import EditMake from '../../components/makes/makes-edit';
 
 var globalId = null
-
+var page = null
 class MakesListContainer extends Component {
     constructor() {
         super();
@@ -22,6 +22,7 @@ class MakesListContainer extends Component {
         this.handlePageChange = this.handlePageChange.bind(this)
         this.editMakes = this.editMakes.bind(this)
         this.toggleStatus = this.toggleStatus.bind(this)
+
     }
 
     hideMessage (e) {
@@ -34,6 +35,8 @@ class MakesListContainer extends Component {
     componentDidMount() {
         // call action to run the relative saga
         this.props.requestMakes();
+        page = this.props.activePage;
+
     }
 
     // submit function for new data
@@ -45,21 +48,22 @@ class MakesListContainer extends Component {
     }
 
     // submit function to update data
-    submitEditMake(values) {
-        this.props.requestUpdateMakes(values);
+    submitEditMake(values, page) {
+        console.log("vvv", page);
+        
+        this.props.requestUpdateMakes(values, page);
         this.setState({
             isEditing : false,
             hide: true
         })
     }
-
+    
     //function to call form of edit
     editMakes(values) {
         globalId = values
         this.setState ({
             isEditing : true
         })
-        
     }
 
     deleteMakeAction(makeId) {
@@ -69,6 +73,7 @@ class MakesListContainer extends Component {
     // pagination function
     handlePageChange(pageNumber) {
         console.log(`active page is ${pageNumber}`);
+        console.log('page', this.props)
         this.props.requestMakesPages(pageNumber)
         
     }
@@ -83,10 +88,10 @@ class MakesListContainer extends Component {
     }
 
     render() {
-        console.log('prop', this.props.makes)
+        console.log('prop', this.props)
         return (
             <div>
-                {this.props.message.trim().length && this.state.hide ? (
+                {/* {this.props.message.trim().length && this.state.hide ? (
                    
                     <div id="card-alert" className="card green">
                         <div className="card-content white-text">
@@ -98,7 +103,7 @@ class MakesListContainer extends Component {
                     </div>
                 ): (
                     <div></div>
-                )}
+                )} */}
                 
                 <div className="row">
                     <div className="col s12 m3 l3">

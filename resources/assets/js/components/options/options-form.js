@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import { Field, reduxForm } from 'redux-form';
+import { Field, reduxForm, formValueSelector } from 'redux-form';
 import store from '../../store';
+import {connect} from 'react-redux';
 
 
 class OptionsForm extends Component {
+    
     renderInputField({input, label, type, meta: {touched, error}}) {
         return (
             <div>
@@ -20,11 +22,27 @@ class OptionsForm extends Component {
         )
     }
     
+    renderSelectField({input, label, meta: {touched, error},children}) {
+        return (
+            <div className="row">
+                <div className="input-field col s12">
+                    <select className="browser-default">
+                        {children}
+                    </select>
+                    <label>{label}</label>
+                    <div className="error">
+                        {touched ? error: ''}
+                    </div>
+                </div>
+            </div>
+        )
+    }
     render() {
         const { handleSubmit } = this.props;
+        console.log('ppp', this.props)
         return (
             <div>
-                <h4 className="header2">Add New Make</h4>
+                <h4 className="header2">Add New Options</h4>
 
                 <div className="card-panel">
 					<div className="row">
@@ -35,9 +53,21 @@ class OptionsForm extends Component {
                                 type="text"
                                 component={this.renderInputField} 
                             />
-                            <Field name="oc_id">
-                                <option>simple</option>
-                            </Field>
+                            
+                                    <Field 
+                                    name="oc_id"
+                                    label="Option Categories"
+                                    component={this.renderSelectField}
+                                    >
+                                      
+                                        {this.props.optionLists.map((optionList) => {
+                                            return (
+                                                <option key= {optionList.oc_id} value={optionList.oc_id}>{optionList.oc_desc}</option>
+                                            )
+                                        })}
+                                    </Field>
+                                
+                            
                             <div className="row">
                                 <div className="input-field col s12">
                                     <button className="btn cyan waves-effect waves-light right" type="submit" name="action">Save
@@ -55,6 +85,7 @@ class OptionsForm extends Component {
 
 function validate(values) {
     const errors = {}
+console.log('val', values)
     if(!values.option_desc) {
         errors.option_desc = "The Field is empty"
     }
@@ -64,8 +95,7 @@ function validate(values) {
     return errors;
 }
 
-
 export default reduxForm({
+    form: 'PostOptions', // a unique identifier for this form
     validate,
-    form: 'PostOptions'
-})(OptionsForm);
+  })(OptionsForm)

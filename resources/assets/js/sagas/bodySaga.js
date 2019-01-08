@@ -1,8 +1,9 @@
-import {takeLatest, call, put, fork, takeEvery } from 'redux-saga/effects';
+import {takeLatest, call, put } from 'redux-saga/effects';
 import { startSubmit, stopSubmit, reset } from 'redux-form';
 import * as types from '../actions/action-types';
 import * as api from '../api/bodies-api';
 import * as bodyAction from '../actions/bodies-action'
+import {notify} from 'react-notify-toast';
 
 
 //Get bodies data in table
@@ -48,6 +49,8 @@ function* callBodySubmit(action) {
         console.log('err', error)
     } else {
         yield put({type: types.ADD_BODIES_SUCCESS, resp, message: result.statusText});
+        notify.show("Body Added successfully!", "success", 5000)
+
     }
     yield put(stopSubmit('PostBodies', error));
     yield put(reset('PostBodies'));
@@ -69,9 +72,12 @@ function* callEditBody (action) {
         error = result.error;
     } else {
         yield put({type: types.UPDATE_BODIES_SUCCESS, resp, message: result.statusText});
+        notify.show("Body Updated successfully!", "success", 5000)
+        
     }
     yield put(stopSubmit('EditBodies', error));
     yield put(reset('EditBodies'));
+
 }
 
 // change status value
@@ -90,7 +96,10 @@ function* callToggleBodyStatus(action) {
         error = result.error;
     } else {
         yield put({type: types.BODIES_STATUS_SUCCESS, resp, message: result.statusText});
+        notify.show("Status changed successfully!", "success", 5000)
+        
     }
+
 }
 
 
@@ -107,6 +116,9 @@ function* callDeleteBody(action) {
         error = result.error;
     } else {
         yield put(bodyAction.deleteBodiesSuccess(action.bodyId, result.statusText));
+        notify.show("Body Deleted successfully!", "error", 5000)
+
     }
+
 } 
 

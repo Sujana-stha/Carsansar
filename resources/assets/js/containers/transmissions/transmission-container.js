@@ -86,19 +86,6 @@ class TransmissionsListContainer extends Component {
         console.log('prop', this.props.transmissions)
         return (
             <div>
-                {this.props.message.trim().length && this.state.hide ? (
-                   
-                    <div id="card-alert" className="card green">
-                        <div className="card-content white-text">
-                            <p>{this.props.message}</p>
-                        </div>
-                        <button type="button" className="close white-text" data-dismiss="alert" aria-label="Close">
-                            <span onClick={this.hideMessage.bind(this)} aria-hidden="true">×</span>
-                        </button>
-                    </div>
-                ): (
-                    <div></div>
-                )}
                 
                 <div className="row">
                     <div className="col s12 m3 l3">

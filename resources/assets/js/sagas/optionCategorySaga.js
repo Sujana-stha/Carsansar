@@ -1,9 +1,8 @@
-import {takeLatest, call, put, fork, takeEvery } from 'redux-saga/effects';
-import { startSubmit, stopSubmit } from 'redux-form';
+import {takeLatest, call, put } from 'redux-saga/effects';
+import { startSubmit, stopSubmit, reset } from 'redux-form';
 import * as types from '../actions/action-types';
 import * as api from '../api/option_cat-api';
-import * as makeOptCatAction from '../actions/option_cat-action';
-
+import {notify} from "react-notify-toast"
 
 //Get makes data in table
 export function* optCatWatcher() {
@@ -11,25 +10,26 @@ export function* optCatWatcher() {
 }
 function* OptCatSaga() {
     const response = yield call(api.getOptionsCategories);
+    console.log('resp', response)
     const optionCategories = response.data
     yield put({type: types.GET_OPT_CAT_SUCCESS, optionCategories});
 }
 
 // Get Makes pagination in table
-export function* OptCatPagesWatcher() {
-    yield takeLatest(types.REQUEST_OPT_CAT_PAGES, callOptCatPages)
-}
-function* callOptCatPages(action) {
-    const result =  yield call(api.getOptionsCategoriesPages, action.pageNumber);
-    const resp = result.data
+// export function* OptCatPagesWatcher() {
+//     yield takeLatest(types.REQUEST_OPT_CAT_PAGES, callOptCatPages)
+// }
+// function* callOptCatPages(action) {
+//     const result =  yield call(api.getOptionsCategoriesPages, action.pageNumber);
+//     const resp = result.data
 
-    if (result.errors) {
-        yield put({ type: types.REQUEST_OPT_CAT_DELETE, errors: result.error});
-        error = result.error;
-    } else {
-        yield put({type: types.GET_OPT_CAT_PAGES, resp});
-    }
-}
+//     if (result.errors) {
+//         yield put({ type: types.REQUEST_OPT_CAT_FAILED, errors: result.error});
+//         error = result.error;
+//     } else {
+//         yield put({type: types.GET_OPT_CAT_PAGES, resp});
+//     }
+// }
 
 
 // Submit form data of makes
@@ -48,6 +48,7 @@ function* callOptCatSubmit(action) {
         console.log('err', error)
     } else {
         yield put({type: types.ADD_OPT_CAT_SUCCESS, resp, message: result.statusText});
+        notify.show("Option Category Added Successfully!", "success", 5000)
     }
     yield put(stopSubmit('PostOptionCategory', error));
     yield put(reset('PostOptionCategory'));
@@ -62,7 +63,7 @@ export function* editOptCatSaga() {
 function* callEditOptCat (action) {
     yield put(startSubmit('EditOptionCategory'));
     let error = {};
-    const result =  yield call(api.updateOptionsCategories, action.values.oc_id, action.values);
+    const result =  yield call(api.updateOptionsCategories, action.values.id, action.values);
     const resp = result.data;
 
     if (result.errors) {
@@ -70,6 +71,7 @@ function* callEditOptCat (action) {
         error = result.error;
     } else {
         yield put({type: types.UPDATE_OPT_CAT_SUCCESS, resp, message: result.statusText});
+        notify.show(`${resp.optioncategory_desc} Updated Successfully!`, "success", 5000)
     }
     yield put(stopSubmit('EditOptionCategory', error));
     yield put(reset('EditOptionCategory'));
@@ -92,6 +94,8 @@ function* callToggleOptCatStatus(action) {
         error = result.error;
     } else {
         yield put({type: types.OPT_CAT_STATUS_SUCCESS, resp, message: result.statusText});
+        notify.show(`Status of ${resp.optioncategory_desc} Updated!`, "success", 5000)
+
     }
 }
 
@@ -111,6 +115,7 @@ function* callDeleteOptCat(action) {
     } else {
         // yield put(makeOptCatAction.deleteOptionCategoriesSuccess(action.optCatId, result.statusText));
         yield put({type: types.DELETE_OPT_CAT_SUCCESS, optCatId, message: result.statusText});
+        notify.show("Option Category Deleted Successfully", "error", 5000)
         
     }
 } 

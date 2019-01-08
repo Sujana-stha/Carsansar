@@ -1,9 +1,9 @@
-import {takeLatest, call, put, fork, takeEvery } from 'redux-saga/effects';
+import {takeLatest, call, put } from 'redux-saga/effects';
 import { startSubmit, stopSubmit, reset } from 'redux-form';
 import * as types from '../actions/action-types';
 import * as api from '../api/enginesize-api';
 import * as enginesizeAction from '../actions/enginesizes-action'
-
+import {notify} from 'react-notify-toast'
 
 //Get Enginesize data in table
 export function* EnginesizeWatcher() {
@@ -48,6 +48,7 @@ function* callEnginesizeSubmit(action) {
         console.log('err', error)
     } else {
         yield put({type: types.ADD_ENGINESIZES_SUCCESS, resp, message: result.statusText});
+        notify.show("Engine Added Successfully!", "success", 5000)
     }
     yield put(stopSubmit('PostEnginesizes', error));
     yield put(reset('PostEnginesizes'));
@@ -69,6 +70,7 @@ function* callEditEnginesize (action) {
         error = result.error;
     } else {
         yield put({type: types.UPDATE_ENGINESIZES_SUCCESS, resp, message: result.statusText});
+        notify.show("Engine Updated Successfully!", "success", 5000)
     }
     yield put(stopSubmit('EditEnginesizes', error));
     yield put(reset('EditEnginesizes'));
@@ -90,7 +92,9 @@ function* callToggleEnginesizeStatus(action) {
         error = result.error;
     } else {
         yield put({type: types.ENGINESIZES_STATUS_SUCCESS, resp, message: result.statusText});
+        notify.show("Status of  Updated!", "success", 5000)
     }
+
 }
 
 
@@ -107,6 +111,7 @@ function* callDeleteEnginesize(action) {
         error = result.error;
     } else {
         yield put(enginesizeAction.deleteEnginesizesSuccess(action.enginesizeId, result.statusText));
+        notify.show("Engine Deleted Successfully!", "error", 5000)
     }
 } 
 

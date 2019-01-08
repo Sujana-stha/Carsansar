@@ -104,13 +104,19 @@ const LeftSidebarNav = () => {
                 <NavLink to="/bodies" className="waves-effect waves-cyan"><i className="material-icons">keyboard_arrow_right</i><span>Bodies</span></NavLink>
                 </li>
                 <li className="bold">
-                <NavLink to="/enginesizes" className="waves-effect waves-cyan"><i className="material-icons">keyboard_arrow_right</i><span>Enginesizes</span></NavLink>
+                <NavLink to="/enginesizes" className="waves-effect waves-cyan"><i className="material-icons">keyboard_arrow_right</i><span>Engine</span></NavLink>
                 </li>
                 <li className="bold">
-                <NavLink to="/fueltypes" className="waves-effect waves-cyan"><i className="material-icons">keyboard_arrow_right</i><span>Fueltypes</span></NavLink>
+                <NavLink to="/fueltypes" className="waves-effect waves-cyan"><i className="material-icons">keyboard_arrow_right</i><span>Fuel</span></NavLink>
                 </li>
                 <li className="bold">
                 <NavLink to="/transmissions" className="waves-effect waves-cyan"><i className="material-icons">keyboard_arrow_right</i><span>Transmissions</span></NavLink>
+                </li>
+                <li className="bold">
+                <NavLink to="/companies" className="waves-effect waves-cyan"><i className="material-icons">keyboard_arrow_right</i><span>Companies</span></NavLink>
+                </li>
+                <li className="bold">
+                <NavLink to="/options" className="waves-effect waves-cyan"><i className="material-icons">keyboard_arrow_right</i><span>Options</span></NavLink>
                 </li>
                 <li className="bold">
                   <a className="collapsible-header waves-effect waves-cyan active">

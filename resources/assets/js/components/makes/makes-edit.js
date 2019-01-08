@@ -1,30 +1,19 @@
 import React, { Component } from 'react';
 import store from '../../store';
 import { Field, reduxForm } from 'redux-form';
-import {connect} from 'react-redux';
 import * as makeApi from '../../api/makes-api';
-
-
-var globalData = null;
 
 
 class EditMake extends Component {
     componentDidMount() {
-        this.handleInitialize();
-        makeApi.getMakes();
+        const id =  this.props.editId;
+        makeApi.getSingleMakes(id).then((response)=> {
+            console.log('respp',response);
+            const data =  response.data;
+            this.props.initialize(data);
+        })
     }
-    
-    handleInitialize() {
-        const id = this.props.editId;
-        
-        console.log('length',this.props.makes[0].id);
-        for (var i = 0; i < this.props.makes.length; i++ ) {
-            if(this.props.makes[i].id == id) {
-                globalData = this.props.makes[i]
-            }
-        }
-        this.props.initialize(globalData);
-    }
+
     renderInputField({input, label, type, meta: {touched, error}}) {
         return (
             <div>
@@ -45,7 +34,6 @@ class EditMake extends Component {
         const { handleSubmit } = this.props;
         return (
             <div>
-                
                 <h4 className="header2">Update Make</h4>
                 <div className="card-panel">
 					<div className="row">
@@ -81,12 +69,8 @@ function validate(values) {
     
     return errors;
 }
-function mapStateToProps(store) {
-    return {
-        makes: store.makeState.makes
-    }
-}
+
 export default reduxForm({
     validate,
-    form: 'EditMakes'
-})(connect(mapStateToProps, null)(EditMake));
+    form: 'EditMakes',
+})(EditMake);

@@ -1,9 +1,9 @@
-import {takeLatest, call, put, fork, takeEvery } from 'redux-saga/effects';
+import {takeLatest, call, put } from 'redux-saga/effects';
 import { startSubmit, stopSubmit, reset } from 'redux-form';
 import * as types from '../actions/action-types';
 import * as driveApi from '../api/drives-api';
 import * as driveAction from '../actions/drives-action';
-
+import {notify} from 'react-notify-toast'
 
 //Get makes data in table
 export function* DriveWatcher() {
@@ -48,6 +48,7 @@ function* callDriveSubmit(action) {
         console.log('err', error)
     } else {
         yield put({type: types.ADD_DRIVES_SUCCESS, resp, message: result.statusText});
+        notify.show("Drive Added Successfully!", "success", 5000)
     }
     yield put(stopSubmit('PostDrives', error));
     yield put(reset('PostDrives'));
@@ -69,6 +70,7 @@ function* callEditDrive (action) {
         error = result.error;
     } else {
         yield put({type: types.UPDATE_DRIVES_SUCCESS, resp, message: result.statusText});
+        notify.show("Drive Updated Successfully!", "success", 5000)
     }
     yield put(stopSubmit('EditDrives', error));
     yield put(reset('EditDrives'));
@@ -90,6 +92,7 @@ function* callDriveToggleStatus(action) {
         error = result.error;
     } else {
         yield put({type: types.DRIVES_STATUS_SUCCESS, resp, message: result.statusText});
+        notify.show("Status Updated Successfully!", "success", 5000)
     }
 }
 
@@ -107,6 +110,7 @@ function* callDeleteDrive(action) {
         error = result.error;
     } else {
         yield put(driveAction.deleteDrivesSuccess(action.driveId, result.statusText));
+        notify.show("Drive Deleted Successfully!", "error", 5000)
     }
 } 
 

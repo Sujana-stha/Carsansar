@@ -38,17 +38,17 @@ class OptionCategoryList extends Component {
             {
                 this.props.optionCategories.map((optionCategory) => {
                     return (
-                        <tr key={optionCategory.oc_id} className={`row-${optionCategory.id}`}>
+                        <tr key={optionCategory.id} className={`row-${optionCategory.id}`}>
                                         
-                            <td>{optionCategory.oc_id}</td>
-                            <td>{optionCategory.oc_desc}</td>
+                            <td>{optionCategory.id}</td>
+                            <td>{optionCategory.optioncategory_desc}</td>
                             <td>{optionCategory.created_by}</td>
                             <td className="action">
-                                <a href="javascript:void(0);" onClick={this.props.onEditOptionCategory.bind(null, optionCategory.oc_id)} className="tooltipped" data-position="top" data-delay="50" data-tooltip="Edit"><i className="material-icons">edit</i></a>
-                                <a className="tooltip" href="javascript:void(0);" onClick={()=>this.deleteItem(optionCategory.oc_id)} data-tooltip="Delete"><i className="material-icons">delete</i></a>
-                                {this.state.showItem==optionCategory.oc_id ? (
+                                <a href="javascript:void(0);" onClick={this.props.onEditOptionCategory.bind(null, optionCategory.id)} className="tooltipped" data-position="top" data-delay="50" data-tooltip="Edit"><i className="material-icons">edit</i></a>
+                                <a className="tooltip" href="javascript:void(0);" onClick={()=>this.deleteItem(optionCategory.id)} data-tooltip="Delete"><i className="material-icons">delete</i></a>
+                                {this.state.showItem==optionCategory.id ? (
                                     <span className="confirm tooltip-text">Are you sure?&nbsp; 
-                                        <a onClick={this.props.deleteOptionCategory.bind(null, optionCategory.oc_id)} href="javascript:void(0);">Yes</a> &nbsp;
+                                        <a onClick={this.props.deleteOptionCategory.bind(null, optionCategory.id)} href="javascript:void(0);">Yes</a> &nbsp;
                                         <a href="javascript:void(0);" onClick={this.hideDiv.bind(this)}>No</a>
                                     </span>
                                 ): null}
@@ -57,10 +57,10 @@ class OptionCategoryList extends Component {
                                 <div className="switch">
                                     <label>Inactive
                                         {optionCategory.status== 1 ? (
-                                            <input onClick = {()=> this.props.optionCategoryStatus(optionCategory.oc_id, optionCategory.status) } defaultChecked type="checkbox" value={optionCategory.status}/>
+                                            <input onClick = {()=> this.props.optionCategoryStatus(optionCategory.id, optionCategory.status) } defaultChecked type="checkbox" value={optionCategory.status}/>
 
                                         ):
-                                            <input onClick = {()=> this.props.optionCategoryStatus(optionCategory.oc_id, optionCategory.status) }  type="checkbox" value={optionCategory.status}/>
+                                            <input onClick = {()=> this.props.optionCategoryStatus(optionCategory.id, optionCategory.status) }  type="checkbox" value={optionCategory.status}/>
                                         }
                                         <span className="lever"></span>Active
                                     </label>

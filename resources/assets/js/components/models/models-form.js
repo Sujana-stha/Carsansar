@@ -30,7 +30,7 @@ class ModelForm extends Component {
 					<div className="row">
                         <form className="col s12" onSubmit= { handleSubmit  } >
                             <Field 
-                                label="Make Desciption"
+                                label="Model Desciption"
                                 name="model_desc"
                                 type="text"
                                 component={this.renderInputField} 

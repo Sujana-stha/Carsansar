@@ -9,8 +9,8 @@ class MakesController extends Controller
 {
     public function index()
     {
-        
-        $make = Make::paginate(3);
+        // Color::with('createdBy:user_id,name')->get();
+        $make = Make::with('createdBy:id,name')->orderBy('id', 'desc')->paginate(3);
         return $make;
     }
  

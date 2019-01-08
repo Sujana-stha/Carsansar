@@ -4,12 +4,11 @@ import Pagination from "react-js-pagination";
 import OptionsList from '../../components/options/options';
 import store from '../../store';
 import { requestOptions, requestDeleteOptions, requestSubmitOptions, requestOptionsPages,requestUpdateOptions, requestOptionsStatus } from  '../../actions/options-actions';
-
+import {requestOptionCategories} from '../../actions/option_cat-action';
 
 //COMPONENT
-import MakeOptions from '../../components/options/options-form';
 import EditOptions from '../../components/options/options-edit';
-import optionsForm from '../../components/options/options-form';
+import OptionsForm from '../../components/options/options-form';
 
 var globalId = null
 
@@ -35,10 +34,12 @@ class OptionsListContainer extends Component {
     componentDidMount() {
         // call action to run the relative saga
         this.props.requestOptions();
+        this.props.requestOptionCategories();
     }
 
     // submit function for new data
     submitOption(values) {
+        console.log('sub', values)
         this.props.requestSubmitOptions(values);
         this.setState ({
             hide: true
@@ -87,26 +88,12 @@ class OptionsListContainer extends Component {
         console.log('prop', this.props.options)
         return (
             <div>
-                {this.props.message.trim().length && this.state.hide ? (
-                   
-                    <div id="card-alert" className="card green">
-                        <div className="card-content white-text">
-                            <p>{this.props.message}</p>
-                        </div>
-                        <button type="button" className="close white-text" data-dismiss="alert" aria-label="Close">
-                            <span onClick={this.hideMessage.bind(this)} aria-hidden="true">×</span>
-                        </button>
-                    </div>
-                ): (
-                    <div></div>
-                )}
-                
                 <div className="row">
                     <div className="col s12 m3 l3">
                         {this.state.isEditing ? (
                             <EditOptions onSubmit = {this.submitEditOption.bind(this)} editId = {globalId} />
                         ): (
-                            <optionsForm onSubmit = { this.submitOption.bind(this) }/>
+                            <OptionsForm onSubmit = { this.submitOption.bind(this) } optionLists = {this.props.optionCategories}/>
                         )}
                        
                     </div>
@@ -159,7 +146,8 @@ function mapStateToProps(store) {
         itemsCountPerPage: store.optionState.itemsCountPerPage,
         totalItemsCount: store.optionState.totalItemsCount,
         pageRangeDisplayed: store.optionState.pageRangeDisplayed,
+        optionCategories: store.OptCatState.optionCategories
     }
 }
 
-export default connect(mapStateToProps, {requestOptions, requestDeleteOptions, requestSubmitOptions, requestOptionsPages,requestUpdateOptions, requestOptionsStatus})(OptionsListContainer);
+export default connect(mapStateToProps, {requestOptions,requestOptionCategories, requestDeleteOptions, requestSubmitOptions, requestOptionsPages,requestUpdateOptions, requestOptionsStatus})(OptionsListContainer);

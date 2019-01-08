@@ -31,7 +31,7 @@ class OptionCategoryForm extends Component {
                         <form className="col s12" onSubmit= { handleSubmit  } >
                             <Field 
                                 label="Option Category Desciption"
-                                name="oc_desc"
+                                name="optioncategory_desc"
                                 type="text"
                                 component={this.renderInputField} 
                             />
@@ -53,8 +53,8 @@ class OptionCategoryForm extends Component {
 
 function validate(values) {
     const errors = {}
-    if(!values.oc_desc) {
-        errors.oc_desc = "The Field is empty"
+    if(!values.optioncategory_desc) {
+        errors.optioncategory_desc = "The Field is empty"
     }
     return errors;
 }

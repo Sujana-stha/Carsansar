@@ -1,9 +1,9 @@
 import {takeLatest, call, put } from 'redux-saga/effects';
-import { startSubmit, stopSubmit } from 'redux-form';
+import { startSubmit, stopSubmit, reset } from 'redux-form';
 import * as types from '../actions/action-types';
 import * as api from '../api/model-api';
 import * as modelAction from '../actions/model-action'
-
+import {notify} from 'react-notify-toast';
 
 //Get models data in table
 export function* ModelWatcher() {
@@ -48,6 +48,7 @@ function* callModelSubmit(action) {
         console.log('err', error)
     } else {
         yield put({type: types.ADD_MODEL_SUCCESS, resp, message: result.statusText});
+        notify.show("Model Added Successfully!", "success", 5000)
     }
     yield put(stopSubmit('PostModels', error));
     yield put(reset('PostModels'));
@@ -70,6 +71,7 @@ function* callModelEdit (action) {
         error = result.error;
     } else {
         yield put({type: types.UPDATE_MODEL_SUCCESS, resp, message: result.statusText});
+        notify.show(`${resp.model_desc} Updated Successfully`, "success", 5000)
     }
     yield put(stopSubmit('EditModels', error));
     yield put(reset('EditModels'));
@@ -92,6 +94,8 @@ function* callModelToggleStatus(action) {
         error = result.error;
     } else {
         yield put({type: types.MODEL_STATUS_SUCCESS, resp, message: result.statusText});
+        notify.show(`Status of ${resp.model_desc} Updated!`, "success", 5000)
+
     }
 }
 
@@ -109,16 +113,6 @@ function* callDeleteModel(action) {
         error = result.error;
     } else {
         yield put(modelAction.deleteModelSuccess(action.modelId, result.statusText));
+        notify.show("Model Deleted Successfully!", "error",5000)
     }
 } 
-
-// //root saga containing all sagas
-// export function* rootSaga() {
-//     yield  [
-//         fork(MakeWatcher),
-//         fork(submitSaga),
-//         fork(editSaga),
-//         fork(deleteSaga),
-//         fork(MakesPagesWatcher)
-//     ]
-// }

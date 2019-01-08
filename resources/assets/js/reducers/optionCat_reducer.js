@@ -5,10 +5,10 @@ const initialState = {
     optionCategories: [],
     fetching: false,
     message: '',
-    activePage: 1,
-    itemsCountPerPage: 3,
-    totalItemsCount: 1,
-    pageRangeDisplayed: 3,
+    // activePage: 1,
+    // itemsCountPerPage: 3,
+    // totalItemsCount: 1,
+    // pageRangeDisplayed: 3,
 }
 
 const optionCategoriesReducer =  function(state = initialState, action) {
@@ -18,24 +18,25 @@ const optionCategoriesReducer =  function(state = initialState, action) {
            
         case types.GET_OPT_CAT_SUCCESS:
             return Object.assign({}, state, {
-                optionCategories: action.optionCategories.data,
+                optionCategories: action.optionCategories,
                 fetching: false,
-                itemsCountPerPage: action.optionCategories.per_page,
-                totalItemsCount: action.optionCategories.total,
-                activePage: action.optionCategories.current_page
+                // itemsCountPerPage: action.optionCategories.per_page,
+                // totalItemsCount: action.optionCategories.total,
+                // activePage: action.optionCategories.current_page
             })
         
-        case types.GET_OPT_CAT_PAGES:
-            return Object.assign({}, state, {
-                optionCategories: action.resp.data,
-                itemsCountPerPage: action.resp.per_page,
-                totalItemsCount: action.resp.total,
-                activePage: action.resp.current_page
-            })
+        // case types.GET_OPT_CAT_PAGES:
+        //     return Object.assign({}, state, {
+        //         optionCategories: action.resp.data,
+        //         itemsCountPerPage: action.resp.per_page,
+        //         totalItemsCount: action.resp.total,
+        //         activePage: action.resp.current_page
+        //     })
 
         case types.ADD_OPT_CAT_SUCCESS:
+            console.log('act', action)
             return  Object.assign({}, state, {
-                makes:  [...state.optionCategories],
+                optionCategories:  [...state.optionCategories, action.resp],
                 message: action.message
             })
         
@@ -44,7 +45,7 @@ const optionCategoriesReducer =  function(state = initialState, action) {
             return {
                 ...state, 
                 optionCategories: state.optionCategories.map(optionCategory => {
-                    if (optionCategory.oc_id === action.resp.oc_id) {
+                    if (optionCategory.id === action.resp.id) {
                         return action.resp;
                     }
                     return optionCategory;
@@ -56,7 +57,7 @@ const optionCategoriesReducer =  function(state = initialState, action) {
             return {
                 ...state,
                 optionCategories: state.optionCategories.map(optionCategory => {
-                    if(optionCategory.oc_id === action.resp.id) {
+                    if(optionCategory.id === action.resp.id) {
                         return action.resp;
                     }
                     return optionCategory;
@@ -64,7 +65,7 @@ const optionCategoriesReducer =  function(state = initialState, action) {
                 message: action.message
             }
         case types.DELETE_OPT_CAT_SUCCESS:
-            const newOptCat = _.filter(state.optionCategories, optionCategory => optionCategory.oc_id !== action.optCatId);
+            const newOptCat = _.filter(state.optionCategories, optionCategory => optionCategory.id !== action.optCatId);
             return Object.assign({}, state, {
                 optionCategories: newOptCat,
                 message: action.message

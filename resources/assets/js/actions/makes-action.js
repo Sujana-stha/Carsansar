@@ -91,3 +91,17 @@ export function MakesStatusSuccess (makeId, values, message) {
         message
     }
 }
+
+export function requestMakesSingle (makeId) {
+    return {
+        type: types.REQUEST_MAKES_SINGLE,
+        makeId
+    }
+}
+
+export function makesSingleSuccess (makes) {
+    return {
+        type: types.MAKES_SINGLE_SUCCESS,
+        makes
+    }
+}

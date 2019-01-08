@@ -37,3 +37,9 @@ export function updateMakeStatus (makeId, values) {
     return axios.put(`${URL}/api/makes/`+ makeId, values)
     .catch(error => console.log(error));
 }
+
+// GET SINGLE DATA OF MAKES
+export function getSingleMakes (makeId) {
+    return axios.get(`${URL}/api/makes/`+makeId)
+    .catch(error => console.log(error));
+}

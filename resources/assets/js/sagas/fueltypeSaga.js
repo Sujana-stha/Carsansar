@@ -1,9 +1,9 @@
-import {takeLatest, call, put, fork, takeEvery } from 'redux-saga/effects';
+import {takeLatest, call, put } from 'redux-saga/effects';
 import { startSubmit, stopSubmit, reset } from 'redux-form';
 import * as types from '../actions/action-types';
 import * as api from '../api/fueltypes-api';
 import * as fueltypeAction from '../actions/fueltypes-action'
-
+import {notify} from 'react-notify-toast'
 
 //Get makes data in table
 export function* FueltypeWatcher() {
@@ -48,6 +48,7 @@ function* callFueltypeSubmit(action) {
         console.log('err', error)
     } else {
         yield put({type: types.ADD_FUELTYPES_SUCCESS, resp, message: result.statusText});
+        notify.show("Fuel Types Added Successfully!", "success", 5000)
     }
     yield put(stopSubmit('PostFueltypes', error));
     yield put(reset('PostFueltypes'));
@@ -69,6 +70,8 @@ function* callEditFueltype (action) {
         error = result.error;
     } else {
         yield put({type: types.UPDATE_FUELTYPES_SUCCESS, resp, message: result.statusText});
+        notify.show(`${resp.fueltype_desc} Updated Successfully!`, "success", 5000)
+
     }
     yield put(stopSubmit('EditFueltypes', error));
     yield put(reset('EditFueltypes'));
@@ -90,6 +93,8 @@ function* callToggleFueltypeStatus(action) {
         error = result.error;
     } else {
         yield put({type: types.FUELTYPES_STATUS_SUCCESS, resp, message: result.statusText});
+        notify.show(`Status of ${resp.fueltype.desc} Changed`, "success", 5000)
+
     }
 }
 
@@ -107,6 +112,7 @@ function* callDeleteFueltype(action) {
         error = result.error;
     } else {
         yield put(fueltypeAction.deleteFueltypesSuccess(action.fueltypeId, result.statusText));
+        notify.show("Fuel Type Deleted Successfully!", "error", 5000)
     }
 } 
 

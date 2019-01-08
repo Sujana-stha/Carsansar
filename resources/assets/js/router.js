@@ -4,7 +4,7 @@
 import React, { Component } from 'react';
 //import { Router, Route, browserHistory, IndexRoute } from 'react-router';
 import { Route, Switch } from 'react-router-dom';
-
+import Notifications from 'react-notify-toast';
 
 //includes
 import Header from './components/header'
@@ -27,6 +27,9 @@ import UserProfile from './components/users/user-profile'
 import InsertVehicleAttribute from './components/vehicles/insert-vehicle-attribute'
 import VehicleAttributes from './components/vehicles/vehicle-attributes'
 
+import CompanyForm from './components/companies/companies-form'
+import EditCompany from './components/companies/companies-edit'
+
 //Containers
 import ColorListContainer from './containers/color/color-container'
 import InsertColor from './containers/color/insert-color-container'
@@ -39,6 +42,8 @@ import BodiesContainer from './containers/bodies/bodies-container'
 import EnginesizesContainer from './containers/enginesizes/enginesizes-container'
 import FueltypesContainer from './containers/fueltypes/fueltypes-container'
 import TransmissionContainer from './containers/transmissions/transmission-container'
+import CompaniesContainer from './containers/companies/companies-container'
+import OptionsContainer from './containers/options/options-container'
 
 export default (
   
@@ -55,8 +60,9 @@ export default (
  				{/* START CONTENT */}
                 <section id="content">
                   	<Breadcrumb/>
+					<Notifications options={{top: '50px', right: '0px', width: '100%', margin:0, left: 'none'}}/>
                   	{/* start container */}
-				
+
                 	<div className="container">
 							<Route exact path="/" component={DashboardAnalytics}></Route>
 							<Route path="/vehicles" component={VehiclesListing}></Route>
@@ -70,7 +76,7 @@ export default (
 							<Route path="/user-profile" component={UserProfile}></Route>
 							<Route path="/makes" component={MakesListContainer}></Route>
 							{/* <Route path="/add-make" component={MakeForm}></Route> */}
-							{/* <Route path="/edit-make/:id" component={EditMake}/> */}
+							{/* <Route path="/makes/:id" component={MakesListContainer}/> */}
 							<Route path="/models" component={ModelListContainer}></Route>
 							<Route path="/options-categories" component={OptionCategoriesContainer}></Route>
 							<Route path="/categories" component={CategoriesContainer}></Route>
@@ -79,6 +85,8 @@ export default (
 							<Route path="/enginesizes" component={EnginesizesContainer}></Route>
 							<Route path="/fueltypes" component={FueltypesContainer}></Route>
 							<Route path="/transmissions" component={TransmissionContainer}></Route>
+							<Route path="/companies" component={CompaniesContainer}></Route>
+							<Route path="/options" component={OptionsContainer} />
 
  					</div>
             

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-
+ 
 var makeId = null
 
 class MakesList extends Component {
@@ -48,7 +48,7 @@ class MakesList extends Component {
                                         
                             <td>{make.id}</td>
                             <td>{make.make_desc}</td>
-                            <td>{make.created_by}</td>
+                            <td>{make.created_by.name}</td>
                             <td className="action">
                                 <a href="javascript:void(0);" onClick={this.props.onEdit.bind(null, make.id)} className="tooltipped" data-position="top" data-delay="50" data-tooltip="Edit"><i className="material-icons">edit</i></a>
                                 <a className="tooltip" href="javascript:void(0);" onClick={()=>this.deleteItem(make.id)} data-tooltip="Delete"><i className="material-icons">delete</i></a>

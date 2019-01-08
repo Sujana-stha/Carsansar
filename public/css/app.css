@@ -18847,7 +18847,11 @@ tr.group:hover {
   position: absolute;
   z-index: 1;
   bottom: 85%;
-  left: -19%;
+  left: -39%;
+}
+
+.action .tooltip-full {
+  left: -55% !important;
 }
 
 .action .tooltip-text::after {
@@ -18864,5 +18868,23 @@ tr.group:hover {
 .tooltip-text a:hover {
   color: #fff;
   text-decoration: underline;
+}
+
+.collapsible-header {
+  display: block;
+  overflow: auto;
+}
+
+.collapsible {
+  -webkit-box-shadow: none;
+          box-shadow: none;
+  border: none;
+}
+
+.toast-notification {
+  width: auto !important;
+  margin: 0px !important;
+  right: 0px !important;
+  left: auto !important;
 }
 

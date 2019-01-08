@@ -1,9 +1,9 @@
-import {takeLatest, call, put, fork, takeEvery } from 'redux-saga/effects';
-import { startSubmit, stopSubmit } from 'redux-form';
+import {takeLatest, call, put } from 'redux-saga/effects';
+import { startSubmit, stopSubmit, reset } from 'redux-form';
 import * as types from '../actions/action-types';
 import * as api from '../api/options-api';
 import * as optionAction from '../actions/options-actions'
-
+import {notify} from 'react-notify-toast'
 
 //Get Options data in table
 export function* OptionWatcher() {
@@ -48,6 +48,7 @@ function* callOptionSubmit(action) {
         console.log('err', error)
     } else {
         yield put({type: types.ADD_OPTIONS_SUCCESS, resp, message: result.statusText});
+        notify.show("Options Added Successfully!", "success", 5000)
     }
     yield put(stopSubmit('PostOptions', error));
     yield put(reset('PostOptions'));
@@ -70,6 +71,7 @@ function* callEditOption (action) {
         error = result.error;
     } else {
         yield put({type: types.UPDATE_OPTIONS_SUCCESS, resp, message: result.statusText});
+        notify.show(`${resp.option_desc} Updated Successfully!`, "success", 5000)
     }
     yield put(stopSubmit('EditOptions', error));
     yield put(reset('EditOptions'));
@@ -92,6 +94,8 @@ function* callOptToggleStatus(action) {
         error = result.error;
     } else {
         yield put({type: types.OPTIONS_STATUS_SUCCESS, resp, message: result.statusText});
+        notify.show(`Status of ${resp.option_desc} Updated!`, "success", 5000)
+
     }
 }
 
@@ -109,6 +113,7 @@ function* callDeleteOption(action) {
         error = result.error;
     } else {
         yield put(optionAction.deleteOptionsSuccess(action.optionId, result.statusText));
+        notify.show("Options Deleted Successfully!", "error", 5000)
     }
 } 
 
