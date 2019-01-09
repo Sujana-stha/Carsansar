@@ -41,7 +41,7 @@ function* callOptionSubmit(action) {
     let error = {};
     const result =  yield call(api.addOptions, action.values);
     const resp = result.data
-
+    console.log('resp',resp)
     if (result.errors) {
         yield put({ type: types.REQUEST_OPTIONS_FAILED, errors: result.error});
         error = result.error;

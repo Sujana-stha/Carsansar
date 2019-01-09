@@ -9,7 +9,11 @@ class OptionsController extends Controller
 {
     public function index()
     {
-        return Option::all();
+        // return Option::all();
+        // $make = Make::with('createdBy:id,name')->orderBy('id', 'desc')->paginate(3);
+
+        $option = Option::with('createdBy:id,name','optionCategories:id')->orderBy('id','desc')->paginate(3);
+        return $option;
     }
  
     public function show(Option $option)

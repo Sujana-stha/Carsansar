@@ -45,9 +45,9 @@ class OptionsList extends Component {
                                         
                             <td>{option.id}</td>
                             <td>{option.option_desc}</td>
-                            <td>{option.oc_id}</td>
+                            <td>{option.oc_id.id}</td>
 
-                            <td>{option.created_by}</td>
+                            <td>{option.created_by.name}</td>
                             <td className="action">
                                 <a href="javascript:void(0);" onClick={this.props.onEditOptions.bind(null, option.id)} className="tooltipped" data-position="top" data-delay="50" data-tooltip="Edit"><i className="material-icons">edit</i></a>
                                 <a className="tooltip" href="javascript:void(0);" onClick={()=>this.deleteItem(option.id)} data-tooltip="Delete"><i className="material-icons">delete</i></a>

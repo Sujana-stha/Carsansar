@@ -110,7 +110,7 @@ class OptionsListContainer extends Component {
                                 </tr>
                             </thead>
                             {this.props.options.length ? (
-                                <OptionsList options= {this.props.options} onEdit = {this.editOptions} deleteOption = {this.props.requestDeleteOptions} OptionStatus = {this.toggleStatus}/>
+                                <OptionsList options= {this.props.options} onEditOptions = {this.editOptions} deleteOption = {this.props.requestDeleteOptions} OptionStatus = {this.toggleStatus}/>
 
                             ) : (
                                 <tbody>
