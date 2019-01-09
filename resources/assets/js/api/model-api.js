@@ -17,17 +17,43 @@ export function addModel(values) {
     console.log('val',values);
     values.created_by = 1;
     return axios.post(`${URL}/api/models`, values)
-    .catch(error=>console.log(error));
+    .catch(error=> {
+        console.log(error)
+        return {
+            errors: error
+        }
+    });
 }
 
 //DELETE MODEL API
 export function deleteModel(modelId) {
     return axios.delete(`${URL}/api/models/`+ modelId)
-    .catch(error=>console.log(error));
+    .catch(error=> {
+        console.log(error)
+        return {
+            errors: error
+        }
+    });
 }
 
 // UPDATE MODEL API
 export function updateModel(modelId, values) {
     return axios.put(`${URL}/api/models/`+ modelId, values)
-    .catch(error=>console.log(error));
+    .catch(error=> {
+        console.log(error)
+        return {
+            errors: error
+        }
+    });
+}
+
+// GET SINGLE DATA OF Models
+export function getSingleModels (modelId) {
+    return axios.get(`${URL}/api/models/`+modelId)
+    .catch(error=> {
+        console.log(error)
+        return {
+            errors: error
+        }
+    });
 }

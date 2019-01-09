@@ -9,6 +9,7 @@ const initialState = {
     itemsCountPerPage: 3,
     totalItemsCount: 1,
     pageRangeDisplayed: 3,
+    sending: false
 }
 
 const makeReducer =  function(state = initialState, action) {
@@ -22,28 +23,39 @@ const makeReducer =  function(state = initialState, action) {
                 fetching: false,
                 itemsCountPerPage: action.makes.per_page,
                 totalItemsCount: action.makes.total,
-                activePage: action.makes.current_page
+                activePage: action.makes.current_page,
+                sending: false
             })
         
-        case types.MAKES_SINGLE_SUCCESS: 
-            console.log('single', action)
+        case types.REQUEST_MAKES_PAGES:
             return Object.assign({}, state, {
-                singleMake: action.makes
+                fetching: true
             })
         case types.GET_MAKES_PAGES:
             return Object.assign({}, state, {
                 makes: action.resp.data,
                 itemsCountPerPage: action.resp.per_page,
                 totalItemsCount: action.resp.total,
-                activePage: action.resp.current_page
+                activePage: action.resp.current_page,
+                fetching: false,
+                sending: false
+            })
+
+        case types.REQUEST_SUBMIT:
+            return Object.assign({}, state, {
+                sending: true
             })
 
         case types.ADD_MAKES_SUCCESS:
             return  Object.assign({}, state, {
-                makes:  [...state.makes],
-                // message: action.message
+                makes:  [...state.makes]
             })
         
+        case types.REQUEST_UPDATE:
+            return Object.assign({}, state, {
+                sending: true
+            })
+
         case types.UPDATE_MAKES_SUCCESS:
             return {
                 ...state, 
@@ -53,10 +65,10 @@ const makeReducer =  function(state = initialState, action) {
                     }
                     return make;
                 }),
-                // message: action.message
+                sending: false
             };
+
         case types.MAKES_STATUS_SUCCESS:
-          console.log('tion', action)
             return {
                 ...state,
                 makes: state.makes.map(make => {
@@ -65,13 +77,14 @@ const makeReducer =  function(state = initialState, action) {
                     }
                     return make;
                 }),
-                // message: action.message
             }
+
+        
         case types.DELETE_MAKES_SUCCESS:
             const newMake = _.filter(state.makes, make => make.id !== action.makeId);
             return Object.assign({}, state, {
                 makes: newMake,
-                // message: action.message
+                fetching: false
             });
 
         default: 

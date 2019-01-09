@@ -45,7 +45,7 @@ function* callCompanySubmit(action) {
     if (result.errors) {
         yield put({ type: types.REQUEST_COMPANIES_FAILED, errors: result.error});
         error = result.error;
-        console.log('err', error)
+        notify.show("Cannot Add Company!", "error", 5000)
     } else {
         yield put({type: types.ADD_COMPANIES_SUCCESS, resp, message: result.statusText});
         notify.show("Company Added Successfully!", "success", 5000);
@@ -69,6 +69,7 @@ function* callEditCompany (action) {
     if (result.errors) {
         yield put({ type: types.REQUEST_COMPANIES_FAILED, errors: result.error});
         error = result.error;
+        notify.show(`Cannot Update ${resp.name}!`, "error", 5000)
     } else {
         yield put({type: types.UPDATE_COMPANIES_SUCCESS, resp, message: result.statusText});
         notify.show(`${resp.name} Company Updated Successfully!`, "success", 5000);
@@ -93,6 +94,8 @@ function* callCompanyToggleStatus(action) {
     if (result.errors) {
         yield put({ type: types.REQUEST_COMPANIES_FAILED, errors: result.error});
         error = result.error;
+        notify.show(`Cannot Change Status of ${resp.name}!`, "error", 5000)
+
     } else {
         yield put({type: types.COMPANIES_STATUS_SUCCESS, resp, message: result.statusText});
         notify.show("Status Changed Successfully!", "success", 5000);
@@ -110,6 +113,7 @@ function* callDeleteCompany(action) {
     if(result.errors) {
         yield put({ type: types.REQUEST_COMPANIES_FAILED, errors: result.error});
         error = result.error;
+        notify.show("Cannot Delete Company!", "error", 5000)
     } else {
         yield put(companyAction.deleteCompaniesSuccess(action.companyId, result.statusText));
         notify.show("Company Deleted Successfully", "error", 5000);

@@ -39,14 +39,11 @@ export function* submitMakesSaga() {
 }
 function* callMakesSubmit(action) {
     yield put(startSubmit('PostMakes'));
-    let error = {};
     const result =  yield call(api.addMakes, action.values);
     const resp = result.data
-    console.log(result);
+    console.log('result', result.errors)
     if (result.errors) {
-        yield put({ type: types.REQUEST_FAILED, errors: result.error});
-        error = result.error;
-        console.log('err', error)
+        yield put({ type: types.REQUEST_FAILED, errors: result.errors});
         notify.show("Cannot Add Makes!","error", 5000);
 
     } else {
@@ -71,8 +68,11 @@ function* callEditMake (action) {
     const result =  yield call(api.updateMake, action.values.id, action.values);
     const resp = result.data;
     if (result.errors) {
-        yield put({ type: types.REQUEST_FAILED, errors: result.error});
+        yield put({ type: types.REQUEST_FAILED, errors: result.errors});
         error = result.error;
+        notify.show(`Cannot Update ${resp.make_desc}!`,"error", 5000);
+        
+
     } else {
         // yield put({type: types.UPDATE_MAKES_SUCCESS, resp, message: result.statusText});
         yield put ({type: types.REQUEST_MAKES_PAGES})
@@ -91,13 +91,14 @@ export function* toggleStatusSaga() {
 
 function* callToggleStatus(action) {
     let error = {};
-    console.log('action', action)
     const result =  yield call(api.updateMakeStatus, action.makeId, action.values);
     const resp = result.data;
 
     if (result.errors) {
         yield put({ type: types.REQUEST_FAILED, errors: result.error});
         error = result.error;
+        notify.show(`Cannot Change Status of ${resp.make_desc}!`,"error", 5000);
+
     } else {
         yield put({type: types.MAKES_STATUS_SUCCESS, resp, message: result.statusText});
         notify.show(`Status of ${resp.make_desc} Updated!`, "success",5000);
@@ -117,6 +118,8 @@ function* callDeleteMake(action) {
     if(result.errors) {
         yield put({ type: types.REQUEST_FAILED, errors: result.error});
         error = result.error;
+        notify.show("Cannot Delete Make!","error", 5000);
+
     } else {
         yield put(makeAction.deleteMakesSuccess(action.makeId, result.statusText));
         notify.show("Makes Deleted Successfully!", "error", 5000);
@@ -131,7 +134,6 @@ export function* singleMakeWatch () {
 function* callMakeSingle(action) {
     const result = yield call(api.getSingleMakes, action.makeId);
     const makes = result.data
-    console.log('result', makes)
     if(result.errors) {
         yield put({ type: types.REQUEST_FAILED, errors: result.error});
         error = result.error;

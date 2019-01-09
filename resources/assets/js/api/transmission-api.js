@@ -17,13 +17,23 @@ export function addTransmission(values) {
     console.log('val',values);
     values.created_by = 1;
     return axios.post(`${URL}/api/transmissions`, values)
-    .catch(error=>console.log(error));
+    .catch(error=> {
+        console.log(error)
+        return {
+            errors: error
+        }
+    });
 }
 
 //DELETE TRANSMISSION API
 export function deleteTransmission(transmissionId) {
     return axios.delete(`${URL}/api/transmissions/`+ transmissionId)
-    .catch(error=>console.log(error));
+    .catch(error=> {
+        console.log(error)
+        return {
+            errors: error
+        }
+    });
 }
 
 // UPDATE TRANSMISSION API
@@ -31,11 +41,32 @@ export function updateTransmission(transmissionId, values) {
     console.log('va', values)
     console.log('id', transmissionId)
     return axios.put(`${URL}/api/transmissions/`+ transmissionId, values)
-    .catch(error=>console.log(error));
+    .catch(error=> {
+        console.log(error)
+        return {
+            errors: error
+        }
+    });
 }
 
 // TOGGLE STATUS API
 export function updateTransmissionStatus (transmissionId, values) {
     return axios.put(`${URL}/api/transmissions/`+ transmissionId, values)
-    .catch(error => console.log(error));
+    .catch(error=> {
+        console.log(error)
+        return {
+            errors: error
+        }
+    });
+}
+
+// GET SINGLE DATA OF Transmissions
+export function getSingleTransmissions (transmissionId) {
+    return axios.get(`${URL}/api/transmissions/`+transmissionId)
+    .catch(error=> {
+        console.log(error)
+        return {
+            errors: error
+        }
+    });
 }

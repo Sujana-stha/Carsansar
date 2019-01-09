@@ -12,7 +12,6 @@ export function* CategoryWatcher() {
 }
 function* CategorySaga() {
     const response = yield call(api.getCategories);
-    console.log('resp', response);
     const categories = response.data
     yield put({type: types.GET_CATEGORIES_SUCCESS, categories});
 }
@@ -47,7 +46,7 @@ function* callCategoriesSubmit(action) {
     if (result.errors) {
         yield put({ type: types.REQUEST_CATEGORIES_FAILED, errors: result.error});
         error = result.error;
-        console.log('err', error)
+        notify.show("Cannot Add Categories!", "error", 5000)
     } else {
         yield put({type: types.ADD_CATEGORIES_SUCCESS, resp, message: result.statusText});
         notify.show("Categories Added Successfully!", "success", 5000)
@@ -72,6 +71,7 @@ function* callEditCategory (action) {
     if (result.errors) {
         yield put({ type: types.REQUEST_CATEGORIES_FAILED, errors: result.error});
         error = result.error;
+        notify.show(`Cannot Update ${resp.category_desc}`, "error", 5000)
     } else {
         yield put({type: types.UPDATE_CATEGORIES_SUCCESS, resp, message: result.statusText});
         notify.show("Categories Updated Successfully!", "success", 5000)
@@ -88,13 +88,14 @@ export function* toggleCategoriesStatusSaga() {
 
 function* callCategoryToggleStatus(action) {
     let error = {};
-    console.log('action', action)
     const result =  yield call(api.updateCategoriesStatus, action.categoryId, action.values);
     const resp = result.data;
 
     if (result.errors) {
         yield put({ type: types.REQUEST_CATEGORIES_FAILED, errors: result.error});
         error = result.error;
+        notify.show(`Cannot Change Status of ${resp.category_desc}`, "error", 5000)
+
     } else {
         yield put({type: types.CATEGORIES_STATUS_SUCCESS, resp, message: result.statusText});
         notify.show("Status Updated Successfully!", "success", 5000)
@@ -115,6 +116,7 @@ function* callDeleteCategory(action) {
     if(result.errors) {
         yield put({ type: types.REQUEST_CATEGORIES_FAILED, errors: result.error});
         error = result.error;
+        notify.show("Cannot Delere Category", "error", 5000)
     } else {
         yield put(categoryAction.deleteCategoriesSuccess(action.categoryId, result.statusText));
         notify.show("Categories Deleted Successfully!", "error", 5000)

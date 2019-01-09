@@ -17,23 +17,53 @@ export function addCompanies(values) {
     console.log('val',values);
     values.created_by = 1;
     return axios.post(`${URL}/api/companies`, values)
-    .catch(error=>console.log(error));
+    .catch(error=> {
+        console.log(error)
+        return {
+            errors: error
+        }
+    });
 }
 
 //DELETE COMPANIES API
 export function deleteCompanies(companyId) {
     return axios.delete(`${URL}/api/companies/`+ companyId)
-    .catch(error=>console.log(error));
+    .catch(error=> {
+        console.log(error)
+        return {
+            errors: error
+        }
+    });
 }
 
 // UPDATE COMPANIES API
 export function updateCompanies(companyId, values) {
     return axios.put(`${URL}/api/companies/`+ companyId, values)
-    .catch(error=>console.log(error));
+    .catch(error=> {
+        console.log(error)
+        return {
+            errors: error
+        }
+    });
 }
 
 // TOGGLE STATUS API
 export function updateCompaniesStatus (companyId, values) {
     return axios.put(`${URL}/api/companies/`+ companyId, values)
-    .catch(error => console.log(error));
+    .catch(error=> {
+        console.log(error)
+        return {
+            errors: error
+        }
+    });
+}
+// GET SINGLE DATA OF Companies
+export function getSingleCompanies (companyId) {
+    return axios.get(`${URL}/api/companies/`+companyId)
+    .catch(error=> {
+        console.log(error)
+        return {
+            errors: error
+        }
+    });
 }

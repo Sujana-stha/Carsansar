@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import store from '../../store';
-
+import { connect } from 'react-redux';
 
 class MakeForm extends Component {
     renderInputField({input, label, type, meta: {touched, error}}) {
@@ -38,9 +38,14 @@ class MakeForm extends Component {
                             
                             <div className="row">
                                 <div className="input-field col s12">
-                                    <button className="btn cyan waves-effect waves-light right" type="submit" name="action">Save
-                                        <i className="material-icons right">send</i>
-                                    </button>
+                                    {this.props.sending ? (
+                                        <button className="btn cyan waves-effect waves-light right" type="submit" name="action">Sending...
+                                        </button>
+                                    ): (
+                                        <button className="btn cyan waves-effect waves-light right" type="submit" name="action">Save
+                                            <i className="material-icons right">send</i>
+                                        </button>
+                                    )}
                                 </div>
                             </div>
                         </form>
@@ -58,9 +63,13 @@ function validate(values) {
     }
     return errors;
 }
-
+function mapStateToProps(store) {
+    return {
+        sending: store.makeState.sending
+    }
+}
 
 export default reduxForm({
     validate,
     form: 'PostMakes'
-})(MakeForm);
+})(connect(mapStateToProps, null)(MakeForm));

@@ -18888,3 +18888,9 @@ tr.group:hover {
   left: auto !important;
 }
 
+.loading-text {
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+}
+

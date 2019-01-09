@@ -1,30 +1,19 @@
 import React, { Component } from 'react';
-import store from '../../store';
 import { Field, reduxForm } from 'redux-form';
-import {connect} from 'react-redux';
-import * as makeApi from '../../api/makes-api';
+import * as Api from '../../api/options-api'
 
 
-var globalData = null;
-
-
-class EditMake extends Component {
+class EditOption extends Component {
+    
     componentDidMount() {
-        this.handleInitialize();
-        makeApi.getMakes();
+        const id =  this.props.editId;
+        Api.getSingleOptions(id).then((response)=> {
+            console.log('respp',response);
+            const data =  response.data;
+            this.props.initialize(data);
+        })
     }
     
-    handleInitialize() {
-        const id = this.props.editId;
-        
-        console.log('length',this.props.makes[0].id);
-        for (var i = 0; i < this.props.makes.length; i++ ) {
-            if(this.props.makes[i].id == id) {
-                globalData = this.props.makes[i]
-            }
-        }
-        this.props.initialize(globalData);
-    }
     renderInputField({input, label, type, meta: {touched, error}}) {
         return (
             <div>
@@ -46,18 +35,32 @@ class EditMake extends Component {
         return (
             <div>
                 
-                <h4 className="header2">Update Make</h4>
+                <h4 className="header2">Update Options</h4>
                 <div className="card-panel">
 					<div className="row">
                         <form className="col s12" onSubmit= { handleSubmit  }>
                         <Field 
-                            label="Make Desciption"
-                            name="make_desc"
+                            label="Options Desciption"
+                            name="option_desc"
                             type="text"
-                            value="make_desc"
+                            value="option_desc"
                             component={this.renderInputField} 
                         />
-                        
+                        <div>
+                            <label>Option Categories</label>
+                            <Field 
+                                name="oc_id"
+                                component="select"
+                                className="browser-default"
+                                value="oc_id"
+                            >
+                                {this.props.optionLists.map((optionList) => {
+                                    return (
+                                        <option key= {optionList.id} value={optionList.id}>{optionList.optioncategory_desc}</option>
+                                    )
+                                })}
+                            </Field>
+                        </div>
                         <div className="row">
 								<div className="input-field col s12">
 									<button className="btn cyan waves-effect waves-light right" type="submit" name="action">Update
@@ -75,18 +78,16 @@ class EditMake extends Component {
 function validate(values) {
     const errors = {}
 
-    if(!values.make_desc) {
-        errors.make_desc = "The Field is empty"
+    if(!values.option_desc) {
+        errors.option_desc = "The Field is empty"
     }
-    
+    if(!values.oc_id) {
+        errors.oc_id = "The Field is empty"
+    }
     return errors;
 }
-function mapStateToProps(store) {
-    return {
-        makes: store.makeState.makes
-    }
-}
+
 export default reduxForm({
     validate,
-    form: 'EditMakes'
-})(connect(mapStateToProps, null)(EditMake));
+    form: 'EditOptions'
+})(EditOption);

@@ -45,7 +45,7 @@ function* callEnginesizeSubmit(action) {
     if (result.errors) {
         yield put({ type: types.REQUEST_ENGINESIZES_FAILED, errors: result.error});
         error = result.error;
-        console.log('err', error)
+        notify.show("Cannot Add Engine!", "error", 5000)
     } else {
         yield put({type: types.ADD_ENGINESIZES_SUCCESS, resp, message: result.statusText});
         notify.show("Engine Added Successfully!", "success", 5000)
@@ -68,6 +68,8 @@ function* callEditEnginesize (action) {
     if (result.errors) {
         yield put({ type: types.REQUEST_ENGINESIZES_FAILED, errors: result.error});
         error = result.error;
+        notify.show(`Cannot Update ${resp.enginesize_desc}!`, "error", 5000)
+
     } else {
         yield put({type: types.UPDATE_ENGINESIZES_SUCCESS, resp, message: result.statusText});
         notify.show("Engine Updated Successfully!", "success", 5000)
@@ -90,6 +92,8 @@ function* callToggleEnginesizeStatus(action) {
     if (result.errors) {
         yield put({ type: types.REQUEST_ENGINESIZES_FAILED, errors: result.error});
         error = result.error;
+        notify.show(`Cannot Delete ${resp.enginesize_desc}!`, "error", 5000)
+
     } else {
         yield put({type: types.ENGINESIZES_STATUS_SUCCESS, resp, message: result.statusText});
         notify.show("Status of  Updated!", "success", 5000)
@@ -109,6 +113,7 @@ function* callDeleteEnginesize(action) {
     if(result.errors) {
         yield put({ type: types.REQUEST_ENGINESIZES_FAILED, errors: result.error});
         error = result.error;
+        notify.show("Cannot Delete Engine!", "error", 5000)
     } else {
         yield put(enginesizeAction.deleteEnginesizesSuccess(action.enginesizeId, result.statusText));
         notify.show("Engine Deleted Successfully!", "error", 5000)
