@@ -91,7 +91,7 @@ class OptionsListContainer extends Component {
                 <div className="row">
                     <div className="col s12 m3 l3">
                         {this.state.isEditing ? (
-                            <EditOptions onSubmit = {this.submitEditOption.bind(this)} editId = {globalId} />
+                            <EditOptions onSubmit = {this.submitEditOption.bind(this)} editId = {globalId} optionLists = {this.props.optionCategories}/>
                         ): (
                             <OptionsForm onSubmit = { this.submitOption.bind(this) } optionLists = {this.props.optionCategories}/>
                         )}

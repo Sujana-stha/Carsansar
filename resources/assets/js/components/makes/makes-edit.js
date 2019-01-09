@@ -3,12 +3,10 @@ import store from '../../store';
 import { Field, reduxForm } from 'redux-form';
 import * as makeApi from '../../api/makes-api';
 
-
 class EditMake extends Component {
     componentDidMount() {
         const id =  this.props.editId;
         makeApi.getSingleMakes(id).then((response)=> {
-            console.log('respp',response);
             const data =  response.data;
             this.props.initialize(data);
         })
@@ -62,11 +60,9 @@ class EditMake extends Component {
 }
 function validate(values) {
     const errors = {}
-
     if(!values.make_desc) {
         errors.make_desc = "The Field is empty"
     }
-    
     return errors;
 }
 

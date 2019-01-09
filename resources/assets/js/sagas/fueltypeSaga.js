@@ -45,7 +45,8 @@ function* callFueltypeSubmit(action) {
     if (result.errors) {
         yield put({ type: types.REQUEST_FUELTYPES_FAILED, errors: result.error});
         error = result.error;
-        console.log('err', error)
+        notify.show("Cannot Add FuelTypes!", "error", 5000)
+
     } else {
         yield put({type: types.ADD_FUELTYPES_SUCCESS, resp, message: result.statusText});
         notify.show("Fuel Types Added Successfully!", "success", 5000)
@@ -68,6 +69,8 @@ function* callEditFueltype (action) {
     if (result.errors) {
         yield put({ type: types.REQUEST_FUELTYPES_FAILED, errors: result.error});
         error = result.error;
+        notify.show(`Cannot Update ${resp.fueltype_desc}!`, "error", 5000)
+
     } else {
         yield put({type: types.UPDATE_FUELTYPES_SUCCESS, resp, message: result.statusText});
         notify.show(`${resp.fueltype_desc} Updated Successfully!`, "success", 5000)
@@ -91,6 +94,8 @@ function* callToggleFueltypeStatus(action) {
     if (result.errors) {
         yield put({ type: types.REQUEST_FUELTYPES_FAILED, errors: result.error});
         error = result.error;
+        notify.show(`Cannot Change Status of ${resp.fueltype_desc}!`, "error", 5000)
+
     } else {
         yield put({type: types.FUELTYPES_STATUS_SUCCESS, resp, message: result.statusText});
         notify.show(`Status of ${resp.fueltype.desc} Changed`, "success", 5000)
@@ -110,6 +115,7 @@ function* callDeleteFueltype(action) {
     if(result.errors) {
         yield put({ type: types.REQUEST_FUELTYPES_FAILED, errors: result.error});
         error = result.error;
+        notify.show("Cannot Delete FuelTypes!", "error", 5000)
     } else {
         yield put(fueltypeAction.deleteFueltypesSuccess(action.fueltypeId, result.statusText));
         notify.show("Fuel Type Deleted Successfully!", "error", 5000)

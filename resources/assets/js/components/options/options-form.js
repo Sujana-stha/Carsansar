@@ -59,7 +59,7 @@ class OptionsForm extends Component {
                                 type="text"
                                 component={this.renderInputField} 
                             />
-                            <div className="col s12">
+                            <div>
                                 <label>Option Categories</label>
                                 <Field 
                                     name="oc_id"

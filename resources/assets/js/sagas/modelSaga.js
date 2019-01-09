@@ -45,7 +45,7 @@ function* callModelSubmit(action) {
     if (result.errors) {
         yield put({ type: types.REQUEST_MODEL_FAILED, errors: result.error});
         error = result.error;
-        console.log('err', error)
+        notify.show("Cannot Add Model!", "error", 5000)
     } else {
         yield put({type: types.ADD_MODEL_SUCCESS, resp, message: result.statusText});
         notify.show("Model Added Successfully!", "success", 5000)
@@ -69,6 +69,7 @@ function* callModelEdit (action) {
     if (result.errors) {
         yield put({ type: types.REQUEST_MODEL_FAILED, errors: result.error});
         error = result.error;
+        notify.show(`Cannot Update ${resp.model_desc}`, "error", 5000)
     } else {
         yield put({type: types.UPDATE_MODEL_SUCCESS, resp, message: result.statusText});
         notify.show(`${resp.model_desc} Updated Successfully`, "success", 5000)
@@ -92,6 +93,7 @@ function* callModelToggleStatus(action) {
     if (result.errors) {
         yield put({ type: types.REQUEST_MODEL_FAILED, errors: result.error});
         error = result.error;
+        notify.show(`Cannot Change Status of ${resp.model_desc}`, "error", 5000)
     } else {
         yield put({type: types.MODEL_STATUS_SUCCESS, resp, message: result.statusText});
         notify.show(`Status of ${resp.model_desc} Updated!`, "success", 5000)
@@ -111,6 +113,7 @@ function* callDeleteModel(action) {
     if(result.errors) {
         yield put({ type: types.REQUEST_MODEL_FAILED, errors: result.error});
         error = result.error;
+        notify.show("Cannot Delete Model", "error", 5000)
     } else {
         yield put(modelAction.deleteModelSuccess(action.modelId, result.statusText));
         notify.show("Model Deleted Successfully!", "error",5000)

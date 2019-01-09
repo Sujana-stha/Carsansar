@@ -44,9 +44,10 @@ function* callBodySubmit(action) {
     const resp = result.data
 
     if (result.errors) {
-        yield put({ type: types.REQUEST_BODIES_FAILED, errors: result.error});
+        yield put({ type: types.REQUEST_BODIES_FAILED, errors: result.errors});
         error = result.error;
-        console.log('err', error)
+        notify.show("Cannot Add Body!","error", 5000);
+
     } else {
         yield put({type: types.ADD_BODIES_SUCCESS, resp, message: result.statusText});
         notify.show("Body Added successfully!", "success", 5000)
@@ -68,8 +69,10 @@ function* callEditBody (action) {
     const resp = result.data;
 
     if (result.errors) {
-        yield put({ type: types.REQUEST_BODIES_FAILED, errors: result.error});
+        yield put({ type: types.REQUEST_BODIES_FAILED, errors: result.errors});
         error = result.error;
+        notify.show(`Cannot Update ${resp.body_desc}!`,"error", 5000);
+
     } else {
         yield put({type: types.UPDATE_BODIES_SUCCESS, resp, message: result.statusText});
         notify.show("Body Updated successfully!", "success", 5000)
@@ -94,6 +97,8 @@ function* callToggleBodyStatus(action) {
     if (result.errors) {
         yield put({ type: types.REQUEST_BODIES_FAILED, errors: result.error});
         error = result.error;
+        notify.show(`Cannot Change Status of ${resp.body_desc}!`,"error", 5000);
+
     } else {
         yield put({type: types.BODIES_STATUS_SUCCESS, resp, message: result.statusText});
         notify.show("Status changed successfully!", "success", 5000)
@@ -114,6 +119,7 @@ function* callDeleteBody(action) {
     if(result.errors) {
         yield put({ type: types.REQUEST_BODIES_FAILED, errors: result.error});
         error = result.error;
+        notify.show("Cannot Delete Body!", "error", 5000)
     } else {
         yield put(bodyAction.deleteBodiesSuccess(action.bodyId, result.statusText));
         notify.show("Body Deleted successfully!", "error", 5000)

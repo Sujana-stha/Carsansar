@@ -5,18 +5,14 @@ import MakesList from '../../components/makes/makes';
 import store from '../../store';
 import { requestMakes, requestDeleteMakes, requestSubmitMake, requestMakesPages,requestUpdateMakes, requestMakesStatus } from  '../../actions/makes-action';
 
-
 //COMPONENT
 import MakeForm from './makes-form';
 import EditMake from '../../components/makes/makes-edit';
 
-var globalId = null
-var page = null
 class MakesListContainer extends Component {
     constructor() {
         super();
         this.state= {
-            hide: true,
             isEditing: false
         }
         this.handlePageChange = this.handlePageChange.bind(this)
@@ -25,44 +21,31 @@ class MakesListContainer extends Component {
 
     }
 
-    hideMessage (e) {
-        e.preventDefault();
-        this.setState ({
-            hide: false
-        })
-    }
-
     componentDidMount() {
         // call action to run the relative saga
         this.props.requestMakes();
-        page = this.props.activePage;
+        // page = this.props.activePage;
 
     }
 
     // submit function for new data
     submitMake(values) {
         this.props.requestSubmitMake(values);
-        this.setState ({
-            hide: true
-        })
     }
 
     // submit function to update data
-    submitEditMake(values, page) {
-        console.log("vvv", page);
+    submitEditMake(values) {
         
-        this.props.requestUpdateMakes(values, page);
+        this.props.requestUpdateMakes(values);
         this.setState({
-            isEditing : false,
-            hide: true
+            isEditing : false
         })
     }
     
     //function to call form of edit
     editMakes(values) {
-        globalId = values
         this.setState ({
-            isEditing : true
+            isEditing : values
         })
     }
 
@@ -73,42 +56,44 @@ class MakesListContainer extends Component {
     // pagination function
     handlePageChange(pageNumber) {
         console.log(`active page is ${pageNumber}`);
-        console.log('page', this.props)
         this.props.requestMakesPages(pageNumber)
         
     }
     
     toggleStatus (makeId, status) {
-        console.log('id', makeId)
-        console.log('val', status)
         const newMakesStatus = {
             status: !status
         }
         this.props.requestMakesStatus(makeId, newMakesStatus)
     }
-
+    renderList() {
+        if(this.props.fetching) {
+            return (
+                <tbody>
+                    <tr><td>LOADING...</td></tr>
+                </tbody>
+            )
+        } else {
+            if(this.props.makes.length) {
+                return (
+                    <MakesList makes= {this.props.makes} onEdit = {this.editMakes} deleteMake = {this.props.requestDeleteMakes} makeStatus = {this.toggleStatus}/>
+                )
+            } else {
+                return (
+                    <tbody>
+                        <tr><td>No Results Found !</td></tr>
+                    </tbody>
+                )
+            }
+        }
+    }
     render() {
-        console.log('prop', this.props)
         return (
             <div>
-                {/* {this.props.message.trim().length && this.state.hide ? (
-                   
-                    <div id="card-alert" className="card green">
-                        <div className="card-content white-text">
-                            <p>{this.props.message}</p>
-                        </div>
-                        <button type="button" className="close white-text" data-dismiss="alert" aria-label="Close">
-                            <span onClick={this.hideMessage.bind(this)} aria-hidden="true">×</span>
-                        </button>
-                    </div>
-                ): (
-                    <div></div>
-                )} */}
-                
                 <div className="row">
                     <div className="col s12 m3 l3">
                         {this.state.isEditing ? (
-                            <EditMake onSubmit = {this.submitEditMake.bind(this)} editId = {globalId} />
+                            <EditMake onSubmit = {this.submitEditMake.bind(this)} editId = {this.state.isEditing} />
                         ): (
                             <MakeForm onSubmit = { this.submitMake.bind(this) }/>
                         )}
@@ -125,16 +110,7 @@ class MakesListContainer extends Component {
                                     <th>Status</th>
                                 </tr>
                             </thead>
-                            {this.props.makes.length ? (
-                                <MakesList makes= {this.props.makes} onEdit = {this.editMakes} deleteMake = {this.props.requestDeleteMakes} makeStatus = {this.toggleStatus}/>
-
-                            ) : (
-                                <tbody>
-                                    <tr>
-                                        <td >No Results Found !</td>
-                                    </tr>
-                                </tbody>
-                            )}
+                            {this.renderList()}
                         </table>
                         <div className="col s12 mt-2 mb-2 left-align">
                             <Pagination
@@ -162,6 +138,7 @@ function mapStateToProps(store) {
         itemsCountPerPage: store.makeState.itemsCountPerPage,
         totalItemsCount: store.makeState.totalItemsCount,
         pageRangeDisplayed: store.makeState.pageRangeDisplayed,
+        fetching: store.makeState.fetching
     }
 }
 

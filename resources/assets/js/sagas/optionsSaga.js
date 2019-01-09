@@ -45,7 +45,7 @@ function* callOptionSubmit(action) {
     if (result.errors) {
         yield put({ type: types.REQUEST_OPTIONS_FAILED, errors: result.error});
         error = result.error;
-        console.log('err', error)
+        notify.show("Cannot Add Options!", "error", 5000)
     } else {
         yield put({type: types.ADD_OPTIONS_SUCCESS, resp, message: result.statusText});
         notify.show("Options Added Successfully!", "success", 5000)
@@ -69,6 +69,7 @@ function* callEditOption (action) {
     if (result.errors) {
         yield put({ type: types.REQUEST_OPTIONS_FAILED, errors: result.error});
         error = result.error;
+        notify.show(`Cannot Update ${resp.option_desc}!`, "error", 5000)
     } else {
         yield put({type: types.UPDATE_OPTIONS_SUCCESS, resp, message: result.statusText});
         notify.show(`${resp.option_desc} Updated Successfully!`, "success", 5000)
@@ -92,6 +93,7 @@ function* callOptToggleStatus(action) {
     if (result.errors) {
         yield put({ type: types.REQUEST_OPTIONS_FAILED, errors: result.error});
         error = result.error;
+        notify.show(`Cannot Change Status of ${resp.option_desc}`, "error", 5000)
     } else {
         yield put({type: types.OPTIONS_STATUS_SUCCESS, resp, message: result.statusText});
         notify.show(`Status of ${resp.option_desc} Updated!`, "success", 5000)
@@ -111,6 +113,7 @@ function* callDeleteOption(action) {
     if(result.errors) {
         yield put({ type: types.REQUEST_OPTIONS_FAILED, errors: result.error});
         error = result.error;
+        notify.show("Cannot Add Options", "error", 5000)
     } else {
         yield put(optionAction.deleteOptionsSuccess(action.optionId, result.statusText));
         notify.show("Options Deleted Successfully!", "error", 5000)

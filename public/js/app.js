@@ -24368,34 +24368,49 @@ function getMakesPages(pageNumber) {
 } // ADD NEW MAKES API
 
 function addMakes(values) {
-  console.log('val', values);
-  values.created_by = 1;
+  console.log('val', values); // values.created_by = 1;
+
   return __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post("".concat(URL, "/api/makes"), values).catch(function (error) {
-    return console.log(error);
+    console.log(error);
+    return {
+      errors: error
+    };
   });
 } //DELETE MAKES API
 
 function deleteMake(makeId) {
   return __WEBPACK_IMPORTED_MODULE_0_axios___default.a.delete("".concat(URL, "/api/makes/") + makeId).catch(function (error) {
-    return console.log(error);
+    console.log(error);
+    return {
+      errors: error
+    };
   });
 } // UPDATE MAKES API
 
 function updateMake(makeId, values) {
   return __WEBPACK_IMPORTED_MODULE_0_axios___default.a.put("".concat(URL, "/api/makes/") + makeId, values).catch(function (error) {
-    return console.log(error);
+    console.log(error);
+    return {
+      errors: error
+    };
   });
 } // TOGGLE STATUS API
 
 function updateMakeStatus(makeId, values) {
   return __WEBPACK_IMPORTED_MODULE_0_axios___default.a.put("".concat(URL, "/api/makes/") + makeId, values).catch(function (error) {
-    return console.log(error);
+    console.log(error);
+    return {
+      errors: error
+    };
   });
 } // GET SINGLE DATA OF MAKES
 
 function getSingleMakes(makeId) {
   return __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get("".concat(URL, "/api/makes/") + makeId).catch(function (error) {
-    return console.log(error);
+    console.log(error);
+    return {
+      errors: error
+    };
   });
 }
 
@@ -29791,6 +29806,7 @@ module.exports = Cancel;
 /* harmony export (immutable) */ __webpack_exports__["a"] = addModel;
 /* harmony export (immutable) */ __webpack_exports__["b"] = deleteModel;
 /* harmony export (immutable) */ __webpack_exports__["e"] = updateModel;
+/* unused harmony export getSingleModels */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
 
@@ -29808,19 +29824,37 @@ function addModel(values) {
   console.log('val', values);
   values.created_by = 1;
   return __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post("".concat(URL, "/api/models"), values).catch(function (error) {
-    return console.log(error);
+    console.log(error);
+    return {
+      errors: error
+    };
   });
 } //DELETE MODEL API
 
 function deleteModel(modelId) {
   return __WEBPACK_IMPORTED_MODULE_0_axios___default.a.delete("".concat(URL, "/api/models/") + modelId).catch(function (error) {
-    return console.log(error);
+    console.log(error);
+    return {
+      errors: error
+    };
   });
 } // UPDATE MODEL API
 
 function updateModel(modelId, values) {
   return __WEBPACK_IMPORTED_MODULE_0_axios___default.a.put("".concat(URL, "/api/models/") + modelId, values).catch(function (error) {
-    return console.log(error);
+    console.log(error);
+    return {
+      errors: error
+    };
+  });
+} // GET SINGLE DATA OF Models
+
+function getSingleModels(modelId) {
+  return __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get("".concat(URL, "/api/models/") + modelId).catch(function (error) {
+    console.log(error);
+    return {
+      errors: error
+    };
   });
 }
 
@@ -29939,6 +29973,7 @@ function ModelStatusSuccess(modelId, values, message) {
 /* harmony export (immutable) */ __webpack_exports__["b"] = deleteOptionsCategories;
 /* harmony export (immutable) */ __webpack_exports__["d"] = updateOptionsCategories;
 /* harmony export (immutable) */ __webpack_exports__["e"] = updateOptionsCategoriesStatus;
+/* unused harmony export getSingleOptionsCategories */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
 
@@ -29956,26 +29991,47 @@ function addOptionsCategories(values) {
   console.log('val', values);
   values.created_by = 1;
   return __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post("".concat(URL, "/api/optionsCategories"), values).catch(function (error) {
-    return console.log(error);
+    console.log(error);
+    return {
+      errors: error
+    };
   });
 } //DELETE OPTION CATEGORIES API
 
 function deleteOptionsCategories(optCatId) {
   console.log('ddd', optCatId);
   return __WEBPACK_IMPORTED_MODULE_0_axios___default.a.delete("".concat(URL, "/api/optionsCategories/") + optCatId).catch(function (error) {
-    return console.log(error);
+    console.log(error);
+    return {
+      errors: error
+    };
   });
 } // UPDATE OPTION CATEGORIES API
 
 function updateOptionsCategories(optCatId, values) {
   return __WEBPACK_IMPORTED_MODULE_0_axios___default.a.put("".concat(URL, "/api/optionsCategories/") + optCatId, values).catch(function (error) {
-    return console.log(error);
+    console.log(error);
+    return {
+      errors: error
+    };
   });
 } // TOGGLE STATUS API
 
 function updateOptionsCategoriesStatus(optCatId, values) {
   return __WEBPACK_IMPORTED_MODULE_0_axios___default.a.put("".concat(URL, "/api/optionsCategories/") + optCatId, values).catch(function (error) {
-    return console.log(error);
+    console.log(error);
+    return {
+      errors: error
+    };
+  });
+} // GET SINGLE DATA OF OptionsCategories
+
+function getSingleOptionsCategories(optCatId) {
+  return __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get("".concat(URL, "/api/optionsCategories/") + optCatId).catch(function (error) {
+    console.log(error);
+    return {
+      errors: error
+    };
   });
 }
 
@@ -29990,6 +30046,7 @@ function updateOptionsCategoriesStatus(optCatId, values) {
 /* harmony export (immutable) */ __webpack_exports__["b"] = deleteCategories;
 /* harmony export (immutable) */ __webpack_exports__["e"] = updateCategories;
 /* harmony export (immutable) */ __webpack_exports__["f"] = updateCategoriesStatus;
+/* unused harmony export getSingleCategories */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
 
@@ -30004,28 +30061,48 @@ function getCategoriesPages(pageNumber) {
 } // ADD NEW CATEGORIES API
 
 function addCategories(values) {
-  console.log('val', values);
   values.created_by = 1;
   return __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post("".concat(URL, "/api/categories"), values).catch(function (error) {
-    return console.log(error);
+    console.log(error);
+    return {
+      errors: error
+    };
   });
 } //DELETE CATEGORIES API
 
 function deleteCategories(categoryId) {
   return __WEBPACK_IMPORTED_MODULE_0_axios___default.a.delete("".concat(URL, "/api/categories/") + categoryId).catch(function (error) {
-    return console.log(error);
+    console.log(error);
+    return {
+      errors: error
+    };
   });
 } // UPDATE CATEGORIES API
 
 function updateCategories(categoryId, values) {
   return __WEBPACK_IMPORTED_MODULE_0_axios___default.a.put("".concat(URL, "/api/categories/") + categoryId, values).catch(function (error) {
-    return console.log(error);
+    console.log(error);
+    return {
+      errors: error
+    };
   });
 } // TOGGLE STATUS API
 
 function updateCategoriesStatus(categoryId, values) {
   return __WEBPACK_IMPORTED_MODULE_0_axios___default.a.put("".concat(URL, "/api/categories/") + categoryId, values).catch(function (error) {
-    return console.log(error);
+    console.log(error);
+    return {
+      errors: error
+    };
+  });
+} // GET SINGLE DATA OF CAtegories
+
+function getSingleCategories(categoryId) {
+  return __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get("".concat(URL, "/api/categories/") + categoryId).catch(function (error) {
+    console.log(error);
+    return {
+      errors: error
+    };
   });
 }
 
@@ -30145,6 +30222,7 @@ function CategoriesStatusSuccess(categoryId, values, message) {
 /* harmony export (immutable) */ __webpack_exports__["b"] = deleteDrives;
 /* harmony export (immutable) */ __webpack_exports__["e"] = updateDrives;
 /* harmony export (immutable) */ __webpack_exports__["f"] = updateDrivesStatus;
+/* unused harmony export getSingleDrives */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
 
@@ -30162,25 +30240,46 @@ function addDrives(values) {
   console.log('val', values);
   values.created_by = 1;
   return __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post("".concat(URL, "/api/drives"), values).catch(function (error) {
-    return console.log(error);
+    console.log(error);
+    return {
+      errors: error
+    };
   });
 } //DELETE DRIVES API
 
 function deleteDrives(driveId) {
   return __WEBPACK_IMPORTED_MODULE_0_axios___default.a.delete("".concat(URL, "/api/drives/") + driveId).catch(function (error) {
-    return console.log(error);
+    console.log(error);
+    return {
+      errors: error
+    };
   });
 } // UPDATE DRIVES API
 
 function updateDrives(driveId, values) {
   return __WEBPACK_IMPORTED_MODULE_0_axios___default.a.put("".concat(URL, "/api/drives/") + driveId, values).catch(function (error) {
-    return console.log(error);
+    console.log(error);
+    return {
+      errors: error
+    };
   });
 } // TOGGLE STATUS API
 
 function updateDrivesStatus(driveId, values) {
   return __WEBPACK_IMPORTED_MODULE_0_axios___default.a.put("".concat(URL, "/api/drives/") + driveId, values).catch(function (error) {
-    return console.log(error);
+    console.log(error);
+    return {
+      errors: error
+    };
+  });
+} // GET SINGLE DATA OF Drives
+
+function getSingleDrives(driveId) {
+  return __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get("".concat(URL, "/api/drives/") + driveId).catch(function (error) {
+    console.log(error);
+    return {
+      errors: error
+    };
   });
 }
 
@@ -30300,6 +30399,7 @@ function DrivesStatusSuccess(driveId, values, message) {
 /* harmony export (immutable) */ __webpack_exports__["b"] = deleteBody;
 /* harmony export (immutable) */ __webpack_exports__["e"] = updateBodies;
 /* harmony export (immutable) */ __webpack_exports__["f"] = updateBodiesStatus;
+/* unused harmony export getSingleBodies */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
 
@@ -30317,25 +30417,46 @@ function addBodies(values) {
   console.log('val', values);
   values.created_by = 1;
   return __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post("".concat(URL, "/api/bodies"), values).catch(function (error) {
-    return console.log(error);
+    console.log(error);
+    return {
+      errors: error
+    };
   });
 } //DELETE BODIES API
 
 function deleteBody(bodyId) {
   return __WEBPACK_IMPORTED_MODULE_0_axios___default.a.delete("".concat(URL, "/api/bodies/") + bodyId).catch(function (error) {
-    return console.log(error);
+    console.log(error);
+    return {
+      errors: error
+    };
   });
 } // UPDATE BODIES API
 
 function updateBodies(bodyId, values) {
   return __WEBPACK_IMPORTED_MODULE_0_axios___default.a.put("".concat(URL, "/api/bodies/") + bodyId, values).catch(function (error) {
-    return console.log(error);
+    console.log(error);
+    return {
+      errors: error
+    };
   });
 } // TOGGLE STATUS API
 
 function updateBodiesStatus(bodyId, values) {
   return __WEBPACK_IMPORTED_MODULE_0_axios___default.a.put("".concat(URL, "/api/bodies/") + bodyId, values).catch(function (error) {
-    return console.log(error);
+    console.log(error);
+    return {
+      errors: error
+    };
+  });
+} // GET SINGLE DATA OF BODIES
+
+function getSingleBodies(bodyId) {
+  return __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get("".concat(URL, "/api/bodies/") + bodyId).catch(function (error) {
+    console.log(error);
+    return {
+      errors: error
+    };
   });
 }
 
@@ -30455,6 +30576,7 @@ function BodiesStatusSuccess(bodyId, values, message) {
 /* harmony export (immutable) */ __webpack_exports__["b"] = deleteEnginesizes;
 /* harmony export (immutable) */ __webpack_exports__["e"] = updateEnginesizes;
 /* harmony export (immutable) */ __webpack_exports__["f"] = updateEnginesizesStatus;
+/* unused harmony export getSingleEnginesizes */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
 
@@ -30472,25 +30594,46 @@ function addEnginesizes(values) {
   console.log('val', values);
   values.created_by = 1;
   return __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post("".concat(URL, "/api/enginesizes"), values).catch(function (error) {
-    return console.log(error);
+    console.log(error);
+    return {
+      errors: error
+    };
   });
 } //DELETE MAKES API
 
 function deleteEnginesizes(enginesizesId) {
   return __WEBPACK_IMPORTED_MODULE_0_axios___default.a.delete("".concat(URL, "/api/enginesizes/") + enginesizesId).catch(function (error) {
-    return console.log(error);
+    console.log(error);
+    return {
+      errors: error
+    };
   });
 } // UPDATE MAKES API
 
 function updateEnginesizes(enginesizesId, values) {
   return __WEBPACK_IMPORTED_MODULE_0_axios___default.a.put("".concat(URL, "/api/enginesizes/") + enginesizesId, values).catch(function (error) {
-    return console.log(error);
+    console.log(error);
+    return {
+      errors: error
+    };
   });
 } // TOGGLE STATUS API
 
 function updateEnginesizesStatus(enginesizesId, values) {
   return __WEBPACK_IMPORTED_MODULE_0_axios___default.a.put("".concat(URL, "/api/enginesizes/") + enginesizesId, values).catch(function (error) {
-    return console.log(error);
+    console.log(error);
+    return {
+      errors: error
+    };
+  });
+} // GET SINGLE DATA OF Enginesizes
+
+function getSingleEnginesizes(enginesizesId) {
+  return __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get("".concat(URL, "/api/enginesizes/") + enginesizesId).catch(function (error) {
+    console.log(error);
+    return {
+      errors: error
+    };
   });
 }
 
@@ -79801,7 +79944,8 @@ var initialState = {
   activePage: 1,
   itemsCountPerPage: 3,
   totalItemsCount: 1,
-  pageRangeDisplayed: 3
+  pageRangeDisplayed: 3,
+  sending: false
 };
 
 var makeReducer = function makeReducer() {
@@ -79820,13 +79964,13 @@ var makeReducer = function makeReducer() {
         fetching: false,
         itemsCountPerPage: action.makes.per_page,
         totalItemsCount: action.makes.total,
-        activePage: action.makes.current_page
+        activePage: action.makes.current_page,
+        sending: false
       });
 
-    case __WEBPACK_IMPORTED_MODULE_0__actions_action_types__["Y" /* MAKES_SINGLE_SUCCESS */]:
-      console.log('single', action);
+    case __WEBPACK_IMPORTED_MODULE_0__actions_action_types__["_48" /* REQUEST_MAKES_PAGES */]:
       return Object.assign({}, state, {
-        singleMake: action.makes
+        fetching: true
       });
 
     case __WEBPACK_IMPORTED_MODULE_0__actions_action_types__["P" /* GET_MAKES_PAGES */]:
@@ -79834,13 +79978,24 @@ var makeReducer = function makeReducer() {
         makes: action.resp.data,
         itemsCountPerPage: action.resp.per_page,
         totalItemsCount: action.resp.total,
-        activePage: action.resp.current_page
+        activePage: action.resp.current_page,
+        fetching: false,
+        sending: false
+      });
+
+    case __WEBPACK_IMPORTED_MODULE_0__actions_action_types__["_71" /* REQUEST_SUBMIT */]:
+      return Object.assign({}, state, {
+        sending: true
       });
 
     case __WEBPACK_IMPORTED_MODULE_0__actions_action_types__["g" /* ADD_MAKES_SUCCESS */]:
       return Object.assign({}, state, {
-        makes: _toConsumableArray(state.makes) // message: action.message
+        makes: _toConsumableArray(state.makes)
+      });
 
+    case __WEBPACK_IMPORTED_MODULE_0__actions_action_types__["_79" /* REQUEST_UPDATE */]:
+      return Object.assign({}, state, {
+        sending: true
       });
 
     case __WEBPACK_IMPORTED_MODULE_0__actions_action_types__["_87" /* UPDATE_MAKES_SUCCESS */]:
@@ -79851,12 +80006,11 @@ var makeReducer = function makeReducer() {
           }
 
           return make;
-        }) // message: action.message
-
+        }),
+        sending: false
       });
 
     case __WEBPACK_IMPORTED_MODULE_0__actions_action_types__["Z" /* MAKES_STATUS_SUCCESS */]:
-      console.log('tion', action);
       return _objectSpread({}, state, {
         makes: state.makes.map(function (make) {
           if (make.id === action.resp.id) {
@@ -79864,8 +80018,7 @@ var makeReducer = function makeReducer() {
           }
 
           return make;
-        }) // message: action.message
-
+        })
       });
 
     case __WEBPACK_IMPORTED_MODULE_0__actions_action_types__["u" /* DELETE_MAKES_SUCCESS */]:
@@ -79874,8 +80027,8 @@ var makeReducer = function makeReducer() {
       });
 
       return Object.assign({}, state, {
-        makes: newMake // message: action.message
-
+        makes: newMake,
+        fetching: false
       });
 
     default:
@@ -82323,7 +82476,7 @@ function submitMakesSaga() {
 }
 
 function callMakesSubmit(action) {
-  var error, result, resp;
+  var result, resp;
   return __WEBPACK_IMPORTED_MODULE_0__babel_runtime_regenerator___default.a.wrap(function callMakesSubmit$(_context6) {
     while (1) {
       switch (_context6.prev = _context6.next) {
@@ -82332,51 +82485,48 @@ function callMakesSubmit(action) {
           return Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["d" /* put */])(Object(__WEBPACK_IMPORTED_MODULE_2_redux_form__["e" /* startSubmit */])('PostMakes'));
 
         case 2:
-          error = {};
-          _context6.next = 5;
+          _context6.next = 4;
           return Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["b" /* call */])(__WEBPACK_IMPORTED_MODULE_4__api_makes_api__["a" /* addMakes */], action.values);
 
-        case 5:
+        case 4:
           result = _context6.sent;
           resp = result.data;
-          console.log(result);
+          console.log('result', result.errors);
 
           if (!result.errors) {
-            _context6.next = 16;
+            _context6.next = 13;
             break;
           }
 
-          _context6.next = 11;
+          _context6.next = 10;
           return Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["d" /* put */])({
             type: __WEBPACK_IMPORTED_MODULE_3__actions_action_types__["_39" /* REQUEST_FAILED */],
-            errors: result.error
+            errors: result.errors
           });
 
-        case 11:
-          error = result.error;
-          console.log('err', error);
+        case 10:
           __WEBPACK_IMPORTED_MODULE_6_react_notify_toast__["notify"].show("Cannot Add Makes!", "error", 5000);
-          _context6.next = 19;
+          _context6.next = 16;
           break;
 
-        case 16:
-          _context6.next = 18;
+        case 13:
+          _context6.next = 15;
           return Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["d" /* put */])({
             type: __WEBPACK_IMPORTED_MODULE_3__actions_action_types__["_47" /* REQUEST_MAKES */]
           });
 
-        case 18:
+        case 15:
           __WEBPACK_IMPORTED_MODULE_6_react_notify_toast__["notify"].show("Makes Added Successfully!", "success", 5000);
 
-        case 19:
-          _context6.next = 21;
+        case 16:
+          _context6.next = 18;
           return Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["d" /* put */])(Object(__WEBPACK_IMPORTED_MODULE_2_redux_form__["f" /* stopSubmit */])('PostMakes', error));
 
-        case 21:
-          _context6.next = 23;
+        case 18:
+          _context6.next = 20;
           return Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["d" /* put */])(Object(__WEBPACK_IMPORTED_MODULE_2_redux_form__["d" /* reset */])('PostMakes'));
 
-        case 23:
+        case 20:
         case "end":
           return _context6.stop();
       }
@@ -82420,39 +82570,40 @@ function callEditMake(action) {
           resp = result.data;
 
           if (!result.errors) {
-            _context8.next = 13;
+            _context8.next = 14;
             break;
           }
 
           _context8.next = 10;
           return Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["d" /* put */])({
             type: __WEBPACK_IMPORTED_MODULE_3__actions_action_types__["_39" /* REQUEST_FAILED */],
-            errors: result.error
+            errors: result.errors
           });
 
         case 10:
           error = result.error;
-          _context8.next = 16;
+          __WEBPACK_IMPORTED_MODULE_6_react_notify_toast__["notify"].show("Cannot Update ".concat(resp.make_desc, "!"), "error", 5000);
+          _context8.next = 17;
           break;
 
-        case 13:
-          _context8.next = 15;
+        case 14:
+          _context8.next = 16;
           return Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["d" /* put */])({
             type: __WEBPACK_IMPORTED_MODULE_3__actions_action_types__["_48" /* REQUEST_MAKES_PAGES */]
           });
 
-        case 15:
+        case 16:
           __WEBPACK_IMPORTED_MODULE_6_react_notify_toast__["notify"].show("Makes Updated Successfully!", "success", 5000);
 
-        case 16:
-          _context8.next = 18;
+        case 17:
+          _context8.next = 19;
           return Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["d" /* put */])(Object(__WEBPACK_IMPORTED_MODULE_2_redux_form__["f" /* stopSubmit */])('EditMakes', error));
 
-        case 18:
-          _context8.next = 20;
+        case 19:
+          _context8.next = 21;
           return Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["d" /* put */])(Object(__WEBPACK_IMPORTED_MODULE_2_redux_form__["d" /* reset */])('EditMakes'));
 
-        case 20:
+        case 21:
         case "end":
           return _context8.stop();
       }
@@ -82484,11 +82635,10 @@ function callToggleStatus(action) {
       switch (_context10.prev = _context10.next) {
         case 0:
           error = {};
-          console.log('action', action);
-          _context10.next = 4;
+          _context10.next = 3;
           return Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["b" /* call */])(__WEBPACK_IMPORTED_MODULE_4__api_makes_api__["g" /* updateMakeStatus */], action.makeId, action.values);
 
-        case 4:
+        case 3:
           result = _context10.sent;
           resp = result.data;
 
@@ -82497,14 +82647,15 @@ function callToggleStatus(action) {
             break;
           }
 
-          _context10.next = 9;
+          _context10.next = 8;
           return Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["d" /* put */])({
             type: __WEBPACK_IMPORTED_MODULE_3__actions_action_types__["_39" /* REQUEST_FAILED */],
             errors: result.error
           });
 
-        case 9:
+        case 8:
           error = result.error;
+          __WEBPACK_IMPORTED_MODULE_6_react_notify_toast__["notify"].show("Cannot Change Status of ".concat(resp.make_desc, "!"), "error", 5000);
           _context10.next = 15;
           break;
 
@@ -82557,7 +82708,7 @@ function callDeleteMake(action) {
           result = _context12.sent;
 
           if (!result.errors) {
-            _context12.next = 9;
+            _context12.next = 10;
             break;
           }
 
@@ -82569,17 +82720,18 @@ function callDeleteMake(action) {
 
         case 6:
           error = result.error;
-          _context12.next = 12;
+          __WEBPACK_IMPORTED_MODULE_6_react_notify_toast__["notify"].show("Cannot Delete Make!", "error", 5000);
+          _context12.next = 13;
           break;
 
-        case 9:
-          _context12.next = 11;
+        case 10:
+          _context12.next = 12;
           return Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["d" /* put */])(__WEBPACK_IMPORTED_MODULE_5__actions_makes_action__["a" /* deleteMakesSuccess */](action.makeId, result.statusText));
 
-        case 11:
+        case 12:
           __WEBPACK_IMPORTED_MODULE_6_react_notify_toast__["notify"].show("Makes Deleted Successfully!", "error", 5000);
 
-        case 12:
+        case 13:
         case "end":
           return _context12.stop();
       }
@@ -82615,32 +82767,31 @@ function callMakeSingle(action) {
         case 2:
           result = _context14.sent;
           makes = result.data;
-          console.log('result', makes);
 
           if (!result.errors) {
-            _context14.next = 11;
+            _context14.next = 10;
             break;
           }
 
-          _context14.next = 8;
+          _context14.next = 7;
           return Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["d" /* put */])({
             type: __WEBPACK_IMPORTED_MODULE_3__actions_action_types__["_39" /* REQUEST_FAILED */],
             errors: result.error
           });
 
-        case 8:
+        case 7:
           error = result.error;
-          _context14.next = 13;
+          _context14.next = 12;
           break;
 
-        case 11:
-          _context14.next = 13;
+        case 10:
+          _context14.next = 12;
           return Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["d" /* put */])({
             type: __WEBPACK_IMPORTED_MODULE_3__actions_action_types__["Y" /* MAKES_SINGLE_SUCCESS */],
             makes: makes
           });
 
-        case 13:
+        case 12:
         case "end":
           return _context14.stop();
       }
@@ -84249,7 +84400,7 @@ function callModelSubmit(action) {
 
         case 10:
           error = result.error;
-          console.log('err', error);
+          __WEBPACK_IMPORTED_MODULE_6_react_notify_toast__["notify"].show("Cannot Add Model!", "error", 5000);
           _context6.next = 17;
           break;
 
@@ -84316,7 +84467,7 @@ function callModelEdit(action) {
           resp = result.data;
 
           if (!result.errors) {
-            _context8.next = 13;
+            _context8.next = 14;
             break;
           }
 
@@ -84328,29 +84479,30 @@ function callModelEdit(action) {
 
         case 10:
           error = result.error;
-          _context8.next = 16;
+          __WEBPACK_IMPORTED_MODULE_6_react_notify_toast__["notify"].show("Cannot Update ".concat(resp.model_desc), "error", 5000);
+          _context8.next = 17;
           break;
 
-        case 13:
-          _context8.next = 15;
+        case 14:
+          _context8.next = 16;
           return Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["d" /* put */])({
             type: __WEBPACK_IMPORTED_MODULE_3__actions_action_types__["_88" /* UPDATE_MODEL_SUCCESS */],
             resp: resp,
             message: result.statusText
           });
 
-        case 15:
+        case 16:
           __WEBPACK_IMPORTED_MODULE_6_react_notify_toast__["notify"].show("".concat(resp.model_desc, " Updated Successfully"), "success", 5000);
 
-        case 16:
-          _context8.next = 18;
+        case 17:
+          _context8.next = 19;
           return Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["d" /* put */])(Object(__WEBPACK_IMPORTED_MODULE_2_redux_form__["f" /* stopSubmit */])('EditModels', error));
 
-        case 18:
-          _context8.next = 20;
+        case 19:
+          _context8.next = 21;
           return Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["d" /* put */])(Object(__WEBPACK_IMPORTED_MODULE_2_redux_form__["d" /* reset */])('EditModels'));
 
-        case 20:
+        case 21:
         case "end":
           return _context8.stop();
       }
@@ -84391,7 +84543,7 @@ function callModelToggleStatus(action) {
           resp = result.data;
 
           if (!result.errors) {
-            _context10.next = 12;
+            _context10.next = 13;
             break;
           }
 
@@ -84403,21 +84555,22 @@ function callModelToggleStatus(action) {
 
         case 9:
           error = result.error;
-          _context10.next = 15;
+          __WEBPACK_IMPORTED_MODULE_6_react_notify_toast__["notify"].show("Cannot Change Status of ".concat(resp.model_desc), "error", 5000);
+          _context10.next = 16;
           break;
 
-        case 12:
-          _context10.next = 14;
+        case 13:
+          _context10.next = 15;
           return Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["d" /* put */])({
             type: __WEBPACK_IMPORTED_MODULE_3__actions_action_types__["_0" /* MODEL_STATUS_SUCCESS */],
             resp: resp,
             message: result.statusText
           });
 
-        case 14:
+        case 15:
           __WEBPACK_IMPORTED_MODULE_6_react_notify_toast__["notify"].show("Status of ".concat(resp.model_desc, " Updated!"), "success", 5000);
 
-        case 15:
+        case 16:
         case "end":
           return _context10.stop();
       }
@@ -84455,7 +84608,7 @@ function callDeleteModel(action) {
           result = _context12.sent;
 
           if (!result.errors) {
-            _context12.next = 9;
+            _context12.next = 10;
             break;
           }
 
@@ -84467,17 +84620,18 @@ function callDeleteModel(action) {
 
         case 6:
           error = result.error;
-          _context12.next = 12;
+          __WEBPACK_IMPORTED_MODULE_6_react_notify_toast__["notify"].show("Cannot Delete Model", "error", 5000);
+          _context12.next = 13;
           break;
 
-        case 9:
-          _context12.next = 11;
+        case 10:
+          _context12.next = 12;
           return Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["d" /* put */])(__WEBPACK_IMPORTED_MODULE_5__actions_model_action__["a" /* deleteModelSuccess */](action.modelId, result.statusText));
 
-        case 11:
+        case 12:
           __WEBPACK_IMPORTED_MODULE_6_react_notify_toast__["notify"].show("Model Deleted Successfully!", "error", 5000);
 
-        case 12:
+        case 13:
         case "end":
           return _context12.stop();
       }
@@ -84648,7 +84802,7 @@ function callOptCatSubmit(action) {
 
         case 10:
           error = result.error;
-          console.log('err', error);
+          __WEBPACK_IMPORTED_MODULE_5_react_notify_toast__["notify"].show("Cannot Add Option Categories!", "error", 5000);
           _context4.next = 17;
           break;
 
@@ -84715,7 +84869,7 @@ function callEditOptCat(action) {
           resp = result.data;
 
           if (!result.errors) {
-            _context6.next = 13;
+            _context6.next = 14;
             break;
           }
 
@@ -84727,29 +84881,30 @@ function callEditOptCat(action) {
 
         case 10:
           error = result.error;
-          _context6.next = 16;
+          __WEBPACK_IMPORTED_MODULE_5_react_notify_toast__["notify"].show("Cannot Update ".concat(resp.optioncategory_desc), "error", 5000);
+          _context6.next = 17;
           break;
 
-        case 13:
-          _context6.next = 15;
+        case 14:
+          _context6.next = 16;
           return Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["d" /* put */])({
             type: __WEBPACK_IMPORTED_MODULE_3__actions_action_types__["_90" /* UPDATE_OPT_CAT_SUCCESS */],
             resp: resp,
             message: result.statusText
           });
 
-        case 15:
+        case 16:
           __WEBPACK_IMPORTED_MODULE_5_react_notify_toast__["notify"].show("".concat(resp.optioncategory_desc, " Updated Successfully!"), "success", 5000);
 
-        case 16:
-          _context6.next = 18;
+        case 17:
+          _context6.next = 19;
           return Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["d" /* put */])(Object(__WEBPACK_IMPORTED_MODULE_2_redux_form__["f" /* stopSubmit */])('EditOptionCategory', error));
 
-        case 18:
-          _context6.next = 20;
+        case 19:
+          _context6.next = 21;
           return Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["d" /* put */])(Object(__WEBPACK_IMPORTED_MODULE_2_redux_form__["d" /* reset */])('EditOptionCategory'));
 
-        case 20:
+        case 21:
         case "end":
           return _context6.stop();
       }
@@ -84790,7 +84945,7 @@ function callToggleOptCatStatus(action) {
           resp = result.data;
 
           if (!result.errors) {
-            _context8.next = 12;
+            _context8.next = 13;
             break;
           }
 
@@ -84802,21 +84957,22 @@ function callToggleOptCatStatus(action) {
 
         case 9:
           error = result.error;
-          _context8.next = 15;
+          __WEBPACK_IMPORTED_MODULE_5_react_notify_toast__["notify"].show("Cannot Change Status of ".concat(resp.optioncategory_desc), "error", 5000);
+          _context8.next = 16;
           break;
 
-        case 12:
-          _context8.next = 14;
+        case 13:
+          _context8.next = 15;
           return Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["d" /* put */])({
             type: __WEBPACK_IMPORTED_MODULE_3__actions_action_types__["_2" /* OPT_CAT_STATUS_SUCCESS */],
             resp: resp,
             message: result.statusText
           });
 
-        case 14:
+        case 15:
           __WEBPACK_IMPORTED_MODULE_5_react_notify_toast__["notify"].show("Status of ".concat(resp.optioncategory_desc, " Updated!"), "success", 5000);
 
-        case 15:
+        case 16:
         case "end":
           return _context8.stop();
       }
@@ -84856,7 +85012,7 @@ function callDeleteOptCat(action) {
           console.log('res', result);
 
           if (!result.errors) {
-            _context10.next = 11;
+            _context10.next = 12;
             break;
           }
 
@@ -84868,21 +85024,22 @@ function callDeleteOptCat(action) {
 
         case 8:
           error = result.error;
-          _context10.next = 14;
+          __WEBPACK_IMPORTED_MODULE_5_react_notify_toast__["notify"].show("Cannot Delete Option Categories", "error", 5000);
+          _context10.next = 15;
           break;
 
-        case 11:
-          _context10.next = 13;
+        case 12:
+          _context10.next = 14;
           return Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["d" /* put */])({
             type: __WEBPACK_IMPORTED_MODULE_3__actions_action_types__["x" /* DELETE_OPT_CAT_SUCCESS */],
             optCatId: optCatId,
             message: result.statusText
           });
 
-        case 13:
+        case 14:
           __WEBPACK_IMPORTED_MODULE_5_react_notify_toast__["notify"].show("Option Category Deleted Successfully", "error", 5000);
 
-        case 14:
+        case 15:
         case "end":
           return _context10.stop();
       }
@@ -84984,15 +85141,14 @@ function CategorySaga() {
 
         case 2:
           response = _context2.sent;
-          console.log('resp', response);
           categories = response.data;
-          _context2.next = 7;
+          _context2.next = 6;
           return Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["d" /* put */])({
             type: __WEBPACK_IMPORTED_MODULE_3__actions_action_types__["F" /* GET_CATEGORIES_SUCCESS */],
             categories: categories
           });
 
-        case 7:
+        case 6:
         case "end":
           return _context2.stop();
       }
@@ -85109,7 +85265,7 @@ function callCategoriesSubmit(action) {
 
         case 10:
           error = result.error;
-          console.log('err', error);
+          __WEBPACK_IMPORTED_MODULE_6_react_notify_toast__["notify"].show("Cannot Add Categories!", "error", 5000);
           _context6.next = 17;
           break;
 
@@ -85176,7 +85332,7 @@ function callEditCategory(action) {
           resp = result.data;
 
           if (!result.errors) {
-            _context8.next = 13;
+            _context8.next = 14;
             break;
           }
 
@@ -85188,29 +85344,30 @@ function callEditCategory(action) {
 
         case 10:
           error = result.error;
-          _context8.next = 16;
+          __WEBPACK_IMPORTED_MODULE_6_react_notify_toast__["notify"].show("Cannot Update ".concat(resp.category_desc), "error", 5000);
+          _context8.next = 17;
           break;
 
-        case 13:
-          _context8.next = 15;
+        case 14:
+          _context8.next = 16;
           return Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["d" /* put */])({
             type: __WEBPACK_IMPORTED_MODULE_3__actions_action_types__["_82" /* UPDATE_CATEGORIES_SUCCESS */],
             resp: resp,
             message: result.statusText
           });
 
-        case 15:
+        case 16:
           __WEBPACK_IMPORTED_MODULE_6_react_notify_toast__["notify"].show("Categories Updated Successfully!", "success", 5000);
 
-        case 16:
-          _context8.next = 18;
+        case 17:
+          _context8.next = 19;
           return Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["d" /* put */])(Object(__WEBPACK_IMPORTED_MODULE_2_redux_form__["f" /* stopSubmit */])('EditCategories', error));
 
-        case 18:
-          _context8.next = 20;
+        case 19:
+          _context8.next = 21;
           return Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["d" /* put */])(Object(__WEBPACK_IMPORTED_MODULE_2_redux_form__["d" /* reset */])('EditCategories'));
 
-        case 20:
+        case 21:
         case "end":
           return _context8.stop();
       }
@@ -85242,11 +85399,10 @@ function callCategoryToggleStatus(action) {
       switch (_context10.prev = _context10.next) {
         case 0:
           error = {};
-          console.log('action', action);
-          _context10.next = 4;
+          _context10.next = 3;
           return Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["b" /* call */])(__WEBPACK_IMPORTED_MODULE_4__api_categories_api__["f" /* updateCategoriesStatus */], action.categoryId, action.values);
 
-        case 4:
+        case 3:
           result = _context10.sent;
           resp = result.data;
 
@@ -85255,14 +85411,15 @@ function callCategoryToggleStatus(action) {
             break;
           }
 
-          _context10.next = 9;
+          _context10.next = 8;
           return Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["d" /* put */])({
             type: __WEBPACK_IMPORTED_MODULE_3__actions_action_types__["_12" /* REQUEST_CATEGORIES_FAILED */],
             errors: result.error
           });
 
-        case 9:
+        case 8:
           error = result.error;
+          __WEBPACK_IMPORTED_MODULE_6_react_notify_toast__["notify"].show("Cannot Change Status of ".concat(resp.category_desc), "error", 5000);
           _context10.next = 15;
           break;
 
@@ -85315,7 +85472,7 @@ function callDeleteCategory(action) {
           result = _context12.sent;
 
           if (!result.errors) {
-            _context12.next = 9;
+            _context12.next = 10;
             break;
           }
 
@@ -85327,17 +85484,18 @@ function callDeleteCategory(action) {
 
         case 6:
           error = result.error;
-          _context12.next = 12;
+          __WEBPACK_IMPORTED_MODULE_6_react_notify_toast__["notify"].show("Cannot Delere Category", "error", 5000);
+          _context12.next = 13;
           break;
 
-        case 9:
-          _context12.next = 11;
+        case 10:
+          _context12.next = 12;
           return Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["d" /* put */])(__WEBPACK_IMPORTED_MODULE_5__actions_categories_action__["a" /* deleteCategoriesSuccess */](action.categoryId, result.statusText));
 
-        case 11:
+        case 12:
           __WEBPACK_IMPORTED_MODULE_6_react_notify_toast__["notify"].show("Categories Deleted Successfully!", "error", 5000);
 
-        case 12:
+        case 13:
         case "end":
           return _context12.stop();
       }
@@ -85563,7 +85721,7 @@ function callDriveSubmit(action) {
 
         case 10:
           error = result.error;
-          console.log('err', error);
+          __WEBPACK_IMPORTED_MODULE_6_react_notify_toast__["notify"].show("Cannot Add Drive!", "error", 5000);
           _context6.next = 17;
           break;
 
@@ -85630,7 +85788,7 @@ function callEditDrive(action) {
           resp = result.data;
 
           if (!result.errors) {
-            _context8.next = 13;
+            _context8.next = 14;
             break;
           }
 
@@ -85642,29 +85800,30 @@ function callEditDrive(action) {
 
         case 10:
           error = result.error;
-          _context8.next = 16;
+          __WEBPACK_IMPORTED_MODULE_6_react_notify_toast__["notify"].show("Cannot Update ".concat(resp.drive_desc, "!"), "error", 5000);
+          _context8.next = 17;
           break;
 
-        case 13:
-          _context8.next = 15;
+        case 14:
+          _context8.next = 16;
           return Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["d" /* put */])({
             type: __WEBPACK_IMPORTED_MODULE_3__actions_action_types__["_84" /* UPDATE_DRIVES_SUCCESS */],
             resp: resp,
             message: result.statusText
           });
 
-        case 15:
-          __WEBPACK_IMPORTED_MODULE_6_react_notify_toast__["notify"].show("Drive Updated Successfully!", "success", 5000);
-
         case 16:
-          _context8.next = 18;
+          __WEBPACK_IMPORTED_MODULE_6_react_notify_toast__["notify"].show("".concat(resp.drive_desc, " Updated Successfully!"), "success", 5000);
+
+        case 17:
+          _context8.next = 19;
           return Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["d" /* put */])(Object(__WEBPACK_IMPORTED_MODULE_2_redux_form__["f" /* stopSubmit */])('EditDrives', error));
 
-        case 18:
-          _context8.next = 20;
+        case 19:
+          _context8.next = 21;
           return Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["d" /* put */])(Object(__WEBPACK_IMPORTED_MODULE_2_redux_form__["d" /* reset */])('EditDrives'));
 
-        case 20:
+        case 21:
         case "end":
           return _context8.stop();
       }
@@ -85705,7 +85864,7 @@ function callDriveToggleStatus(action) {
           resp = result.data;
 
           if (!result.errors) {
-            _context10.next = 12;
+            _context10.next = 13;
             break;
           }
 
@@ -85717,21 +85876,22 @@ function callDriveToggleStatus(action) {
 
         case 9:
           error = result.error;
-          _context10.next = 15;
+          __WEBPACK_IMPORTED_MODULE_6_react_notify_toast__["notify"].show("Cannot Change Status of ".concat(resp.drive_desc, "!"), "error", 5000);
+          _context10.next = 16;
           break;
 
-        case 12:
-          _context10.next = 14;
+        case 13:
+          _context10.next = 15;
           return Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["d" /* put */])({
             type: __WEBPACK_IMPORTED_MODULE_3__actions_action_types__["z" /* DRIVES_STATUS_SUCCESS */],
             resp: resp,
             message: result.statusText
           });
 
-        case 14:
+        case 15:
           __WEBPACK_IMPORTED_MODULE_6_react_notify_toast__["notify"].show("Status Updated Successfully!", "success", 5000);
 
-        case 15:
+        case 16:
         case "end":
           return _context10.stop();
       }
@@ -85769,7 +85929,7 @@ function callDeleteDrive(action) {
           result = _context12.sent;
 
           if (!result.errors) {
-            _context12.next = 9;
+            _context12.next = 10;
             break;
           }
 
@@ -85781,17 +85941,18 @@ function callDeleteDrive(action) {
 
         case 6:
           error = result.error;
-          _context12.next = 12;
+          __WEBPACK_IMPORTED_MODULE_6_react_notify_toast__["notify"].show("Cannot Delete Drive!", "error", 5000);
+          _context12.next = 13;
           break;
 
-        case 9:
-          _context12.next = 11;
+        case 10:
+          _context12.next = 12;
           return Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["d" /* put */])(__WEBPACK_IMPORTED_MODULE_5__actions_drives_action__["a" /* deleteDrivesSuccess */](action.driveId, result.statusText));
 
-        case 11:
+        case 12:
           __WEBPACK_IMPORTED_MODULE_6_react_notify_toast__["notify"].show("Drive Deleted Successfully!", "error", 5000);
 
-        case 12:
+        case 13:
         case "end":
           return _context12.stop();
       }
@@ -86012,12 +86173,12 @@ function callBodySubmit(action) {
           _context6.next = 10;
           return Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["d" /* put */])({
             type: __WEBPACK_IMPORTED_MODULE_3__actions_action_types__["_5" /* REQUEST_BODIES_FAILED */],
-            errors: result.error
+            errors: result.errors
           });
 
         case 10:
           error = result.error;
-          console.log('err', error);
+          __WEBPACK_IMPORTED_MODULE_6_react_notify_toast__["notify"].show("Cannot Add Body!", "error", 5000);
           _context6.next = 17;
           break;
 
@@ -86084,41 +86245,42 @@ function callEditBody(action) {
           resp = result.data;
 
           if (!result.errors) {
-            _context8.next = 13;
+            _context8.next = 14;
             break;
           }
 
           _context8.next = 10;
           return Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["d" /* put */])({
             type: __WEBPACK_IMPORTED_MODULE_3__actions_action_types__["_5" /* REQUEST_BODIES_FAILED */],
-            errors: result.error
+            errors: result.errors
           });
 
         case 10:
           error = result.error;
-          _context8.next = 16;
+          __WEBPACK_IMPORTED_MODULE_6_react_notify_toast__["notify"].show("Cannot Update ".concat(resp.body_desc, "!"), "error", 5000);
+          _context8.next = 17;
           break;
 
-        case 13:
-          _context8.next = 15;
+        case 14:
+          _context8.next = 16;
           return Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["d" /* put */])({
             type: __WEBPACK_IMPORTED_MODULE_3__actions_action_types__["_81" /* UPDATE_BODIES_SUCCESS */],
             resp: resp,
             message: result.statusText
           });
 
-        case 15:
+        case 16:
           __WEBPACK_IMPORTED_MODULE_6_react_notify_toast__["notify"].show("Body Updated successfully!", "success", 5000);
 
-        case 16:
-          _context8.next = 18;
+        case 17:
+          _context8.next = 19;
           return Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["d" /* put */])(Object(__WEBPACK_IMPORTED_MODULE_2_redux_form__["f" /* stopSubmit */])('EditBodies', error));
 
-        case 18:
-          _context8.next = 20;
+        case 19:
+          _context8.next = 21;
           return Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["d" /* put */])(Object(__WEBPACK_IMPORTED_MODULE_2_redux_form__["d" /* reset */])('EditBodies'));
 
-        case 20:
+        case 21:
         case "end":
           return _context8.stop();
       }
@@ -86159,7 +86321,7 @@ function callToggleBodyStatus(action) {
           resp = result.data;
 
           if (!result.errors) {
-            _context10.next = 12;
+            _context10.next = 13;
             break;
           }
 
@@ -86171,21 +86333,22 @@ function callToggleBodyStatus(action) {
 
         case 9:
           error = result.error;
-          _context10.next = 15;
+          __WEBPACK_IMPORTED_MODULE_6_react_notify_toast__["notify"].show("Cannot Change Status of ".concat(resp.body_desc, "!"), "error", 5000);
+          _context10.next = 16;
           break;
 
-        case 12:
-          _context10.next = 14;
+        case 13:
+          _context10.next = 15;
           return Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["d" /* put */])({
             type: __WEBPACK_IMPORTED_MODULE_3__actions_action_types__["l" /* BODIES_STATUS_SUCCESS */],
             resp: resp,
             message: result.statusText
           });
 
-        case 14:
+        case 15:
           __WEBPACK_IMPORTED_MODULE_6_react_notify_toast__["notify"].show("Status changed successfully!", "success", 5000);
 
-        case 15:
+        case 16:
         case "end":
           return _context10.stop();
       }
@@ -86223,7 +86386,7 @@ function callDeleteBody(action) {
           result = _context12.sent;
 
           if (!result.errors) {
-            _context12.next = 9;
+            _context12.next = 10;
             break;
           }
 
@@ -86235,17 +86398,18 @@ function callDeleteBody(action) {
 
         case 6:
           error = result.error;
-          _context12.next = 12;
+          __WEBPACK_IMPORTED_MODULE_6_react_notify_toast__["notify"].show("Cannot Delete Body!", "error", 5000);
+          _context12.next = 13;
           break;
 
-        case 9:
-          _context12.next = 11;
+        case 10:
+          _context12.next = 12;
           return Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["d" /* put */])(__WEBPACK_IMPORTED_MODULE_5__actions_bodies_action__["a" /* deleteBodiesSuccess */](action.bodyId, result.statusText));
 
-        case 11:
+        case 12:
           __WEBPACK_IMPORTED_MODULE_6_react_notify_toast__["notify"].show("Body Deleted successfully!", "error", 5000);
 
-        case 12:
+        case 13:
         case "end":
           return _context12.stop();
       }
@@ -86471,7 +86635,7 @@ function callEnginesizeSubmit(action) {
 
         case 10:
           error = result.error;
-          console.log('err', error);
+          __WEBPACK_IMPORTED_MODULE_6_react_notify_toast__["notify"].show("Cannot Add Engine!", "error", 5000);
           _context6.next = 17;
           break;
 
@@ -86538,7 +86702,7 @@ function callEditEnginesize(action) {
           resp = result.data;
 
           if (!result.errors) {
-            _context8.next = 13;
+            _context8.next = 14;
             break;
           }
 
@@ -86550,29 +86714,30 @@ function callEditEnginesize(action) {
 
         case 10:
           error = result.error;
-          _context8.next = 16;
+          __WEBPACK_IMPORTED_MODULE_6_react_notify_toast__["notify"].show("Cannot Update ".concat(resp.enginesize_desc, "!"), "error", 5000);
+          _context8.next = 17;
           break;
 
-        case 13:
-          _context8.next = 15;
+        case 14:
+          _context8.next = 16;
           return Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["d" /* put */])({
             type: __WEBPACK_IMPORTED_MODULE_3__actions_action_types__["_85" /* UPDATE_ENGINESIZES_SUCCESS */],
             resp: resp,
             message: result.statusText
           });
 
-        case 15:
+        case 16:
           __WEBPACK_IMPORTED_MODULE_6_react_notify_toast__["notify"].show("Engine Updated Successfully!", "success", 5000);
 
-        case 16:
-          _context8.next = 18;
+        case 17:
+          _context8.next = 19;
           return Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["d" /* put */])(Object(__WEBPACK_IMPORTED_MODULE_2_redux_form__["f" /* stopSubmit */])('EditEnginesizes', error));
 
-        case 18:
-          _context8.next = 20;
+        case 19:
+          _context8.next = 21;
           return Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["d" /* put */])(Object(__WEBPACK_IMPORTED_MODULE_2_redux_form__["d" /* reset */])('EditEnginesizes'));
 
-        case 20:
+        case 21:
         case "end":
           return _context8.stop();
       }
@@ -86613,7 +86778,7 @@ function callToggleEnginesizeStatus(action) {
           resp = result.data;
 
           if (!result.errors) {
-            _context10.next = 12;
+            _context10.next = 13;
             break;
           }
 
@@ -86625,21 +86790,22 @@ function callToggleEnginesizeStatus(action) {
 
         case 9:
           error = result.error;
-          _context10.next = 15;
+          __WEBPACK_IMPORTED_MODULE_6_react_notify_toast__["notify"].show("Cannot Delete ".concat(resp.enginesize_desc, "!"), "error", 5000);
+          _context10.next = 16;
           break;
 
-        case 12:
-          _context10.next = 14;
+        case 13:
+          _context10.next = 15;
           return Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["d" /* put */])({
             type: __WEBPACK_IMPORTED_MODULE_3__actions_action_types__["A" /* ENGINESIZES_STATUS_SUCCESS */],
             resp: resp,
             message: result.statusText
           });
 
-        case 14:
+        case 15:
           __WEBPACK_IMPORTED_MODULE_6_react_notify_toast__["notify"].show("Status of  Updated!", "success", 5000);
 
-        case 15:
+        case 16:
         case "end":
           return _context10.stop();
       }
@@ -86677,7 +86843,7 @@ function callDeleteEnginesize(action) {
           result = _context12.sent;
 
           if (!result.errors) {
-            _context12.next = 9;
+            _context12.next = 10;
             break;
           }
 
@@ -86689,17 +86855,18 @@ function callDeleteEnginesize(action) {
 
         case 6:
           error = result.error;
-          _context12.next = 12;
+          __WEBPACK_IMPORTED_MODULE_6_react_notify_toast__["notify"].show("Cannot Delete Engine!", "error", 5000);
+          _context12.next = 13;
           break;
 
-        case 9:
-          _context12.next = 11;
+        case 10:
+          _context12.next = 12;
           return Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["d" /* put */])(__WEBPACK_IMPORTED_MODULE_5__actions_enginesizes_action__["a" /* deleteEnginesizesSuccess */](action.enginesizeId, result.statusText));
 
-        case 11:
+        case 12:
           __WEBPACK_IMPORTED_MODULE_6_react_notify_toast__["notify"].show("Engine Deleted Successfully!", "error", 5000);
 
-        case 12:
+        case 13:
         case "end":
           return _context12.stop();
       }
@@ -86925,7 +87092,7 @@ function callFueltypeSubmit(action) {
 
         case 10:
           error = result.error;
-          console.log('err', error);
+          __WEBPACK_IMPORTED_MODULE_6_react_notify_toast__["notify"].show("Cannot Add FuelTypes!", "error", 5000);
           _context6.next = 17;
           break;
 
@@ -86992,7 +87159,7 @@ function callEditFueltype(action) {
           resp = result.data;
 
           if (!result.errors) {
-            _context8.next = 13;
+            _context8.next = 14;
             break;
           }
 
@@ -87004,29 +87171,30 @@ function callEditFueltype(action) {
 
         case 10:
           error = result.error;
-          _context8.next = 16;
+          __WEBPACK_IMPORTED_MODULE_6_react_notify_toast__["notify"].show("Cannot Update ".concat(resp.fueltype_desc, "!"), "error", 5000);
+          _context8.next = 17;
           break;
 
-        case 13:
-          _context8.next = 15;
+        case 14:
+          _context8.next = 16;
           return Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["d" /* put */])({
             type: __WEBPACK_IMPORTED_MODULE_3__actions_action_types__["_86" /* UPDATE_FUELTYPES_SUCCESS */],
             resp: resp,
             message: result.statusText
           });
 
-        case 15:
+        case 16:
           __WEBPACK_IMPORTED_MODULE_6_react_notify_toast__["notify"].show("".concat(resp.fueltype_desc, " Updated Successfully!"), "success", 5000);
 
-        case 16:
-          _context8.next = 18;
+        case 17:
+          _context8.next = 19;
           return Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["d" /* put */])(Object(__WEBPACK_IMPORTED_MODULE_2_redux_form__["f" /* stopSubmit */])('EditFueltypes', error));
 
-        case 18:
-          _context8.next = 20;
+        case 19:
+          _context8.next = 21;
           return Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["d" /* put */])(Object(__WEBPACK_IMPORTED_MODULE_2_redux_form__["d" /* reset */])('EditFueltypes'));
 
-        case 20:
+        case 21:
         case "end":
           return _context8.stop();
       }
@@ -87067,7 +87235,7 @@ function callToggleFueltypeStatus(action) {
           resp = result.data;
 
           if (!result.errors) {
-            _context10.next = 12;
+            _context10.next = 13;
             break;
           }
 
@@ -87079,21 +87247,22 @@ function callToggleFueltypeStatus(action) {
 
         case 9:
           error = result.error;
-          _context10.next = 15;
+          __WEBPACK_IMPORTED_MODULE_6_react_notify_toast__["notify"].show("Cannot Change Status of ".concat(resp.fueltype_desc, "!"), "error", 5000);
+          _context10.next = 16;
           break;
 
-        case 12:
-          _context10.next = 14;
+        case 13:
+          _context10.next = 15;
           return Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["d" /* put */])({
             type: __WEBPACK_IMPORTED_MODULE_3__actions_action_types__["B" /* FUELTYPES_STATUS_SUCCESS */],
             resp: resp,
             message: result.statusText
           });
 
-        case 14:
+        case 15:
           __WEBPACK_IMPORTED_MODULE_6_react_notify_toast__["notify"].show("Status of ".concat(resp.fueltype.desc, " Changed"), "success", 5000);
 
-        case 15:
+        case 16:
         case "end":
           return _context10.stop();
       }
@@ -87131,7 +87300,7 @@ function callDeleteFueltype(action) {
           result = _context12.sent;
 
           if (!result.errors) {
-            _context12.next = 9;
+            _context12.next = 10;
             break;
           }
 
@@ -87143,17 +87312,18 @@ function callDeleteFueltype(action) {
 
         case 6:
           error = result.error;
-          _context12.next = 12;
+          __WEBPACK_IMPORTED_MODULE_6_react_notify_toast__["notify"].show("Cannot Delete FuelTypes!", "error", 5000);
+          _context12.next = 13;
           break;
 
-        case 9:
-          _context12.next = 11;
+        case 10:
+          _context12.next = 12;
           return Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["d" /* put */])(__WEBPACK_IMPORTED_MODULE_5__actions_fueltypes_action__["a" /* deleteFueltypesSuccess */](action.fueltypeId, result.statusText));
 
-        case 11:
+        case 12:
           __WEBPACK_IMPORTED_MODULE_6_react_notify_toast__["notify"].show("Fuel Type Deleted Successfully!", "error", 5000);
 
-        case 12:
+        case 13:
         case "end":
           return _context12.stop();
       }
@@ -87172,6 +87342,7 @@ function callDeleteFueltype(action) {
 /* harmony export (immutable) */ __webpack_exports__["b"] = deleteFueltype;
 /* harmony export (immutable) */ __webpack_exports__["e"] = updateFueltype;
 /* harmony export (immutable) */ __webpack_exports__["f"] = updateFueltypeStatus;
+/* unused harmony export getSingleFueltypes */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
 
@@ -87189,25 +87360,46 @@ function addFueltypes(values) {
   console.log('val', values);
   values.created_by = 1;
   return __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post("".concat(URL, "/api/fueltypes"), values).catch(function (error) {
-    return console.log(error);
+    console.log(error);
+    return {
+      errors: error
+    };
   });
 } //DELETE FUELTYPES API
 
 function deleteFueltype(fueltypeId) {
   return __WEBPACK_IMPORTED_MODULE_0_axios___default.a.delete("".concat(URL, "/api/fueltypes/") + fueltypeId).catch(function (error) {
-    return console.log(error);
+    console.log(error);
+    return {
+      errors: error
+    };
   });
 } // UPDATE FUELTYPES API
 
 function updateFueltype(fueltypeId, values) {
   return __WEBPACK_IMPORTED_MODULE_0_axios___default.a.put("".concat(URL, "/api/fueltypes/") + fueltypeId, values).catch(function (error) {
-    return console.log(error);
+    console.log(error);
+    return {
+      errors: error
+    };
   });
 } // TOGGLE STATUS API
 
 function updateFueltypeStatus(fueltypeId, values) {
   return __WEBPACK_IMPORTED_MODULE_0_axios___default.a.put("".concat(URL, "/api/fueltypes/") + fueltypeId, values).catch(function (error) {
-    return console.log(error);
+    console.log(error);
+    return {
+      errors: error
+    };
+  });
+} // GET SINGLE DATA OF Fueltypes
+
+function getSingleFueltypes(fueltypeId) {
+  return __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get("".concat(URL, "/api/fueltypes/") + fueltypeId).catch(function (error) {
+    console.log(error);
+    return {
+      errors: error
+    };
   });
 }
 
@@ -87429,7 +87621,7 @@ function callTransmissionSubmit(action) {
 
         case 10:
           error = result.error;
-          console.log('err', error);
+          __WEBPACK_IMPORTED_MODULE_6_react_notify_toast__["notify"].show("Cannot Add Transmission!", "error", 5000);
           _context6.next = 17;
           break;
 
@@ -87493,7 +87685,6 @@ function callEditTransmission(action) {
 
         case 5:
           result = _context8.sent;
-          console.log('ttt', result);
           resp = result.data;
 
           if (!result.errors) {
@@ -87501,14 +87692,15 @@ function callEditTransmission(action) {
             break;
           }
 
-          _context8.next = 11;
+          _context8.next = 10;
           return Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["d" /* put */])({
             type: __WEBPACK_IMPORTED_MODULE_3__actions_action_types__["_74" /* REQUEST_TRANSMISSONS_FAILED */],
             errors: result.error
           });
 
-        case 11:
+        case 10:
           error = result.error;
+          __WEBPACK_IMPORTED_MODULE_6_react_notify_toast__["notify"].show("Cannot Update ".concat(resp.transmission_desc, "!"), "error", 5000);
           _context8.next = 17;
           break;
 
@@ -87572,7 +87764,7 @@ function callToggleTransmissionStatus(action) {
           resp = result.data;
 
           if (!result.errors) {
-            _context10.next = 12;
+            _context10.next = 13;
             break;
           }
 
@@ -87584,21 +87776,22 @@ function callToggleTransmissionStatus(action) {
 
         case 9:
           error = result.error;
-          _context10.next = 15;
+          __WEBPACK_IMPORTED_MODULE_6_react_notify_toast__["notify"].show("Cannot Change Status of ".concat(resp.transmission_desc, "!"), "error", 5000);
+          _context10.next = 16;
           break;
 
-        case 12:
-          _context10.next = 14;
+        case 13:
+          _context10.next = 15;
           return Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["d" /* put */])({
             type: __WEBPACK_IMPORTED_MODULE_3__actions_action_types__["_80" /* TRANSMISSONS_STATUS_SUCCESS */],
             resp: resp,
             message: result.statusText
           });
 
-        case 14:
+        case 15:
           __WEBPACK_IMPORTED_MODULE_6_react_notify_toast__["notify"].show("Status of ".concat(resp.transmission_desc, " Updated!"), "success", 5000);
 
-        case 15:
+        case 16:
         case "end":
           return _context10.stop();
       }
@@ -87636,7 +87829,7 @@ function callDeleteTransmission(action) {
           result = _context12.sent;
 
           if (!result.errors) {
-            _context12.next = 9;
+            _context12.next = 10;
             break;
           }
 
@@ -87648,17 +87841,18 @@ function callDeleteTransmission(action) {
 
         case 6:
           error = result.error;
-          _context12.next = 12;
+          __WEBPACK_IMPORTED_MODULE_6_react_notify_toast__["notify"].show("Cannot Delete Transmission!", "error", 5000);
+          _context12.next = 13;
           break;
 
-        case 9:
-          _context12.next = 11;
+        case 10:
+          _context12.next = 12;
           return Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["d" /* put */])(__WEBPACK_IMPORTED_MODULE_5__actions_transmissons_actions__["a" /* deleteTransmissionSuccess */](action.transmissionId, result.statusText));
 
-        case 11:
+        case 12:
           __WEBPACK_IMPORTED_MODULE_6_react_notify_toast__["notify"].show("Transmissioin Deleted Successfully!", "error", 5000);
 
-        case 12:
+        case 13:
         case "end":
           return _context12.stop();
       }
@@ -87677,6 +87871,7 @@ function callDeleteTransmission(action) {
 /* harmony export (immutable) */ __webpack_exports__["b"] = deleteTransmission;
 /* harmony export (immutable) */ __webpack_exports__["e"] = updateTransmission;
 /* harmony export (immutable) */ __webpack_exports__["f"] = updateTransmissionStatus;
+/* unused harmony export getSingleTransmissions */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
 
@@ -87694,13 +87889,19 @@ function addTransmission(values) {
   console.log('val', values);
   values.created_by = 1;
   return __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post("".concat(URL, "/api/transmissions"), values).catch(function (error) {
-    return console.log(error);
+    console.log(error);
+    return {
+      errors: error
+    };
   });
 } //DELETE TRANSMISSION API
 
 function deleteTransmission(transmissionId) {
   return __WEBPACK_IMPORTED_MODULE_0_axios___default.a.delete("".concat(URL, "/api/transmissions/") + transmissionId).catch(function (error) {
-    return console.log(error);
+    console.log(error);
+    return {
+      errors: error
+    };
   });
 } // UPDATE TRANSMISSION API
 
@@ -87708,13 +87909,28 @@ function updateTransmission(transmissionId, values) {
   console.log('va', values);
   console.log('id', transmissionId);
   return __WEBPACK_IMPORTED_MODULE_0_axios___default.a.put("".concat(URL, "/api/transmissions/") + transmissionId, values).catch(function (error) {
-    return console.log(error);
+    console.log(error);
+    return {
+      errors: error
+    };
   });
 } // TOGGLE STATUS API
 
 function updateTransmissionStatus(transmissionId, values) {
   return __WEBPACK_IMPORTED_MODULE_0_axios___default.a.put("".concat(URL, "/api/transmissions/") + transmissionId, values).catch(function (error) {
-    return console.log(error);
+    console.log(error);
+    return {
+      errors: error
+    };
+  });
+} // GET SINGLE DATA OF Transmissions
+
+function getSingleTransmissions(transmissionId) {
+  return __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get("".concat(URL, "/api/transmissions/") + transmissionId).catch(function (error) {
+    console.log(error);
+    return {
+      errors: error
+    };
   });
 }
 
@@ -87936,7 +88152,7 @@ function callCompanySubmit(action) {
 
         case 10:
           error = result.error;
-          console.log('err', error);
+          __WEBPACK_IMPORTED_MODULE_6_react_notify_toast__["notify"].show("Cannot Add Company!", "error", 5000);
           _context6.next = 17;
           break;
 
@@ -88003,7 +88219,7 @@ function callEditCompany(action) {
           resp = result.data;
 
           if (!result.errors) {
-            _context8.next = 13;
+            _context8.next = 14;
             break;
           }
 
@@ -88015,29 +88231,30 @@ function callEditCompany(action) {
 
         case 10:
           error = result.error;
-          _context8.next = 16;
+          __WEBPACK_IMPORTED_MODULE_6_react_notify_toast__["notify"].show("Cannot Update ".concat(resp.name, "!"), "error", 5000);
+          _context8.next = 17;
           break;
 
-        case 13:
-          _context8.next = 15;
+        case 14:
+          _context8.next = 16;
           return Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["d" /* put */])({
             type: __WEBPACK_IMPORTED_MODULE_3__actions_action_types__["_83" /* UPDATE_COMPANIES_SUCCESS */],
             resp: resp,
             message: result.statusText
           });
 
-        case 15:
+        case 16:
           __WEBPACK_IMPORTED_MODULE_6_react_notify_toast__["notify"].show("".concat(resp.name, " Company Updated Successfully!"), "success", 5000);
 
-        case 16:
-          _context8.next = 18;
+        case 17:
+          _context8.next = 19;
           return Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["d" /* put */])(Object(__WEBPACK_IMPORTED_MODULE_2_redux_form__["f" /* stopSubmit */])('EditCompanies', error));
 
-        case 18:
-          _context8.next = 20;
+        case 19:
+          _context8.next = 21;
           return Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["d" /* put */])(Object(__WEBPACK_IMPORTED_MODULE_2_redux_form__["d" /* reset */])('EditCompanies'));
 
-        case 20:
+        case 21:
         case "end":
           return _context8.stop();
       }
@@ -88078,7 +88295,7 @@ function callCompanyToggleStatus(action) {
           resp = result.data;
 
           if (!result.errors) {
-            _context10.next = 12;
+            _context10.next = 13;
             break;
           }
 
@@ -88090,21 +88307,22 @@ function callCompanyToggleStatus(action) {
 
         case 9:
           error = result.error;
-          _context10.next = 15;
+          __WEBPACK_IMPORTED_MODULE_6_react_notify_toast__["notify"].show("Cannot Change Status of ".concat(resp.name, "!"), "error", 5000);
+          _context10.next = 16;
           break;
 
-        case 12:
-          _context10.next = 14;
+        case 13:
+          _context10.next = 15;
           return Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["d" /* put */])({
             type: __WEBPACK_IMPORTED_MODULE_3__actions_action_types__["n" /* COMPANIES_STATUS_SUCCESS */],
             resp: resp,
             message: result.statusText
           });
 
-        case 14:
+        case 15:
           __WEBPACK_IMPORTED_MODULE_6_react_notify_toast__["notify"].show("Status Changed Successfully!", "success", 5000);
 
-        case 15:
+        case 16:
         case "end":
           return _context10.stop();
       }
@@ -88142,7 +88360,7 @@ function callDeleteCompany(action) {
           result = _context12.sent;
 
           if (!result.errors) {
-            _context12.next = 9;
+            _context12.next = 10;
             break;
           }
 
@@ -88154,17 +88372,18 @@ function callDeleteCompany(action) {
 
         case 6:
           error = result.error;
-          _context12.next = 12;
+          __WEBPACK_IMPORTED_MODULE_6_react_notify_toast__["notify"].show("Cannot Delete Company!", "error", 5000);
+          _context12.next = 13;
           break;
 
-        case 9:
-          _context12.next = 11;
+        case 10:
+          _context12.next = 12;
           return Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["d" /* put */])(__WEBPACK_IMPORTED_MODULE_5__actions_companies_action__["a" /* deleteCompaniesSuccess */](action.companyId, result.statusText));
 
-        case 11:
+        case 12:
           __WEBPACK_IMPORTED_MODULE_6_react_notify_toast__["notify"].show("Company Deleted Successfully", "error", 5000);
 
-        case 12:
+        case 13:
         case "end":
           return _context12.stop();
       }
@@ -88183,6 +88402,7 @@ function callDeleteCompany(action) {
 /* harmony export (immutable) */ __webpack_exports__["b"] = deleteCompanies;
 /* harmony export (immutable) */ __webpack_exports__["e"] = updateCompanies;
 /* harmony export (immutable) */ __webpack_exports__["f"] = updateCompaniesStatus;
+/* unused harmony export getSingleCompanies */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
 
@@ -88200,25 +88420,46 @@ function addCompanies(values) {
   console.log('val', values);
   values.created_by = 1;
   return __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post("".concat(URL, "/api/companies"), values).catch(function (error) {
-    return console.log(error);
+    console.log(error);
+    return {
+      errors: error
+    };
   });
 } //DELETE COMPANIES API
 
 function deleteCompanies(companyId) {
   return __WEBPACK_IMPORTED_MODULE_0_axios___default.a.delete("".concat(URL, "/api/companies/") + companyId).catch(function (error) {
-    return console.log(error);
+    console.log(error);
+    return {
+      errors: error
+    };
   });
 } // UPDATE COMPANIES API
 
 function updateCompanies(companyId, values) {
   return __WEBPACK_IMPORTED_MODULE_0_axios___default.a.put("".concat(URL, "/api/companies/") + companyId, values).catch(function (error) {
-    return console.log(error);
+    console.log(error);
+    return {
+      errors: error
+    };
   });
 } // TOGGLE STATUS API
 
 function updateCompaniesStatus(companyId, values) {
   return __WEBPACK_IMPORTED_MODULE_0_axios___default.a.put("".concat(URL, "/api/companies/") + companyId, values).catch(function (error) {
-    return console.log(error);
+    console.log(error);
+    return {
+      errors: error
+    };
+  });
+} // GET SINGLE DATA OF Companies
+
+function getSingleCompanies(companyId) {
+  return __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get("".concat(URL, "/api/companies/") + companyId).catch(function (error) {
+    console.log(error);
+    return {
+      errors: error
+    };
   });
 }
 
@@ -88441,7 +88682,7 @@ function callOptionSubmit(action) {
 
         case 11:
           error = result.error;
-          console.log('err', error);
+          __WEBPACK_IMPORTED_MODULE_6_react_notify_toast__["notify"].show("Cannot Add Options!", "error", 5000);
           _context6.next = 18;
           break;
 
@@ -88501,14 +88742,14 @@ function callEditOption(action) {
         case 2:
           error = {};
           _context8.next = 5;
-          return Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["b" /* call */])(__WEBPACK_IMPORTED_MODULE_4__api_options_api__["e" /* updateOptions */], action.values.id, action.values);
+          return Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["b" /* call */])(__WEBPACK_IMPORTED_MODULE_4__api_options_api__["f" /* updateOptions */], action.values.id, action.values);
 
         case 5:
           result = _context8.sent;
           resp = result.data;
 
           if (!result.errors) {
-            _context8.next = 13;
+            _context8.next = 14;
             break;
           }
 
@@ -88520,29 +88761,30 @@ function callEditOption(action) {
 
         case 10:
           error = result.error;
-          _context8.next = 16;
+          __WEBPACK_IMPORTED_MODULE_6_react_notify_toast__["notify"].show("Cannot Update ".concat(resp.option_desc, "!"), "error", 5000);
+          _context8.next = 17;
           break;
 
-        case 13:
-          _context8.next = 15;
+        case 14:
+          _context8.next = 16;
           return Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["d" /* put */])({
             type: __WEBPACK_IMPORTED_MODULE_3__actions_action_types__["_89" /* UPDATE_OPTIONS_SUCCESS */],
             resp: resp,
             message: result.statusText
           });
 
-        case 15:
+        case 16:
           __WEBPACK_IMPORTED_MODULE_6_react_notify_toast__["notify"].show("".concat(resp.option_desc, " Updated Successfully!"), "success", 5000);
 
-        case 16:
-          _context8.next = 18;
+        case 17:
+          _context8.next = 19;
           return Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["d" /* put */])(Object(__WEBPACK_IMPORTED_MODULE_2_redux_form__["f" /* stopSubmit */])('EditOptions', error));
 
-        case 18:
-          _context8.next = 20;
+        case 19:
+          _context8.next = 21;
           return Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["d" /* put */])(Object(__WEBPACK_IMPORTED_MODULE_2_redux_form__["d" /* reset */])('EditOptions'));
 
-        case 20:
+        case 21:
         case "end":
           return _context8.stop();
       }
@@ -88576,14 +88818,14 @@ function callOptToggleStatus(action) {
           error = {};
           console.log('action', action);
           _context10.next = 4;
-          return Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["b" /* call */])(__WEBPACK_IMPORTED_MODULE_4__api_options_api__["f" /* updateOptionsStatus */], action.optionId, action.values);
+          return Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["b" /* call */])(__WEBPACK_IMPORTED_MODULE_4__api_options_api__["g" /* updateOptionsStatus */], action.optionId, action.values);
 
         case 4:
           result = _context10.sent;
           resp = result.data;
 
           if (!result.errors) {
-            _context10.next = 12;
+            _context10.next = 13;
             break;
           }
 
@@ -88595,21 +88837,22 @@ function callOptToggleStatus(action) {
 
         case 9:
           error = result.error;
-          _context10.next = 15;
+          __WEBPACK_IMPORTED_MODULE_6_react_notify_toast__["notify"].show("Cannot Change Status of ".concat(resp.option_desc), "error", 5000);
+          _context10.next = 16;
           break;
 
-        case 12:
-          _context10.next = 14;
+        case 13:
+          _context10.next = 15;
           return Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["d" /* put */])({
             type: __WEBPACK_IMPORTED_MODULE_3__actions_action_types__["_1" /* OPTIONS_STATUS_SUCCESS */],
             resp: resp,
             message: result.statusText
           });
 
-        case 14:
+        case 15:
           __WEBPACK_IMPORTED_MODULE_6_react_notify_toast__["notify"].show("Status of ".concat(resp.option_desc, " Updated!"), "success", 5000);
 
-        case 15:
+        case 16:
         case "end":
           return _context10.stop();
       }
@@ -88647,7 +88890,7 @@ function callDeleteOption(action) {
           result = _context12.sent;
 
           if (!result.errors) {
-            _context12.next = 9;
+            _context12.next = 10;
             break;
           }
 
@@ -88659,17 +88902,18 @@ function callDeleteOption(action) {
 
         case 6:
           error = result.error;
-          _context12.next = 12;
+          __WEBPACK_IMPORTED_MODULE_6_react_notify_toast__["notify"].show("Cannot Add Options", "error", 5000);
+          _context12.next = 13;
           break;
 
-        case 9:
-          _context12.next = 11;
+        case 10:
+          _context12.next = 12;
           return Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["d" /* put */])(__WEBPACK_IMPORTED_MODULE_5__actions_options_actions__["a" /* deleteOptionsSuccess */](action.optionId, result.statusText));
 
-        case 11:
+        case 12:
           __WEBPACK_IMPORTED_MODULE_6_react_notify_toast__["notify"].show("Options Deleted Successfully!", "error", 5000);
 
-        case 12:
+        case 13:
         case "end":
           return _context12.stop();
       }
@@ -88686,8 +88930,9 @@ function callDeleteOption(action) {
 /* harmony export (immutable) */ __webpack_exports__["d"] = getOptionsPages;
 /* harmony export (immutable) */ __webpack_exports__["a"] = addOptions;
 /* harmony export (immutable) */ __webpack_exports__["b"] = deleteOptions;
-/* harmony export (immutable) */ __webpack_exports__["e"] = updateOptions;
-/* harmony export (immutable) */ __webpack_exports__["f"] = updateOptionsStatus;
+/* harmony export (immutable) */ __webpack_exports__["f"] = updateOptions;
+/* harmony export (immutable) */ __webpack_exports__["g"] = updateOptionsStatus;
+/* harmony export (immutable) */ __webpack_exports__["e"] = getSingleOptions;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
 
@@ -88705,25 +88950,46 @@ function addOptions(values) {
   console.log('val', values);
   values.created_by = 1;
   return __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post("".concat(URL, "/api/options"), values).catch(function (error) {
-    return console.log(error);
+    console.log(error);
+    return {
+      errors: error
+    };
   });
 } //DELETE OPTIONS API
 
 function deleteOptions(optionId) {
   return __WEBPACK_IMPORTED_MODULE_0_axios___default.a.delete("".concat(URL, "/api/options/") + optionId).catch(function (error) {
-    return console.log(error);
+    console.log(error);
+    return {
+      errors: error
+    };
   });
 } // UPDATE OPTIONS API
 
 function updateOptions(optionId, values) {
   return __WEBPACK_IMPORTED_MODULE_0_axios___default.a.put("".concat(URL, "/api/options/") + optionId, values).catch(function (error) {
-    return console.log(error);
+    console.log(error);
+    return {
+      errors: error
+    };
   });
 } // TOGGLE STATUS API
 
 function updateOptionsStatus(optionId, values) {
   return __WEBPACK_IMPORTED_MODULE_0_axios___default.a.put("".concat(URL, "/api/options/") + optionId, values).catch(function (error) {
-    return console.log(error);
+    console.log(error);
+    return {
+      errors: error
+    };
+  });
+} // GET SINGLE DATA OF Options
+
+function getSingleOptions(optionId) {
+  return __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get("".concat(URL, "/api/options/") + optionId).catch(function (error) {
+    console.log(error);
+    return {
+      errors: error
+    };
   });
 }
 
@@ -108040,8 +108306,6 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 
 
 
-var globalId = null;
-var page = null;
 
 var MakesListContainer =
 /*#__PURE__*/
@@ -108055,7 +108319,6 @@ function (_Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(MakesListContainer).call(this));
     _this.state = {
-      hide: true,
       isEditing: false
     };
     _this.handlePageChange = _this.handlePageChange.bind(_assertThisInitialized(_assertThisInitialized(_this)));
@@ -108065,47 +108328,32 @@ function (_Component) {
   }
 
   _createClass(MakesListContainer, [{
-    key: "hideMessage",
-    value: function hideMessage(e) {
-      e.preventDefault();
-      this.setState({
-        hide: false
-      });
-    }
-  }, {
     key: "componentDidMount",
     value: function componentDidMount() {
       // call action to run the relative saga
-      this.props.requestMakes();
-      page = this.props.activePage;
+      this.props.requestMakes(); // page = this.props.activePage;
     } // submit function for new data
 
   }, {
     key: "submitMake",
     value: function submitMake(values) {
       this.props.requestSubmitMake(values);
-      this.setState({
-        hide: true
-      });
     } // submit function to update data
 
   }, {
     key: "submitEditMake",
-    value: function submitEditMake(values, page) {
-      console.log("vvv", page);
-      this.props.requestUpdateMakes(values, page);
+    value: function submitEditMake(values) {
+      this.props.requestUpdateMakes(values);
       this.setState({
-        isEditing: false,
-        hide: true
+        isEditing: false
       });
     } //function to call form of edit
 
   }, {
     key: "editMakes",
     value: function editMakes(values) {
-      globalId = values;
       this.setState({
-        isEditing: true
+        isEditing: values
       });
     }
   }, {
@@ -108118,40 +108366,49 @@ function (_Component) {
     key: "handlePageChange",
     value: function handlePageChange(pageNumber) {
       console.log("active page is ".concat(pageNumber));
-      console.log('page', this.props);
       this.props.requestMakesPages(pageNumber);
     }
   }, {
     key: "toggleStatus",
     value: function toggleStatus(makeId, status) {
-      console.log('id', makeId);
-      console.log('val', status);
       var newMakesStatus = {
         status: !status
       };
       this.props.requestMakesStatus(makeId, newMakesStatus);
     }
   }, {
+    key: "renderList",
+    value: function renderList() {
+      if (this.props.fetching) {
+        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("tbody", null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("tr", null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("td", null, "LOADING...")));
+      } else {
+        if (this.props.makes.length) {
+          return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_makes_makes__["a" /* default */], {
+            makes: this.props.makes,
+            onEdit: this.editMakes,
+            deleteMake: this.props.requestDeleteMakes,
+            makeStatus: this.toggleStatus
+          });
+        } else {
+          return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("tbody", null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("tr", null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("td", null, "No Results Found !")));
+        }
+      }
+    }
+  }, {
     key: "render",
     value: function render() {
-      console.log('prop', this.props);
       return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("div", null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("div", {
         className: "row"
       }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("div", {
         className: "col s12 m3 l3"
       }, this.state.isEditing ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_7__components_makes_makes_edit__["a" /* default */], {
         onSubmit: this.submitEditMake.bind(this),
-        editId: globalId
+        editId: this.state.isEditing
       }) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6__makes_form__["a" /* default */], {
         onSubmit: this.submitMake.bind(this)
       })), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("div", {
         className: "col s12 m9 l9"
-      }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("table", null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("thead", null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("tr", null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("th", null, "S.N"), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("th", null, "Title"), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("th", null, "Added by"), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("th", null, "Action"), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("th", null, "Status"))), this.props.makes.length ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_makes_makes__["a" /* default */], {
-        makes: this.props.makes,
-        onEdit: this.editMakes,
-        deleteMake: this.props.requestDeleteMakes,
-        makeStatus: this.toggleStatus
-      }) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("tbody", null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("tr", null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("td", null, "No Results Found !")))), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("div", {
+      }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("table", null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("thead", null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("tr", null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("th", null, "S.N"), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("th", null, "Title"), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("th", null, "Added by"), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("th", null, "Action"), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("th", null, "Status"))), this.renderList()), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("div", {
         className: "col s12 mt-2 mb-2 left-align"
       }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_js_pagination___default.a, {
         activePage: this.props.activePage,
@@ -108177,7 +108434,8 @@ function mapStateToProps(store) {
     activePage: store.makeState.activePage,
     itemsCountPerPage: store.makeState.itemsCountPerPage,
     totalItemsCount: store.makeState.totalItemsCount,
-    pageRangeDisplayed: store.makeState.pageRangeDisplayed
+    pageRangeDisplayed: store.makeState.pageRangeDisplayed,
+    fetching: store.makeState.fetching
   };
 }
 
@@ -108448,6 +108706,7 @@ function (_Component) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_redux_form__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__store__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react_redux__ = __webpack_require__(7);
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
@@ -108467,6 +108726,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
 
 
 
@@ -108524,7 +108784,11 @@ function (_Component) {
         className: "row"
       }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("div", {
         className: "input-field col s12"
-      }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("button", {
+      }, this.props.sending ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("button", {
+        className: "btn cyan waves-effect waves-light right",
+        type: "submit",
+        name: "action"
+      }, "Sending...") : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("button", {
         className: "btn cyan waves-effect waves-light right",
         type: "submit",
         name: "action"
@@ -108547,10 +108811,16 @@ function validate(values) {
   return errors;
 }
 
+function mapStateToProps(store) {
+  return {
+    sending: store.makeState.sending
+  };
+}
+
 /* harmony default export */ __webpack_exports__["a"] = (Object(__WEBPACK_IMPORTED_MODULE_1_redux_form__["c" /* reduxForm */])({
   validate: validate,
   form: 'PostMakes'
-})(MakeForm));
+})(Object(__WEBPACK_IMPORTED_MODULE_3_react_redux__["connect"])(mapStateToProps, null)(MakeForm)));
 
 /***/ }),
 /* 691 */
@@ -108605,7 +108875,6 @@ function (_Component) {
 
       var id = this.props.editId;
       __WEBPACK_IMPORTED_MODULE_3__api_makes_api__["e" /* getSingleMakes */](id).then(function (response) {
-        console.log('respp', response);
         var data = response.data;
 
         _this.props.initialize(data);
@@ -113746,7 +114015,8 @@ function (_Component) {
         className: "col s12 m3 l3"
       }, this.state.isEditing ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_7__components_options_options_edit__["a" /* default */], {
         onSubmit: this.submitEditOption.bind(this),
-        editId: globalId
+        editId: globalId,
+        optionLists: this.props.optionCategories
       }) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_8__components_options_options_form__["a" /* default */], {
         onSubmit: this.submitOption.bind(this),
         optionLists: this.props.optionCategories
@@ -113949,10 +114219,8 @@ function (_Component) {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__store__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_redux_form__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react_redux__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__api_makes_api__ = __webpack_require__(102);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_redux_form__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__api_options_api__ = __webpack_require__(496);
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
@@ -113977,39 +114245,29 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
-
-var globalData = null;
-
-var EditMake =
+var EditOption =
 /*#__PURE__*/
 function (_Component) {
-  _inherits(EditMake, _Component);
+  _inherits(EditOption, _Component);
 
-  function EditMake() {
-    _classCallCheck(this, EditMake);
+  function EditOption() {
+    _classCallCheck(this, EditOption);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(EditMake).apply(this, arguments));
+    return _possibleConstructorReturn(this, _getPrototypeOf(EditOption).apply(this, arguments));
   }
 
-  _createClass(EditMake, [{
+  _createClass(EditOption, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      this.handleInitialize();
-      __WEBPACK_IMPORTED_MODULE_4__api_makes_api__["c" /* getMakes */]();
-    }
-  }, {
-    key: "handleInitialize",
-    value: function handleInitialize() {
+      var _this = this;
+
       var id = this.props.editId;
-      console.log('length', this.props.makes[0].id);
+      __WEBPACK_IMPORTED_MODULE_2__api_options_api__["e" /* getSingleOptions */](id).then(function (response) {
+        console.log('respp', response);
+        var data = response.data;
 
-      for (var i = 0; i < this.props.makes.length; i++) {
-        if (this.props.makes[i].id == id) {
-          globalData = this.props.makes[i];
-        }
-      }
-
-      this.props.initialize(globalData);
+        _this.props.initialize(data);
+      });
     }
   }, {
     key: "renderInputField",
@@ -114038,20 +114296,30 @@ function (_Component) {
       var handleSubmit = this.props.handleSubmit;
       return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("div", null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("h4", {
         className: "header2"
-      }, "Update Make"), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("div", {
+      }, "Update Options"), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("div", {
         className: "card-panel"
       }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("div", {
         className: "row"
       }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("form", {
         className: "col s12",
         onSubmit: handleSubmit
-      }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_redux_form__["a" /* Field */], {
-        label: "Make Desciption",
-        name: "make_desc",
+      }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_redux_form__["a" /* Field */], {
+        label: "Options Desciption",
+        name: "option_desc",
         type: "text",
-        value: "make_desc",
+        value: "option_desc",
         component: this.renderInputField
-      }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("div", {
+      }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("div", null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("label", null, "Option Categories"), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_redux_form__["a" /* Field */], {
+        name: "oc_id",
+        component: "select",
+        className: "browser-default",
+        value: "oc_id"
+      }, this.props.optionLists.map(function (optionList) {
+        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("option", {
+          key: optionList.id,
+          value: optionList.id
+        }, optionList.optioncategory_desc);
+      }))), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("div", {
         className: "row"
       }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("div", {
         className: "input-field col s12"
@@ -114065,29 +114333,27 @@ function (_Component) {
     }
   }]);
 
-  return EditMake;
+  return EditOption;
 }(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
 
 function validate(values) {
   var errors = {};
 
-  if (!values.make_desc) {
-    errors.make_desc = "The Field is empty";
+  if (!values.option_desc) {
+    errors.option_desc = "The Field is empty";
+  }
+
+  if (!values.oc_id) {
+    errors.oc_id = "The Field is empty";
   }
 
   return errors;
 }
 
-function mapStateToProps(store) {
-  return {
-    makes: store.makeState.makes
-  };
-}
-
-/* harmony default export */ __webpack_exports__["a"] = (Object(__WEBPACK_IMPORTED_MODULE_2_redux_form__["c" /* reduxForm */])({
+/* harmony default export */ __webpack_exports__["a"] = (Object(__WEBPACK_IMPORTED_MODULE_1_redux_form__["c" /* reduxForm */])({
   validate: validate,
-  form: 'EditMakes'
-})(Object(__WEBPACK_IMPORTED_MODULE_3_react_redux__["connect"])(mapStateToProps, null)(EditMake)));
+  form: 'EditOptions'
+})(EditOption));
 
 /***/ }),
 /* 728 */
@@ -114198,9 +114464,7 @@ function (_Component) {
         name: "option_desc",
         type: "text",
         component: this.renderInputField
-      }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("div", {
-        className: "col s12"
-      }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("label", null, "Option Categories"), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_redux_form__["a" /* Field */], {
+      }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("div", null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("label", null, "Option Categories"), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_redux_form__["a" /* Field */], {
         name: "oc_id",
         component: "select",
         className: "browser-default"

@@ -45,7 +45,7 @@ function* callTransmissionSubmit(action) {
     if (result.errors) {
         yield put({ type: types.REQUEST_TRANSMISSONS_FAILED, errors: result.error});
         error = result.error;
-        console.log('err', error)
+        notify.show("Cannot Add Transmission!", "error", 5000)
     } else {
         yield put({type: types.ADD_TRANSMISSONS_SUCCESS, resp, message: result.statusText});
         notify.show("Transmission Added Successfully!", "success", 5000)
@@ -63,13 +63,13 @@ function* callEditTransmission (action) {
     yield put(startSubmit('EditTransmissions'));
     let error = {};
     const result =  yield call(api.updateTransmission, action.values.id, action.values);
-    console.log('ttt', result)
 
     const resp = result.data;
 
     if (result.errors) {
         yield put({ type: types.REQUEST_TRANSMISSONS_FAILED, errors: result.error});
         error = result.error;
+        notify.show(`Cannot Update ${resp.transmission_desc}!`, "error", 5000)
     } else {
         yield put({type: types.UPDATE_TRANSMISSONS_SUCCESS, resp, message: result.statusText});
         notify.show(`${resp.transmission_desc} Updated Successfully!`, "success", 5000)
@@ -92,6 +92,7 @@ function* callToggleTransmissionStatus(action) {
     if (result.errors) {
         yield put({ type: types.REQUEST_TRANSMISSONS_FAILED, errors: result.error});
         error = result.error;
+        notify.show(`Cannot Change Status of ${resp.transmission_desc}!`, "error", 5000)
     } else {
         yield put({type: types.TRANSMISSONS_STATUS_SUCCESS, resp, message: result.statusText});
         notify.show(`Status of ${resp.transmission_desc} Updated!`, "success", 5000)
@@ -110,6 +111,7 @@ function* callDeleteTransmission(action) {
     if(result.errors) {
         yield put({ type: types.REQUEST_TRANSMISSONS_FAILED, errors: result.error});
         error = result.error;
+        notify.show("Cannot Delete Transmission!", "error", 5000)
     } else {
         yield put(transmissionAction.deleteTransmissionSuccess(action.transmissionId, result.statusText));
         notify.show("Transmissioin Deleted Successfully!", "error", 5000)

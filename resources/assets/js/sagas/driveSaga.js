@@ -26,6 +26,7 @@ function* callDrivesPages(action) {
     if (result.errors) {
         yield put({ type: types.REQUEST_DRIVES_FAILED, errors: result.error});
         error = result.error;
+
     } else {
         yield put({type: types.GET_DRIVES_PAGES, resp});
     }
@@ -45,7 +46,7 @@ function* callDriveSubmit(action) {
     if (result.errors) {
         yield put({ type: types.REQUEST_DRIVES_FAILED, errors: result.error});
         error = result.error;
-        console.log('err', error)
+        notify.show("Cannot Add Drive!", "error",5000)
     } else {
         yield put({type: types.ADD_DRIVES_SUCCESS, resp, message: result.statusText});
         notify.show("Drive Added Successfully!", "success", 5000)
@@ -68,9 +69,11 @@ function* callEditDrive (action) {
     if (result.errors) {
         yield put({ type: types.REQUEST_DRIVES_FAILED, errors: result.error});
         error = result.error;
+        notify.show(`Cannot Update ${resp.drive_desc}!`, "error",5000)
+
     } else {
         yield put({type: types.UPDATE_DRIVES_SUCCESS, resp, message: result.statusText});
-        notify.show("Drive Updated Successfully!", "success", 5000)
+        notify.show(`${resp.drive_desc} Updated Successfully!`, "success", 5000)
     }
     yield put(stopSubmit('EditDrives', error));
     yield put(reset('EditDrives'));
@@ -90,6 +93,8 @@ function* callDriveToggleStatus(action) {
     if (result.errors) {
         yield put({ type: types.REQUEST_DRIVES_FAILED, errors: result.error});
         error = result.error;
+        notify.show(`Cannot Change Status of ${resp.drive_desc}!`, "error",5000)
+
     } else {
         yield put({type: types.DRIVES_STATUS_SUCCESS, resp, message: result.statusText});
         notify.show("Status Updated Successfully!", "success", 5000)
@@ -108,6 +113,7 @@ function* callDeleteDrive(action) {
     if(result.errors) {
         yield put({ type: types.REQUEST_DRIVES_FAILED, errors: result.error});
         error = result.error;
+        notify.show("Cannot Delete Drive!", "error", 5000)
     } else {
         yield put(driveAction.deleteDrivesSuccess(action.driveId, result.statusText));
         notify.show("Drive Deleted Successfully!", "error", 5000)
