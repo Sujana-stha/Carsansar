@@ -1,28 +1,18 @@
 import React, { Component } from 'react';
-import store from '../../store';
 import { Field, reduxForm } from 'redux-form';
-import {connect} from 'react-redux';
-
-
-var globalData = null;
-
+import * as companyApi from '../../api/companies-api'
 
 class EditCompany extends Component {
     componentDidMount() {
-        this.handleInitialize();
+        const id = this.props.editId;
+        companyApi.getSingleCompanies(id).then((response)=> {
+            const data =  response.data;
+            this.props.initialize(data);
+        })
+
     }
     
-    handleInitialize() {
-        const id = this.props.editId;
-        // console.log('length',this.props.drives[0].id);
-
-        for (var i = 0; i < this.props.companies.length; i++ ) {
-            if(this.props.companies[i].id == id) {
-                globalData = this.props.companies[i]
-            }
-        }
-        this.props.initialize(globalData);
-    }
+    
     renderInputField({input, label, type, meta: {touched, error}}) {
         return (
             <div>
@@ -132,12 +122,8 @@ function validate(values) {
     
     return errors;
 }
-function mapStateToProps(store) {
-    return {
-        companies: store.companyState.companies
-    }
-}
+
 export default reduxForm({
     validate,
     form: 'EditCompanies'
-})(connect(mapStateToProps, null)(EditCompany));
+})(EditCompany);

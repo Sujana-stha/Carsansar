@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Pagination from "react-js-pagination";
-import MakesList from '../../components/drives/drives';
+import DrivesList from '../../components/drives/drives';
 import store from '../../store';
 import { requestDrives, requestDeleteDrives, requestSubmitDrives, requestDrivesPages,requestUpdateDrives, requestDrivesStatus } from  '../../actions/drives-action';
 
@@ -9,6 +9,8 @@ import { requestDrives, requestDeleteDrives, requestSubmitDrives, requestDrivesP
 //COMPONENT
 import DriveForm from '../../components/drives/drives-form';
 import EditDrive from '../../components/drives/drives-edit';
+import Loading from '../../components/loading';
+
 
 var globalId = null
 
@@ -81,7 +83,27 @@ class DrivesListContainer extends Component {
         }
         this.props.requestDrivesStatus(driveId, newDrivesStatus)
     }
-
+    // renderList() {
+    //     if(this.props.fetching) {
+    //         return (
+    //             <tbody>
+    //                 <tr><td></td></tr>
+    //             </tbody>
+    //         )
+    //     } else {
+    //         if(this.props.drives.length) {
+    //             return (
+    //                 <DrivesList drives= {this.props.drives} onEditDrive = {this.editDrives} deleteDrive = {this.props.requestDeleteDrives} driveStatus = {this.toggleStatus}/>
+    //             )
+    //         } else {
+    //             return (
+    //                 <tbody>
+    //                     <tr><td>No Results Found !</td></tr>
+    //                 </tbody>
+    //             )
+    //         }
+    //     }
+    // }
     render() {
         console.log('prop', this.props.drives)
         return (
@@ -96,6 +118,11 @@ class DrivesListContainer extends Component {
                        
                     </div>
                     <div className="col s12 m9 l9">
+                        {this.props.fetching ? (
+                            <Loading/>
+                        ): (
+                            <div className="wr-not-loading"></div>
+                        )}
                         <table>
                             <thead>
                                 <tr>
@@ -106,8 +133,9 @@ class DrivesListContainer extends Component {
                                     <th>Status</th>
                                 </tr>
                             </thead>
+                            {/* {this.renderList()} */}
                             {this.props.drives.length ? (
-                                <MakesList drives= {this.props.drives} onEditDrive = {this.editDrives} deleteDrive = {this.props.requestDeleteDrives} driveStatus = {this.toggleStatus}/>
+                                <DrivesList drives= {this.props.drives} onEditDrive = {this.editDrives} deleteDrive = {this.props.requestDeleteDrives} driveStatus = {this.toggleStatus}/>
 
                             ) : (
                                 <tbody>
@@ -138,7 +166,7 @@ class DrivesListContainer extends Component {
 function mapStateToProps(store) {
     return {
         drives: store.driveState.drives,
-        message: store.driveState.message,
+        fetching: store.driveState.fetching,
         activePage: store.driveState.activePage,
         itemsCountPerPage: store.driveState.itemsCountPerPage,
         totalItemsCount: store.driveState.totalItemsCount,

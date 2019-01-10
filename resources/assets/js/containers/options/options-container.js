@@ -9,6 +9,8 @@ import {requestOptionCategories} from '../../actions/option_cat-action';
 //COMPONENT
 import EditOptions from '../../components/options/options-edit';
 import OptionsForm from '../../components/options/options-form';
+import Loading from '../../components/loading';
+
 
 var globalId = null
 
@@ -83,9 +85,28 @@ class OptionsListContainer extends Component {
         }
         this.props.requestOptionsStatus(optionId, newOptionsStatus)
     }
-
+    // renderList() {
+    //     if(this.props.fetching) {
+    //         return (
+    //             <tbody>
+    //                 <tr><td></td></tr>
+    //             </tbody>
+    //         )
+    //     } else {
+    //         if(this.props.options.length) {
+    //             return (
+    //                 <OptionsList options= {this.props.options} onEditOptions = {this.editOptions} deleteOption = {this.props.requestDeleteOptions} OptionStatus = {this.toggleStatus}/>
+    //             )
+    //         } else {
+    //             return (
+    //                 <tbody>
+    //                     <tr><td>No Results Found !</td></tr>
+    //                 </tbody>
+    //             )
+    //         }
+    //     }
+    // }
     render() {
-        console.log('prop', this.props.options)
         return (
             <div>
                 <div className="row">
@@ -98,6 +119,11 @@ class OptionsListContainer extends Component {
                        
                     </div>
                     <div className="col s12 m9 l9">
+                        {this.props.fetching ? (
+                            <Loading/>
+                        ): (
+                            <div className="wr-not-loading"></div>
+                        )}
                         <table>
                             <thead>
                                 <tr>
@@ -141,7 +167,7 @@ class OptionsListContainer extends Component {
 function mapStateToProps(store) {
     return {
         options: store.optionState.options,
-        message: store.optionState.message,
+        fetching: store.optionState.fetching,
         activePage: store.optionState.activePage,
         itemsCountPerPage: store.optionState.itemsCountPerPage,
         totalItemsCount: store.optionState.totalItemsCount,

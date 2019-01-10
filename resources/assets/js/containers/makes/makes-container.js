@@ -8,6 +8,7 @@ import { requestMakes, requestDeleteMakes, requestSubmitMake, requestMakesPages,
 //COMPONENT
 import MakeForm from './makes-form';
 import EditMake from '../../components/makes/makes-edit';
+import Loading from '../../components/loading';
 
 class MakesListContainer extends Component {
     constructor() {
@@ -35,8 +36,8 @@ class MakesListContainer extends Component {
 
     // submit function to update data
     submitEditMake(values) {
-        
-        this.props.requestUpdateMakes(values);
+        const page = this.props.activePage;
+        this.props.requestUpdateMakes(values, page);
         this.setState({
             isEditing : false
         })
@@ -66,27 +67,25 @@ class MakesListContainer extends Component {
         }
         this.props.requestMakesStatus(makeId, newMakesStatus)
     }
-    renderList() {
-        if(this.props.fetching) {
-            return (
-                <tbody>
-                    <tr><td>LOADING...</td></tr>
-                </tbody>
-            )
-        } else {
-            if(this.props.makes.length) {
-                return (
-                    <MakesList makes= {this.props.makes} onEdit = {this.editMakes} deleteMake = {this.props.requestDeleteMakes} makeStatus = {this.toggleStatus}/>
-                )
-            } else {
-                return (
-                    <tbody>
-                        <tr><td>No Results Found !</td></tr>
-                    </tbody>
-                )
-            }
-        }
-    }
+    // renderList() {
+    //     if(this.props.fetching) {
+    //         return (
+    //             <Loading />
+    //         )
+    //     } else {
+    //         if(this.props.makes.length) {
+    //             return (
+    //                 <MakesList makes= {this.props.makes} onEdit = {this.editMakes} deleteMake = {this.props.requestDeleteMakes} makeStatus = {this.toggleStatus}/>
+    //             )
+    //         } else {
+    //             return (
+    //                 <tbody>
+    //                     <tr><td>No Results Found !</td></tr>
+    //                 </tbody>
+    //             )
+    //         }
+    //     }
+    // }
     render() {
         return (
             <div>
@@ -99,7 +98,13 @@ class MakesListContainer extends Component {
                         )}
                        
                     </div>
+                    
                     <div className="col s12 m9 l9">
+                        {this.props.fetching ? (
+                            <Loading/>
+                        ): (
+                            <div className="wr-not-loading"></div>
+                        )}
                         <table>
                             <thead>
                                 <tr>
@@ -110,7 +115,17 @@ class MakesListContainer extends Component {
                                     <th>Status</th>
                                 </tr>
                             </thead>
-                            {this.renderList()}
+                            {/* {this.renderList()} */}
+                            {this.props.makes.length ? (
+                                <MakesList makes= {this.props.makes} onEdit = {this.editMakes} deleteMake = {this.props.requestDeleteMakes} makeStatus = {this.toggleStatus}/>
+
+                            ): (
+                                <tbody>
+                                    <tr><td>No Results Found!</td></tr>
+                                </tbody>
+                            )}
+
+
                         </table>
                         <div className="col s12 mt-2 mb-2 left-align">
                             <Pagination

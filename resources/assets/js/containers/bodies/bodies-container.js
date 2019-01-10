@@ -9,14 +9,12 @@ import { requestBodies, requestDeleteBodies, requestSubmitBodies, requestBodiesP
 //COMPONENT
 import BodyForm from '../../components/bodies/bodies-form';
 import EditBody from '../../components/bodies/bodies-edit';
-
-var globalId = null
+import Loading from '../../components/loading';
 
 class BodiesListContainer extends Component {
     constructor() {
         super();
         this.state= {
-            hide: true,
             isEditing: false
         }
         this.handlePageChange = this.handlePageChange.bind(this)
@@ -24,12 +22,12 @@ class BodiesListContainer extends Component {
         this.toggleStatus = this.toggleStatus.bind(this)
     }
 
-    hideMessage (e) {
-        e.preventDefault();
-        this.setState ({
-            hide: false
-        })
-    }
+    // hideMessage (e) {
+    //     e.preventDefault();
+    //     this.setState ({
+    //         hide: false
+    //     })
+    // }
 
     componentDidMount() {
         // call action to run the relative saga
@@ -55,9 +53,8 @@ class BodiesListContainer extends Component {
 
     //function to call form of edit
     editBodies(values) {
-        globalId = values
         this.setState ({
-            isEditing : true
+            isEditing : values
         })
         
     }
@@ -74,14 +71,32 @@ class BodiesListContainer extends Component {
     }
     
     toggleStatus (bodyId, status) {
-        console.log('id', bodyId)
-        console.log('val', status)
         const newBodyStatus = {
             status: !status
         }
         this.props.requestBodiesStatus(bodyId, newBodyStatus)
     }
-
+    // renderList() {
+    //     if(this.props.fetching) {
+    //         return (
+    //             <tbody>
+    //                 <tr><td></td></tr>
+    //             </tbody>
+    //         )
+    //     } else {
+    //         if(this.props.makes.length) {
+    //             return (
+    //                 <BodiesList bodies= {this.props.bodies} onEditBody = {this.editBodies} deleteBody = {this.props.requestDeleteBodies} bodyStatus = {this.toggleStatus}/>
+    //             )
+    //         } else {
+    //             return (
+    //                 <tbody>
+    //                     <tr><td>No Results Found !</td></tr>
+    //                 </tbody>
+    //             )
+    //         }
+    //     }
+    // }
     render() {
         console.log('prop', this.props.bodies)
         return (
@@ -103,13 +118,18 @@ class BodiesListContainer extends Component {
                 <div className="row">
                     <div className="col s12 m3 l3">
                         {this.state.isEditing ? (
-                            <EditBody onSubmit = {this.submitEditBody.bind(this)} editId = {globalId} />
+                            <EditBody onSubmit = {this.submitEditBody.bind(this)} editId = {this.state.isEditing} />
                         ): (
                             <BodyForm onSubmit = { this.submitBody.bind(this) }/>
                         )}
                        
                     </div>
                     <div className="col s12 m9 l9">
+                        {this.props.fetching ? (
+                            <Loading/>
+                        ): (
+                            <div className="wr-not-loading"></div>
+                        )}
                         <table>
                             <thead>
                                 <tr>
@@ -120,6 +140,7 @@ class BodiesListContainer extends Component {
                                     <th>Status</th>
                                 </tr>
                             </thead>
+                            {/* {this.renderList()} */}
                             {this.props.bodies.length ? (
                                 <BodiesList bodies= {this.props.bodies} onEditBody = {this.editBodies} deleteBody = {this.props.requestDeleteBodies} bodyStatus = {this.toggleStatus}/>
 
@@ -152,7 +173,7 @@ class BodiesListContainer extends Component {
 function mapStateToProps(store) {
     return {
         bodies: store.bodyState.bodies,
-        message: store.bodyState.message,
+        fetching: store.bodyState.fetching,
         activePage: store.bodyState.activePage,
         itemsCountPerPage: store.bodyState.itemsCountPerPage,
         totalItemsCount: store.bodyState.totalItemsCount,

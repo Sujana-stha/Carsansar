@@ -1,28 +1,17 @@
 import React, { Component } from 'react';
-import store from '../../store';
 import { Field, reduxForm } from 'redux-form';
-import {connect} from 'react-redux';
-
-
-var globalData = null;
+import * as fuelApi from '../../api/fueltypes-api';
 
 
 class EditFueltype extends Component {
     componentDidMount() {
-        this.handleInitialize();
+        const id = this.props.editId;
+        fuelApi.getSingleFueltypes(id).then((response) => {
+            const data =  response.data;
+            this.props.initialize(data);
+        })
     }
     
-    handleInitialize() {
-        const id = this.props.editId;
-        
-        console.log('length',this.props.fueltypes[0].id);
-        for (var i = 0; i < this.props.fueltypes.length; i++ ) {
-            if(this.props.fueltypes[i].id == id) {
-                globalData = this.props.fueltypes[i]
-            }
-        }
-        this.props.initialize(globalData);
-    }
     renderInputField({input, label, type, meta: {touched, error}}) {
         return (
             <div>
@@ -79,12 +68,8 @@ function validate(values) {
     
     return errors;
 }
-function mapStateToProps(store) {
-    return {
-        fueltypes: store.fueltypeState.fueltypes
-    }
-}
+
 export default reduxForm({
     validate,
     form: 'EditFueltypes'
-})(connect(mapStateToProps, null)(EditFueltype));
+})(EditFueltype);

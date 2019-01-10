@@ -1,7 +1,5 @@
 import React, {Component} from 'react';
  
-var makeId = null
-
 class MakesList extends Component {
     constructor() {
         super();
@@ -11,30 +9,17 @@ class MakesList extends Component {
         };
         // this.deleteItem = this.deleteItem.bind(this);
     }
-    
-    onClicked(e) {
-        // e.preventDefault();
-        makeId = e;
-        console.log(makeId);
-
-        this.setState({confirm: true})
-    }
 
     deleteItem(id){
-        // e.preventDefault();
         console.log(id);
-        // return false;
-        
         this.setState({showItem: id})
-        
     }
     componentDidMount() {
         this.setState({
             confirm: false
         })
     }
-    hideDiv(e) {
-        e.preventDefault();
+    hideDiv() {
         this.setState({showItem: null})
     }
     render() {

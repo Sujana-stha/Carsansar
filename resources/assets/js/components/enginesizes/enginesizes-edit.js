@@ -1,30 +1,17 @@
 import React, { Component } from 'react';
-import store from '../../store';
 import { Field, reduxForm } from 'redux-form';
-import {connect} from 'react-redux';
 import * as enginesizeApi from '../../api/enginesize-api';
-
-
-var globalData = null;
 
 
 class EditEnginesize extends Component {
     componentDidMount() {
-        this.handleInitialize();
-        enginesizeApi.getEnginesizes();
+        const id = this.props.editId;
+        enginesizeApi.getSingleEnginesizes(id).then((response)=> {
+            const data =  response.data;
+            this.props.initialize(data);
+        })
     }
     
-    handleInitialize() {
-        const id = this.props.editId;
-        // console.log('length',this.props.drives[0].id);
-
-        for (var i = 0; i < this.props.enginesizes.length; i++ ) {
-            if(this.props.enginesizes[i].id == id) {
-                globalData = this.props.enginesizes[i]
-            }
-        }
-        this.props.initialize(globalData);
-    }
     renderInputField({input, label, type, meta: {touched, error}}) {
         return (
             <div>
@@ -81,12 +68,8 @@ function validate(values) {
     
     return errors;
 }
-function mapStateToProps(store) {
-    return {
-        enginesizes: store.enginesizeState.enginesizes
-    }
-}
+
 export default reduxForm({
     validate,
     form: 'EditEnginesizes'
-})(connect(mapStateToProps, null)(EditEnginesize));
+})(EditEnginesize);

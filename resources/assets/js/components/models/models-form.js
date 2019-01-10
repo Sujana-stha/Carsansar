@@ -55,6 +55,8 @@ function validate(values) {
     const errors = {}
     if(!values.model_desc) {
         errors.model_desc = "The Field is empty"
+    } else if (values.model_desc.length > 30) {
+        errors.model_desc ="Must be 30 character or Less!"
     }
     return errors;
 }

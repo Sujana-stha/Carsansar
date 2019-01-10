@@ -24,8 +24,7 @@ function* callMakesPages(action) {
     const resp = result.data
 
     if (result.errors) {
-        yield put({ type: types.REQUEST_FAILED, errors: result.error});
-        error = result.error;
+        yield put({ type: types.REQUEST_FAILED});
     } else {
         yield put({type: types.GET_MAKES_PAGES, resp});
         
@@ -41,11 +40,11 @@ function* callMakesSubmit(action) {
     yield put(startSubmit('PostMakes'));
     const result =  yield call(api.addMakes, action.values);
     const resp = result.data
-    console.log('result', result.errors)
+    let error = {};
     if (result.errors) {
-        yield put({ type: types.REQUEST_FAILED, errors: result.errors});
+        yield put({ type: types.REQUEST_FAILED});
         notify.show("Cannot Add Makes!","error", 5000);
-
+        error = result.errors
     } else {
         // yield put({type: types.ADD_MAKES_SUCCESS, resp, message: result.statusText});
         yield put({type: types.REQUEST_MAKES});
@@ -63,19 +62,19 @@ export function* editSaga() {
 
 function* callEditMake (action) {
     yield put(startSubmit('EditMakes'));
-
+    console.log("nnnn", action)
     let error = {};
     const result =  yield call(api.updateMake, action.values.id, action.values);
     const resp = result.data;
+    const pageNumber = action.page
     if (result.errors) {
         yield put({ type: types.REQUEST_FAILED, errors: result.errors});
-        error = result.error;
         notify.show(`Cannot Update ${resp.make_desc}!`,"error", 5000);
-        
+        error = result.errors
 
     } else {
         // yield put({type: types.UPDATE_MAKES_SUCCESS, resp, message: result.statusText});
-        yield put ({type: types.REQUEST_MAKES_PAGES})
+        yield put ({type: types.REQUEST_MAKES_PAGES, pageNumber})
         notify.show("Makes Updated Successfully!", "success", 5000);
 
     }

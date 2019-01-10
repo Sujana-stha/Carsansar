@@ -9,6 +9,8 @@ import { requestOptionCategories, requestDeleteOptionCategories, requestSubmitOp
 //COMPONENT
 import OptionCategoryForm from '../../components/OptionCategory/optionCategory-form';
 import EditOptionCategory from '../../components/OptionCategory/optionCategory-edit';
+import Loading from '../../components/loading';
+
 
 var globalId = null
 
@@ -83,8 +85,28 @@ class OptionCategoryListContainer extends Component {
         }
         this.props.requestOptionCategoriesStatus(optCatId, newOptCatStatus)
     }
+    // renderList() {
+    //     if(this.props.fetching) {
+    //         return (
+    //             <tbody>
+    //                 <tr><td></td></tr>
+    //             </tbody>
+    //         )
+    //     } else {
+    //         if(this.props.optionCategories.length) {
+    //             return (
+    //                 <OptionCategoryList optionCategories= {this.props.optionCategories} onEditOptionCategory = {this.editOptionCategory} deleteOptionCategory = {this.props.requestDeleteOptionCategories} optionCategoryStatus={this.toggleStatus}/>
+    //             )
+    //         } else {
+    //             return (
+    //                 <tbody>
+    //                     <tr><td>No Results Found !</td></tr>
+    //                 </tbody>
+    //             )
+    //         }
+    //     }
+    // }
     render() {
-        console.log('prop', this.props)
         return (
             <div>
                 <div className="row">
@@ -97,6 +119,11 @@ class OptionCategoryListContainer extends Component {
                        
                     </div>
                     <div className="col s12 m9 l9">
+                        {this.props.fetching ? (
+                            <Loading/>
+                        ): (
+                            <div className="wr-not-loading"></div>
+                        )}
                         <table>
                             <thead>
                                 <tr>
@@ -107,6 +134,7 @@ class OptionCategoryListContainer extends Component {
                                     <th>Status</th>
                                 </tr>
                             </thead>
+                            {/* {this.renderList()} */}
                             {this.props.optionCategories.length ? (
                                 <OptionCategoryList optionCategories= {this.props.optionCategories} onEditOptionCategory = {this.editOptionCategory} deleteOptionCategory = {this.props.requestDeleteOptionCategories} optionCategoryStatus={this.toggleStatus}/>
 
@@ -139,7 +167,7 @@ class OptionCategoryListContainer extends Component {
 function mapStateToProps(store) {
     return {
         optionCategories: store.OptCatState.optionCategories,
-        message: store.OptCatState.message,
+        fetching: store.OptCatState.fetching,
         // activePage: store.OptCatState.activePage,
         // itemsCountPerPage: store.OptCatState.itemsCountPerPage,
         // totalItemsCount: store.OptCatState.totalItemsCount,

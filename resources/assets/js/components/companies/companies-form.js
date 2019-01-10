@@ -90,22 +90,33 @@ function validate(values) {
     const errors = {}
     if(!values.company_cd) {
         errors.company_cd = "The Field is empty"
+    } else if(values.company_cd.length > 25) {
+        errors.company_cd = "Must be 25 character or Less!"
     }
+
     if(!values.name) {
         errors.name = "This Fiels is empty"
+    } else if(values.name.length > 50) {
+        errors.name = "Must be 50 character or Less!"
     }
 
     if(!values.address) {
         errors.address = "This Fiels is empty"
+    } else if (values.address.length > 100) {
+        errors.address = "Must be 50 character or Less!"
     }
     if (!values.email) {
         errors.email = 'Required'
     } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
         errors.email = 'Invalid email address'
+    } else if (values.email.length > 50) {
+        errors.email = "Must be 50 character or Less!"
     }
     if(!values.contact_no) {
         errors.contact_no = "This Fiels is empty"
-    } 
+    } else if(values.contact_no.length > 15) {
+        errors.contact_no = "Must be 15 character or Less!"
+    }
     return errors;
 }
 

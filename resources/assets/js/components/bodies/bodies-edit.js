@@ -1,30 +1,33 @@
 import React, { Component } from 'react';
-import store from '../../store';
+// import store from '../../store';
 import { Field, reduxForm } from 'redux-form';
-import {connect} from 'react-redux';
+// import {connect} from 'react-redux';
 import * as bodyApi from '../../api/bodies-api';
 
 
-var globalData = null;
+// var globalData = null;
 
 
 class EditBody extends Component {
     componentDidMount() {
-        this.handleInitialize();
-        bodyApi.getBodies();
+        const id =  this.props.editId;
+        bodyApi.getSingleBodies(id).then((response)=> {
+            const data =  response.data;
+            this.props.initialize(data);
+        })
     }
     
-    handleInitialize() {
-        const id = this.props.editId;
+    // handleInitialize() {
+    //     const id = this.props.editId;
         
-        console.log('length',this.props.bodies[0].id);
-        for (var i = 0; i < this.props.bodies.length; i++ ) {
-            if(this.props.bodies[i].id == id) {
-                globalData = this.props.bodies[i]
-            }
-        }
-        this.props.initialize(globalData);
-    }
+    //     console.log('length',this.props.bodies[0].id);
+    //     for (var i = 0; i < this.props.bodies.length; i++ ) {
+    //         if(this.props.bodies[i].id == id) {
+    //             globalData = this.props.bodies[i]
+    //         }
+    //     }
+    //     this.props.initialize(globalData);
+    // }
     renderInputField({input, label, type, meta: {touched, error}}) {
         return (
             <div>
@@ -81,12 +84,12 @@ function validate(values) {
     
     return errors;
 }
-function mapStateToProps(store) {
-    return {
-        bodies: store.bodyState.bodies
-    }
-}
+// function mapStateToProps(store) {
+//     return {
+//         bodies: store.bodyState.bodies
+//     }
+// }
 export default reduxForm({
     validate,
     form: 'EditBodies'
-})(connect(mapStateToProps, null)(EditBody));
+})(EditBody);

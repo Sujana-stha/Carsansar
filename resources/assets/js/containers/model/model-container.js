@@ -9,6 +9,8 @@ import { requestModel, requestModelPages, requestDeleteModel, requestSubmitModel
 //COMPONENT
 import ModelForm from '../../components/models/models-form';
 import EditModel from '../../components/models/models-edit';
+import Loading from '../../components/loading';
+
 
 var globalId = null
 
@@ -78,9 +80,28 @@ class ModelsListContainer extends Component {
         }
         this.props.requestModelStatus(modelId, newModelStatus)
     }
-
+    // renderList() {
+    //     if(this.props.fetching) {
+    //         return (
+    //             <tbody>
+    //                 <tr><td></td></tr>
+    //             </tbody>
+    //         )
+    //     } else {
+    //         if(this.props.models.length) {
+    //             return (
+    //                 <ModelList models= {this.props.models} onEditModel = {this.editModels} deleteModel = {this.props.requestDeleteModel} modelStatus = {this.toggleStatus}/>
+    //             )
+    //         } else {
+    //             return (
+    //                 <tbody>
+    //                     <tr><td>No Results Found !</td></tr>
+    //                 </tbody>
+    //             )
+    //         }
+    //     }
+    // }
     render() {
-        console.log('prop', this.props.models)
         return (
             <div>
                 <div className="row">
@@ -93,6 +114,11 @@ class ModelsListContainer extends Component {
                        
                     </div>
                     <div className="col s12 m9 l9">
+                        {this.props.fetching ? (
+                            <Loading/>
+                        ): (
+                            <div className="wr-not-loading"></div>
+                        )}
                         <table>
                             <thead>
                                 <tr>
@@ -103,6 +129,7 @@ class ModelsListContainer extends Component {
                                     <th>Status</th>
                                 </tr>
                             </thead>
+                            {/* {this.renderList()} */}
                             {this.props.models.length ? (
                                 <ModelList models= {this.props.models} onEditModel = {this.editModels} deleteModel = {this.props.requestDeleteModel} modelStatus = {this.toggleStatus}/>
 
@@ -135,7 +162,7 @@ class ModelsListContainer extends Component {
 function mapStateToProps(store) {
     return {
         models: store.modelState.models,
-        message: store.modelState.message,
+        fetching: store.modelState.fetching,
         activePage: store.modelState.activePage,
         itemsCountPerPage: store.modelState.itemsCountPerPage,
         totalItemsCount: store.modelState.totalItemsCount,

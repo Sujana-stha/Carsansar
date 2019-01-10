@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 
-var categoryId = null
 
 class CategoriesList extends Component {
     constructor() {
@@ -12,12 +11,6 @@ class CategoriesList extends Component {
         // this.deleteItem = this.deleteItem.bind(this);
     }
     
-    onClicked(e) {
-        categoryId = e;
-        console.log(categoryId);
-
-        this.setState({confirm: true})
-    }
 
     deleteItem(id){
         console.log(id);
@@ -30,8 +23,7 @@ class CategoriesList extends Component {
             confirm: false
         })
     }
-    hideDiv(e) {
-        e.preventDefault();
+    hideDiv() {
         this.setState({showItem: null})
     }
     render() {

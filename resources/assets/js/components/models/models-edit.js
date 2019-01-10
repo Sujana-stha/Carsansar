@@ -1,21 +1,18 @@
 import React, { Component } from 'react';
-import store from '../../store';
 import { Field, reduxForm } from 'redux-form';
-import {connect} from 'react-redux';
 import * as modelApi from '../../api/model-api';
-
-
-var globalData = null;
 
 
 class EditModel extends Component {
     componentDidMount() {
-        this.handleInitialize();
-        modelApi.getModel();
+        const id = this.props.editId;
+        modelApi.getSingleModels(id).then((response) => {
+            const data =  response.data;
+            this.props.initialize(data);
+        })
     }
     
     handleInitialize() {
-        const id = this.props.editId;
         
         console.log('length',this.props.models[0].id);
         for (var i = 0; i < this.props.models.length; i++ ) {
@@ -80,12 +77,8 @@ function validate(values) {
     
     return errors;
 }
-function mapStateToProps(store) {
-    return {
-        models: store.modelState.models
-    }
-}
+
 export default reduxForm({
     validate,
     form: 'EditModels'
-})(connect(mapStateToProps, null)(EditModel));
+})(EditModel);
