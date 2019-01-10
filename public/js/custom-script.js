@@ -14,6 +14,7 @@ $(document).ready(function(){
 	// $(".ql-header").material_select("destroy");
 	$('select').material_select();
 	$('.modal').modal();
+	$('.collapsible').collapsible();
 	//$('.tabs').tabs();
 	//$('select').formSelect();
 	

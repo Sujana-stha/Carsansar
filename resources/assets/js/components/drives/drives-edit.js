@@ -1,30 +1,17 @@
 import React, { Component } from 'react';
-import store from '../../store';
 import { Field, reduxForm } from 'redux-form';
-import {connect} from 'react-redux';
 import * as driveApi from '../../api/drives-api';
-
-
-var globalData = null;
 
 
 class EditDrive extends Component {
     componentDidMount() {
-        this.handleInitialize();
-        driveApi.getDrives();
+        const id = this.props.editId;
+        driveApi.getSingleDrives(id).then((response) => {
+            const data =  response.data;
+            this.props.initialize(data);
+        })
     }
     
-    handleInitialize() {
-        const id = this.props.editId;
-        // console.log('length',this.props.drives[0].id);
-
-        for (var i = 0; i < this.props.drives.length; i++ ) {
-            if(this.props.drives[i].id == id) {
-                globalData = this.props.drives[i]
-            }
-        }
-        this.props.initialize(globalData);
-    }
     renderInputField({input, label, type, meta: {touched, error}}) {
         return (
             <div>
@@ -81,12 +68,8 @@ function validate(values) {
     
     return errors;
 }
-function mapStateToProps(store) {
-    return {
-        drives: store.driveState.drives
-    }
-}
+
 export default reduxForm({
     validate,
     form: 'EditDrives'
-})(connect(mapStateToProps, null)(EditDrive));
+})(EditDrive);

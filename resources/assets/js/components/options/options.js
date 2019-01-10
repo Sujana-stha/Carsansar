@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
 
 
-var makeId = null
-
 class OptionsList extends Component {
     constructor() {
         super();
@@ -11,16 +9,8 @@ class OptionsList extends Component {
             showItem: null
         };
     }
-    
-    onClicked(e) {
-        optionId = e;
-        console.log(optionId);
-
-        this.setState({confirm: true})
-    }
 
     deleteItem(id){
-        console.log(id);
         this.setState({showItem: id})
     }
 
@@ -30,13 +20,11 @@ class OptionsList extends Component {
         })
     }
 
-    hideDiv(e) {
-        e.preventDefault();
+    hideDiv() {
         this.setState({showItem: null})
     }
 
     render() {
-        console.log('tab', this.props)
         return (
             <tbody>
                 {this.props.options.map((option) => {

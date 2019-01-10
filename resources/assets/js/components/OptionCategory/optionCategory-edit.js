@@ -1,30 +1,18 @@
 import React, { Component } from 'react';
-import store from '../../store';
 import { Field, reduxForm } from 'redux-form';
-import {connect} from 'react-redux';
 import * as optionCatApi from '../../api/option_cat-api';
-
-
-var globalData = null;
 
 
 class EditOptionCategory extends Component {
     componentDidMount() {
-        this.handleInitialize();
-        optionCatApi.getOptionsCategories();
+        const id = this.props.editId;
+        optionCatApi.getOptionsCategories(id).then((response)=> {
+            const data =  response.data;
+            this.props.initialize(data);
+        })
     }
     
-    handleInitialize() {
-        const id = this.props.editId;
-        
-        console.log('length',this.props.optionCategories[0].id);
-        for (var i = 0; i < this.props.optionCategories.length; i++ ) {
-            if(this.props.optionCategories[i].id == id) {
-                globalData = this.props.optionCategories[i]
-            }
-        }
-        this.props.initialize(globalData);
-    }
+    
     renderInputField({input, label, type, meta: {touched, error}}) {
         return (
             <div>
@@ -80,12 +68,8 @@ function validate(values) {
     
     return errors;
 }
-function mapStateToProps(store) {
-    return {
-        optionCategories: store.OptCatState.optionCategories
-    }
-}
+
 export default reduxForm({
     validate,
     form: 'EditOptionCategory'
-})(connect(mapStateToProps, null)(EditOptionCategory));
+})(EditOptionCategory);

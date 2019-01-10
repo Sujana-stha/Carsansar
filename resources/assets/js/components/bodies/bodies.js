@@ -1,7 +1,5 @@
 import React, {Component} from 'react';
 
-var bodyId = null
-
 class BodiesList extends Component {
     constructor() {
         super();
@@ -11,30 +9,18 @@ class BodiesList extends Component {
         };
         // this.deleteItem = this.deleteItem.bind(this);
     }
-    
-    onClicked(e) {
-        // e.preventDefault();
-        bodyId = e;
-        console.log(bodyId);
-
-        this.setState({confirm: true})
-    }
-
-    deleteItem(id){
-        // e.preventDefault();
-        console.log(id);
-        // return false;
-        
-        this.setState({showItem: id})
-        
-    }
     componentDidMount() {
         this.setState({
             confirm: false
         })
     }
-    hideDiv(e) {
-        e.preventDefault();
+
+    deleteItem(id){
+        console.log(id);
+        this.setState({showItem: id})
+    }
+
+    hideDiv() {
         this.setState({showItem: null})
     }
     render() {

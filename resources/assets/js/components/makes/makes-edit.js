@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import store from '../../store';
 import { Field, reduxForm } from 'redux-form';
 import * as makeApi from '../../api/makes-api';
 

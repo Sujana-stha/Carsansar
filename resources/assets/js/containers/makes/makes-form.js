@@ -24,7 +24,7 @@ class MakeForm extends Component {
         const { handleSubmit } = this.props;
         return (
             <div>
-                <h4 className="header2">Add New Make</h4>
+                <h4 className="header2 wr-header2">Add New Make</h4>
 
                 <div className="card-panel">
 					<div className="row">
@@ -60,6 +60,8 @@ function validate(values) {
     const errors = {}
     if(!values.make_desc) {
         errors.make_desc = "The Field is empty"
+    } else if (values.make_desc.length > 30) {
+        errors.make_desc = "Must be 30 Character or less!"
     }
     return errors;
 }

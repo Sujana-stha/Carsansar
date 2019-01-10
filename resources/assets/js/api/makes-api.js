@@ -15,7 +15,7 @@ export function getMakesPages(pageNumber) {
 // ADD NEW MAKES API
 export function addMakes(values) {
     console.log('val',values);
-    // values.created_by = 1;
+    values.created_by = 1;
     return axios.post(`${URL}/api/makes`, values)
     .catch(error=> {
         console.log(error)

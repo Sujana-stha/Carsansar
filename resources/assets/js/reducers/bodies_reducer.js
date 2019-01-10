@@ -24,10 +24,13 @@ const bodyReducer =  function(state = initialState, action) {
                 totalItemsCount: action.bodies.total,
                 activePage: action.bodies.current_page
             })
-        
+        case types.REQUEST_BODIES_PAGES:
+            return {...state, fetching: true}
+
         case types.GET_BODIES_PAGES:
             return Object.assign({}, state, {
                 bodies: action.resp.data,
+                fetching: false,
                 itemsCountPerPage: action.resp.per_page,
                 totalItemsCount: action.resp.total,
                 activePage: action.resp.current_page

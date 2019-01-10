@@ -9,6 +9,8 @@ import { requestFueltypes, requestDeleteFueltypes, requestSubmitFueltypes, reque
 //COMPONENT
 import FueltypeForm from '../../components/fueltypes/fueltypes-form';
 import EditFueltype from '../../components/fueltypes/fueltypes-edit';
+import Loading from '../../components/loading';
+
 
 var globalId = null
 
@@ -81,9 +83,28 @@ class FueltypesListContainer extends Component {
         }
         this.props.requestFueltypesStatus(fueltypeId, newFueltypeStatus)
     }
-
+    // renderList() {
+    //     if(this.props.fetching) {
+    //         return (
+    //             <tbody>
+    //                 <tr><td></td></tr>
+    //             </tbody>
+    //         )
+    //     } else {
+    //         if(this.props.fueltypes.length) {
+    //             return (
+    //                 <FueltypesList fueltypes= {this.props.fueltypes} onEditFueltype = {this.editFueltype} deleteFueltype = {this.props.requestDeleteFueltypes} fueltypeStatus = {this.toggleStatus}/>
+    //             )
+    //         } else {
+    //             return (
+    //                 <tbody>
+    //                     <tr><td>No Results Found !</td></tr>
+    //                 </tbody>
+    //             )
+    //         }
+    //     }
+    // }
     render() {
-        console.log('prop', this.props.fueltypes)
         return (
             <div>
                 <div className="row">
@@ -96,6 +117,11 @@ class FueltypesListContainer extends Component {
                        
                     </div>
                     <div className="col s12 m9 l9">
+                        {this.props.fetching ? (
+                            <Loading/>
+                        ): (
+                            <div className="wr-not-loading"></div>
+                        )}
                         <table>
                             <thead>
                                 <tr>
@@ -106,6 +132,7 @@ class FueltypesListContainer extends Component {
                                     <th>Status</th>
                                 </tr>
                             </thead>
+                            {/* {this.renderList()} */}
                             {this.props.fueltypes.length ? (
                                 <FueltypesList fueltypes= {this.props.fueltypes} onEditFueltype = {this.editFueltype} deleteFueltype = {this.props.requestDeleteFueltypes} fueltypeStatus = {this.toggleStatus}/>
 
@@ -138,7 +165,7 @@ class FueltypesListContainer extends Component {
 function mapStateToProps(store) {
     return {
         fueltypes: store.fueltypeState.fueltypes,
-        message: store.fueltypeState.message,
+        fetching: store.fueltypeState.fetching,
         activePage: store.fueltypeState.activePage,
         itemsCountPerPage: store.fueltypeState.itemsCountPerPage,
         totalItemsCount: store.fueltypeState.totalItemsCount,

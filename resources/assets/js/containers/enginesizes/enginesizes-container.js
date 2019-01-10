@@ -9,6 +9,8 @@ import { requestEnginesizes, requestDeleteEnginesizes, requestSubmitEnginesizes,
 //COMPONENT
 import EnginesizeForm from '../../components/enginesizes/enginesizes-form';
 import EditEnginesize from '../../components/enginesizes/enginesizes-edit';
+import Loading from '../../components/loading';
+
 
 var globalId = null
 
@@ -81,7 +83,27 @@ class EnginesizesListContainer extends Component {
         }
         this.props.requestEnginesizesStatus(enginesizeId, newEnginesizesStatus)
     }
-
+    // renderList() {
+    //     if(this.props.fetching) {
+    //         return (
+    //             <tbody>
+    //                 <tr><td></td></tr>
+    //             </tbody>
+    //         )
+    //     } else {
+    //         if(this.props.enginesizes.length) {
+    //             return (
+    //                 <EnginesizesList enginesizes= {this.props.enginesizes} onEditEnginesize = {this.editEnginesizes} deleteEnginesize = {this.props.requestDeleteEnginesizes} enginesizeStatus = {this.toggleStatus}/>
+    //             )
+    //         } else {
+    //             return (
+    //                 <tbody>
+    //                     <tr><td>No Results Found !</td></tr>
+    //                 </tbody>
+    //             )
+    //         }
+    //     }
+    // }
     render() {
         console.log('prop', this.props.enginesizes)
         return (
@@ -96,6 +118,11 @@ class EnginesizesListContainer extends Component {
                        
                     </div>
                     <div className="col s12 m9 l9">
+                        {this.props.fetching ? (
+                            <Loading/>
+                        ): (
+                            <div className="wr-not-loading"></div>
+                        )}
                         <table>
                             <thead>
                                 <tr>
@@ -106,6 +133,7 @@ class EnginesizesListContainer extends Component {
                                     <th>Status</th>
                                 </tr>
                             </thead>
+                            {/* {this.renderList()} */}
                             {this.props.enginesizes.length ? (
                                 <EnginesizesList enginesizes= {this.props.enginesizes} onEditEnginesize = {this.editEnginesizes} deleteEnginesize = {this.props.requestDeleteEnginesizes} enginesizeStatus = {this.toggleStatus}/>
 
@@ -138,7 +166,7 @@ class EnginesizesListContainer extends Component {
 function mapStateToProps(store) {
     return {
         enginesizes: store.enginesizeState.enginesizes,
-        message: store.enginesizeState.message,
+        fetching: store.enginesizeState.fetching,
         activePage: store.enginesizeState.activePage,
         itemsCountPerPage: store.enginesizeState.itemsCountPerPage,
         totalItemsCount: store.enginesizeState.totalItemsCount,

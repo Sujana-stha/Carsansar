@@ -9,6 +9,8 @@ import { requestTransmissions, requestDeleteTransmission, requestSubmitTransmiss
 //COMPONENT
 import TransmissionForm from '../../components/transmission/transmission-form';
 import EditTransmission from '../../components/transmission/transmission-edit';
+import Loading from '../../components/loading';
+
 
 var globalId = null
 
@@ -81,7 +83,27 @@ class TransmissionsListContainer extends Component {
         }
         this.props.requestTransmissionStatus(transmissionId, newTransmissionStatus)
     }
-
+    // renderList() {
+    //     if(this.props.fetching) {
+    //         return (
+    //             <tbody>
+    //                 <tr><td></td></tr>
+    //             </tbody>
+    //         )
+    //     } else {
+    //         if(this.props.transmissions.length) {
+    //             return (
+    //                 <TransmissionList transmissions= {this.props.transmissions} onEditTransmission = {this.editTransmission} deleteTransmission = {this.props.requestDeleteTransmission} transmissionStatus = {this.toggleStatus}/>
+    //             )
+    //         } else {
+    //             return (
+    //                 <tbody>
+    //                     <tr><td>No Results Found !</td></tr>
+    //                 </tbody>
+    //             )
+    //         }
+    //     }
+    // }
     render() {
         console.log('prop', this.props.transmissions)
         return (
@@ -97,6 +119,11 @@ class TransmissionsListContainer extends Component {
                        
                     </div>
                     <div className="col s12 m9 l9">
+                        {this.props.fetching ? (
+                            <Loading/>
+                        ): (
+                            <div className="wr-not-loading"></div>
+                        )}
                         <table>
                             <thead>
                                 <tr>
@@ -107,6 +134,7 @@ class TransmissionsListContainer extends Component {
                                     <th>Status</th>
                                 </tr>
                             </thead>
+                            {/* {this.renderList()} */}
                             {this.props.transmissions.length ? (
                                 <TransmissionList transmissions= {this.props.transmissions} onEditTransmission = {this.editTransmission} deleteTransmission = {this.props.requestDeleteTransmission} transmissionStatus = {this.toggleStatus}/>
 
@@ -139,7 +167,7 @@ class TransmissionsListContainer extends Component {
 function mapStateToProps(store) {
     return {
         transmissions: store.transmissionState.transmissions,
-        message: store.transmissionState.message,
+        fetching: store.transmissionState.fetching,
         activePage: store.transmissionState.activePage,
         itemsCountPerPage: store.transmissionState.itemsCountPerPage,
         totalItemsCount: store.transmissionState.totalItemsCount,

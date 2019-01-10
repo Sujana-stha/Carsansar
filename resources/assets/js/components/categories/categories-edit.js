@@ -1,30 +1,17 @@
 import React, { Component } from 'react';
-import store from '../../store';
 import { Field, reduxForm } from 'redux-form';
-import {connect} from 'react-redux';
 import * as categoryApi from '../../api/categories-api';
-
-
-var globalData = null;
 
 
 class EditCategory extends Component {
     componentDidMount() {
-        this.handleInitialize();
-        categoryApi.getCategories();
+        const id = this.props.editId;
+        categoryApi.getSingleCategories(id).then((response)=> {
+            const data =  response.data;
+            this.props.initialize(data);
+        })
     }
     
-    handleInitialize() {
-        const id = this.props.editId;
-        
-        console.log('length',this.props.categories[0].id);
-        for (var i = 0; i < this.props.categories.length; i++ ) {
-            if(this.props.categories[i].id == id) {
-                globalData = this.props.categories[i]
-            }
-        }
-        this.props.initialize(globalData);
-    }
     renderInputField({input, label, value, type, meta: {touched, error}}) {
         return (
             <div>
@@ -81,12 +68,8 @@ function validate(values) {
     
     return errors;
 }
-function mapStateToProps(store) {
-    return {
-        categories: store.categoryState.categories
-    }
-}
+
 export default reduxForm({
     validate,
     form: 'EditCategories'
-})(connect(mapStateToProps, null)(EditCategory));
+})(EditCategory);

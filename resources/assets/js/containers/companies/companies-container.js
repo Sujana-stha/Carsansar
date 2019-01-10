@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Pagination from "react-js-pagination";
 // import { NavLink } from 'react-router-dom';
-import CompaniesList from '../../components/companies/companies';
 import store from '../../store';
 import { requestCompanies, requestDeleteCompanies, requestSubmitCompanies, requestCompaniesPages,requestUpdateCompanies, requestCompaniesStatus } from  '../../actions/companies-action';
 
@@ -10,6 +9,8 @@ import { requestCompanies, requestDeleteCompanies, requestSubmitCompanies, reque
 //COMPONENT
 import CompanyForm from '../../components/companies/companies-form';
 import EditCompany from '../../components/companies/companies-edit';
+import CompaniesList from '../../components/companies/companies';
+import Loading from '../../components/loading';
 
 var globalId = null
 
@@ -17,7 +18,6 @@ class CompaniesListContainer extends Component {
     constructor() {
         super();
         this.state= {
-            hide: true,
             isEditing: false
         }
         this.handlePageChange = this.handlePageChange.bind(this)
@@ -25,13 +25,7 @@ class CompaniesListContainer extends Component {
         this.toggleStatus = this.toggleStatus.bind(this)
     }
 
-    hideMessage (e) {
-        e.preventDefault();
-        this.setState ({
-            hide: false
-        })
-    }
-
+    
     componentDidMount() {
         // call action to run the relative saga
         this.props.requestCompanies();
@@ -40,19 +34,14 @@ class CompaniesListContainer extends Component {
     // submit function for new data
     submitCompany(values) {
         this.props.requestSubmitCompanies(values);
-        this.setState ({
-            hide: true
-        });
         $('.collapsible').collapsible('close', 0);
-
     }
 
     // submit function to update data
     submitEditCompany(values) {
         this.props.requestUpdateCompanies(values);
         this.setState({
-            isEditing : false,
-            hide: true
+            isEditing : false
         });
         $('.collapsible').collapsible('close', 0);
 
@@ -87,14 +76,37 @@ class CompaniesListContainer extends Component {
         }
         this.props.requestCompaniesStatus(companyId, newCompanyStatus)
     }
-
+    // renderList() {
+    //     if(this.props.fetching) {
+    //         return (
+    //             <tbody>
+    //                 <tr><td></td></tr>
+    //             </tbody>
+    //         )
+    //     } else {
+    //         if(this.props.companies.length) {
+    //             return (
+    //                 <CompaniesList companies= {this.props.companies} onEditCompany = {this.editCompanies} deleteCompany = {this.props.requestDeleteCompanies} companyStatus = {this.toggleStatus}/>
+    //             )
+    //         } else {
+    //             return (
+    //                 <tbody>
+    //                     <tr><td>No Results Found !</td></tr>
+    //                 </tbody>
+    //             )
+    //         }
+    //     }
+    // }
     render() {
-        console.log('prop', this.props.companies)
         return (
             <div>
                 <div className="row">
+                    {this.props.fetching ? (
+                        <Loading/>
+                    ): (
+                        <div className="wr-not-loading"></div>
+                    )}
                     <ul className="collapsible collapsible-accordion" data-collapsible="accordion">
-                        
                             {this.state.isEditing ? (
                                 <li>
                                     <div className="collapsible-header">
@@ -117,6 +129,7 @@ class CompaniesListContainer extends Component {
                             )}
                     </ul>
                     <div className="col s12 m12 l12 mt-2 mb-2">
+                        
                         <table>
                             <thead>
                                 <tr>
@@ -131,6 +144,7 @@ class CompaniesListContainer extends Component {
                                     <th>Status</th>
                                 </tr>
                             </thead>
+                            {/* {this.renderList()} */}
                             {this.props.companies.length ? (
                                 <CompaniesList companies= {this.props.companies} onEditCompany = {this.editCompanies} deleteCompany = {this.props.requestDeleteCompanies} companyStatus = {this.toggleStatus}/>
 
@@ -163,7 +177,7 @@ class CompaniesListContainer extends Component {
 function mapStateToProps(store) {
     return {
         companies: store.companyState.companies,
-        message: store.companyState.message,
+        fetching: store.companyState.fetching,
         activePage: store.companyState.activePage,
         itemsCountPerPage: store.companyState.itemsCountPerPage,
         totalItemsCount: store.companyState.totalItemsCount,

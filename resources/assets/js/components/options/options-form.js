@@ -94,6 +94,8 @@ function validate(values) {
     console.log('values', values)
     if(!values.option_desc) {
         errors.option_desc = "The Field is empty"
+    } else if (values.option_desc.length > 30) {
+        errors.option_desc = "Must be 30 character or Less!"
     }
     if(!values.oc_id) {
         errors.oc_id = "The Field is empty"

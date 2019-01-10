@@ -10,6 +10,8 @@ import { requestCategories, requestDeleteCategories, requestSubmitCategories, re
 import CategoryForm from '../../components/categories/categories-form';
 import EditCategory from '../../components/categories/categories-edit';
 import CategoriesList from '../../components/categories/categories';
+import Loading from '../../components/loading';
+
 
 var globalId = null
 
@@ -80,7 +82,27 @@ class CategoriesListContainer extends Component {
         }
         this.props.requestCategoriesStatus(categoryId, newCategoriesStatus)
     }
-
+    // renderList() {
+    //     if(this.props.fetching) {
+    //         return (
+    //             <tbody>
+    //                 <tr><td></td></tr>
+    //             </tbody>
+    //         )
+    //     } else {
+    //         if(this.props.categories.length) {
+    //             return (
+    //                 <CategoriesList categories= {this.props.categories} onEditCategory = {this.editCategories} deleteCategory = {this.props.requestDeleteCategories} categoryStatus = {this.toggleStatus}/>
+    //             )
+    //         } else {
+    //             return (
+    //                 <tbody>
+    //                     <tr><td>No Results Found !</td></tr>
+    //                 </tbody>
+    //             )
+    //         }
+    //     }
+    // }
     render() {
         console.log('prop', this.props)
         return (
@@ -96,6 +118,11 @@ class CategoriesListContainer extends Component {
                        
                     </div>
                     <div className="col s12 m9 l9">
+                        {this.props.fetching ? (
+                            <Loading/>
+                        ): (
+                            <div className="wr-not-loading"></div>
+                        )}
                         <table>
                             <thead>
                                 <tr>
@@ -106,6 +133,7 @@ class CategoriesListContainer extends Component {
                                     <th>Status</th>
                                 </tr>
                             </thead>
+                            {/* {this.renderList()} */}
                             {this.props.categories.length ? (
                                 <CategoriesList categories= {this.props.categories} onEditCategory = {this.editCategories} deleteCategory = {this.props.requestDeleteCategories} categoryStatus = {this.toggleStatus}/>
 
@@ -138,7 +166,7 @@ class CategoriesListContainer extends Component {
 function mapStateToProps(store) {
     return {
         categories: store.categoryState.categories,
-        message: store.categoryState.message,
+        fetching: store.categoryState.fetching,
         activePage: store.categoryState.activePage,
         itemsCountPerPage: store.categoryState.itemsCountPerPage,
         totalItemsCount: store.categoryState.totalItemsCount,

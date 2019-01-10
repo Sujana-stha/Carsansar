@@ -1,28 +1,16 @@
 import React, { Component } from 'react';
-import store from '../../store';
 import { Field, reduxForm } from 'redux-form';
-import {connect} from 'react-redux';
-
-
-var globalData = null;
-
+import * as Api from '../../api/transmission-api';
 
 class EditTransmission extends Component {
     componentDidMount() {
-        this.handleInitialize();
+        const id = this.props.editId;
+        Api.getSingleTransmissions(id).then((response) => {
+            const data =  response.data;
+            this.props.initialize(data);
+        })
     }
     
-    handleInitialize() {
-        const id = this.props.editId;
-        // console.log('length',this.props.drives[0].id);
-
-        for (var i = 0; i < this.props.transmissions.length; i++ ) {
-            if(this.props.transmissions[i].id == id) {
-                globalData = this.props.transmissions[i]
-            }
-        }
-        this.props.initialize(globalData);
-    }
     renderInputField({input, label, type, meta: {touched, error}}) {
         return (
             <div>
@@ -79,12 +67,8 @@ function validate(values) {
     
     return errors;
 }
-function mapStateToProps(store) {
-    return {
-        transmissions: store.transmissionState.transmissions
-    }
-}
+
 export default reduxForm({
     validate,
     form: 'EditTransmissions'
-})(connect(mapStateToProps, null)(EditTransmission));
+})(EditTransmission);
