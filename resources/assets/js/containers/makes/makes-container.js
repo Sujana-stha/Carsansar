@@ -25,7 +25,6 @@ class MakesListContainer extends Component {
     componentDidMount() {
         // call action to run the relative saga
         this.props.requestMakes();
-        // page = this.props.activePage;
 
     }
 
@@ -62,10 +61,11 @@ class MakesListContainer extends Component {
     }
     
     toggleStatus (makeId, status) {
+        const page = this.props.activePage;
         const newMakesStatus = {
             status: !status
         }
-        this.props.requestMakesStatus(makeId, newMakesStatus)
+        this.props.requestMakesStatus(makeId, newMakesStatus, page)
     }
     // renderList() {
     //     if(this.props.fetching) {
@@ -148,7 +148,6 @@ class MakesListContainer extends Component {
 function mapStateToProps(store) {
     return {
         makes: store.makeState.makes,
-        message: store.makeState.message,
         activePage: store.makeState.activePage,
         itemsCountPerPage: store.makeState.itemsCountPerPage,
         totalItemsCount: store.makeState.totalItemsCount,

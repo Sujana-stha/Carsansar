@@ -73,7 +73,7 @@ class OptionsListContainer extends Component {
     // pagination function
     handlePageChange(pageNumber) {
         console.log(`active page is ${pageNumber}`);
-        this.props.requestMakesPages(pageNumber)
+        this.props.requestOptionsPages(pageNumber)
         
     }
     
@@ -136,7 +136,7 @@ class OptionsListContainer extends Component {
                                 </tr>
                             </thead>
                             {this.props.options.length ? (
-                                <OptionsList options= {this.props.options} onEditOptions = {this.editOptions} deleteOption = {this.props.requestDeleteOptions} OptionStatus = {this.toggleStatus}/>
+                                <OptionsList options= {this.props.options} onEditOptions = {this.editOptions} deleteOption = {this.props.requestDeleteOptions} optionStatus = {this.toggleStatus}/>
 
                             ) : (
                                 <tbody>

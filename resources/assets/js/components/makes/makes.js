@@ -23,14 +23,12 @@ class MakesList extends Component {
         this.setState({showItem: null})
     }
     render() {
-        console.log('tab', this.props)
-    return (
-        <tbody>
-            {
-                this.props.makes.map((make) => {
+        return (
+            <tbody>
+                {this.props.makes.map((make) => {
                     return (
                         <tr key={make.id} className={`row-${make.id}`}>
-                                        
+                                            
                             <td>{make.id}</td>
                             <td>{make.make_desc}</td>
                             <td>{make.created_by.name}</td>
@@ -59,11 +57,10 @@ class MakesList extends Component {
                             </td>
                         </tr>
                     )
-                })
-            }
-            
-        </tbody>
-    );
+                })}
+                
+            </tbody>
+        );
     }
 };
 

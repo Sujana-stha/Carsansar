@@ -4,7 +4,6 @@ import _ from 'lodash';
 const initialState = {
     bodies: [],
     fetching: false,
-    message: '',
     activePage: 1,
     itemsCountPerPage: 3,
     totalItemsCount: 1,
@@ -39,7 +38,6 @@ const bodyReducer =  function(state = initialState, action) {
         case types.ADD_BODIES_SUCCESS:
             return  Object.assign({}, state, {
                 bodies:  [...state.bodies],
-                message: action.message
             })
         
         case types.UPDATE_BODIES_SUCCESS:
@@ -50,8 +48,7 @@ const bodyReducer =  function(state = initialState, action) {
                     return action.resp;
                     }
                     return body;
-                }),
-                message: action.message
+                })
             };
         case types.BODIES_STATUS_SUCCESS:
           console.log('tion', action)
@@ -62,14 +59,12 @@ const bodyReducer =  function(state = initialState, action) {
                         return action.resp;
                     }
                     return body;
-                }),
-                message: action.message
+                })
             }
         case types.DELETE_BODIES_SUCCESS:
             const newBody = _.filter(state.bodies, body => body.id !== action.bodyId);
             return Object.assign({}, state, {
-                bodies: newBody,
-                message: action.message
+                bodies: newBody
             });
 
         default: 

@@ -4,7 +4,6 @@ import _ from 'lodash';
 const initialState = {
     options: [],
     fetching: false,
-    message: '',
     activePage: 1,
     itemsCountPerPage: 3,
     totalItemsCount: 1,
@@ -24,19 +23,21 @@ const optionReducer =  function(state = initialState, action) {
                 totalItemsCount: action.options.total,
                 activePage: action.options.current_page
             })
-        
+        case types.REQUEST_OPTIONS_PAGES:
+            return {...state, fetching: true}
+
         case types.GET_OPTIONS_PAGES:
             return Object.assign({}, state, {
                 options: action.resp.data,
                 itemsCountPerPage: action.resp.per_page,
                 totalItemsCount: action.resp.total,
-                activePage: action.resp.current_page
+                activePage: action.resp.current_page,
+                fetching: false
             })
 
         case types.ADD_OPTIONS_SUCCESS:
             return  Object.assign({}, state, {
-                options:  [...state.options],
-                message: action.message
+                options:  [...state.options]
             })
         
         case types.UPDATE_OPTIONS_SUCCESS:
@@ -47,8 +48,7 @@ const optionReducer =  function(state = initialState, action) {
                     return action.resp;
                     }
                     return option;
-                }),
-                message: action.message
+                })
             };
         case types.OPTIONS_STATUS_SUCCESS:
           console.log('tion', action)
@@ -59,14 +59,12 @@ const optionReducer =  function(state = initialState, action) {
                         return action.resp;
                     }
                     return option;
-                }),
-                message: action.message
+                })
             }
         case types.DELETE_OPTIONS_SUCCESS:
             const newOption = _.filter(state.options, option => option.id !== action.optionId);
             return Object.assign({}, state, {
-                options: newOption,
-                message: action.message
+                options: newOption
             });
 
         default: 
