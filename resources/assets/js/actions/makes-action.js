@@ -37,11 +37,10 @@ export function getMakesPages(makes) {
         makes
     }
 }
-export function addMakesSuccess(values, message) {
+export function addMakesSuccess(values) {
     return {
         type: types.ADD_MAKES_SUCCESS,
-        values,
-        message
+        values
     }
 }
 
@@ -52,10 +51,10 @@ export function requestDeleteMakes(makeId) {
     }
 }
 
-export function deleteMakesSuccess(makeId, message) {
+export function deleteMakesSuccess(makeId) {
     return {
         type: types.DELETE_MAKES_SUCCESS,
-        makeId, message
+        makeId
     }
 }
 
@@ -66,42 +65,28 @@ export function requestUpdateMakes(values, page) {
     }
 }
 
-export function updateMakesSuccess(makeId, values, message) {
+export function updateMakesSuccess(makeId, values) {
     return {
         type: types.UPDATE_MAKES_SUCCESS,
         values,
-        makeId,
-        message
-    }
-}
-
-export function requestMakesStatus (makeId,values) {
-    return {
-        type: types.REQUEST_MAKES_STATUS,
-        values,
-        makeId  
-    }
-}
-
-export function MakesStatusSuccess (makeId, values, message) {
-    return {
-        type: types.MAKES_STATUS_SUCCESS,
-        values,
-        makeId,
-        message
-    }
-}
-
-export function requestMakesSingle (makeId) {
-    return {
-        type: types.REQUEST_MAKES_SINGLE,
         makeId
     }
 }
 
-export function makesSingleSuccess (makes) {
+export function requestMakesStatus (makeId,values, page) {
     return {
-        type: types.MAKES_SINGLE_SUCCESS,
-        makes
+        type: types.REQUEST_MAKES_STATUS,
+        values,
+        makeId, page 
     }
 }
+
+export function MakesStatusSuccess (makeId, values, page) {
+    return {
+        type: types.MAKES_STATUS_SUCCESS,
+        values,
+        makeId,
+        page
+    }
+}
+

@@ -4,7 +4,6 @@ import _ from 'lodash';
 const initialState = {
     categories: [],
     fetching: false,
-    message: '',
     activePage: 1,
     itemsCountPerPage: 3,
     totalItemsCount: 1,
@@ -39,8 +38,7 @@ const categoriesReducer =  function(state = initialState, action) {
 
         case types.ADD_CATEGORIES_SUCCESS:
             return  Object.assign({}, state, {
-                categories:  [...state.categories],
-                message: action.message
+                categories:  [...state.categories]
             })
         
         case types.UPDATE_CATEGORIES_SUCCESS:
@@ -51,8 +49,7 @@ const categoriesReducer =  function(state = initialState, action) {
                     return action.resp;
                     }
                     return category;
-                }),
-                message: action.message
+                })
             };
         case types.CATEGORIES_STATUS_SUCCESS:
             return {
@@ -62,14 +59,12 @@ const categoriesReducer =  function(state = initialState, action) {
                         return action.resp;
                     }
                     return category;
-                }),
-                message: action.message
+                })
             }
         case types.DELETE_CATEGORIES_SUCCESS:
             const newCategory = _.filter(state.categories, category => category.id !== action.categoryId);
             return Object.assign({}, state, {
-                categories: newCategory,
-                message: action.message
+                categories: newCategory
             });
 
         default: 

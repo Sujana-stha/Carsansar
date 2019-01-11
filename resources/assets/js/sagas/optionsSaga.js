@@ -47,7 +47,8 @@ function* callOptionSubmit(action) {
         error = result.error;
         notify.show("Cannot Add Options!", "error", 5000)
     } else {
-        yield put({type: types.ADD_OPTIONS_SUCCESS, resp, message: result.statusText});
+        // yield put({type: types.ADD_OPTIONS_SUCCESS, resp, message: result.statusText});
+        yield put({type: types.REQUEST_OPTIONS})
         notify.show("Options Added Successfully!", "success", 5000)
     }
     yield put(stopSubmit('PostOptions', error));

@@ -2,9 +2,8 @@ import * as types from '../actions/action-types';
 import _ from 'lodash';
 
 const initialState = {
-    makes: [],
+    colors: [],
     fetching: false,
-    singleMake: [],
     activePage: 1,
     itemsCountPerPage: 3,
     totalItemsCount: 1,
@@ -12,28 +11,28 @@ const initialState = {
     sending: false
 }
 
-const makeReducer =  function(state = initialState, action) {
+const colorReducer =  function(state = initialState, action) {
     switch(action.type) {
-        case types.REQUEST_MAKES: 
+        case types.REQUEST_COLORS: 
             return {...state, fetching: true};
            
-        case types.GET_MAKES_SUCCESS:
+        case types.GET_COLORS_SUCCESS:
             return Object.assign({}, state, {
-                makes: action.makes.data,
+                colors: action.colors.data,
                 fetching: false,
-                itemsCountPerPage: action.makes.per_page,
-                totalItemsCount: action.makes.total,
-                activePage: action.makes.current_page,
+                itemsCountPerPage: action.colors.per_page,
+                totalItemsCount: action.colors.total,
+                activePage: action.colors.current_page,
                 sending: false
             })
         
-        case types.REQUEST_MAKES_PAGES:
+        case types.REQUEST_COLORS_PAGES:
             return Object.assign({}, state, {
                 fetching: true
             })
-        case types.GET_MAKES_PAGES:
+        case types.GET_COLORS_PAGES:
             return Object.assign({}, state, {
-                makes: action.resp.data,
+                colors: action.resp.data,
                 itemsCountPerPage: action.resp.per_page,
                 totalItemsCount: action.resp.total,
                 activePage: action.resp.current_page,
@@ -41,49 +40,49 @@ const makeReducer =  function(state = initialState, action) {
                 sending: false
             })
 
-        case types.REQUEST_SUBMIT:
+        case types.REQUEST_COLORS_SUBMIT:
             return Object.assign({}, state, {
                 sending: true
             })
 
-        case types.ADD_MAKES_SUCCESS:
+        case types.ADD_COLORS_SUCCESS:
             return  Object.assign({}, state, {
-                makes:  [...state.makes]
+                colors:  [...state.colors]
             })
         
-        case types.REQUEST_UPDATE:
+        case types.REQUEST_COLORS_UPDATE:
             return Object.assign({}, state, {
                 sending: true
             })
 
-        case types.UPDATE_MAKES_SUCCESS:
+        case types.UPDATE_COLORS_SUCCESS:
             return {
                 ...state, 
-                makes: state.makes.map(make => {
-                    if (make.id === action.resp.id) {
+                colors: state.colors.map(color => {
+                    if (color.id === action.resp.id) {
                     return action.resp;
                     }
-                    return make;
+                    return color;
                 }),
                 sending: false
             };
 
-        case types.MAKES_STATUS_SUCCESS:
+        case types.COLORS_STATUS_SUCCESS:
             return {
                 ...state,
-                makes: state.makes.map(make => {
-                    if(make.id === action.resp.id) {
+                colors: state.colors.map(color => {
+                    if(color.id === action.resp.id) {
                         return action.resp;
                     }
-                    return make;
+                    return color;
                 }),
             }
 
         
-        case types.DELETE_MAKES_SUCCESS:
-            const newMake = _.filter(state.makes, make => make.id !== action.makeId);
+        case types.DELETE_COLORS_SUCCESS:
+            const newColor = _.filter(state.colors, color => color.id !== action.colorId);
             return Object.assign({}, state, {
-                makes: newMake,
+                colors: newColor,
                 fetching: false
             });
 
@@ -92,4 +91,4 @@ const makeReducer =  function(state = initialState, action) {
     }
 }
 
-export default makeReducer;
+export default colorReducer;
