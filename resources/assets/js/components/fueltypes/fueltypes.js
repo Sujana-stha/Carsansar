@@ -32,7 +32,7 @@ class FueltypesList extends Component {
                                             
                                 <td>{fueltype.id}</td>
                                 <td>{fueltype.fueltype_desc}</td>
-                                <td>{fueltype.created_by}</td>
+                                <td>{fueltype.created_by.name}</td>
                                 <td className="action">
                                     <a href="javascript:void(0);" onClick={this.props.onEditFueltype.bind(null, fueltype.id)} className="tooltipped" data-position="top" data-delay="50" data-tooltip="Edit"><i className="material-icons">edit</i></a>
 

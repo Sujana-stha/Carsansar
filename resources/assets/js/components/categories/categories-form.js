@@ -55,7 +55,7 @@ function validate(values) {
     const errors = {}
     if(!values.category_desc) {
         errors.category_desc = "The Field is empty"
-    } else if(values.category_desc.length) {
+    } else if(values.category_desc.length > 30) {
         errors.category_desc = "Must be 30 character or Less!"
     }
     return errors;

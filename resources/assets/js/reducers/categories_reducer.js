@@ -8,6 +8,7 @@ const initialState = {
     itemsCountPerPage: 3,
     totalItemsCount: 1,
     pageRangeDisplayed: 3,
+    sending: false
 }
 
 const categoriesReducer =  function(state = initialState, action) {
@@ -22,7 +23,8 @@ const categoriesReducer =  function(state = initialState, action) {
                 fetching: false,
                 itemsCountPerPage: action.categories.per_page,
                 totalItemsCount: action.categories.total,
-                activePage: action.categories.current_page
+                activePage: action.categories.current_page,
+                sending: false
             })
         case types.REQUEST_CATEGORIES_PAGES:
             return {...state, fetching: true}
@@ -33,14 +35,15 @@ const categoriesReducer =  function(state = initialState, action) {
                 itemsCountPerPage: action.resp.per_page,
                 totalItemsCount: action.resp.total,
                 fetching: false,
-                activePage: action.resp.current_page
+                activePage: action.resp.current_page,
+                sending: false
             })
+        case types.REQUEST_CATEGORIES_SUBMIT:
+            return {...state, sending: true}
 
-        case types.ADD_CATEGORIES_SUCCESS:
-            return  Object.assign({}, state, {
-                categories:  [...state.categories]
-            })
-        
+        case types.REQUEST_CATEGORIES_UPDATE:
+            return {...state, sending: true}
+
         case types.UPDATE_CATEGORIES_SUCCESS:
             return {
                 ...state, 
@@ -49,8 +52,11 @@ const categoriesReducer =  function(state = initialState, action) {
                     return action.resp;
                     }
                     return category;
-                })
+                }),
+                sending: false
             };
+        case types.REQUEST_CATEGORIES_STATUS:
+            return {...state, fetching: true}
         case types.CATEGORIES_STATUS_SUCCESS:
             return {
                 ...state,
@@ -59,7 +65,8 @@ const categoriesReducer =  function(state = initialState, action) {
                         return action.resp;
                     }
                     return category;
-                })
+                }),
+                fetching: false
             }
         case types.DELETE_CATEGORIES_SUCCESS:
             const newCategory = _.filter(state.categories, category => category.id !== action.categoryId);

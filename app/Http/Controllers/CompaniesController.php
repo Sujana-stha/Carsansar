@@ -10,7 +10,7 @@ class CompaniesController extends Controller
     public function index()
     {
         // return Company::all();
-        $company = Company::paginate(3);
+        $company = Company::with('createdBy:id,name')->orderby('id', 'desc')->paginate(3);
         return $company;
     }
  

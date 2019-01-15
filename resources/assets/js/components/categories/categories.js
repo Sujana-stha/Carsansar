@@ -36,7 +36,7 @@ class CategoriesList extends Component {
                                         
                             <td>{category.id}</td>
                             <td>{category.category_desc}</td>
-                            <td>{category.created_by}</td>
+                            <td>{category.created_by.name}</td>
                             <td className="action">
                                 <a href="javascript:void(0);" onClick={this.props.onEditCategory.bind(null, category.id)} className="tooltipped" data-position="top" data-delay="50" data-tooltip="Edit"><i className="material-icons">edit</i></a>
                                 <a className="tooltip" href="javascript:void(0);" onClick={()=>this.deleteItem(category.id)} data-tooltip="Delete"><i className="material-icons">delete</i></a>

@@ -9,7 +9,7 @@ class BodiesController extends Controller
 {
     public function index()
     {
-        $body= Body::paginate(3);
+        $body= Body::with('createdBy:id,name')->orderBy('id', 'desc')->paginate(3);
         return $body;
     }
  

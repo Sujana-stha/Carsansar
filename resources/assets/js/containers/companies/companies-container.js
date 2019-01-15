@@ -12,7 +12,6 @@ import EditCompany from '../../components/companies/companies-edit';
 import CompaniesList from '../../components/companies/companies';
 import Loading from '../../components/loading';
 
-var globalId = null
 
 class CompaniesListContainer extends Component {
     constructor() {
@@ -39,20 +38,20 @@ class CompaniesListContainer extends Component {
 
     // submit function to update data
     submitEditCompany(values) {
-        this.props.requestUpdateCompanies(values);
+        const page = this.props.activePage;
+        this.props.requestUpdateCompanies(values, page);
         this.setState({
             isEditing : false
         });
         $('.collapsible').collapsible('close', 0);
-
     }
 
     //function to call form of edit
     editCompanies(values) {
         $('.collapsible').collapsible('open', 0);
-        globalId = values
+        
         this.setState ({
-            isEditing : true
+            isEditing : values
         })
         
     }
@@ -69,12 +68,12 @@ class CompaniesListContainer extends Component {
     }
     
     toggleStatus (companyId, status) {
-        console.log('id', companyId)
-        console.log('val', status)
+        const page = this.props.activePage;
+        
         const newCompanyStatus = {
             status: !status
         }
-        this.props.requestCompaniesStatus(companyId, newCompanyStatus)
+        this.props.requestCompaniesStatus(companyId, newCompanyStatus, page)
     }
     // renderList() {
     //     if(this.props.fetching) {
@@ -113,7 +112,7 @@ class CompaniesListContainer extends Component {
                                         <a className="btn right"><i className="material-icons left">add</i><span> Update Color</span></a>
                                     </div>
                                     <div className="collapsible-body col s12 m12 l12">
-                                        <EditCompany onSubmit = {this.submitEditCompany.bind(this)} editId = {globalId} />
+                                        <EditCompany onSubmit = {this.submitEditCompany.bind(this)} editId = {this.state.isEditing} />
                                     </div>
                                 </li>
 

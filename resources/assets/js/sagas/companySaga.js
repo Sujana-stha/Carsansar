@@ -26,6 +26,7 @@ function* callCompaniesPages(action) {
     if (result.errors) {
         yield put({ type: types.REQUEST_COMPANIES_FAILED, errors: result.error});
         error = result.error;
+        notify.show("Cannot Get all Company", "error", 5000)
     } else {
         yield put({type: types.GET_COMPANIES_PAGES, resp});
     }
@@ -47,7 +48,8 @@ function* callCompanySubmit(action) {
         error = result.error;
         notify.show("Cannot Add Company!", "error", 5000)
     } else {
-        yield put({type: types.ADD_COMPANIES_SUCCESS, resp, message: result.statusText});
+        // yield put({type: types.ADD_COMPANIES_SUCCESS, resp, message: result.statusText});
+        yield put({type: types.REQUEST_COMPANIES})
         notify.show("Company Added Successfully!", "success", 5000);
 
     }
@@ -65,13 +67,14 @@ function* callEditCompany (action) {
     let error = {};
     const result =  yield call(Api.updateCompanies, action.values.id, action.values);
     const resp = result.data;
-
+    const pageNumber = action.page
     if (result.errors) {
         yield put({ type: types.REQUEST_COMPANIES_FAILED, errors: result.error});
         error = result.error;
         notify.show(`Cannot Update ${resp.name}!`, "error", 5000)
     } else {
-        yield put({type: types.UPDATE_COMPANIES_SUCCESS, resp, message: result.statusText});
+        // yield put({type: types.UPDATE_COMPANIES_SUCCESS, resp, message: result.statusText});
+        yield put({type: types.REQUEST_COMPANIES_PAGES, pageNumber})
         notify.show(`${resp.name} Company Updated Successfully!`, "success", 5000);
 
     }
@@ -90,14 +93,15 @@ function* callCompanyToggleStatus(action) {
     console.log('action', action)
     const result =  yield call(Api.updateCompaniesStatus, action.companyId, action.values);
     const resp = result.data;
-
+    const pageNumber = action.page
     if (result.errors) {
         yield put({ type: types.REQUEST_COMPANIES_FAILED, errors: result.error});
         error = result.error;
         notify.show(`Cannot Change Status of ${resp.name}!`, "error", 5000)
 
     } else {
-        yield put({type: types.COMPANIES_STATUS_SUCCESS, resp, message: result.statusText});
+        // yield put({type: types.COMPANIES_STATUS_SUCCESS, resp, message: result.statusText});
+        yield put({type: types.REQUEST_COMPANIES_PAGES, pageNumber})
         notify.show("Status Changed Successfully!", "success", 5000);
     }
 }

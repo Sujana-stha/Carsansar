@@ -37,11 +37,10 @@ export function getTransmissionPages(transmission) {
         transmission
     }
 }
-export function addTransmissionSuccess(values, message) {
+export function addTransmissionSuccess(values) {
     return {
         type: types.ADD_TRANSMISSONS_SUCCESS,
-        values,
-        message
+        values
     }
 }
 
@@ -52,42 +51,40 @@ export function requestDeleteTransmission(transmissionId) {
     }
 }
 
-export function deleteTransmissionSuccess(transmissionId, message) {
+export function deleteTransmissionSuccess(transmissionId) {
     return {
         type: types.DELETE_TRANSMISSONS_SUCCESS,
-        transmissionId, message
+        transmissionId
     }
 }
 
-export function requestUpdateTransmission( values) {
+export function requestUpdateTransmission( values, page) {
     return {
         type: types.REQUEST_TRANSMISSONS_UPDATE,
-        values
+        values, page
     }
 }
 
-export function updateTransmissionSuccess(transmissionId, values, message) {
+export function updateTransmissionSuccess(transmissionId, values) {
     return {
         type: types.UPDATE_TRANSMISSONS_SUCCESS,
         values,
-        transmissionId,
-        message
+        transmissionId
     }
 }
 
-export function requestTransmissionStatus (transmissionId,values) {
+export function requestTransmissionStatus (transmissionId,values, page) {
     return {
         type: types.REQUEST_TRANSMISSONS_STATUS,
         values,
-        transmissionId  
+        transmissionId, page
     }
 }
 
-export function TransmissionStatusSuccess (transmissionId, values, message) {
+export function TransmissionStatusSuccess (transmissionId, values) {
     return {
         type: types.TRANSMISSONS_STATUS_SUCCESS,
         values,
-        transmissionId,
-        message
+        transmissionId
     }
 }

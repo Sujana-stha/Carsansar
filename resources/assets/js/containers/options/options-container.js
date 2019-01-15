@@ -12,13 +12,11 @@ import OptionsForm from '../../components/options/options-form';
 import Loading from '../../components/loading';
 
 
-var globalId = null
-
 class OptionsListContainer extends Component {
     constructor() {
         super();
         this.state= {
-            hide: true,
+           
             isEditing: false
         }
         this.handlePageChange = this.handlePageChange.bind(this)
@@ -41,27 +39,23 @@ class OptionsListContainer extends Component {
 
     // submit function for new data
     submitOption(values) {
-        console.log('sub', values)
-        this.props.requestSubmitOptions(values);
-        this.setState ({
-            hide: true
-        })
+        this.props.requestSubmitOptions(values); 
     }
 
     // submit function to update data
     submitEditOption(values) {
-        this.props.requestUpdateOptions(values);
+        const page = this.props.activePage;
+        this.props.requestUpdateOptions(values, page);
         this.setState({
-            isEditing : false,
-            hide: true
+            isEditing : false
         })
     }
 
     //function to call form of edit
     editOptions(values) {
-        globalId = values
+        
         this.setState ({
-            isEditing : true
+            isEditing : values
         })
         
     }
@@ -78,12 +72,11 @@ class OptionsListContainer extends Component {
     }
     
     toggleStatus (optionId, status) {
-        console.log('id', optionId)
-        console.log('val', status)
+        const page = this.props.activePage;
         const newOptionsStatus = {
             status: !status
         }
-        this.props.requestOptionsStatus(optionId, newOptionsStatus)
+        this.props.requestOptionsStatus(optionId, newOptionsStatus, page)
     }
     // renderList() {
     //     if(this.props.fetching) {
@@ -112,7 +105,7 @@ class OptionsListContainer extends Component {
                 <div className="row">
                     <div className="col s12 m3 l3">
                         {this.state.isEditing ? (
-                            <EditOptions onSubmit = {this.submitEditOption.bind(this)} editId = {globalId} optionLists = {this.props.optionCategories}/>
+                            <EditOptions onSubmit = {this.submitEditOption.bind(this)} editId = {this.state.isEditing} optionLists = {this.props.optionCategories}/>
                         ): (
                             <OptionsForm onSubmit = { this.submitOption.bind(this) } optionLists = {this.props.optionCategories}/>
                         )}

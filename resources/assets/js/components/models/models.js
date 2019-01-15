@@ -47,7 +47,12 @@ class ModelList extends Component {
                                 <td>
                                     <div className="switch">
                                         <label>Inactive
-                                            <input onClick = {()=> this.props.modelStatus(model.id, model.status) } defaultChecked type="checkbox" value={model.status}/>
+                                            {model.status== 1 ? (
+                                                <input onClick = {()=> this.props.modelStatus(model.id, model.status) } defaultChecked type="checkbox" value={model.status}/>
+
+                                            ):
+                                                <input onClick = {()=> this.props.modelStatus(model.id, model.status) }  type="checkbox" value={model.status}/>
+                                            }
                                             <span className="lever"></span>Active
                                         </label>
                                     </div>

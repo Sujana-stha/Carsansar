@@ -26,6 +26,7 @@ function* callModelPages(action) {
     if (result.errors) {
         yield put({ type: types.REQUEST_MODEL_FAILED, errors: result.error});
         error = result.error;
+        notify.show("Cannot Get all Models!", "error", 5000)
     } else {
         yield put({type: types.GET_MODEL_PAGES, resp});
     }
@@ -47,7 +48,8 @@ function* callModelSubmit(action) {
         error = result.error;
         notify.show("Cannot Add Model!", "error", 5000)
     } else {
-        yield put({type: types.ADD_MODEL_SUCCESS, resp, message: result.statusText});
+        // yield put({type: types.ADD_MODEL_SUCCESS, resp, message: result.statusText});
+        yield put({type: types.REQUEST_MODEL})
         notify.show("Model Added Successfully!", "success", 5000)
     }
     yield put(stopSubmit('PostModels', error));
@@ -65,13 +67,14 @@ function* callModelEdit (action) {
     let error = {};
     const result =  yield call(api.updateModel, action.values.id, action.values);
     const resp = result.data;
-
+    const pageNumber = action.page
     if (result.errors) {
         yield put({ type: types.REQUEST_MODEL_FAILED, errors: result.error});
         error = result.error;
         notify.show(`Cannot Update ${resp.model_desc}`, "error", 5000)
     } else {
-        yield put({type: types.UPDATE_MODEL_SUCCESS, resp, message: result.statusText});
+        // yield put({type: types.UPDATE_MODEL_SUCCESS, resp, message: result.statusText});
+        yield put({type: types.REQUEST_MODEL_PAGES, pageNumber});
         notify.show(`${resp.model_desc} Updated Successfully`, "success", 5000)
     }
     yield put(stopSubmit('EditModels', error));
@@ -89,13 +92,14 @@ function* callModelToggleStatus(action) {
     console.log('action', action)
     const result =  yield call(api.updateModel, action.modelId, action.values);
     const resp = result.data;
-
+    const pageNumber = action.page
     if (result.errors) {
         yield put({ type: types.REQUEST_MODEL_FAILED, errors: result.error});
         error = result.error;
         notify.show(`Cannot Change Status of ${resp.model_desc}`, "error", 5000)
     } else {
-        yield put({type: types.MODEL_STATUS_SUCCESS, resp, message: result.statusText});
+        // yield put({type: types.MODEL_STATUS_SUCCESS, resp, message: result.statusText});
+        yield put({type: types.REQUEST_MODEL_PAGES, pageNumber});
         notify.show(`Status of ${resp.model_desc} Updated!`, "success", 5000)
 
     }

@@ -10,7 +10,7 @@ class TransmissionsController extends Controller
     public function index()
     {
         // return Transmission::all();
-        $transmission = Transmission::paginate(3);
+        $transmission = Transmission::with('createdBy:id,name')->orderBy('id', 'desc')->paginate(3);
         return $transmission;
     }
  

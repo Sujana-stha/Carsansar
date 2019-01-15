@@ -34,7 +34,7 @@ class BodiesList extends Component {
                                         
                             <td>{body.id}</td>
                             <td>{body.body_desc}</td>
-                            <td>{body.created_by}</td>
+                            <td>{body.created_by.name}</td>
                             <td className="action">
                                 <a href="javascript:void(0);" onClick={this.props.onEditBody.bind(null, body.id)} className="tooltipped" data-position="top" data-delay="50" data-tooltip="Edit"><i className="material-icons">edit</i></a>
                                 <a className="tooltip" href="javascript:void(0);" onClick={()=>this.deleteItem(body.id)} data-tooltip="Delete"><i className="material-icons">delete</i></a>

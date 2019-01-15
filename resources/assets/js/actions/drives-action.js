@@ -37,11 +37,10 @@ export function getDrivesPages(drives) {
         drives
     }
 }
-export function addDrivesSuccess(values, message) {
+export function addDrivesSuccess(values) {
     return {
         type: types.ADD_DRIVES_SUCCESS,
-        values,
-        message
+        values
     }
 }
 
@@ -52,42 +51,40 @@ export function requestDeleteDrives(driveId) {
     }
 }
 
-export function deleteDrivesSuccess(driveId, message) {
+export function deleteDrivesSuccess(driveId) {
     return {
         type: types.DELETE_DRIVES_SUCCESS,
-        driveId, message
+        driveId
     }
 }
 
-export function requestUpdateDrives( values) {
+export function requestUpdateDrives( values, page) {
     return {
         type: types.REQUEST_DRIVES_UPDATE,
-        values
+        values, page
     }
 }
 
-export function updateDrivesSuccess(driveId, values, message) {
+export function updateDrivesSuccess(driveId, values) {
     return {
         type: types.UPDATE_DRIVES_SUCCESS,
         values,
-        driveId,
-        message
+        driveId
     }
 }
 
-export function requestDrivesStatus (driveId,values) {
+export function requestDrivesStatus (driveId,values, page) {
     return {
         type: types.REQUEST_DRIVES_STATUS,
         values,
-        driveId  
+        driveId, page
     }
 }
 
-export function DrivesStatusSuccess (driveId, values, message) {
+export function DrivesStatusSuccess (driveId, values) {
     return {
         type: types.DRIVES_STATUS_SUCCESS,
         values,
-        driveId,
-        message
+        driveId
     }
 }

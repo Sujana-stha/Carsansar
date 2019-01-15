@@ -12,13 +12,10 @@ import EditDrive from '../../components/drives/drives-edit';
 import Loading from '../../components/loading';
 
 
-var globalId = null
-
 class DrivesListContainer extends Component {
     constructor() {
         super();
         this.state= {
-            hide: true,
             isEditing: false
         }
         this.handlePageChange = this.handlePageChange.bind(this)
@@ -26,12 +23,12 @@ class DrivesListContainer extends Component {
         this.toggleStatus = this.toggleStatus.bind(this)
     }
 
-    hideMessage (e) {
-        e.preventDefault();
-        this.setState ({
-            hide: false
-        })
-    }
+    // hideMessage (e) {
+    //     e.preventDefault();
+    //     this.setState ({
+    //         hide: false
+    //     })
+    // }
 
     componentDidMount() {
         // call action to run the relative saga
@@ -48,7 +45,8 @@ class DrivesListContainer extends Component {
 
     // submit function to update data
     submitEditDrive(values) {
-        this.props.requestUpdateDrives(values);
+        const page = this.props.activePage;
+        this.props.requestUpdateDrives(values, page);
         this.setState({
             isEditing : false,
             hide: true
@@ -57,9 +55,9 @@ class DrivesListContainer extends Component {
 
     //function to call form of edit
     editDrives(values) {
-        globalId = values
+     
         this.setState ({
-            isEditing : true
+            isEditing : values
         })
         
     }
@@ -76,12 +74,12 @@ class DrivesListContainer extends Component {
     }
     
     toggleStatus (driveId, status) {
-        console.log('id', driveId)
-        console.log('val', status)
+        const page = this.props.activePage;
+        
         const newDrivesStatus = {
             status: !status
         }
-        this.props.requestDrivesStatus(driveId, newDrivesStatus)
+        this.props.requestDrivesStatus(driveId, newDrivesStatus, page)
     }
     // renderList() {
     //     if(this.props.fetching) {
@@ -111,7 +109,7 @@ class DrivesListContainer extends Component {
                 <div className="row">
                     <div className="col s12 m3 l3">
                         {this.state.isEditing ? (
-                            <EditDrive onSubmit = {this.submitEditDrive.bind(this)} editId = {globalId} />
+                            <EditDrive onSubmit = {this.submitEditDrive.bind(this)} editId = {this.state.isEditing} />
                         ): (
                             <DriveForm onSubmit = { this.submitDrive.bind(this) }/>
                         )}

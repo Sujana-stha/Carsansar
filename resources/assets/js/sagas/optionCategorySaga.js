@@ -47,7 +47,8 @@ function* callOptCatSubmit(action) {
         error = result.error;
         notify.show("Cannot Add Option Categories!", "error", 5000)
     } else {
-        yield put({type: types.ADD_OPT_CAT_SUCCESS, resp, message: result.statusText});
+        // yield put({type: types.ADD_OPT_CAT_SUCCESS, resp, message: result.statusText});
+        yield put({type: types.REQUEST_OPTION_CATEGORIES})
         notify.show("Option Category Added Successfully!", "success", 5000)
     }
     yield put(stopSubmit('PostOptionCategory', error));
@@ -71,7 +72,8 @@ function* callEditOptCat (action) {
         error = result.error;
         notify.show(`Cannot Update ${resp.optioncategory_desc}`, "error", 5000)
     } else {
-        yield put({type: types.UPDATE_OPT_CAT_SUCCESS, resp, message: result.statusText});
+        // yield put({type: types.UPDATE_OPT_CAT_SUCCESS, resp, message: result.statusText});
+        yield put({type: types.REQUEST_OPTION_CATEGORIES});
         notify.show(`${resp.optioncategory_desc} Updated Successfully!`, "success", 5000)
     }
     yield put(stopSubmit('EditOptionCategory', error));
@@ -95,7 +97,8 @@ function* callToggleOptCatStatus(action) {
         error = result.error;
         notify.show(`Cannot Change Status of ${resp.optioncategory_desc}`, "error", 5000)
     } else {
-        yield put({type: types.OPT_CAT_STATUS_SUCCESS, resp, message: result.statusText});
+        // yield put({type: types.OPT_CAT_STATUS_SUCCESS, resp, message: result.statusText});
+        yield put({type: types.REQUEST_OPTION_CATEGORIES})
         notify.show(`Status of ${resp.optioncategory_desc} Updated!`, "success", 5000)
 
     }

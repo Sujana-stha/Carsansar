@@ -90,7 +90,7 @@ function* callColorToggleStatus(action) {
     const result =  yield call(api.updateColorsStatus, action.colorId, action.values);
     const resp = result.data;
     const pageNumber = action.page
-
+    console.log('are', resp)
     if (result.errors) {
         yield put({ type: types.REQUEST_COLORS_FAILED, errors: result.error});
         notify.show(`Cannot Change Status of ${resp.color_desc}!`,"error", 5000);

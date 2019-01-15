@@ -13,13 +13,10 @@ import CategoriesList from '../../components/categories/categories';
 import Loading from '../../components/loading';
 
 
-var globalId = null
-
 class CategoriesListContainer extends Component {
     constructor() {
         super();
         this.state= {
-            hide: true,
             isEditing: false
         }
         this.handlePageChange = this.handlePageChange.bind(this)
@@ -27,12 +24,12 @@ class CategoriesListContainer extends Component {
         this.toggleStatus = this.toggleStatus.bind(this)
     }
 
-    hideMessage (e) {
-        e.preventDefault();
-        this.setState ({
-            hide: false
-        })
-    }
+    // hideMessage (e) {
+    //     e.preventDefault();
+    //     this.setState ({
+    //         hide: false
+    //     })
+    // }
 
     componentDidMount() {
         // call action to run the relative saga
@@ -41,7 +38,8 @@ class CategoriesListContainer extends Component {
 
     // submit function for new data
     submitCategory(values) {
-        this.props.requestSubmitCategories(values);
+        const page = this.props.activePage;
+        this.props.requestSubmitCategories(values, page);
         this.setState ({
             hide: true
         })
@@ -49,23 +47,23 @@ class CategoriesListContainer extends Component {
 
     // submit function to update data
     submitEditCategory(values) {
-        this.props.requestUpdateCategories(values);
+        const page = this.props.activePage;
+        this.props.requestUpdateCategories(values, page);
         this.setState({
-            isEditing : false,
-            hide: true
+            isEditing : false
         })
     }
 
     //function to call form of edit
     editCategories(values) {
-        globalId = values
+     
         this.setState ({
-            isEditing : true
+            isEditing : values
         })
         
     }
 
-    deleteCategoryAction(makeId) {
+    deleteCategoryAction(categoryId) {
         this.props.requestDeleteCategories(categoryId);
     }
 
@@ -77,10 +75,11 @@ class CategoriesListContainer extends Component {
     }
     
     toggleStatus (categoryId, status) {
+        const page = this.props.activePage;
         const newCategoriesStatus = {
             status: !status
         }
-        this.props.requestCategoriesStatus(categoryId, newCategoriesStatus)
+        this.props.requestCategoriesStatus(categoryId, newCategoriesStatus, page)
     }
     // renderList() {
     //     if(this.props.fetching) {
@@ -111,7 +110,7 @@ class CategoriesListContainer extends Component {
                 <div className="row">
                     <div className="col s12 m3 l3">
                         {this.state.isEditing ? (
-                            <EditCategory onSubmit = {this.submitEditCategory.bind(this)} editId = {globalId} />
+                            <EditCategory onSubmit = {this.submitEditCategory.bind(this)} editId = {this.state.isEditing} />
                         ): (
                             <CategoryForm onSubmit = { this.submitCategory.bind(this) }/>
                         )}

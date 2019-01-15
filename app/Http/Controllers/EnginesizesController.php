@@ -10,7 +10,7 @@ class EnginesizesController extends Controller
     public function index()
     {
         // return Enginesize::all();
-        $enginesize = Enginesize::paginate(3);
+        $enginesize = Enginesize::with('createdBy:id,name')->orderBy('id', 'desc')->paginate(3);
         return $enginesize;
     }
  

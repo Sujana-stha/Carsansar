@@ -37,11 +37,10 @@ export function getCompaniesPages(companies) {
         companies
     }
 }
-export function addCompaniesSuccess(values, message) {
+export function addCompaniesSuccess(values) {
     return {
         type: types.ADD_COMPANIES_SUCCESS,
-        values,
-        message
+        values
     }
 }
 
@@ -52,34 +51,33 @@ export function requestDeleteCompanies(companyId) {
     }
 }
 
-export function deleteCompaniesSuccess(companyId, message) {
+export function deleteCompaniesSuccess(companyId) {
     return {
         type: types.DELETE_COMPANIES_SUCCESS,
-        companyId, message
+        companyId
     }
 }
 
-export function requestUpdateCompanies( values) {
+export function requestUpdateCompanies( values, page) {
     return {
         type: types.REQUEST_COMPANIES_UPDATE,
-        values
+        values, page
     }
 }
 
-export function updateDrivesSuccess(companyId, values, message) {
+export function updateDrivesSuccess(companyId, values) {
     return {
         type: types.UPDATE_COMPANIES_SUCCESS,
         values,
-        companyId,
-        message
+        companyId
     }
 }
 
-export function requestCompaniesStatus (companyId,values) {
+export function requestCompaniesStatus (companyId,values, page) {
     return {
         type: types.REQUEST_COMPANIES_STATUS,
         values,
-        companyId  
+        companyId, page
     }
 }
 

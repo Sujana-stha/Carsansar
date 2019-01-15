@@ -27,6 +27,7 @@ function* callCategoriesPages(action) {
     if (result.errors) {
         yield put({ type: types.REQUEST_CATEGORIES_FAILED, errors: result.error});
         error = result.error;
+        notify.show("Cannot Get all Categories", "error", 5000)
     } else {
         yield put({type: types.GET_CATEGORIES_PAGES, resp});
     }
@@ -48,7 +49,8 @@ function* callCategoriesSubmit(action) {
         error = result.error;
         notify.show("Cannot Add Categories!", "error", 5000)
     } else {
-        yield put({type: types.ADD_CATEGORIES_SUCCESS, resp, message: result.statusText});
+        // yield put({type: types.ADD_CATEGORIES_SUCCESS, resp, message: result.statusText});
+        yield put({type: types.REQUEST_CATEGORIES})
         notify.show("Categories Added Successfully!", "success", 5000)
 
     }
@@ -67,13 +69,14 @@ function* callEditCategory (action) {
     let error = {};
     const result =  yield call(api.updateCategories, action.values.id, action.values);
     const resp = result.data;
-
+    const pageNumber = action.page
     if (result.errors) {
         yield put({ type: types.REQUEST_CATEGORIES_FAILED, errors: result.error});
         error = result.error;
         notify.show(`Cannot Update ${resp.category_desc}`, "error", 5000)
     } else {
-        yield put({type: types.UPDATE_CATEGORIES_SUCCESS, resp, message: result.statusText});
+        // yield put({type: types.UPDATE_CATEGORIES_SUCCESS, resp, message: result.statusText});
+        yield put({type: types.REQUEST_CATEGORIES_PAGES, pageNumber})
         notify.show("Categories Updated Successfully!", "success", 5000)
     }
     yield put(stopSubmit('EditCategories', error));
@@ -90,14 +93,15 @@ function* callCategoryToggleStatus(action) {
     let error = {};
     const result =  yield call(api.updateCategoriesStatus, action.categoryId, action.values);
     const resp = result.data;
-
+    const pageNumber = action.page
     if (result.errors) {
         yield put({ type: types.REQUEST_CATEGORIES_FAILED, errors: result.error});
         error = result.error;
         notify.show(`Cannot Change Status of ${resp.category_desc}`, "error", 5000)
 
     } else {
-        yield put({type: types.CATEGORIES_STATUS_SUCCESS, resp, message: result.statusText});
+        // yield put({type: types.CATEGORIES_STATUS_SUCCESS, resp, message: result.statusText});
+        yield put({type: types.REQUEST_CATEGORIES_PAGES, pageNumber})
         notify.show("Status Updated Successfully!", "success", 5000)
         
     }
@@ -118,7 +122,7 @@ function* callDeleteCategory(action) {
         error = result.error;
         notify.show("Cannot Delere Category", "error", 5000)
     } else {
-        yield put(categoryAction.deleteCategoriesSuccess(action.categoryId, result.statusText));
+        yield put(categoryAction.deleteCategoriesSuccess(action.categoryId));
         notify.show("Categories Deleted Successfully!", "error", 5000)
         
     }

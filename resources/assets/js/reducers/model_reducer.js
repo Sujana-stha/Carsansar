@@ -4,11 +4,11 @@ import _ from 'lodash';
 const initialState = {
     models: [],
     fetching: false,
-    message: '',
     activePage: 1,
     itemsCountPerPage: 3,
     totalItemsCount: 1,
     pageRangeDisplayed: 3,
+    sending: false
 }
 
 const modelReducer =  function(state = initialState, action) {
@@ -22,21 +22,26 @@ const modelReducer =  function(state = initialState, action) {
                 fetching: false,
                 itemsCountPerPage: action.models.per_page,
                 totalItemsCount: action.models.total,
-                activePage: action.models.current_page
+                activePage: action.models.current_page,
+                sending: false
             })
-        
+        case types.REQUEST_MODEL_PAGES:
+            return {...state, fetching: true}
+
         case types.GET_MODEL_PAGES:
             return Object.assign({}, state, {
                 models: action.resp.data,
                 itemsCountPerPage: action.resp.per_page,
                 totalItemsCount: action.resp.total,
-                activePage: action.resp.current_page
+                activePage: action.resp.current_page,
+                fetching: false,
+                sending: false
             })
-
-        case types.ADD_MODEL_SUCCESS:
+        
+        
+        case types.REQUEST_MODEL_SUBMIT:
             return  Object.assign({}, state, {
-                models:  [...state.models],
-                message: action.message
+                sending: true
             })
         
         case types.UPDATE_MODEL_SUCCESS:
@@ -47,11 +52,9 @@ const modelReducer =  function(state = initialState, action) {
                     return action.resp;
                     }
                     return model;
-                }),
-                message: action.message
+                })
             };
         case types.MODEL_STATUS_SUCCESS:
-            console.log('tion', action)
             return {
                 ...state,
                 models: state.models.map(model => {
@@ -59,14 +62,15 @@ const modelReducer =  function(state = initialState, action) {
                         return action.resp;
                     }
                     return model;
-                }),
-                message: action.message
+                })
             }
+        case types.REQUEST_MODEL_DELETE: 
+            return {...state, fetching: true}
         case types.DELETE_MODEL_SUCCESS:
             const newModel = _.filter(state.models, model => model.id !== action.modelId);
             return Object.assign({}, state, {
                 models: newModel,
-                message: action.message
+                fetching: false
             });
 
         default: 

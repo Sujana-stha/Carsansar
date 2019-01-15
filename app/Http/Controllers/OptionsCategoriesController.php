@@ -10,7 +10,7 @@ class OptionsCategoriesController extends Controller
     public function index()
     {
         
-        return OptionCategory::all();
+        return OptionCategory::with('createdBy:id,name')->orderBy('id', 'desc')->get();
         
     }
  

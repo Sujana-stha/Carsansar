@@ -33,7 +33,7 @@ class OptionsList extends Component {
                                         
                             <td>{option.id}</td>
                             <td>{option.option_desc}</td>
-                            <td>{option.oc_id.id}</td>
+                            <td>{option.oc_id.optioncategory_desc}</td>
 
                             <td>{option.created_by.name}</td>
                             <td className="action">
@@ -41,7 +41,7 @@ class OptionsList extends Component {
                                 <a className="tooltip" href="javascript:void(0);" onClick={()=>this.deleteItem(option.id)} data-tooltip="Delete"><i className="material-icons">delete</i></a>
                                 {this.state.showItem==option.id ? (
                                     <span className="confirm tooltip-text">Are you sure?&nbsp; 
-                                        <a onClick={this.props.deletOption.bind(null, option.id)} href="javascript:void(0);">Yes</a> &nbsp;
+                                        <a onClick={this.props.deleteOption.bind(null, option.id)} href="javascript:void(0);">Yes</a> &nbsp;
                                         <a href="javascript:void(0);" onClick={this.hideDiv.bind(this)}>No</a>
                                     </span>
                                 ): null}

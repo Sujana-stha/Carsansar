@@ -4,11 +4,11 @@ import _ from 'lodash';
 const initialState = {
     transmissions: [],
     fetching: false,
-    message: '',
     activePage: 1,
     itemsCountPerPage: 3,
     totalItemsCount: 1,
     pageRangeDisplayed: 3,
+    sending: false
 }
 
 const transmissionReducer =  function(state = initialState, action) {
@@ -22,23 +22,29 @@ const transmissionReducer =  function(state = initialState, action) {
                 fetching: false,
                 itemsCountPerPage: action.transmissions.per_page,
                 totalItemsCount: action.transmissions.total,
-                activePage: action.transmissions.current_page
+                activePage: action.transmissions.current_page,
+                sending: false
             })
-        
+
+        case types.REQUEST_TRANSMISSONS_PAGES: 
+            return {...state, fetching: true};
+           
         case types.GET_TRANSMISSONS_PAGES:
             return Object.assign({}, state, {
                 transmissions: action.resp.data,
                 itemsCountPerPage: action.resp.per_page,
                 totalItemsCount: action.resp.total,
-                activePage: action.resp.current_page
+                activePage: action.resp.current_page,
+                sending: false,
+                fetching: false
             })
 
-        case types.ADD_TRANSMISSONS_SUCCESS:
-            return  Object.assign({}, state, {
-                transmissions:  [...state.transmissions],
-                message: action.message
-            })
-        
+        case types.REQUEST_TRANSMISSONS_SUBMIT: 
+            return {...state, sending: true};
+           
+        case types.REQUEST_TRANSMISSONS_UPDATE: 
+            return {...state, sending: true};
+           
         case types.UPDATE_TRANSMISSONS_SUCCESS:
         console.log('acc', action)
             return {
@@ -49,8 +55,11 @@ const transmissionReducer =  function(state = initialState, action) {
                     }
                     return transmission;
                 }),
-                message: action.message
+                sending:false
             };
+        case types.REQUEST_TRANSMISSONS_STATUS: 
+            return {...state, fetching: true};
+           
         case types.TRANSMISSONS_STATUS_SUCCESS:
           console.log('tion', action)
             return {
@@ -61,13 +70,12 @@ const transmissionReducer =  function(state = initialState, action) {
                     }
                     return transmission;
                 }),
-                message: action.message
+                fetching: false
             }
         case types.DELETE_TRANSMISSONS_SUCCESS:
             const newTransmission= _.filter(state.transmissions, transmission => transmission.id !== action.transmissionId);
             return Object.assign({}, state, {
                 transmissions: newTransmission,
-                message: action.message
             });
 
         default: 

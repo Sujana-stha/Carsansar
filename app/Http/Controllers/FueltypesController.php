@@ -10,7 +10,7 @@ class FueltypesController extends Controller
     public function index()
     {
         // return Fueltype::all();
-        $fueltype = Fueltype::paginate(3);
+        $fueltype = Fueltype::with('createdBy:id,name')->orderBy('id', 'desc')->paginate(3);
         return $fueltype;
     }
  

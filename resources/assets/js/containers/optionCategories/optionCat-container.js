@@ -12,26 +12,16 @@ import EditOptionCategory from '../../components/OptionCategory/optionCategory-e
 import Loading from '../../components/loading';
 
 
-var globalId = null
-
 class OptionCategoryListContainer extends Component {
     constructor() {
         super();
         this.state= {
-            hide: true,
             isEditing: false
         }
         // this.handlePageChange = this.handlePageChange.bind(this)
         this.editOptionCategory = this.editOptionCategory.bind(this)
         this.toggleStatus = this.toggleStatus.bind(this)
 
-    }
-
-    hideMessage (e) {
-        e.preventDefault();
-        this.setState ({
-            hide: false
-        })
     }
 
     componentDidMount() {
@@ -59,9 +49,8 @@ class OptionCategoryListContainer extends Component {
 
     //function to call form of edit
     editOptionCategory(values) {
-        globalId = values
         this.setState ({
-            isEditing : true
+            isEditing : values
         })
         
     }
@@ -78,8 +67,7 @@ class OptionCategoryListContainer extends Component {
     // }
     // toggle status value
     toggleStatus (optCatId, status) {
-        console.log('id', optCatId)
-        console.log('val', status)
+       
         const newOptCatStatus = {
             status: !status
         }
@@ -112,7 +100,7 @@ class OptionCategoryListContainer extends Component {
                 <div className="row">
                     <div className="col s12 m3 l3">
                         {this.state.isEditing ? (
-                            <EditOptionCategory onSubmit = {this.submitEditOptionCategory.bind(this)} editId = {globalId} />
+                            <EditOptionCategory onSubmit = {this.submitEditOptionCategory.bind(this)} editId = {this.state.isEditing} />
                         ): (
                             <OptionCategoryForm onSubmit = { this.submitOptionCategory.bind(this) }/>
                         )}

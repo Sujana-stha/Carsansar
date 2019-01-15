@@ -26,6 +26,7 @@ function* callFueltypesPages(action) {
     if (result.errors) {
         yield put({ type: types.REQUEST_FUELTYPES_FAILED, errors: result.error});
         error = result.error;
+        notify.show("Cannot get all Fuels", "error", 5000)
     } else {
         yield put({type: types.GET_FUELTYPES_PAGES, resp});
     }
@@ -40,7 +41,7 @@ function* callFueltypeSubmit(action) {
     yield put(startSubmit('PostFueltypes'));
     let error = {};
     const result =  yield call(api.addFueltypes, action.values);
-    const resp = result.data
+    const resp = result.data;
 
     if (result.errors) {
         yield put({ type: types.REQUEST_FUELTYPES_FAILED, errors: result.error});
@@ -48,7 +49,8 @@ function* callFueltypeSubmit(action) {
         notify.show("Cannot Add FuelTypes!", "error", 5000)
 
     } else {
-        yield put({type: types.ADD_FUELTYPES_SUCCESS, resp, message: result.statusText});
+        // yield put({type: types.ADD_FUELTYPES_SUCCESS, resp, message: result.statusText});
+        yield put({type: types.REQUEST_FUELTYPES})
         notify.show("Fuel Types Added Successfully!", "success", 5000)
     }
     yield put(stopSubmit('PostFueltypes', error));
@@ -65,14 +67,15 @@ function* callEditFueltype (action) {
     let error = {};
     const result =  yield call(api.updateFueltype, action.values.id, action.values);
     const resp = result.data;
-
+    const pageNumber = action.page
     if (result.errors) {
         yield put({ type: types.REQUEST_FUELTYPES_FAILED, errors: result.error});
         error = result.error;
         notify.show(`Cannot Update ${resp.fueltype_desc}!`, "error", 5000)
 
     } else {
-        yield put({type: types.UPDATE_FUELTYPES_SUCCESS, resp, message: result.statusText});
+        // yield put({type: types.UPDATE_FUELTYPES_SUCCESS, resp, message: result.statusText});
+        yield put({type: types.REQUEST_FUELTYPES_PAGES, pageNumber})
         notify.show(`${resp.fueltype_desc} Updated Successfully!`, "success", 5000)
 
     }
@@ -90,15 +93,16 @@ function* callToggleFueltypeStatus(action) {
     console.log('action', action)
     const result =  yield call(api.updateFueltypeStatus, action.fueltypeId, action.values);
     const resp = result.data;
-
+    const pageNumber = action.page
     if (result.errors) {
         yield put({ type: types.REQUEST_FUELTYPES_FAILED, errors: result.error});
         error = result.error;
         notify.show(`Cannot Change Status of ${resp.fueltype_desc}!`, "error", 5000)
 
     } else {
-        yield put({type: types.FUELTYPES_STATUS_SUCCESS, resp, message: result.statusText});
-        notify.show(`Status of ${resp.fueltype.desc} Changed`, "success", 5000)
+        // yield put({type: types.FUELTYPES_STATUS_SUCCESS, resp, message: result.statusText});
+        yield put({type: types.REQUEST_FUELTYPES_PAGES, pageNumber})
+        notify.show(`Status of ${resp.fueltype_desc} Changed`, "success", 5000)
 
     }
 }

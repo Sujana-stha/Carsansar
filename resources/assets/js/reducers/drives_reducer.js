@@ -4,11 +4,11 @@ import _ from 'lodash';
 const initialState = {
     drives: [],
     fetching: false,
-    message: '',
     activePage: 1,
     itemsCountPerPage: 3,
     totalItemsCount: 1,
     pageRangeDisplayed: 3,
+    sending: false
 }
 
 const driveReducer =  function(state = initialState, action) {
@@ -22,7 +22,8 @@ const driveReducer =  function(state = initialState, action) {
                 fetching: false,
                 itemsCountPerPage: action.drives.per_page,
                 totalItemsCount: action.drives.total,
-                activePage: action.drives.current_page
+                activePage: action.drives.current_page,
+                sending: false
             })
         
         case types.GET_DRIVES_PAGES:
@@ -30,15 +31,18 @@ const driveReducer =  function(state = initialState, action) {
                 drives: action.resp.data,
                 itemsCountPerPage: action.resp.per_page,
                 totalItemsCount: action.resp.total,
-                activePage: action.resp.current_page
-            })
-
-        case types.ADD_DRIVES_SUCCESS:
-            return  Object.assign({}, state, {
-                drives:  [...state.drives],
-                message: action.message
+                activePage: action.resp.current_page,
+                sending: false,
+                fetching: false
             })
         
+        case types.REQUEST_DRIVES_SUBMIT:
+            return {...state, sending: true}
+
+        
+        case types.REQUEST_DRIVES_UPDATE:
+            return {...state, sending: true}
+         
         case types.UPDATE_DRIVES_SUCCESS:
             return {
                 ...state, 
@@ -48,8 +52,12 @@ const driveReducer =  function(state = initialState, action) {
                     }
                     return drive;
                 }),
-                message: action.message
+                sending: false
             };
+        
+        case types.REQUEST_DRIVES_STATUS:
+            return {...state, fetching: true}
+         
         case types.DRIVES_STATUS_SUCCESS:
           console.log('tion', action)
             return {
@@ -60,13 +68,12 @@ const driveReducer =  function(state = initialState, action) {
                     }
                     return drive;
                 }),
-                message: action.message
+                fetching: false
             }
         case types.DELETE_DRIVES_SUCCESS:
             const newDrive= _.filter(state.drives, drive => drive.id !== action.driveId);
             return Object.assign({}, state, {
                 drives: newDrive,
-                message: action.message
             });
 
         default: 
