@@ -37,11 +37,10 @@ export function getOptionCategoriesSuccess(optCat) {
 //         optCat
 //     }
 // }
-export function addOptionCategoriesSuccess(values, message) {
+export function addOptionCategoriesSuccess(values) {
     return {
         type: types.ADD_OPT_CAT_SUCCESS,
-        values,
-        message
+        values
     }
 }
 
@@ -52,10 +51,10 @@ export function requestDeleteOptionCategories(optCatId) {
     }
 }
 
-export function deleteOptionCategoriesSuccess(optCatId, message) {
+export function deleteOptionCategoriesSuccess(optCatId) {
     return {
         type: types.DELETE_OPT_CAT_SUCCESS,
-        optCatId, message
+        optCatId
     }
 }
 
@@ -66,12 +65,11 @@ export function requestUpdateOptionCategories( values) {
     }
 }
 
-export function updateOptionCategoriesSuccess(optCatId, values, message) {
+export function updateOptionCategoriesSuccess(optCatId, values) {
     return {
         type: types.UPDATE_OPT_CAT_SUCCESS,
         values,
-        optCatId,
-        message
+        optCatId
     }
 }
 
@@ -82,11 +80,10 @@ export function requestOptionCategoriesStatus (optCatId,values) {
     }
 }
 
-export function OptionCategoriesStatusSuccess (optCatId, values, message) {
+export function OptionCategoriesStatusSuccess (optCatId, values) {
     return {
         type: types.OPT_CAT_STATUS_SUCCESS,
         values,
-        optCatId,
-        message
+        optCatId
     }
 }

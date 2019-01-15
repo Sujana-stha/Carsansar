@@ -12,13 +12,11 @@ import EditEnginesize from '../../components/enginesizes/enginesizes-edit';
 import Loading from '../../components/loading';
 
 
-var globalId = null
 
 class EnginesizesListContainer extends Component {
     constructor() {
         super();
         this.state= {
-            hide: true,
             isEditing: false
         }
         this.handlePageChange = this.handlePageChange.bind(this)
@@ -26,12 +24,12 @@ class EnginesizesListContainer extends Component {
         this.toggleStatus = this.toggleStatus.bind(this)
     }
 
-    hideMessage (e) {
-        e.preventDefault();
-        this.setState ({
-            hide: false
-        })
-    }
+    // hideMessage (e) {
+    //     e.preventDefault();
+    //     this.setState ({
+    //         hide: false
+    //     })
+    // }
 
     componentDidMount() {
         // call action to run the relative saga
@@ -48,18 +46,19 @@ class EnginesizesListContainer extends Component {
 
     // submit function to update data
     submitEditEnginesize(values) {
-        this.props.requestUpdateEnginesizes(values);
+        const page = this.props.activePage;
+        this.props.requestUpdateEnginesizes(values, page);
         this.setState({
             isEditing : false,
-            hide: true
+           
         })
     }
 
     //function to call form of edit
     editEnginesizes(values) {
-        globalId = values
+        
         this.setState ({
-            isEditing : true
+            isEditing : values
         })
         
     }
@@ -76,12 +75,11 @@ class EnginesizesListContainer extends Component {
     }
     
     toggleStatus (enginesizeId, status) {
-        console.log('id', enginesizeId)
-        console.log('val', status)
+        const page = this.props.activePage;       
         const newEnginesizesStatus = {
             status: !status
         }
-        this.props.requestEnginesizesStatus(enginesizeId, newEnginesizesStatus)
+        this.props.requestEnginesizesStatus(enginesizeId, newEnginesizesStatus, page)
     }
     // renderList() {
     //     if(this.props.fetching) {
@@ -111,7 +109,7 @@ class EnginesizesListContainer extends Component {
                 <div className="row">
                     <div className="col s12 m3 l3">
                         {this.state.isEditing ? (
-                            <EditEnginesize onSubmit = {this.submitEditEnginesize.bind(this)} editId = {globalId} />
+                            <EditEnginesize onSubmit = {this.submitEditEnginesize.bind(this)} editId = {this.state.isEditing} />
                         ): (
                             <EnginesizeForm onSubmit = { this.submitEnginesize.bind(this) }/>
                         )}

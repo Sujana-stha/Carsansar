@@ -12,25 +12,15 @@ import EditTransmission from '../../components/transmission/transmission-edit';
 import Loading from '../../components/loading';
 
 
-var globalId = null
-
 class TransmissionsListContainer extends Component {
     constructor() {
         super();
         this.state= {
-            hide: true,
             isEditing: false
         }
         this.handlePageChange = this.handlePageChange.bind(this)
         this.editTransmission = this.editTransmission.bind(this)
         this.toggleStatus = this.toggleStatus.bind(this)
-    }
-
-    hideMessage (e) {
-        e.preventDefault();
-        this.setState ({
-            hide: false
-        })
     }
 
     componentDidMount() {
@@ -41,25 +31,22 @@ class TransmissionsListContainer extends Component {
     // submit function for new data
     submitTransmission(values) {
         this.props.requestSubmitTransmission(values);
-        this.setState ({
-            hide: true
-        })
     }
 
     // submit function to update data
     submitEditTransmissions(values) {
-        this.props.requestUpdateTransmission(values);
+        const page = this.props.activePage;
+        this.props.requestUpdateTransmission(values, page);
         this.setState({
-            isEditing : false,
-            hide: true
+            isEditing : false
         })
     }
 
     //function to call form of edit
     editTransmission(values) {
-        globalId = values
+
         this.setState ({
-            isEditing : true
+            isEditing : values
         })
         
     }
@@ -76,12 +63,11 @@ class TransmissionsListContainer extends Component {
     }
     
     toggleStatus (transmissionId, status) {
-        console.log('id', transmissionId)
-        console.log('val', status)
+        const page = this.props.activePage;
         const newTransmissionStatus = {
             status: !status
         }
-        this.props.requestTransmissionStatus(transmissionId, newTransmissionStatus)
+        this.props.requestTransmissionStatus(transmissionId, newTransmissionStatus, page)
     }
     // renderList() {
     //     if(this.props.fetching) {
@@ -105,14 +91,13 @@ class TransmissionsListContainer extends Component {
     //     }
     // }
     render() {
-        console.log('prop', this.props.transmissions)
         return (
             <div>
                 
                 <div className="row">
                     <div className="col s12 m3 l3">
                         {this.state.isEditing ? (
-                            <EditTransmission onSubmit = {this.submitEditTransmissions.bind(this)} editId = {globalId} />
+                            <EditTransmission onSubmit = {this.submitEditTransmissions.bind(this)} editId = {this.state.isEditing} />
                         ): (
                             <TransmissionForm onSubmit = { this.submitTransmission.bind(this) }/>
                         )}

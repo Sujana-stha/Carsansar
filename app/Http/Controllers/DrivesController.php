@@ -9,7 +9,7 @@ class DrivesController extends Controller
 {
     public function index()
     {
-        $drive = Drive::paginate(3);
+        $drive = Drive::with('createdBy:id,name')->orderBy('id', 'desc')->paginate(3);
         return $drive;
     }
  

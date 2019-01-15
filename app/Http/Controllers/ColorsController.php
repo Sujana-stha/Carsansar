@@ -10,7 +10,7 @@ class ColorsController extends Controller
     public function index()
     {
 
-        return Color::with('createdBy:id,name')->paginate(3);
+        return Color::with('createdBy:id,name')->orderBy('id', 'desc')->paginate(3);
     }
  
     public function show(Color $color)

@@ -11,27 +11,17 @@ import ModelForm from '../../components/models/models-form';
 import EditModel from '../../components/models/models-edit';
 import Loading from '../../components/loading';
 
-
-var globalId = null
-
 class ModelsListContainer extends Component {
     constructor() {
         super();
         this.state= {
-            hide: true,
             isEditing: false
         }
         this.handlePageChange = this.handlePageChange.bind(this)
         this.editModels = this.editModels.bind(this)
     }
 
-    hideMessage (e) {
-        e.preventDefault();
-        this.setState ({
-            hide: false
-        })
-    }
-
+    
     componentDidMount() {
         // call action to run the relative saga
         this.props.requestModel();
@@ -47,18 +37,18 @@ class ModelsListContainer extends Component {
 
     // submit function to update data
     submitEditModel(values) {
-        this.props.requestUpdateModel(values);
+        const page = this.props.activePage;
+        console.log('pp', page);
+        this.props.requestUpdateModel(values, page);
         this.setState({
-            isEditing : false,
-            hide: true
+            isEditing : false
         })
     }
 
     //function to call form of edit
     editModels(values) {
-        globalId = values
         this.setState ({
-            isEditing : true
+            isEditing : values
         })
         
     }
@@ -75,10 +65,12 @@ class ModelsListContainer extends Component {
     }
     // toggle status value
     toggleStatus(modelId, status) {
+        const page = this.props.activePage;
+        console.log('pp', page);
         const newModelStatus = {
             status: !status
         }
-        this.props.requestModelStatus(modelId, newModelStatus)
+        this.props.requestModelStatus(modelId, newModelStatus, page);
     }
     // renderList() {
     //     if(this.props.fetching) {
@@ -107,7 +99,7 @@ class ModelsListContainer extends Component {
                 <div className="row">
                     <div className="col s12 m3 l3">
                         {this.state.isEditing ? (
-                            <EditModel onSubmit = {this.submitEditModel.bind(this)} editId = {globalId} />
+                            <EditModel onSubmit = {this.submitEditModel.bind(this)} editId = {this.state.isEditing} />
                         ): (
                             <ModelForm onSubmit = { this.submitModel.bind(this) }/>
                         )}

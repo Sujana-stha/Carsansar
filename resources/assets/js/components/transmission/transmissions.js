@@ -32,7 +32,7 @@ class TransmissionList extends Component {
                                             
                                 <td>{transmission.id}</td>
                                 <td>{transmission.transmission_desc}</td>
-                                <td>{transmission.created_by}</td>
+                                <td>{transmission.created_by.name}</td>
                                 <td className="action">
                                     <a href="javascript:void(0);" onClick={this.props.onEditTransmission.bind(null, transmission.id)} className="tooltipped" data-position="top" data-delay="50" data-tooltip="Edit"><i className="material-icons">edit</i></a>
                                     <a className="tooltip" href="javascript:void(0);" onClick={()=>this.deleteItem(transmission.id)} data-tooltip="Delete"><i className="material-icons">delete</i></a>

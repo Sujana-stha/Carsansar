@@ -4,7 +4,6 @@ import _ from 'lodash';
 const initialState = {
     makes: [],
     fetching: false,
-    singleMake: [],
     activePage: 1,
     itemsCountPerPage: 3,
     totalItemsCount: 1,
@@ -67,7 +66,10 @@ const makeReducer =  function(state = initialState, action) {
                 }),
                 sending: false
             };
-
+        case types.REQUEST_MAKES_STATUS:
+            return Object.assign({}, state, {
+                fetching: true
+            })
         case types.MAKES_STATUS_SUCCESS:
             return {
                 ...state,
@@ -77,6 +79,7 @@ const makeReducer =  function(state = initialState, action) {
                     }
                     return make;
                 }),
+                fetching: false
             }
 
         

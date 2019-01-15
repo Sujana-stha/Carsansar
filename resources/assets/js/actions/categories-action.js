@@ -59,10 +59,10 @@ export function deleteCategoriesSuccess(categoryId, message) {
     }
 }
 
-export function requestUpdateCategories( values) {
+export function requestUpdateCategories( values, page) {
     return {
         type: types.REQUEST_CATEGORIES_UPDATE,
-        values
+        values, page
     }
 }
 
@@ -75,11 +75,11 @@ export function updateCategoriesSuccess(categoryId, values, message) {
     }
 }
 
-export function requestCategoriesStatus (categoryId,values) {
+export function requestCategoriesStatus (categoryId,values, page) {
     return {
         type: types.REQUEST_CATEGORIES_STATUS,
         values,
-        categoryId  
+        categoryId, page  
     }
 }
 

@@ -37,7 +37,7 @@ class CompaniesList extends Component {
                                 <td>{company.address}</td>
                                 <td>{company.email}</td>
                                 <td>{company.contact_no}</td>
-                                <td>{company.created_by}</td>
+                                <td>{company.created_by.name}</td>
                                 <td className="action">
                                     <a href="javascript:void(0);" onClick={this.props.onEditCompany.bind(null, company.id)} className="tooltipped" data-position="top" data-delay="50" data-tooltip="Edit"><i className="material-icons">edit</i></a>
                                     <a className="tooltip" href="javascript:void(0);" onClick={()=>this.deleteItem(company.id)} data-tooltip="Delete"><i className="material-icons">delete</i></a>

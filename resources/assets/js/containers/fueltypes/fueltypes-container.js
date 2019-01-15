@@ -12,13 +12,11 @@ import EditFueltype from '../../components/fueltypes/fueltypes-edit';
 import Loading from '../../components/loading';
 
 
-var globalId = null
-
 class FueltypesListContainer extends Component {
     constructor() {
         super();
         this.state= {
-            hide: true,
+            
             isEditing: false
         }
         this.handlePageChange = this.handlePageChange.bind(this)
@@ -26,12 +24,12 @@ class FueltypesListContainer extends Component {
         this.toggleStatus = this.toggleStatus.bind(this)
     }
 
-    hideMessage (e) {
-        e.preventDefault();
-        this.setState ({
-            hide: false
-        })
-    }
+    // hideMessage (e) {
+    //     e.preventDefault();
+    //     this.setState ({
+    //         hide: false
+    //     })
+    // }
 
     componentDidMount() {
         // call action to run the relative saga
@@ -48,18 +46,18 @@ class FueltypesListContainer extends Component {
 
     // submit function to update data
     submitEditFueltypes(values) {
-        this.props.requestUpdateFueltypes(values);
+        const page = this.props.activePage;
+        this.props.requestUpdateFueltypes(values, page);
         this.setState({
-            isEditing : false,
-            hide: true
+            isEditing : false
         })
     }
 
     //function to call form of edit
     editFueltype(values) {
-        globalId = values
+        
         this.setState ({
-            isEditing : true
+            isEditing : values
         })
         
     }
@@ -76,12 +74,11 @@ class FueltypesListContainer extends Component {
     }
     
     toggleStatus (fueltypeId, status) {
-        console.log('id', fueltypeId)
-        console.log('val', status)
+        const page = this.props.activePage;       
         const newFueltypeStatus = {
             status: !status
         }
-        this.props.requestFueltypesStatus(fueltypeId, newFueltypeStatus)
+        this.props.requestFueltypesStatus(fueltypeId, newFueltypeStatus, page)
     }
     // renderList() {
     //     if(this.props.fetching) {
@@ -110,7 +107,7 @@ class FueltypesListContainer extends Component {
                 <div className="row">
                     <div className="col s12 m3 l3">
                         {this.state.isEditing ? (
-                            <EditFueltype onSubmit = {this.submitEditFueltypes.bind(this)} editId = {globalId} />
+                            <EditFueltype onSubmit = {this.submitEditFueltypes.bind(this)} editId = {this.state.isEditing} />
                         ): (
                             <FueltypeForm onSubmit = { this.submitFueltype.bind(this) }/>
                         )}

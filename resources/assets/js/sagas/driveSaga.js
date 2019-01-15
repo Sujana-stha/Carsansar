@@ -26,7 +26,7 @@ function* callDrivesPages(action) {
     if (result.errors) {
         yield put({ type: types.REQUEST_DRIVES_FAILED, errors: result.error});
         error = result.error;
-
+        notify.show("Cannot Get all Drives", "error", 5000)
     } else {
         yield put({type: types.GET_DRIVES_PAGES, resp});
     }
@@ -48,7 +48,8 @@ function* callDriveSubmit(action) {
         error = result.error;
         notify.show("Cannot Add Drive!", "error",5000)
     } else {
-        yield put({type: types.ADD_DRIVES_SUCCESS, resp, message: result.statusText});
+        // yield put({type: types.ADD_DRIVES_SUCCESS, resp, message: result.statusText});
+        yield put({type: types.REQUEST_DRIVES_SUBMIT})
         notify.show("Drive Added Successfully!", "success", 5000)
     }
     yield put(stopSubmit('PostDrives', error));
@@ -65,14 +66,16 @@ function* callEditDrive (action) {
     let error = {};
     const result =  yield call(driveApi.updateDrives, action.values.id, action.values);
     const resp = result.data;
-
+    const pageNumber = action.page
     if (result.errors) {
         yield put({ type: types.REQUEST_DRIVES_FAILED, errors: result.error});
         error = result.error;
         notify.show(`Cannot Update ${resp.drive_desc}!`, "error",5000)
 
     } else {
-        yield put({type: types.UPDATE_DRIVES_SUCCESS, resp, message: result.statusText});
+        // yield put({type: types.UPDATE_DRIVES_SUCCESS, resp, message: result.statusText});
+        yield put({type: types.REQUEST_DRIVES_PAGES, pageNumber})
+
         notify.show(`${resp.drive_desc} Updated Successfully!`, "success", 5000)
     }
     yield put(stopSubmit('EditDrives', error));
@@ -89,14 +92,16 @@ function* callDriveToggleStatus(action) {
     console.log('action', action)
     const result =  yield call(driveApi.updateDrivesStatus, action.driveId, action.values);
     const resp = result.data;
-
+    const pageNumber = action.page
     if (result.errors) {
         yield put({ type: types.REQUEST_DRIVES_FAILED, errors: result.error});
         error = result.error;
         notify.show(`Cannot Change Status of ${resp.drive_desc}!`, "error",5000)
 
     } else {
-        yield put({type: types.DRIVES_STATUS_SUCCESS, resp, message: result.statusText});
+        // yield put({type: types.DRIVES_STATUS_SUCCESS, resp, message: result.statusText});
+        yield put({type: types.REQUEST_DRIVES_PAGES, pageNumber})
+
         notify.show("Status Updated Successfully!", "success", 5000)
     }
 }

@@ -27,6 +27,7 @@ function* callBodiesPages(action) {
     if (result.errors) {
         yield put({ type: types.REQUEST_BODIES_FAILED, errors: result.error});
         error = result.error;
+        notify.show("Cannot Get all Bodies", "error", 5000);
     } else {
         yield put({type: types.GET_BODIES_PAGES, resp});
     }
@@ -49,7 +50,8 @@ function* callBodySubmit(action) {
         notify.show("Cannot Add Body!","error", 5000);
 
     } else {
-        yield put({type: types.ADD_BODIES_SUCCESS, resp, message: result.statusText});
+        // yield put({type: types.ADD_BODIES_SUCCESS, resp, message: result.statusText});
+        yield put({type: types.REQUEST_BODIES})
         notify.show("Body Added successfully!", "success", 5000)
 
     }
@@ -67,14 +69,15 @@ function* callEditBody (action) {
     let error = {};
     const result =  yield call(api.updateBodies, action.values.id, action.values);
     const resp = result.data;
-
+    const pageNumber = action.page
     if (result.errors) {
         yield put({ type: types.REQUEST_BODIES_FAILED, errors: result.errors});
         error = result.error;
         notify.show(`Cannot Update ${resp.body_desc}!`,"error", 5000);
 
     } else {
-        yield put({type: types.UPDATE_BODIES_SUCCESS, resp, message: result.statusText});
+        // yield put({type: types.UPDATE_BODIES_SUCCESS, resp, message: result.statusText});
+        yield put({type: types.REQUEST_BODIES_PAGES, pageNumber})
         notify.show("Body Updated successfully!", "success", 5000)
         
     }
@@ -93,16 +96,16 @@ function* callToggleBodyStatus(action) {
     console.log('action', action)
     const result =  yield call(api.updateBodiesStatus, action.bodyId, action.values);
     const resp = result.data;
-
+    const pageNumber = action.page
     if (result.errors) {
         yield put({ type: types.REQUEST_BODIES_FAILED, errors: result.error});
         error = result.error;
         notify.show(`Cannot Change Status of ${resp.body_desc}!`,"error", 5000);
 
     } else {
-        yield put({type: types.BODIES_STATUS_SUCCESS, resp, message: result.statusText});
+        // yield put({type: types.BODIES_STATUS_SUCCESS, resp, message: result.statusText});
+        yield put({type: types.REQUEST_BODIES_PAGES, pageNumber})
         notify.show("Status changed successfully!", "success", 5000)
-        
     }
 
 }

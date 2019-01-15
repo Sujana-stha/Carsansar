@@ -49,7 +49,7 @@ class ColorsList extends Component {
                           <td>
                               <div className="switch">
                                   <label>Inactive
-                                      {color.status== 1 ? (
+                                      {color.status=== 1 ? (
                                           <input onClick = {()=> this.props.colorStatus(color.id, color.status) } defaultChecked type="checkbox" value={color.status}/>
 
                                       ):

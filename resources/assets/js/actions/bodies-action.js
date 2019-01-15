@@ -59,35 +59,33 @@ export function deleteBodiesSuccess(bodyId, message) {
     }
 }
 
-export function requestUpdateBodies( values) {
+export function requestUpdateBodies( values, page) {
     return {
         type: types.REQUEST_BODIES_UPDATE,
-        values
+        values, page
     }
 }
 
-export function updateBodiesSuccess(bodyId, values, message) {
+export function updateBodiesSuccess(bodyId, values) {
     return {
         type: types.UPDATE_BODIES_SUCCESS,
         values,
-        bodyId,
-        message
+        bodyId
     }
 }
 
-export function requestBodiesStatus (bodyId,values) {
+export function requestBodiesStatus (bodyId,values, page) {
     return {
         type: types.REQUEST_BODIES_STATUS,
         values,
-        bodyId  
+        bodyId , page 
     }
 }
 
-export function BodiesStatusSuccess (bodyId, values, message) {
+export function BodiesStatusSuccess (bodyId, values) {
     return {
         type: types.BODIES_STATUS_SUCCESS,
         values,
-        bodyId,
-        message
+        bodyId
     }
 }

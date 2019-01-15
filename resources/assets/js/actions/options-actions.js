@@ -37,11 +37,10 @@ export function getOptionsPages(options) {
         options
     }
 }
-export function addOptionsSuccess(values, message) {
+export function addOptionsSuccess(values) {
     return {
         type: types.ADD_OPTIONS_SUCCESS,
-        values,
-        message
+        values
     }
 }
 
@@ -52,42 +51,40 @@ export function requestDeleteOptions(optionId) {
     }
 }
 
-export function deleteOptionsSuccess(optionId, message) {
+export function deleteOptionsSuccess(optionId) {
     return {
         type: types.DELETE_OPTIONS_SUCCESS,
-        optionId, message
+        optionId
     }
 }
 
-export function requestUpdateOptions( values) {
+export function requestUpdateOptions( values, page) {
     return {
         type: types.REQUEST_OPTIONS_UPDATE,
-        values
+        values, page
     }
 }
 
-export function updateOptionsSuccess(optionId, values, message) {
+export function updateOptionsSuccess(optionId, values) {
     return {
         type: types.UPDATE_OPTIONS_SUCCESS,
         values,
-        optionId,
-        message
+        optionId
     }
 }
 
-export function requestOptionsStatus (optionId,values) {
+export function requestOptionsStatus (optionId,values, page) {
     return {
         type: types.REQUEST_OPTIONS_STATUS,
         values,
-        optionId  
+        optionId, page
     }
 }
 
-export function OptionsStatusSuccess (optionId, values, message) {
+export function OptionsStatusSuccess (optionId, values) {
     return {
         type: types.OPTIONS_STATUS_SUCCESS,
         values,
-        optionId,
-        message
+        optionId
     }
 }

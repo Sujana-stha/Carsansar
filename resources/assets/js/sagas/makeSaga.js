@@ -25,9 +25,9 @@ function* callMakesPages(action) {
 
     if (result.errors) {
         yield put({ type: types.REQUEST_FAILED});
+        notify.show("Cannot Get All Makes", "error", 5000);
     } else {
         yield put({type: types.GET_MAKES_PAGES, resp});
-        
     }
 }
 

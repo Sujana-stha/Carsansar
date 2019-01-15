@@ -12,7 +12,7 @@ class Option extends Model
         return $this->belongsTo('App\User','created_by','id');
     }
 
-    public function optionCategory() {
+    public function ocId() {
         return $this->belongsTo('App\OptionCategory','oc_id','id');
     }
 }

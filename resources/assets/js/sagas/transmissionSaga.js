@@ -26,6 +26,7 @@ function* callTransmissionsPages(action) {
     if (result.errors) {
         yield put({ type: types.REQUEST_TRANSMISSONS_FAILED, errors: result.error});
         error = result.error;
+        notify.show("Cannot Get all Transmissions", "error", 5000)
     } else {
         yield put({type: types.GET_TRANSMISSONS_PAGES, resp});
     }
@@ -47,7 +48,8 @@ function* callTransmissionSubmit(action) {
         error = result.error;
         notify.show("Cannot Add Transmission!", "error", 5000)
     } else {
-        yield put({type: types.ADD_TRANSMISSONS_SUCCESS, resp, message: result.statusText});
+        // yield put({type: types.ADD_TRANSMISSONS_SUCCESS, resp, message: result.statusText});
+        yield put({type: types.REQUEST_TRANSMISSONS})
         notify.show("Transmission Added Successfully!", "success", 5000)
     }
     yield put(stopSubmit('PostTransmissions', error));
@@ -63,15 +65,15 @@ function* callEditTransmission (action) {
     yield put(startSubmit('EditTransmissions'));
     let error = {};
     const result =  yield call(api.updateTransmission, action.values.id, action.values);
-
     const resp = result.data;
-
+    const pageNumber = action.page
     if (result.errors) {
         yield put({ type: types.REQUEST_TRANSMISSONS_FAILED, errors: result.error});
         error = result.error;
         notify.show(`Cannot Update ${resp.transmission_desc}!`, "error", 5000)
     } else {
-        yield put({type: types.UPDATE_TRANSMISSONS_SUCCESS, resp, message: result.statusText});
+        // yield put({type: types.UPDATE_TRANSMISSONS_SUCCESS, resp, message: result.statusText});
+        yield put({type: types.REQUEST_TRANSMISSONS_PAGES, pageNumber})
         notify.show(`${resp.transmission_desc} Updated Successfully!`, "success", 5000)
     }
     yield put(stopSubmit('EditTransmissions', error));
@@ -88,13 +90,14 @@ function* callToggleTransmissionStatus(action) {
     console.log('action', action)
     const result =  yield call(api.updateTransmissionStatus, action.transmissionId, action.values);
     const resp = result.data;
-
+    const pageNumber = action.page
     if (result.errors) {
         yield put({ type: types.REQUEST_TRANSMISSONS_FAILED, errors: result.error});
         error = result.error;
         notify.show(`Cannot Change Status of ${resp.transmission_desc}!`, "error", 5000)
     } else {
-        yield put({type: types.TRANSMISSONS_STATUS_SUCCESS, resp, message: result.statusText});
+        // yield put({type: types.TRANSMISSONS_STATUS_SUCCESS, resp, message: result.statusText});
+        yield put({type: types.REQUEST_TRANSMISSONS_PAGES, pageNumber})
         notify.show(`Status of ${resp.transmission_desc} Updated!`, "success", 5000)
     }
 }

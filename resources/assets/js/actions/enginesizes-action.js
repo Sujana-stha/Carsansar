@@ -37,11 +37,10 @@ export function getEnginesizesPages(enginesizes) {
         enginesizes
     }
 }
-export function addEnginesizesSuccess(values, message) {
+export function addEnginesizesSuccess(values) {
     return {
         type: types.ADD_ENGINESIZES_SUCCESS,
-        values,
-        message
+        values
     }
 }
 
@@ -52,42 +51,40 @@ export function requestDeleteEnginesizes(enginesizeId) {
     }
 }
 
-export function deleteEnginesizesSuccess(enginesizeId, message) {
+export function deleteEnginesizesSuccess(enginesizeId) {
     return {
         type: types.DELETE_ENGINESIZES_SUCCESS,
-        enginesizeId, message
+        enginesizeId
     }
 }
 
-export function requestUpdateEnginesizes( values) {
+export function requestUpdateEnginesizes( values, page) {
     return {
         type: types.REQUEST_ENGINESIZES_UPDATE,
-        values
+        values, page
     }
 }
 
-export function updateEnginesizesSuccess(enginesizeId, values, message) {
+export function updateEnginesizesSuccess(enginesizeId, values) {
     return {
         type: types.UPDATE_ENGINESIZES_SUCCESS,
         values,
-        enginesizeId,
-        message
+        enginesizeId
     }
 }
 
-export function requestEnginesizesStatus (enginesizeId,values) {
+export function requestEnginesizesStatus (enginesizeId,values, page) {
     return {
         type: types.REQUEST_ENGINESIZES_STATUS,
         values,
-        enginesizeId  
+        enginesizeId, page 
     }
 }
 
-export function EnginesizesStatusSuccess (enginesizeId, values, message) {
+export function EnginesizesStatusSuccess (enginesizeId, values) {
     return {
         type: types.ENGINESIZES_STATUS_SUCCESS,
         values,
-        enginesizeId,
-        message
+        enginesizeId
     }
 }

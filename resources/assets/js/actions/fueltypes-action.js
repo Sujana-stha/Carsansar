@@ -37,11 +37,10 @@ export function getFueltypesPages(fueltypes) {
         fueltypes
     }
 }
-export function addFueltypesSuccess(values, message) {
+export function addFueltypesSuccess(values) {
     return {
         type: types.ADD_FUELTYPES_SUCCESS,
-        values,
-        message
+        values
     }
 }
 
@@ -52,42 +51,40 @@ export function requestDeleteFueltypes(fueltypeId) {
     }
 }
 
-export function deleteFueltypesSuccess(fueltypeId, message) {
+export function deleteFueltypesSuccess(fueltypeId) {
     return {
         type: types.DELETE_FUELTYPES_SUCCESS,
-        fueltypeId, message
+        fueltypeId
     }
 }
 
-export function requestUpdateFueltypes( values) {
+export function requestUpdateFueltypes( values, page) {
     return {
         type: types.REQUEST_FUELTYPES_UPDATE,
-        values
+        values, page
     }
 }
 
-export function updateFueltypesSuccess(fueltypeId, values, message) {
+export function updateFueltypesSuccess(fueltypeId, values) {
     return {
         type: types.UPDATE_FUELTYPES_SUCCESS,
         values,
-        fueltypeId,
-        message
+        fueltypeId
     }
 }
 
-export function requestFueltypesStatus (fueltypeId,values) {
+export function requestFueltypesStatus (fueltypeId,values,page) {
     return {
         type: types.REQUEST_FUELTYPES_STATUS,
         values,
-        fueltypeId  
+        fueltypeId, page 
     }
 }
 
-export function FueltypesStatusSuccess (fueltypeId, values, message) {
+export function FueltypesStatusSuccess (fueltypeId, values) {
     return {
         type: types.FUELTYPES_STATUS_SUCCESS,
         values,
-        fueltypeId,
-        message
+        fueltypeId
     }
 }

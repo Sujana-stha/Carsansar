@@ -37,17 +37,15 @@ class BodiesListContainer extends Component {
     // submit function for new data
     submitBody(values) {
         this.props.requestSubmitBodies(values);
-        this.setState ({
-            hide: true
-        })
+        
     }
 
     // submit function to update data
     submitEditBody(values) {
-        this.props.requestUpdateBodies(values);
+        const page = this.props.activePage;
+        this.props.requestUpdateBodies(values, page);
         this.setState({
-            isEditing : false,
-            hide: true
+            isEditing : false
         })
     }
 
@@ -71,10 +69,12 @@ class BodiesListContainer extends Component {
     }
     
     toggleStatus (bodyId, status) {
+        const page = this.props.activePage;
+
         const newBodyStatus = {
             status: !status
         }
-        this.props.requestBodiesStatus(bodyId, newBodyStatus)
+        this.props.requestBodiesStatus(bodyId, newBodyStatus, page)
     }
     // renderList() {
     //     if(this.props.fetching) {

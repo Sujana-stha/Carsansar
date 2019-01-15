@@ -37,11 +37,10 @@ export function getModelPages(models) {
         models
     }
 }
-export function addModelSuccess(values, message) {
+export function addModelSuccess(values) {
     return {
         type: types.ADD_MODEL_SUCCESS,
-        values,
-        message
+        values
     }
 }
 
@@ -52,42 +51,40 @@ export function requestDeleteModel(modelId) {
     }
 }
 
-export function deleteModelSuccess(modelId, message) {
+export function deleteModelSuccess(modelId) {
     return {
         type: types.DELETE_MODEL_SUCCESS,
-        modelId, message
+        modelId
     }
 }
 
-export function requestUpdateModel( values) {
+export function requestUpdateModel( values, page) {
     return {
         type: types.REQUEST_MODEL_UPDATE,
-        values
+        values, page
     }
 }
 
-export function updateModelSuccess(modelId, values, message) {
+export function updateModelSuccess(modelId, values) {
     return {
         type: types.UPDATE_MODEL_SUCCESS,
         values,
-        modelId,
-        message
+        modelId
     }
 }
 
-export function requestModelStatus (modelId,values) {
+export function requestModelStatus (modelId,values, page) {
     return {
         type: types.REQUEST_MODEL_STATUS,
         values,
-        modelId  
+        modelId, page
     }
 }
 
-export function ModelStatusSuccess (modelId, values, message) {
+export function ModelStatusSuccess (modelId, values) {
     return {
         type: types.MODEL_STATUS_SUCCESS,
         values,
-        modelId,
-        message
+        modelId
     }
 }

@@ -10,7 +10,7 @@ class OptionCategory extends Model
 
     public function createdBy()
     {
-        return $this->belongsTo('App\User', 'created_by', 'user_id');
+        return $this->belongsTo('App\User', 'created_by', 'id');
     }
     protected $table = 'optioncategories';
 }

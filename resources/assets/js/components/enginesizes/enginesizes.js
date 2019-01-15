@@ -33,7 +33,7 @@ class EnginesizesList extends Component {
                                             
                                 <td>{enginesize.id}</td>
                                 <td>{enginesize.enginesize_desc}</td>
-                                <td>{enginesize.created_by}</td>
+                                <td>{enginesize.created_by.name}</td>
                                 <td className="action">
                                     <a href="javascript:void(0);" onClick={this.props.onEditEnginesize.bind(null, enginesize.id)} className="tooltipped" data-position="top" data-delay="50" data-tooltip="Edit"><i className="material-icons">edit</i></a>
                                     <a className="tooltip" href="javascript:void(0);" onClick={()=>this.deleteItem(enginesize.id)} data-tooltip="Delete"><i className="material-icons">delete</i></a>

@@ -32,7 +32,7 @@ class DrivesList extends Component {
                                             
                                 <td>{drive.id}</td>
                                 <td>{drive.drive_desc}</td>
-                                <td>{drive.created_by}</td>
+                                <td>{drive.created_by.name}</td>
                                 <td className="action">
                                     <a href="javascript:void(0);" onClick={this.props.onEditDrive.bind(null, drive.id)} className="tooltipped" data-position="top" data-delay="50" data-tooltip="Edit"><i className="material-icons">edit</i></a>
                                     <a className="tooltip" href="javascript:void(0);" onClick={()=>this.deleteItem(drive.id)} data-tooltip="Delete"><i className="material-icons">delete</i></a>

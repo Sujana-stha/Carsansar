@@ -8,6 +8,7 @@ const initialState = {
     itemsCountPerPage: 3,
     totalItemsCount: 1,
     pageRangeDisplayed: 3,
+    sending: false
 }
 
 const bodyReducer =  function(state = initialState, action) {
@@ -21,7 +22,8 @@ const bodyReducer =  function(state = initialState, action) {
                 fetching: false,
                 itemsCountPerPage: action.bodies.per_page,
                 totalItemsCount: action.bodies.total,
-                activePage: action.bodies.current_page
+                activePage: action.bodies.current_page,
+                sending: false
             })
         case types.REQUEST_BODIES_PAGES:
             return {...state, fetching: true}
@@ -32,14 +34,15 @@ const bodyReducer =  function(state = initialState, action) {
                 fetching: false,
                 itemsCountPerPage: action.resp.per_page,
                 totalItemsCount: action.resp.total,
-                activePage: action.resp.current_page
+                activePage: action.resp.current_page,
+                sending: false
             })
-
-        case types.ADD_BODIES_SUCCESS:
-            return  Object.assign({}, state, {
-                bodies:  [...state.bodies],
-            })
+        case types.REQUEST_BODIES_SUBMIT:
+            return {...state, sending: true}
         
+        case types.REQUEST_BODIES_UPDATE:
+            return {...state, sending: true}
+
         case types.UPDATE_BODIES_SUCCESS:
             return {
                 ...state, 
@@ -48,8 +51,11 @@ const bodyReducer =  function(state = initialState, action) {
                     return action.resp;
                     }
                     return body;
-                })
+                }),
+                sending: false
             };
+        case types.REQUEST_BODIES_STATUS:
+            return {...state, fetching: true}
         case types.BODIES_STATUS_SUCCESS:
           console.log('tion', action)
             return {
@@ -59,7 +65,8 @@ const bodyReducer =  function(state = initialState, action) {
                         return action.resp;
                     }
                     return body;
-                })
+                }),
+                fetching: false
             }
         case types.DELETE_BODIES_SUCCESS:
             const newBody = _.filter(state.bodies, body => body.id !== action.bodyId);

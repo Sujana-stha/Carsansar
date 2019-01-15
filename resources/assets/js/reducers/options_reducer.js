@@ -8,6 +8,7 @@ const initialState = {
     itemsCountPerPage: 3,
     totalItemsCount: 1,
     pageRangeDisplayed: 3,
+    sending: false
 }
 
 const optionReducer =  function(state = initialState, action) {
@@ -21,7 +22,8 @@ const optionReducer =  function(state = initialState, action) {
                 fetching: false,
                 itemsCountPerPage: action.options.per_page,
                 totalItemsCount: action.options.total,
-                activePage: action.options.current_page
+                activePage: action.options.current_page,
+                sending: false
             })
         case types.REQUEST_OPTIONS_PAGES:
             return {...state, fetching: true}
@@ -32,14 +34,16 @@ const optionReducer =  function(state = initialState, action) {
                 itemsCountPerPage: action.resp.per_page,
                 totalItemsCount: action.resp.total,
                 activePage: action.resp.current_page,
-                fetching: false
+                fetching: false,
+                sending: false
             })
-
-        case types.ADD_OPTIONS_SUCCESS:
-            return  Object.assign({}, state, {
-                options:  [...state.options]
-            })
+        case types.REQUEST_OPTIONS_SUBMIT: 
+            return {...state, sending: true};
+          
         
+        case types.REQUEST_OPTIONS_UPDATE: 
+            return {...state, sending: true};
+          
         case types.UPDATE_OPTIONS_SUCCESS:
             return {
                 ...state, 
@@ -50,6 +54,9 @@ const optionReducer =  function(state = initialState, action) {
                     return option;
                 })
             };
+        case types.REQUEST_OPTIONS_STATUS: 
+            return {...state, fetching: true};
+          
         case types.OPTIONS_STATUS_SUCCESS:
           console.log('tion', action)
             return {
@@ -59,7 +66,8 @@ const optionReducer =  function(state = initialState, action) {
                         return action.resp;
                     }
                     return option;
-                })
+                }),
+                fetching: false
             }
         case types.DELETE_OPTIONS_SUCCESS:
             const newOption = _.filter(state.options, option => option.id !== action.optionId);

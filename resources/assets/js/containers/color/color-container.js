@@ -68,6 +68,8 @@ class ColorListContainer extends Component {
         const newColorsStatus = {
             status: !status
         }
+        console.log('status', newColorsStatus)
+
         this.props.requestColorStatus(colorId, newColorsStatus, page)
     }
 
