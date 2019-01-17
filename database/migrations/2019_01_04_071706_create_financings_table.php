@@ -15,15 +15,15 @@ class CreateFinancingsTable extends Migration
     {
         Schema::create('financings', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('d_id');
-            $table->integer('vi_id');
-            $table->string('type',15);
-            $table->double('payment',10,2);
-            $table->string('payment_type',15);
-            $table->double('downpayment',10,2);
-            $table->integer('number_of_payment');
-            $table->string('source',20);
-            $table->string('odometer',20);
+            $table->integer('d_id')->nullable();
+            $table->integer('vi_id')->nullable();
+            $table->string('type',15)->nullable();
+            $table->double('payment',10,2)->nullable();
+            $table->string('payment_type',15)->nullable();
+            $table->double('downpayment',10,2)->nullable();
+            $table->integer('number_of_payment')->nullable();
+            $table->string('source',20)->nullable();
+            $table->string('odometer',20)->nullable();
             $table->string('description',500)->nullable();
             $table->tinyInteger('status')->default('1');
             $table->integer('created_by');

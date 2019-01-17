@@ -15,18 +15,19 @@ class CreateDealsTable extends Migration
     {
         Schema::create('deals', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('vi_id');
-            $table->integer('stock_number');
-            $table->integer('company_id');
-            $table->integer('kms');
-            $table->double('price',10,2);
+            $table->string('title',200);
+            $table->integer('vi_id')->nullable();
+            $table->integer('stock_number')->nullable();
+            $table->integer('company_id')->nullable();
+            $table->integer('kms')->nullable();
+            $table->double('price',10,2)->nullable();
             $table->enum('vehicle_status',['Used','New']);
             $table->string('trim',200)->nullable();
             $table->string('ad_desc',600)->nullable();
-            $table->string('warranty_flag',1);
+            $table->tinyInteger('warranty_flag')->default(0);
             $table->string('warranty_desc',100)->nullable();
-            $table->string('financing_flag',1);
-            $table->string('available_flag',1);
+            $table->tinyInteger('financing_flag')->default(0);
+            $table->tinyInteger('available_flag')->default(1);
             $table->tinyInteger('status')->default('1');
             $table->integer('created_by');
             $table->integer('updated_by')->nullable();
