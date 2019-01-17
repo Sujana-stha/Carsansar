@@ -13,11 +13,11 @@ class CreateVehicleoptionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('vehicleoptions', function (Blueprint $table) {
+        Schema::create('vehicle_options', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('d_id');
-            $table->integer('vi_id');
-            $table->integer('option_id');
+            $table->integer('d_id')->nullable();
+            $table->integer('vi_id')->nullable();
+            $table->integer('option_id')->nullable();
             $table->tinyInteger('status')->default('1');
             $table->integer('created_by');
             $table->integer('updated_by')->nullable();

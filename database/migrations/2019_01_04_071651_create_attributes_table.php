@@ -15,13 +15,13 @@ class CreateAttributesTable extends Migration
     {
         Schema::create('attributes', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('d_id');
-            $table->integer('vi_id');
+            $table->integer('d_id')->nullable();
+            $table->integer('vi_id')->nullable();
             $table->integer('exterior_color_id')->nullable();
             $table->integer('interior_color_id')->nullable();
             $table->integer('doors')->nullable();
             $table->integer('passenger')->nullable();
-            $table->integer('body_id');
+            $table->integer('body_id')->nullable();
             $table->tinyInteger('status')->default('1');
             $table->integer('created_by');
             $table->integer('updated_by')->nullable();

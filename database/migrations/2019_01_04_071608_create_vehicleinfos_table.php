@@ -13,19 +13,19 @@ class CreateVehicleinfosTable extends Migration
      */
     public function up()
     {
-        Schema::create('vehicleinfos', function (Blueprint $table) {
+        Schema::create('vehicle_infos', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('vin',20);
-            $table->integer('category_id');
-            $table->string('year',4);
-            $table->integer('make_id');
-            $table->integer('model_id');
-            $table->integer('fueltype_id');
-            $table->integer('drive_id');
-            $table->integer('enginesize_id');
-            $table->integer('cylinder');
-            $table->integer('transmission_id');
-            $table->integer('mfg_exterior_color_id');
+            $table->string('vin',20)->nullable();
+            $table->integer('category_id')->nullable();
+            $table->string('year',4)->nullable();
+            $table->integer('make_id')->nullable();
+            $table->integer('model_id')->nullable();
+            $table->integer('fueltype_id')->nullable();
+            $table->integer('drive_id')->nullable();
+            $table->integer('enginesize_id')->nullable();
+            $table->integer('cylinder')->nullable();
+            $table->integer('transmission_id')->nullable();
+            $table->integer('mfg_exterior_color_id')->nullable();
             $table->tinyInteger('status')->default('1');
             $table->integer('created_by');
             $table->integer('updated_by')->nullable();
@@ -41,6 +41,6 @@ class CreateVehicleinfosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('vehicleinfos');
+        Schema::dropIfExists('vehicle_infos');
     }
 }
