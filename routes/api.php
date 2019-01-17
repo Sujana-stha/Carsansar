@@ -175,4 +175,16 @@ Route::put('transmissions/{transmission}','TransmissionsController@update');
  
 Route::delete('transmissions/{transmission}', 'TransmissionsController@delete');
 
+//vehicles
+
+Route::get('vehicles', 'DealsController@index');
+ 
+Route::get('vehicles/{vehicle}', 'DealsController@show');
+ 
+Route::post('vehicles','DealsController@store');
+ 
+Route::put('vehicles/{vehicle}','DealsController@update');
+ 
+Route::delete('vehicles/{vehicle}', 'DealsController@delete');
+
 
