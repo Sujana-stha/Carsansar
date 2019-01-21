@@ -23,10 +23,11 @@
     </head>
     <body>
         <div id="root"></div>
-        <script src="{{asset('js/app.js')}}" ></script>
+		
         <!-- ================================================
 	    Scripts
 	    ================================================ -->
+        <script src="{{asset('js/app.js')}}" ></script>
 	    <!-- jQuery Library -->
 	    <script type="text/javascript" src="{{asset('vendors/jquery-3.2.1.min.js')}}"></script>
 	    <!--materialize js-->

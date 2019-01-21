@@ -73,7 +73,7 @@ const companyReducer =  function(state = initialState, action) {
             const newCompany= _.filter(state.companies, company => company.id !== action.companyId);
             return Object.assign({}, state, {
                 companies: newCompany,
-                message: action.message
+                fetching: false
             });
 
         default: 

@@ -75,7 +75,7 @@ const enginesizeReducer =  function(state = initialState, action) {
             const newEnginesize = _.filter(state.enginesizes, enginesize => enginesize.id !== action.enginesizeId);
             return Object.assign({}, state, {
                 enginesizes: newEnginesize,
-                message: action.message
+                fetching: false
             });
 
         default: 
