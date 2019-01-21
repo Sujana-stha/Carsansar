@@ -19,6 +19,7 @@ class ModelsListContainer extends Component {
         }
         this.handlePageChange = this.handlePageChange.bind(this)
         this.editModels = this.editModels.bind(this)
+        this.toggleStatus = this.toggleStatus.bind(this)
     }
 
     
@@ -162,4 +163,4 @@ function mapStateToProps(store) {
     }
 }
 
-export default connect(mapStateToProps, {requestModel, requestModelPages, requestDeleteModel, requestSubmitModel, requestUpdateModel })(ModelsListContainer);
+export default connect(mapStateToProps, {requestModel, requestModelPages, requestDeleteModel, requestSubmitModel, requestUpdateModel, requestModelStatus })(ModelsListContainer);

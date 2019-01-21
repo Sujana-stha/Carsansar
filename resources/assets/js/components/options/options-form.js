@@ -5,7 +5,12 @@ import {connect} from 'react-redux';
 
 
 class OptionsForm extends Component {
-    
+    constructor() {
+        super();
+        this.state = {
+            value: 1
+        }
+    }
     componentDidMount() {
         // $('select').material_select('destroy');
        
@@ -26,20 +31,16 @@ class OptionsForm extends Component {
             </div>
         )
     }
-    
-    renderSelectField({input, label, type, meta: {touched, error},children}) {
+    renderSelectField({input, label, meta: {touched, error}, defaultValue, children}) {
         return (
-            <div className="row">
-                <div className="col s12">
-                    <label>{label}</label>
-                    <select className="browser-default wr-select" defaultValue="1">
-                        {children}
-                    </select>
-                    <div className="error">
-                        {touched ? error: ''}
-                    </div>
+            <div>
+                <label>{label}</label>
+                <select value={defaultValue} {...input} className="browser-default">
+                    {children}
+                </select>
+                <div className="error">
+                    {touched ? error: ''}
                 </div>
-                
             </div>
         )
     }
@@ -60,16 +61,16 @@ class OptionsForm extends Component {
                                 component={this.renderInputField} 
                             />
                             <div>
-                                <label>Option Categories</label>
+                                
                                 <Field 
                                     name="oc_id"
-                                    component="select"
-                                    className="browser-default"
+                                    component={this.renderSelectField}
+                                    label="Option Categories"
+                                    value = "4"
                                 >
-                                    
                                     {this.props.optionLists.map((optionList) => {
                                         return (
-                                            <option key= {optionList.id} value={optionList.id}>{optionList.optioncategory_desc}</option>
+                                            <option key= {optionList.id} value={optionList.id} >{optionList.optioncategory_desc}</option>
                                         )
                                     })}
                                 </Field>
