@@ -106,6 +106,8 @@ Route::delete('fueltypes/{fueltype}', 'FueltypesController@delete');
 //makes
 
 Route::get('makes', 'MakesController@index');
+
+Route::get('makes/getList', 'MakesController@getList');
  
 Route::get('makes/{make}', 'MakesController@show');
  

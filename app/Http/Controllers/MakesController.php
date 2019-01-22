@@ -18,6 +18,12 @@ class MakesController extends Controller
     {
         return $make;
     }
+
+    public function getList()
+    {
+        $make = Make::where('status','1')->pluck('id','make_desc');
+        return $make;
+    }
  
     public function store(Request $request)
     {
