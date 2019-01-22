@@ -12,6 +12,12 @@ class DrivesController extends Controller
         $drive = Drive::with('createdBy:id,name')->orderBy('id', 'desc')->paginate(3);
         return $drive;
     }
+
+    public function getList()
+    {
+        $drive = Drive::where('status','1')->pluck('drive_desc','id');
+        return $drive;
+    }
  
     public function show(Drive $drive)
     {

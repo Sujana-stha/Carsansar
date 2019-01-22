@@ -13,6 +13,12 @@ class CompaniesController extends Controller
         $company = Company::with('createdBy:id,name')->orderby('id', 'desc')->paginate(3);
         return $company;
     }
+
+    public function getList()
+    {
+        $company = Company::where('status','1')->pluck('name','id');
+        return $company;
+    }
  
     public function show(Company $company)
     {

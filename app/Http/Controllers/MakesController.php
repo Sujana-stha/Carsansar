@@ -21,7 +21,7 @@ class MakesController extends Controller
 
     public function getList()
     {
-        $make = Make::where('status','1')->pluck('id','make_desc');
+        $make = Make::where('status','1')->pluck('make_desc','id');
         return $make;
     }
  

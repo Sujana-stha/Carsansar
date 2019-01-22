@@ -13,6 +13,12 @@ class EnginesizesController extends Controller
         $enginesize = Enginesize::with('createdBy:id,name')->orderBy('id', 'desc')->paginate(3);
         return $enginesize;
     }
+
+    public function getList()
+    {
+        $enginesize = Enginesize::where('status','1')->pluck('enginesize_desc','id');
+        return $enginesize;
+    }
  
     public function show(Enginesize $enginesize)
     {

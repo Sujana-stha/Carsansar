@@ -13,6 +13,12 @@ class FueltypesController extends Controller
         $fueltype = Fueltype::with('createdBy:id,name')->orderBy('id', 'desc')->paginate(3);
         return $fueltype;
     }
+
+    public function getList()
+    {
+        $fueltype = Fueltype::where('status','1')->pluck('fueltype_desc','id');
+        return $fueltype;
+    }
  
     public function show(Fueltype $fueltype)
     {

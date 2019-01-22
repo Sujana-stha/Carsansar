@@ -12,6 +12,12 @@ class BodiesController extends Controller
         $body= Body::with('createdBy:id,name')->orderBy('id', 'desc')->paginate(3);
         return $body;
     }
+
+    public function getList()
+    {
+        $body = Body::where('status','1')->pluck('body_desc','id');
+        return $body;
+    }
  
     public function show(Body $body)
     {

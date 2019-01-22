@@ -15,6 +15,12 @@ class OptionsController extends Controller
         $option = Option::with(['ocId:id,optioncategory_desc','createdBy:id,name'])->orderBy('id','desc')->paginate(3);
         return $option;
     }
+
+    public function getList()
+    {
+        $option = Option::where('status','1')->pluck('option_desc','id');
+        return $option;
+    }
  
     public function show(Option $option)
     {

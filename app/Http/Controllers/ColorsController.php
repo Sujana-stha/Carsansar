@@ -12,6 +12,12 @@ class ColorsController extends Controller
 
         return Color::with('createdBy:id,name')->orderBy('id', 'desc')->paginate(3);
     }
+
+    public function getList()
+    {
+        $color = Color::where('status','1')->pluck('color_desc','id');
+        return $color;
+    }
  
     public function show(Color $color)
     {

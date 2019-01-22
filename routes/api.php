@@ -22,6 +22,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 //bodies
 
 Route::get('bodies', 'BodiesController@index');
+
+Route::get('bodies/getList', 'BodiesController@getList');
  
 Route::get('bodies/{body}', 'BodiesController@show');
  
@@ -34,6 +36,8 @@ Route::delete('bodies/{body}', 'BodiesController@delete');
 //categories
 
 Route::get('categories', 'CategoriesController@index');
+
+Route::get('categories/getList', 'CategoriesController@getList');
  
 Route::get('categories/{category}', 'CategoriesController@show');
  
@@ -46,6 +50,8 @@ Route::delete('categories/{category}', 'CategoriesController@delete');
 //colors
 
 Route::get('colors', 'ColorsController@index');
+
+Route::get('colors/getList', 'ColorsController@getList');
  
 Route::get('colors/{color}', 'ColorsController@show');
  
@@ -58,6 +64,8 @@ Route::delete('colors/{color}', 'ColorsController@delete');
 //companies
 
 Route::get('companies', 'CompaniesController@index');
+
+Route::get('companies/getList', 'CompaniesController@getList');
  
 Route::get('companies/{company}', 'CompaniesController@show');
  
@@ -70,6 +78,8 @@ Route::delete('companies/{company}', 'CompaniesController@delete');
 //drives
 
 Route::get('drives', 'DrivesController@index');
+
+Route::get('drives/getList', 'DrivesController@getList');
  
 Route::get('drives/{drive}', 'DrivesController@show');
  
@@ -82,6 +92,8 @@ Route::delete('drives/{drive}', 'DrivesController@delete');
 //enginesizes
 
 Route::get('enginesizes', 'EnginesizesController@index');
+
+Route::get('enginesizes/getList', 'EnginesizesController@getList');
  
 Route::get('enginesizes/{enginesize}', 'EnginesizesController@show');
  
@@ -94,6 +106,8 @@ Route::delete('enginesizes/{enginesize}', 'EnginesizesController@delete');
 //fueltypes
 
 Route::get('fueltypes', 'FueltypesController@index');
+
+Route::get('fueltypes/getList', 'FueltypesController@getList');
  
 Route::get('fueltypes/{fueltype}', 'FueltypesController@show');
  
@@ -120,6 +134,8 @@ Route::delete('makes/{make}', 'MakesController@delete');
 //models
 
 Route::get('models', 'VehicleModelsController@index');
+
+Route::get('models/getList', 'VehicleModelsController@getList');
  
 Route::get('models/{model}', 'VehicleModelsController@show');
  
@@ -144,6 +160,8 @@ Route::delete('vehicle-options/{vehicle_option}', 'VehicleOptionsController@dele
 //options
 
 Route::get('options', 'OptionsController@index');
+
+Route::get('options/getList', 'OptionsController@getList');
  
 Route::get('options/{option}', 'OptionsController@show');
  
@@ -168,6 +186,8 @@ Route::delete('optionsCategories/{optionCategories}', 'OptionsCategoriesControll
 //transmissons
 
 Route::get('transmissions', 'TransmissionsController@index');
+
+Route::get('transmissions/getList', 'TransmissionsController@getList');
  
 Route::get('transmissions/{transmission}', 'TransmissionsController@show');
  

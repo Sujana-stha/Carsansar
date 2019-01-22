@@ -12,6 +12,12 @@ class CategoriesController extends Controller
         $category = Category::with('createdBy:id,name')->orderBy('id', 'desc')->paginate(3);
         return $category;
     }
+
+    public function getList()
+    {
+        $category = Category::where('status','1')->pluck('category_desc','id');
+        return $category;
+    }
  
     public function show(Category $category)
     {

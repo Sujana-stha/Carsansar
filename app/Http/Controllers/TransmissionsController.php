@@ -13,6 +13,12 @@ class TransmissionsController extends Controller
         $transmission = Transmission::with('createdBy:id,name')->orderBy('id', 'desc')->paginate(3);
         return $transmission;
     }
+
+    public function getList()
+    {
+        $transmission = Transmission::where('status','1')->pluck('transmission_desc','id');
+        return $transmission;
+    }
  
     public function show(Transmission $transmission)
     {

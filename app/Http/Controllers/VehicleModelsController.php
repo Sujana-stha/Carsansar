@@ -12,6 +12,12 @@ class VehicleModelsController extends Controller
         $model = VehicleModel::paginate(3);
         return $model;
     }
+
+    public function getList()
+    {
+        $model = VehicleModel::where('status','1')->pluck('model_desc','id');
+        return $model;
+    }
  
     public function show(VehicleModel $model)
     {
