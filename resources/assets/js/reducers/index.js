@@ -16,6 +16,7 @@ import enginesizeReducer from './enginesize_reducer';
 import fueltypeReducer from './fueltype_reducer';
 import transmissionReducer from './transmission_reducer';
 import companyReducer from './company_reducer';
+import dealsReducer from './deals_reducer';
 
 const rootReducer = (history) => combineReducers({
     colorState: colorReducer,
@@ -31,7 +32,8 @@ const rootReducer = (history) => combineReducers({
     enginesizeState: enginesizeReducer,
     fueltypeState: fueltypeReducer,
     transmissionState: transmissionReducer,
-    companyState: companyReducer
+    companyState: companyReducer,
+    dealState: dealsReducer
 });
 
 export default rootReducer;

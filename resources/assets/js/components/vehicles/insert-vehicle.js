@@ -1,7 +1,8 @@
 // Insert Vehicle
 
 import React, { Component } from 'react';
-import { render } from 'react-dom';
+import Dropzone from 'react-dropzone';
+
 import { NavLink } from 'react-router-dom';
 import ReactQuill from 'react-quill';
 import { Tabs, Tab, TabPanel, TabList } from 'react-web-tabs';
@@ -11,19 +12,57 @@ import 'react-web-tabs/dist/react-web-tabs.css';
 // import 'react-quill/dist/quill.snow.css';
 import { connect } from 'react-redux';
 import store from '../../store';
-import { bindActionCreators } from 'redux';
-import { requestMakes } from  '../../actions/makes-action';
+import * as api from '../../api/deals-api';
+import * as optCatapi from '../../api/option_cat-api';
 import { Field, reduxForm } from 'redux-form';
 
-class InsertVehicle extends React.Component {
-	constructor(props) {
-	  super(props)
-	  this.state = { text: 'Vehicle Description' } // You can also pass a Quill Delta here
-	  this.handleChange = this.handleChange.bind(this)
+class InsertVehicle extends Component {
+	constructor() {
+	  	super()
+	  	this.state = { 
+		  	text: 'Vehicle Description',
+			makes: {},
+			models:{},
+			bodies: {},
+			enginesizes:{},
+			transmissions: {},
+			colors: {},
+			fueltypes: {},
+			options: [],
+			optCategories: []
+		} // You can also pass a Quill Delta here
+		  this.handleChange = this.handleChange.bind(this);
 	}
 	componentDidMount() {
-        // makeApi.getMakes();
-        this.props.requestMakes();
+		api.getMakesList().then((response)=> {
+			this.setState({ makes: response.data })
+		})
+		api.getModelsList().then((response) => {
+			this.setState({ models: response.data })
+		})
+		api.getBodiesList().then((response) => {
+			this.setState({ bodies: response.data })
+		})
+		api.getEnginesizeList().then((response) => {
+			this.setState({ enginesizes: response.data })
+		})
+		api.getTransmissionList().then((response) => {
+			this.setState({ transmissions: response.data })
+		})
+		api.getColorsList().then((response)=> {
+			this.setState({ colors: response.data })
+		})
+		api.getFueltypesList().then((response)=> {
+			this.setState({ fueltypes: response.data })
+		})
+		api.getOptionsList().then((response)=> {
+			console.log('opt',response)
+			this.setState({options: response.data})
+		})
+		optCatapi.getOptionsCategories().then((response) => {
+			console.log('optcat',response)
+			this.setState({optCategories: response.data})
+		})
     }
 	handleChange(value) {
 	  this.setState({ text: value })
@@ -34,6 +73,7 @@ class InsertVehicle extends React.Component {
 		event.preventDefault();
 	}
 	renderInputField({input, label, type, meta: {touched, error}}) {
+		
         return (
 			<div className="input-field col s12">
                 <input  type={type} {...input}/>
@@ -69,18 +109,95 @@ class InsertVehicle extends React.Component {
             </div>
         )
 	}
-	renderCheckboxField({input, label, type, id, meta: {touched, error}}) {
+	
+	renderCheckboxField({input, label, id, type,  meta: {touched, error}}) {
+		
 		return (
+			
 			<div className="col s12">
-				<input type={type} {...input} className="filled-in" id={id}/>
-				<label>{label}</label>
+				<Input {...input} 
+				type={type}
+				label={label} 
+				className='filled-in'
+				checked={input.value.indexOf(id) !== -1}
+				onChange={(event) => {
+					const checkedValues= [...input.value];
+					console.log('new', checkedValues)
+					if(event.target.checked) {
+						checkedValues.push(id);
+					} else {
+						checkedValues.splice(checkedValues.indexOf(id), 1);
+					}
+					return input.onChange(checkedValues)
+				}}/>
+				
 				<div className="error">
                     {touched ? error: ''}
                 </div>
 			</div>
 		)
 	}
+	renderDropzoneField(field) {
+		const files = field.input.value;
+  		let dropzoneRef;
+  		return (
+    		<div>
+				<Dropzone
+					style={{
+					width: '200px',
+					height: '200px',
+					borderWidth: '2px',
+					borderColor: 'rgb(102, 102, 102)',
+					borderStyle: 'dashed',
+					borderRadius: '5px',
+					padding: '20px',
+					}}
+					name={field.name}
+					onDrop={(filesToUpload, e) => field.input.onChange(filesToUpload)}
+					ref={(node) => { dropzoneRef = node; }}
+					maxSize={5242880}
+					multiple={false}
+					accept={'image/*'}
+					className="drop-zone"
+        		>
+					{({isDragActive, isDragReject, acceptedFiles, rejectedFiles}) => {
+						if (isDragActive) {
+						return 'This file is authorized';
+						}
+						if (isDragReject) {
+						return 'This file is not authorized';
+						}
+						return acceptedFiles.length || rejectedFiles.length
+							? `Accepted ${acceptedFiles.length}, rejected ${rejectedFiles.length} files`
+							: 'Try dropping some files.';
+					}}
+        		</Dropzone>
+				{field.meta.touched &&
+        		field.meta.error &&
+					<span className="error">{field.meta.error}</span>
+				}
+        		{files && Array.isArray(files) && (
+					<ul>
+						{files.map((file, i) =>
+							<li key={i}>
+								<img key={i}
+									src={file.preview} alt="preview"/>
+								<p>{file.name}</p>
+							</li>
+						)}
+					</ul>
+				  )}
+				<Row>
+					<button type="button" style={{margin: '5px'}}
+							onClick={() => { dropzoneRef.open(); }}>Add An
+					Image
+					</button>
+          		</Row>
+    		</div>
+  		);
+	}
 	render() {
+		const FILE_FIELD_NAME = 'files';
 	  	return (
 			<div>
 				<Row>
@@ -208,54 +325,60 @@ class InsertVehicle extends React.Component {
 												<option value="3">2018</option>
 											</Field>
 
+											<Field
+											name="make_id"
+											label="Make"
+											value="1"
+											component={this.renderSelectField}
+											>
+												<option value="">Choose your option</option>
+												{Object.keys(this.state.makes).map((make, i)=> {
+													return (
+														<option key={i} value={make}>{this.state.makes[make]}</option>
+													)
+												})}
+											</Field>
 							  				<Field
-											name="model"
+											name="model_id"
 											label="Model"
 											value="2"
 											component={this.renderSelectField}
 											>
-												<option value="" disabled>Choose your option</option>
-												<option value="1">Acadia</option>
-												<option value="2">Accent</option>
-												<option value="3">Accord</option>
-												<option value="3">Patriot</option>
-											</Field>
-
-							  				<Field
-											name="model-code"
-											label="Model Code"
-											value="2"
-											component={this.renderSelectField}
-											>
-												<option value="" disabled>Choose your option</option>
-												<option value="1">E87</option>
-												<option value="2">E53</option>
-												<option value="2">W201</option>
+												<option value="">Choose your option</option>
+												{Object.keys(this.state.models).map((model, i)=> {
+													return (
+														<option key={i} value={model}>{this.state.models[model]}</option>
+													)
+												})}
 											</Field>
 
 							  				<Field 
-											name="body"
+											name="body_id"
 											value="2"
 											label="Body"
 											component={this.renderSelectField}
 											>
-												<option value="" disabled>Choose your option</option>
-												<option value="1">Convertible</option>
-												<option value="2">Coupe</option>
-												<option value="3">Hatchback</option>
-												<option value="3">Sedan</option>
+												<option value="">Choose your option</option>
+												{Object.keys(this.state.bodies).map((body, i)=> {
+													return(
+														<option key={i} value={body}>{this.state.bodies[body]}</option>
+													)
+												})}
 											</Field>
 											
 											<Field
-											name="engine"
+											name="enginesize_id"
 											label="Engine"
 											value="2"
 											component={this.renderSelectField}
 											>
-												<option value="" disabled>Choose your option</option>
-												<option value="1">4-Cylinder</option>
-												<option value="2">6-Cylinder</option>
-												<option value="2">V6-Cylinder</option>
+												<option value="">Choose your option</option>
+												{Object.keys(this.state.enginesizes).map((enginesize, i)=> {
+													return(
+														<option key={i} value={enginesize}>{this.state.enginesizes[enginesize]}</option>
+													)
+												})}
+												
 											</Field>
 											
 											<Field
@@ -271,52 +394,60 @@ class InsertVehicle extends React.Component {
 											</Field>
 											
 											<Field
-											name="transmission"
+											name="transmission_id"
 											value="2"
 											label="Transmission"
 											component={this.renderSelectField}
 											>
-												<option value="" disabled>Choose your option</option>
-												<option value="1">Automatic</option>
-												<option value="2">Manual</option>
-												<option value="3">4 Speed Automatic</option>
-												<option value="3">5 Speed Automatic</option>
+												<option value="">Choose your option</option>
+												{Object.keys(this.state.transmissions).map((transmission, i)=>{
+													return(
+														<option key={i} value={transmission}>{this.state.transmissions[transmission]}</option>
+													)
+												})}
+												
 											</Field>
 							  				
 											<Field
-											name="exterior-color"
+											name="exterior_color_id"
 											value="2"
 											label="Exterior Color"
 											component={this.renderSelectField}
 											>
-												<option value="" disabled>Choose your option</option>
-												<option value="1">Red</option>
-												<option value="2">Black</option>
-												<option value="2">Grey</option>
+												<option value="">Choose your option</option>
+												{Object.keys(this.state.colors).map((color, i)=>{
+													return(
+														<option key={i} value={color}>{this.state.colors[color]}</option>
+													)
+												})}
 											</Field>
 
 											<Field
-											name="interior-color"
+											name="interior_color_id"
 											value="2"
 											label="Interior Color"
 											component={this.renderSelectField}
 											>
-												<option value="" disabled>Choose your option</option>
-												<option value="1">Red</option>
-												<option value="2">Black</option>
-												<option value="2">Grey</option>
+												<option value="">Choose your option</option>
+												{Object.keys(this.state.colors).map((color, i)=>{
+													return(
+														<option key={i} value={color}>{this.state.colors[color]}</option>
+													)
+												})}
 											</Field>
 											
 											<Field
-											name="fuel-type"
+											name="fueltype_id"
 											value="2"
 											label="Fuel Type"
 											component={this.renderSelectField}
 											>
-												<option value="" disabled>Choose your option</option>
-												<option value="1">Diesel</option>
-												<option value="2">Electric</option>
-												<option value="2">Flexible</option>
+												<option value="">Choose your option</option>
+												{Object.keys(this.state.fueltypes).map((fueltype, i)=> {
+													return(
+														<option key={i} value={fueltype}>{this.state.fueltypes[fueltype]}</option>
+													)
+												})}
 											</Field>
 											
 											<Field
@@ -357,88 +488,36 @@ class InsertVehicle extends React.Component {
 									</TabPanel>
 									<TabPanel tabId="features-options">
 										<div className="row">
-											<div className="col s4">
-												<strong>Interior Features</strong>
-												<Field
-												name="interior-features"
-												type="checkbox"
-												id="air-condition"
-												Label="Air Conditioning" 
-												component={this.renderCheckboxField}
-												/>
+											<div className="col s12">
+												{this.state.optCategories.map((optCategory) => {
+													return (
+														<div key={optCategory.id}>
+															<strong>{optCategory.optioncategory_desc}</strong>
+																
+															{this.state.options.map((option, index)=> {
+																return (
+																	<div key={index}>
+																		{optCategory.id== option.oc_id ? (
+																			<Field
+																			name={`option_id`}
+																			type="checkbox"
+																			label={option.option_desc}
+																			value={option.id}
+																			id={option.id}
+																			component={this.renderCheckboxField}
+																			></Field>
+																		): (
+																			<div></div>
+																		)}
+
+																	</div>
+																)
+															})}
+														</div>
+													)
+												})}
 												
-												<Field
-												name="interior-features"
-												type="checkbox"
-												id="alloy-wheel"
-												Label="Alloy Wheels" 
-												component={this.renderCheckboxField}
-												/>
-												{/* <div className="col s12">
-													<input type="checkbox" className="filled-in" id="air-conditioning" defaultChecked />
-													<label htmlFor="air-conditioning"></label>
-												</div>
-												<div className="col s12">
-													<input type="checkbox" className="filled-in" id="alloy-wheels" />
-													<label htmlFor="alloy-wheels"></label>
-												</div> */}
-											</div>
-
-											<div className="col s4">
-												<strong>Exterior Features</strong>
-												<div className="col s12">
-													<input type="checkbox" className="filled-in" id="air-conditioning" defaultChecked />
-													<label htmlFor="air-conditioning">Air Conditioning</label>
-												</div>
-												<div className="col s12">
-													<input type="checkbox" className="filled-in" id="alloy-wheels" />
-													<label htmlFor="alloy-wheels">Alloy Wheels</label>
-												</div>
-											</div>
-
-											<div className="col s4">
-												<strong>Suspension, Brakes and Steering</strong>
-												<div className="col s12">
-													<input type="checkbox" className="filled-in" id="air-conditioning" defaultChecked />
-													<label htmlFor="air-conditioning">Air Conditioning</label>
-												</div>
-												<div className="col s12">
-													<input type="checkbox" className="filled-in" id="alloy-wheels" />
-													<label htmlFor="alloy-wheels">Alloy Wheels</label>
-												</div>
-											</div>
-											<div className="col s4">
-												<strong>Comfort</strong>
-												<div className="col s12">
-													<input type="checkbox" className="filled-in" id="air-conditioning" defaultChecked />
-													<label htmlFor="air-conditioning">Air Conditioning</label>
-												</div>
-												<div className="col s12">
-													<input type="checkbox" className="filled-in" id="alloy-wheels" />
-													<label htmlFor="alloy-wheels">Alloy Wheels</label>
-												</div>
-											</div>
-											<div className="col s4">
-												<strong>Safety Features</strong>
-												<div className="col s12">
-													<input type="checkbox" className="filled-in" id="air-conditioning" defaultChecked />
-													<label htmlFor="air-conditioning">Air Conditioning</label>
-												</div>
-												<div className="col s12">
-													<input type="checkbox" className="filled-in" id="alloy-wheels" />
-													<label htmlFor="alloy-wheels">Alloy Wheels</label>
-												</div>
-											</div>
-											<div className="col s4">
-												<strong>Entertainment Features</strong>
-												<div className="col s12">
-													<input type="checkbox" className="filled-in" id="air-conditioning" defaultChecked />
-													<label htmlFor="air-conditioning">Air Conditioning</label>
-												</div>
-												<div className="col s12">
-													<input type="checkbox" className="filled-in" id="alloy-wheels" />
-													<label htmlFor="alloy-wheels">Alloy Wheels</label>
-												</div>
+												
 											</div>
 										</div>
 									</TabPanel>
@@ -466,9 +545,10 @@ class InsertVehicle extends React.Component {
 									</TabPanel>
 									<TabPanel tabId="gallery">
 										<div className="row section">
-											<div className="input-field col s12">
+											{/* <div className="input-field col s12">
 												<input type="file" id="input-file-now" className="dropify" multiple />
-											</div>
+											</div> */}
+											<Field name={FILE_FIELD_NAME} component={this.renderDropzoneField} />
 										</div>
 									</TabPanel>
 									<TabPanel tabId="vehicle-location">
@@ -506,7 +586,7 @@ class InsertVehicle extends React.Component {
 									</TabPanel>
 									<TabPanel tabId="status">
 										<div className="row">
-											<div className="input-field col s6">
+											<div className="col s6">
 												<div className="switch"><label>Featured<input defaultChecked type="checkbox" /><span className="lever"></span>Active</label></div>
 											</div>
 																	
@@ -927,16 +1007,19 @@ class InsertVehicle extends React.Component {
 
 	}
 }
-
+function validate(values) {
+	const errors = {}
+    console.log('values', values)
+}
 function mapStateToProps(store) {
-    console.log('ins', store.makeState)
     return {
         makes: store.makeState.makes
     }
 }
-const mapDispatchToProps = dispatch =>
-  bindActionCreators({ requestMakes }, dispatch);
+// const mapDispatchToProps = dispatch =>
+//   bindActionCreators({ requestMakes }, dispatch);
 export default reduxForm({
-	form: 'PostVehicles'
-})(connect(mapStateToProps, mapDispatchToProps)(InsertVehicle));
+	form: 'PostVehicles',
+	validate
+})(connect(mapStateToProps, null)(InsertVehicle));
 // export default InsertVehicle;

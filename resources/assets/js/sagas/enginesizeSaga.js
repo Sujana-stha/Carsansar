@@ -100,7 +100,7 @@ function* callToggleEnginesizeStatus(action) {
     } else {
         // yield put({type: types.ENGINESIZES_STATUS_SUCCESS, resp, message: result.statusText});
         yield put({type: types.REQUEST_ENGINESIZES_PAGES, pageNumber})
-        notify.show("Status of  Updated!", "success", 5000)
+        notify.show(`Status of ${resp.enginesize_desc} Updated!`, "success", 3000)
     }
 
 }
