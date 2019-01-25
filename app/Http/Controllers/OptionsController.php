@@ -18,7 +18,7 @@ class OptionsController extends Controller
 
     public function getList()
     {
-        $option = Option::where('status','1')->pluck('option_desc','id');
+        $option = Option::where('status','1')->get();
         return $option;
     }
  

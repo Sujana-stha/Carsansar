@@ -13,6 +13,7 @@ import * as transmissionSaga from './transmissionSaga'
 import * as companySaga from './companySaga'
 import * as optionSaga from './optionsSaga'
 import * as colorSaga from './colorSaga'
+import * as dealSaga from './dealsSaga';
 
 export default function* rootSaga() {
     yield all (
@@ -27,7 +28,8 @@ export default function* rootSaga() {
             ...Object.values(transmissionSaga),
             ...Object.values(companySaga),
             ...Object.values(optionSaga),
-            ...Object.values(colorSaga)
+            ...Object.values(colorSaga),
+            ...Object.values(dealSaga)
         ].map(fork)
     );
 }

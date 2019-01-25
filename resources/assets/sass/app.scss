@@ -70,3 +70,12 @@ h4.wr-header2 {
     margin-top: 1.8rem;
     text-transform: capitalize;
 }
+.drop-zone {
+    width: '200px';
+    height: '200px';
+    border-width: '2px';
+    border-color: 'rgb(102, 102, 102)';
+    border-style: 'dashed';
+    border-radius: '5px';
+    padding: '20px';
+}
