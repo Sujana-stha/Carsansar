@@ -20,7 +20,8 @@ class InsertVehicle extends Component {
 	constructor() {
 	  	super()
 	  	this.state = { 
-		  	text: 'Vehicle Description',
+			text: 'Vehicle Description',
+			images:[],
 			makes: {},
 			models:{},
 			bodies: {},
@@ -110,90 +111,135 @@ class InsertVehicle extends Component {
         )
 	}
 	
-	renderCheckboxField({input, label, id, type,  meta: {touched, error}}) {
+	renderCheckboxField({input, options, optCategories, meta: {touched, error}}) {
+		return optCategories.map((optCategory, i)=> {
+			return (
+				<div key={i}>
+					<strong>{optCategory.optioncategory_desc}</strong>
+					{options.map((option, i) => {
+						return(
+						<div className="col s12" key={i}>
+							{optCategory.id== option.oc_id ? (
+								<Input 
+								name={`${input.name}`}
+								type="checkbox"
+								
+								label={option.option_desc} 
+								className='filled-in'
+								checked={input.value.indexOf(option.id) !== -1}
+								onChange={(event) => {
+								const checkedValues= [...input.value];
+								console.log('new', checkedValues)
+								if(event.target.checked) {
+									checkedValues.push(option.id);
+				 				} else {
+									checkedValues.splice(checkedValues.indexOf(option.id), 1);
+								}
+								return input.onChange(checkedValues)
+								}}/>
+							): null }
+						</div>
+						)
+					})}
+				</div>
+			)
+		})
 		
-		return (
-			
-			<div className="col s12">
-				<Input {...input} 
-				type={type}
-				label={label} 
-				className='filled-in'
-				checked={input.value.indexOf(id) !== -1}
-				onChange={(event) => {
-					const checkedValues= [...input.value];
-					console.log('new', checkedValues)
-					if(event.target.checked) {
-						checkedValues.push(id);
-					} else {
-						checkedValues.splice(checkedValues.indexOf(id), 1);
-					}
-					return input.onChange(checkedValues)
-				}}/>
-				
-				<div className="error">
-                    {touched ? error: ''}
-                </div>
-			</div>
-		)
 	}
+	
 	renderDropzoneField(field) {
 		const files = field.input.value;
-  		let dropzoneRef;
+		let dropzoneRef;
+		var images=[]
+		const onDrop =(files) => {
+			files.map(file => Object.assign(file, {
+				preview: URL.createObjectURL(file)
+			}))
+			console.log('fileV',files);
+			images = files;
+			console.log('img', images)
+		}
   		return (
-    		<div>
-				<Dropzone
-					style={{
-					width: '200px',
-					height: '200px',
-					borderWidth: '2px',
-					borderColor: 'rgb(102, 102, 102)',
-					borderStyle: 'dashed',
-					borderRadius: '5px',
-					padding: '20px',
-					}}
-					name={field.name}
-					onDrop={(filesToUpload, e) => field.input.onChange(filesToUpload)}
-					ref={(node) => { dropzoneRef = node; }}
-					maxSize={5242880}
-					multiple={false}
-					accept={'image/*'}
-					className="drop-zone"
-        		>
-					{({isDragActive, isDragReject, acceptedFiles, rejectedFiles}) => {
+      		<div className="col s12">
+				<Row>
+					<Dropzone
+						style={{
+						width: '200px',
+						height: '200px',
+						borderWidth: '2px',
+						borderColor: 'rgb(102, 102, 102)',
+						borderStyle: 'dashed',
+						borderRadius: '5px',
+						padding: '20px',
+						}}
+						name={field.name}
+						onDrop={onDrop.bind(files)}
+						ref={(node) => { dropzoneRef = node; }}
+						maxSize={5242880}
+						multiple={false}
+						accept={'image/*'}
+						className="drop-zone"
+					>
+					{({getRootProps, getInputProps, open, isDragActive, isDragReject, acceptedFiles, rejectedFiles}) => {
 						if (isDragActive) {
 						return 'This file is authorized';
 						}
 						if (isDragReject) {
 						return 'This file is not authorized';
 						}
-						return acceptedFiles.length || rejectedFiles.length
-							? `Accepted ${acceptedFiles.length}, rejected ${rejectedFiles.length} files`
-							: 'Try dropping some files.';
+						return (
+							<div>
+								<div style={{
+									width: '200px',
+									height: '200px',
+									borderWidth: '2px',
+									borderColor: 'rgb(102, 102, 102)',
+									borderStyle: 'dashed',
+									borderRadius: '5px',
+									padding: '20px',
+								}}  {...getRootProps()}>
+									<input 
+									{...getInputProps()} 
+									/>
+									<p>Drop files here</p>
+								</div>
+							</div>
+						)
 					}}
-        		</Dropzone>
-				{field.meta.touched &&
-        		field.meta.error &&
-					<span className="error">{field.meta.error}</span>
-				}
-        		{files && Array.isArray(files) && (
-					<ul>
-						{files.map((file, i) =>
-							<li key={i}>
+					</Dropzone>
+					{field.meta.touched &&
+					field.meta.error &&
+					<span className="error">{field.meta.error}</span>}
+					{
+					images && Array.isArray(images) && (
+						<ul>
+							{images.map((file, i) =>
+								<li key={i}>
 								<img key={i}
 									src={file.preview} alt="preview"/>
 								<p>{file.name}</p>
-							</li>
-						)}
-					</ul>
-				  )}
+								</li>,
+							)}
+						</ul>
+					)}
+					{
+						images.map((image, i)=> {
+							<ul ke={i}>
+								<li>
+									<img src={image.preview} alt="image"/>
+									<p>{image.name}</p>
+								</li>
+							</ul>
+						})
+					}
+				</Row>
 				<Row>
-					<button type="button" style={{margin: '5px'}}
+					<Button type="button" style={{margin: '5px'}}
 							onClick={() => { dropzoneRef.open(); }}>Add An
 					Image
-					</button>
-          		</Row>
-    		</div>
+					</Button>
+				</Row>
+      		</div>
   		);
 	}
 	render() {
@@ -489,35 +535,12 @@ class InsertVehicle extends Component {
 									<TabPanel tabId="features-options">
 										<div className="row">
 											<div className="col s12">
-												{this.state.optCategories.map((optCategory) => {
-													return (
-														<div key={optCategory.id}>
-															<strong>{optCategory.optioncategory_desc}</strong>
-																
-															{this.state.options.map((option, index)=> {
-																return (
-																	<div key={index}>
-																		{optCategory.id== option.oc_id ? (
-																			<Field
-																			name={`option_id`}
-																			type="checkbox"
-																			label={option.option_desc}
-																			value={option.id}
-																			id={option.id}
-																			component={this.renderCheckboxField}
-																			></Field>
-																		): (
-																			<div></div>
-																		)}
-
-																	</div>
-																)
-															})}
-														</div>
-													)
-												})}
-												
-												
+												<Field
+												name="option_id"
+												component={this.renderCheckboxField}
+												options={this.state.options}
+												optCategories={this.state.optCategories}
+												/>
 											</div>
 										</div>
 									</TabPanel>
