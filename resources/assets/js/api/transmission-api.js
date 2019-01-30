@@ -14,7 +14,6 @@ export function getTransmissionPages(pageNumber) {
 
 // ADD NEW TRANSMISSION API
 export function addTransmission(values) {
-    console.log('val',values);
     values.created_by = 1;
     return axios.post(`${URL}/api/transmissions`, values)
     .catch(error=> {

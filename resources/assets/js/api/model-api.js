@@ -14,7 +14,6 @@ export function getModelPages(pageNumber) {
 
 // ADD NEW MODEL API
 export function addModel(values) {
-    console.log('val',values);
     values.created_by = 1;
     return axios.post(`${URL}/api/models`, values)
     .catch(error=> {

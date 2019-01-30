@@ -15,6 +15,7 @@ import store from '../../store';
 import * as api from '../../api/deals-api';
 import * as optCatapi from '../../api/option_cat-api';
 import { Field, reduxForm } from 'redux-form';
+import {requestSubmitVehicle} from '../../actions/deals-action'
 
 class InsertVehicle extends Component {
 	constructor() {
@@ -69,10 +70,7 @@ class InsertVehicle extends Component {
 	  this.setState({ text: value })
 	}
 
-	handleSubmit(event) {
-		//alert('A name was submitted: ' + this.state.value);
-		event.preventDefault();
-	}
+	
 	renderInputField({input, label, type, meta: {touched, error}}) {
 		
         return (
@@ -159,7 +157,23 @@ class InsertVehicle extends Component {
 			images = files;
 			console.log('img', images)
 		}
-  		return (
+		const thumbs = ()=> {
+			return (
+				<div>
+					{images.length > 0 ? (
+						<ul>
+							{images.map((image, i)=> {
+								<li key={i}>
+									<p>{image.name}</p>
+									<img src={image.preview} alt="Preview"/>
+								</li>
+							})}
+						</ul>
+					): null}
+				</div>
+			)
+		}
+  		return ( 
       		<div className="col s12">
 				<Row>
 					<Dropzone
@@ -210,28 +224,10 @@ class InsertVehicle extends Component {
 					{field.meta.touched &&
 					field.meta.error &&
 					<span className="error">{field.meta.error}</span>}
-					{
-					images && Array.isArray(images) && (
-						<ul>
-							{images.map((file, i) =>
-								<li key={i}>
-								<img key={i}
-									src={file.preview} alt="preview"/>
-								<p>{file.name}</p>
-								</li>,
-							)}
-						</ul>
+					{files && Array.isArray(files) && (
+						{thumbs}
 					)}
-					{
-						images.map((image, i)=> {
-							<ul ke={i}>
-								<li>
-									<img src={image.preview} alt="image"/>
-									<p>{image.name}</p>
-								</li>
-							</ul>
-						})
-					}
+					
 				</Row>
 				<Row>
 					<Button type="button" style={{margin: '5px'}}
@@ -242,8 +238,13 @@ class InsertVehicle extends Component {
       		</div>
   		);
 	}
+	// onSubmit(values) {
+	// 	console.log('valuessss', this.props)
+	// 	this.props.requestSubmitVehicle(values);
+	// }
 	render() {
 		const FILE_FIELD_NAME = 'files';
+		// const { handleSubmit } = this.props
 	  	return (
 			<div>
 				<Row>
@@ -254,7 +255,7 @@ class InsertVehicle extends Component {
 				<h4 className="header2">Add New Vehicle</h4>
 				<CardPanel>
 					<Row>
-						<form className="col s12" onSubmit={this.handleSubmit}>
+						<form className="col s12" onSubmit={ this.props.handleSubmit((event)=>this.onSubmit(event))}>
 					  		{/* <Row>
 								<div className="input-field col s12">
 						  			<input id="v_title" type="text" className="validate" />
@@ -1016,12 +1017,12 @@ class InsertVehicle extends Component {
 							</Row>
 							 */}
 							<div className="row">
-								<div className="input-field col s12">
-									<button className="btn cyan waves-effect waves-light right" type="submit" name="action">Save
-										<i className="material-icons right">send</i>
-									</button>
-								</div>
-							</div>
+                                <div className="input-field col s12">
+                                    <button className="btn cyan waves-effect waves-light right" type="submit" name="action">Save
+                                        <i className="material-icons right">send</i>
+                                    </button>
+                                </div>
+                            </div>
 						</form>
 					</Row>
 				</CardPanel>
@@ -1034,15 +1035,11 @@ function validate(values) {
 	const errors = {}
     console.log('values', values)
 }
-function mapStateToProps(store) {
-    return {
-        makes: store.makeState.makes
-    }
-}
+
 // const mapDispatchToProps = dispatch =>
 //   bindActionCreators({ requestMakes }, dispatch);
 export default reduxForm({
 	form: 'PostVehicles',
 	validate
-})(connect(mapStateToProps, null)(InsertVehicle));
+})(connect(null, {requestSubmitVehicle})(InsertVehicle));
 // export default InsertVehicle;

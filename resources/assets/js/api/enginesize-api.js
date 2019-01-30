@@ -14,7 +14,6 @@ export function getEnginesizesPages(pageNumber) {
 
 // ADD NEW MAKES API
 export function addEnginesizes(values) {
-    console.log('val',values);
     values.created_by = 1;
     return axios.post(`${URL}/api/enginesizes`, values)
     .catch(error=> {
