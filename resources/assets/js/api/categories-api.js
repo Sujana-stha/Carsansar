@@ -14,7 +14,6 @@ export function getCategoriesPages(pageNumber) {
 
 // ADD NEW CATEGORIES API
 export function addCategories(values) {
-    
     values.created_by = 1;
     return axios.post(`${URL}/api/categories`, values)
     .catch(error=> {

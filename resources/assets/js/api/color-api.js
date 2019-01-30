@@ -31,7 +31,6 @@ export function getColorsPages(pageNumber) {
 
 // ADD NEW COLORS API
 export function addColors(values) {
-    console.log('val',values);
     values.created_by = 1;
     return axios.post(`${URL}/api/colors`, values)
     .catch(error=> {

@@ -78,7 +78,7 @@ export function getFueltypesList() {
         }
     })
 }
-
+//GET OPTIONS LIST
 export function getOptionsList() {
     return axios.get(`${URL}/api/options/getList`)
     .catch(error=> {
@@ -87,4 +87,16 @@ export function getOptionsList() {
             errors: error
         }
     })
+}
+
+// POST VEHICLES FORM
+export function addVehicles(values) {
+    console.log('val',values);
+    return axios.post(`${URL}/api/vehicles`, values)
+    .catch(error=> {
+        console.log(error)
+        return {
+            errors: error
+        }
+    });
 }

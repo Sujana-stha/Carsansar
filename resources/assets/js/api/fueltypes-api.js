@@ -14,7 +14,6 @@ export function getFueltypesPages(pageNumber) {
 
 // ADD NEW FUELTYPES API
 export function addFueltypes(values) {
-    console.log('val',values);
     values.created_by = 1;
     return axios.post(`${URL}/api/fueltypes`, values)
     .catch(error=> {

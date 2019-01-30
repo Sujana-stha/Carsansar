@@ -14,7 +14,6 @@ export function getOptionsCategories() {
 
 // ADD NEW OPTION CATEGORIES API
 export function addOptionsCategories(values) {
-    console.log('val',values);
     values.created_by = 1;
     return axios.post(`${URL}/api/optionsCategories`, values)
     .catch(error=> {

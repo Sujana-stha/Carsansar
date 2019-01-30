@@ -1,14 +1,22 @@
+import * as types from '../actions/action-types';
 
-//MAKES
-export function RequestMakesList(values) {
+//ADD VEHICLES
+export function requestSubmitVehicle(values) {
     return {
-        type: types.REQUEST_MAKES_LIST,
+        type: types.REQUEST_VEHICLES_SUBMIT,
         values
     }
 }
-export function getMakesListSuccess(makes) {
+
+export function addVehicleSuccess(values) {
     return {
-        type: types.MAKES_LIST_SUCCESS,
-        makes
+        type: types.ADD_VEHICLES_SUCCESS,
+        values
+    }
+}
+
+export function requestVehicleFailed() {
+    return {
+        type: types.REQUEST_VEHICLES_FAILED
     }
 }

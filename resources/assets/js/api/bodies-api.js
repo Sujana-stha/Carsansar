@@ -14,7 +14,6 @@ export function getBodiesPages(pageNumber) {
 
 // ADD NEW BODIES API
 export function addBodies(values) {
-    console.log('val',values);
     values.created_by = 1;
     return axios.post(`${URL}/api/bodies`, values)
     .catch(error=> {

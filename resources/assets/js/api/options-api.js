@@ -14,7 +14,6 @@ export function getOptionsPages(pageNumber) {
 
 // ADD NEW OPTIONS API
 export function addOptions(values) {
-    console.log('val',values);
     values.created_by = 1;
     return axios.post(`${URL}/api/options`, values)
     .catch(error=> {
