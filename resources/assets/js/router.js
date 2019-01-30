@@ -19,7 +19,7 @@ import RightSidebarNav from './components/nav/right-sidebar-nav'
 
 import DashboardAnalytics from './components/dashboard/dashboard-analytics'
 import VehiclesListing from './components/vehicles/vehicles-listing'
-import InsertVehicle from './components/vehicles/insert-vehicle'
+// import InsertVehicle from './components/vehicles/insert-vehicle'
 import AddVehicle from './components/vehicles/add-vehicle'
 import UsersListing from './components/users/users'
 import InsertUser from './components/users/insert-user'
@@ -32,6 +32,7 @@ import CompanyForm from './components/companies/companies-form'
 import EditCompany from './components/companies/companies-edit'
 
 //Containers
+import InsertVehicleContainer from './containers/vehicles/insert-vehicle-containers'
 import ColorListContainer from './containers/color/color-container'
 import InsertColor from './containers/color/insert-color-container'
 import MakesListContainer from './containers/makes/makes-container'
@@ -67,7 +68,7 @@ export default (
                 	<div className="container">
 							<Route exact path="/" component={DashboardAnalytics}></Route>
 							<Route path="/vehicles" component={VehiclesListing}></Route>
-							<Route path="/insert-vehicle" component={InsertVehicle}></Route>
+							<Route path="/insert-vehicle" component={InsertVehicleContainer}></Route>
 							<Route path="/vehicle-attributes" component={VehicleAttributes}></Route>
 							<Route path="/insert-vehicle-attribute" component={InsertVehicleAttribute}></Route>
 							<Route path="/color" component={ColorListContainer}></Route>
