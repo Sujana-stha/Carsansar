@@ -49,7 +49,7 @@ function* callDriveSubmit(action) {
         notify.show("Cannot Add Drive!", "error",5000)
     } else {
         // yield put({type: types.ADD_DRIVES_SUCCESS, resp, message: result.statusText});
-        yield put({type: types.REQUEST_DRIVES_SUBMIT})
+        yield put({type: types.REQUEST_DRIVES})
         notify.show("Drive Added Successfully!", "success", 5000)
     }
     yield put(stopSubmit('PostDrives', error));
