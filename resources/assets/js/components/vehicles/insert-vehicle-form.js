@@ -29,6 +29,7 @@ class InsertVehicle extends Component {
 			transmissions: {},
 			colors: {},
 			fueltypes: {},
+			drives: {},
 			options: [],
 			optCategories: []
 		} // You can also pass a Quill Delta here
@@ -55,6 +56,9 @@ class InsertVehicle extends Component {
 		})
 		api.getFueltypesList().then((response)=> {
 			this.setState({ fueltypes: response.data })
+		})
+		api.getDRivesist().then((response)=> {
+			this.setState({drives: response.data })
 		})
 		api.getOptionsList().then((response)=> {
 			console.log('opt',response)
@@ -151,6 +155,8 @@ class InsertVehicle extends Component {
 			files.map(file => Object.assign(file, {
 				preview: URL.createObjectURL(file)
 			}))
+			field.input.onChange(files);
+
 			console.log('fileV',files);
 			images = files;
 			console.log('img', images)
@@ -160,31 +166,17 @@ class InsertVehicle extends Component {
       		<div className="col s12">
 				<Row>
 					<Dropzone
-						style={{
-						width: '200px',
-						height: '200px',
-						borderWidth: '2px',
-						borderColor: 'rgb(102, 102, 102)',
-						borderStyle: 'dashed',
-						borderRadius: '5px',
-						padding: '20px',
-						}}
 						name={field.name}
-						onDrop={(filesToUpload, e) => field.input.onChange(filesToUpload)}
+						onDrop={onDrop.bind(files)}
 						ref={(node) => { dropzoneRef = node; }}
 						maxSize={5242880}
-						multiple={false}
+						multiple={true}
 						accept={'image/*'}
 						className="drop-zone"
 						
 					>
-					{({getRootProps, getInputProps, open, isDragActive, isDragReject, acceptedFiles, rejectedFiles}) => {
-						if (isDragActive) {
-						return 'This file is authorized';
-						}
-						if (isDragReject) {
-						return 'This file is not authorized';
-						}
+					{({getRootProps, getInputProps, isDragActive, isDragAccept, isDragReject}) => {
+						
 						return (
 							<div>
 								<div style={{
@@ -199,7 +191,10 @@ class InsertVehicle extends Component {
 									<input 
 									{...getInputProps()} 
 									/>
-									<p>Drop files here</p>
+									<p>
+										{isDragAccept ? 'Drop' : 'Drag'} files here...
+									</p>
+									<div>{isDragReject && <p>Unsupported file type...</p>}</div>
 								</div>
 							</div>
 						)
@@ -211,20 +206,20 @@ class InsertVehicle extends Component {
 					{files && Array.isArray(files) && (
 						<ul>
 						{files.map((file, i) =>
-							<li key={i}>
-							  <img key={i}
-								   src={file.preview} alt="preview"/>
-							  <p>{file.name}</p>
-							</li>,
+							<li key={i} >
+								<div className="wr-preview-image-block">
+							   		<img src={file.preview} alt="preview" className="wr-preview-image"/>
+							   	</div>
+							  	<p>{file.name}</p>
+							</li>
 						)}
 					  </ul>
 					)}
 					
 				</Row>
 				<Row>
-					<Button type="button" style={{margin: '5px'}}
-							onClick={() => { dropzoneRef.open(); }}>Add An
-					Image
+					<Button type="button" style={{margin: '5px'}} 
+					onClick={() => { dropzoneRef.open(); }}> Add An Image
 					</Button>
 				</Row>
       		</div>
@@ -248,16 +243,10 @@ class InsertVehicle extends Component {
 				<CardPanel>
 					<Row>
 						<form onSubmit={ handleSubmit} className="col s12">
-					  		{/* <Row>
-								<div className="input-field col s12">
-						  			<input id="v_title" type="text" className="validate" />
-						  			<label htmlFor="v_title">Vehicle Title</label>
-								</div>
-							  </Row> */}
 							<Field
 								label="Vehicle Title"
 								type = "text"
-								name="v_title"
+								name="title"
 								component={this.renderInputField}
 							></Field>
 
@@ -293,7 +282,7 @@ class InsertVehicle extends Component {
 											label="Condition"
 											component={this.renderSelectField}
 											>
-												<option value="" disabled>Choose your option</option>
+												<option value="">Choose your option</option>
 												<option value="1">Used</option>
 												<option value="2">New</option>
 											</Field>
@@ -303,7 +292,7 @@ class InsertVehicle extends Component {
 											label="Type"
 											component={this.renderSelectField}
 											>
-												<option value="" disabled>Choose your option</option>
+												<option value="" >Choose your option</option>
 												<option value="1">Car</option>
 												<option value="2">Sport Utility</option>
 												<option value="3">Truck</option>
@@ -334,19 +323,19 @@ class InsertVehicle extends Component {
 											value="1"
 											component={this.renderSelectField}
 											>
-												<option value="" disabled>Choose your option</option>
+												<option value="" >Choose your option</option>
 												<option value="1">W1001</option>
 												<option value="2">W1002</option>
 												<option value="2">W1003</option>
 											</Field>
 
 											<Field
-											name="vin-number"
+											name="vin"
 											label="Vin Number"
 											value="1"
 											component={this.renderSelectField}
 											>
-												<option value="" disabled>Choose your option</option>
+												<option value="">Choose your option</option>
 												<option value="1">1FVACWDU1BHBB3474</option>
 												<option value="2">JH4DB1670MS000448</option>
 												<option value="2">1YVHZ8CH2A5M03260</option>
@@ -358,7 +347,7 @@ class InsertVehicle extends Component {
 											value="1"
 											component={this.renderSelectField}
 											>
-												<option value="" disabled>Choose your option</option>
+												<option value="">Choose your option</option>
 												<option value="1">2016</option>
 												<option value="2">2017</option>
 												<option value="3">2018</option>
@@ -421,15 +410,17 @@ class InsertVehicle extends Component {
 											</Field>
 											
 											<Field
-											name="drivetrain"
+											name="drive_id"
 											label="Drivetrain"
 											value="2"
 											component={this.renderSelectField}
 											>
-												<option value="" disabled>Choose your option</option>
-												<option value="1">2WD</option>
-												<option value="2">4WD</option>
-												<option value="2">AWD</option>
+												<option value="">Choose your option</option>
+												{Object.keys(this.state.drives).map((drive, i)=> {
+													return(
+														<option key={i} value={drive}>{this.state.drives[drive]}</option>
+													)
+												})}
 											</Field>
 											
 											<Field
@@ -575,7 +566,7 @@ class InsertVehicle extends Component {
 											value="1"
 											component={this.renderSelectField}
 											>
-												<option value="" disabled>Choose your option</option>
+												<option value="">Choose your option</option>
 												<option value="1">Dealership 1</option>
 												<option value="2">Dealership 2</option>
 											</Field>

@@ -78,6 +78,18 @@ export function getFueltypesList() {
         }
     })
 }
+
+// GET DRIVES LIST 
+export function getDRivesist() {
+    return axios.get(`${URL}/api/drives/getList`)
+    .catch(error=> {
+        console.log(error)
+        return {
+            errors: error
+        }
+    })
+}
+
 //GET OPTIONS LIST
 export function getOptionsList() {
     return axios.get(`${URL}/api/options/getList`)

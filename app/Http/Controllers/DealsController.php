@@ -27,7 +27,16 @@ class DealsController extends Controller
     public function store(Request $request)
     {
         
-
+        // $request->get('file');
+        // $res = $request->get('files');
+        // if($res) {
+        //     echo "Succeed";
+        // } else {
+        //     echo "Failedcd";
+        // }
+       
+        // print_r($request);
+        // exit;
         $vehicle_info = new VehicleInfo([
              'vin' => $request->get('vin'),
              'category_id' => $request->get('category_id'),
