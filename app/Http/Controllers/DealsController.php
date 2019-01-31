@@ -26,17 +26,17 @@ class DealsController extends Controller
  
     public function store(Request $request)
     {
-        
+        //var_dump($request->all());
         // $request->get('file');
-        // $res = $request->get('files');
-        // if($res) {
+        // $res = $request->hasFile('files');
+        //  if($res) {
         //     echo "Succeed";
         // } else {
-        //     echo "Failedcd";
+        //     echo "Failed";
         // }
        
-        // print_r($request);
-        // exit;
+        // // print_r($request);
+        // // exit;
         $vehicle_info = new VehicleInfo([
              'vin' => $request->get('vin'),
              'category_id' => $request->get('category_id'),
@@ -87,6 +87,10 @@ class DealsController extends Controller
             'created_by' => 1
         ]); 
 
+        $options_array=$request->get('option_id');
+         
+        //$options = new VehicleOption([]); 
+
         DB::beginTransaction();
         try {
             $vehicle = VehicleInfo::where('vin', '=', $vehicle_info->vin)->first();
@@ -110,7 +114,21 @@ class DealsController extends Controller
                 $financing->d_id = $d_id;
                 $financing->vi_id = $vi_id;
                 $financing->save();
-            }        
+            } 
+            
+            if(count($options_array)>0){
+                for($i=0;$i<count($options_array);$i++){
+                    $options = new VehicleOption([
+                        'd_id' => $d_id,
+                        'vi_id' => $vi_id,
+                        'option_id' => $options_array[$i],
+                        'created_by' => 1
+                    ]);
+                    $options->save();
+                }
+                
+            }            
+            
         
             DB::commit();
             return response()->json('Vehicle Added Successfully.', 201);
@@ -123,12 +141,7 @@ class DealsController extends Controller
 
         //$images
 
-        // $options = new VehicleOption([
-        //     // 'd_id' => $request->get('d_id'),
-        //     // 'vi_id' => $request->get('vi_id'),
-        //     'option_id' => $request->get('option_id'),
-
-        // ]); 
+        
     }
  
     public function update(Request $request, Deal $deal)
