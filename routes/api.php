@@ -13,11 +13,20 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::resource('products', 'ProductController');
+//Public Route
+Route::post('/login','AuthenticationController@login')->name('login');
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:api')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
+
+//Private Route
+ Route::middleware('auth:api')->group(function () {
+     Route::get('/logout','AuthenticationController@logout')->name('logout');
+
+     Route::get('makes', 'MakesController@index');
+     
+ });
 
 //bodies
 
@@ -119,7 +128,7 @@ Route::delete('fueltypes/{fueltype}', 'FueltypesController@delete');
 
 //makes
 
-Route::get('makes', 'MakesController@index');
+
 
 Route::get('makes/getList', 'MakesController@getList');
  
