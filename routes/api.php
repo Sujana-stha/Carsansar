@@ -219,3 +219,16 @@ Route::put('vehicles/{vehicle}','DealsController@update');
 Route::delete('vehicles/{vehicle}', 'DealsController@delete');
 
 
+//importScript
+
+//Route::get('vehicles', 'DealsController@index');
+ 
+//Route::get('vehicles/{vehicle}', 'DealsController@show');
+ 
+Route::get('import','ImportScriptController@ReadCSV');
+ 
+//Route::put('vehicles/{vehicle}','DealsController@update');
+ 
+//Route::delete('vehicles/{vehicle}', 'DealsController@delete');
+
+
