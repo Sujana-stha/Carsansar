@@ -3,7 +3,7 @@
     <head>
 	    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		 <meta name="csrf-token" content="{{ csrf_token() }}">
+		<meta name="csrf-token" content="{{ csrf_token() }}">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="msapplication-tap-highlight" content="no">
 		<meta name="description" content="Vehicles Inventory Management System ">
@@ -18,7 +18,11 @@
 		<link href="{{asset('materialize-admin/vendors/dropify/css/dropify.min.css')}}" type="text/css" rel="stylesheet">
 		<link rel="stylesheet" href="//cdn.quilljs.com/1.2.6/quill.snow.css">
 		<link href="{{asset('css/app.css')}}" rel="stylesheet" type="text/css">
-		
+		<script>
+			window.Laravel = {!! json_encode([
+				'csrfToken' => csrf_token()
+			]) !!}
+		</script>
 		
     </head>
     <body>
@@ -30,7 +34,7 @@
         <script src="{{asset('js/app.js')}}" ></script>
 	    <!-- jQuery Library -->
 	    <script type="text/javascript" src="{{asset('vendors/jquery-3.2.1.min.js')}}"></script>
-	    <!--materialize js-->
+		<!--materialize js-->
 		<script type="text/javascript" src="{{asset('js/materialize.min.js')}}"></script>
 	    <!--scrollbar-->
 	    <script type="text/javascript" src="{{asset('vendors/perfect-scrollbar/perfect-scrollbar.min.js')}}"></script>

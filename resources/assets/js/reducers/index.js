@@ -17,23 +17,28 @@ import fueltypeReducer from './fueltype_reducer';
 import transmissionReducer from './transmission_reducer';
 import companyReducer from './company_reducer';
 import dealsReducer from './deals_reducer';
+import loginReducer from './login_reducers'
+import LoggedUserReducer from './loggedUserReducer'
 
 const rootReducer = (history) => combineReducers({
+    form: formReducer,
+    router: connectRouter(history),
+    
     colorState: colorReducer,
     makeState: makeReducer,
     modelState: modelReducer,
     OptCatState: optionCatReducer,
     categoryState: categoriesReducer,
     optionState: optionReducer,
-    form: formReducer,
-    router: connectRouter(history),
     driveState: driveReducer,
     bodyState: bodyReducer,
     enginesizeState: enginesizeReducer,
     fueltypeState: fueltypeReducer,
     transmissionState: transmissionReducer,
     companyState: companyReducer,
-    dealState: dealsReducer
+    dealState: dealsReducer,
+    loginState: loginReducer,
+    loggedUserState:LoggedUserReducer
 });
 
 export default rootReducer;

@@ -18870,17 +18870,6 @@ tr.group:hover {
   text-decoration: underline;
 }
 
-.collapsible-header {
-  display: block;
-  overflow: auto;
-}
-
-.collapsible {
-  -webkit-box-shadow: none;
-          box-shadow: none;
-  border: none;
-}
-
 .toast-notification {
   width: auto !important;
   margin: 0px !important;
@@ -18924,5 +18913,21 @@ h4.wr-header2 {
   width: 100%;
   height: 100%;
   padding: 3px;
+}
+
+.wr-auth-container,
+.wr-auth-form,
+#login-page {
+  height: 100%;
+}
+
+.wr-auth-form {
+  display: table;
+  margin: auto;
+}
+
+#login-page {
+  display: table-cell;
+  vertical-align: middle;
 }
 

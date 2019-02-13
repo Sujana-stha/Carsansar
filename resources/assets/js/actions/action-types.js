@@ -1,3 +1,9 @@
+// LOGIN AUTH
+export const LOGIN_REQUEST = 'LOGIN_REQUEST';
+export const LOGIN_SUBMIT = 'LOGIN_SUBMIT';
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
+export const LOGIN_ERROR = 'LOGIN_ERROR'
 
 // Colors
 export const REQUEST_COLORS = 'REQUEST_COLORS';
