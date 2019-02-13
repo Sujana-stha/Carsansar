@@ -1,0 +1,96 @@
+import React, { Component } from 'react';
+import {Route, Switch, Redirect} from 'react-router-dom';
+import Notifications from 'react-notify-toast';
+import {PrivateRoute} from './privateRouter';
+
+//includes
+import Header from './components/header'
+import Breadcrumb from './components/breadcrumb'
+import Footer from './components/footer'
+import FloatingActionButton from './components/floating-action-button'
+import LeftSidebarNav from './components/nav/left-sidebar-nav'
+import RightSidebarNav from './components/nav/right-sidebar-nav'
+
+//Components
+
+import DashboardAnalytics from './components/dashboard/dashboard-analytics'
+import VehiclesListing from './components/vehicles/vehicles-listing'
+import UsersListing from './components/users/users'
+import InsertUser from './components/users/insert-user'
+import UserProfile from './components/users/user-profile'
+import InsertVehicleAttribute from './components/vehicles/insert-vehicle-attribute'
+import VehicleAttributes from './components/vehicles/vehicle-attributes'
+
+//Containers
+import InsertVehicleContainer from './containers/vehicles/insert-vehicle-containers'
+import ColorListContainer from './containers/color/color-container'
+import MakesListContainer from './containers/makes/makes-container'
+import ModelListContainer from './containers/model/model-container'
+import OptionCategoriesContainer from './containers/optionCategories/optionCat-container'
+import CategoriesContainer from './containers/categories/categories-container'
+import DrivesContainer from './containers/drives/drives-container'
+import BodiesContainer from './containers/bodies/bodies-container'
+import EnginesizesContainer from './containers/enginesizes/enginesizes-container'
+import FueltypesContainer from './containers/fueltypes/fueltypes-container'
+import TransmissionContainer from './containers/transmissions/transmission-container'
+import CompaniesContainer from './containers/companies/companies-container'
+import OptionsContainer from './containers/options/options-container'
+
+const DashboardLayout =() =>  {
+    // console.log('sdss', match)
+        return (
+            <div className="app">
+                <Header/>
+                { /* START MAIN */}
+                <div id="main">
+                    {/* START WRAPPER */}
+                    <div className="wrapper">
+                        <LeftSidebarNav />
+                        {/* START CONTENT */}
+                        <section id="content">
+                            <Breadcrumb/>
+                            <Notifications options={{top: '50px', right: '0px', width: '100%', margin:0, left: 'none'}}/>
+                            {/* start container */}
+                            <div className="container">
+                                <Switch>
+                                    <Route exact path='/' component={DashboardAnalytics}/>
+                                    <Route path='/vehicles' component={VehiclesListing}/>
+                                    <Route path='/insert-vehicle' component={InsertVehicleContainer}/>
+                                    <Route path="/vehicle-attributes" component={VehicleAttributes}/>
+							        <Route path="/insert-vehicle-attribute" component={InsertVehicleAttribute}/>
+							        <Route path="/color" component={ColorListContainer}/>
+							        
+							        <Route path="/users" component={UsersListing}></Route>
+							        <Route path="/insert-user" component={InsertUser}></Route>
+							        <Route path="/user-profile" component={UserProfile}></Route>
+							        <Route path="/makes" component={MakesListContainer}></Route>
+							
+                                    <Route path="/models" component={ModelListContainer}></Route>
+                                    <Route path="/options-categories" component={OptionCategoriesContainer}></Route>
+                                    <Route path="/categories" component={CategoriesContainer}></Route>
+                                    <Route path="/drives" component={DrivesContainer}></Route>
+                                    <Route path="/bodies" component={BodiesContainer}></Route>
+                                    <Route path="/enginesizes" component={EnginesizesContainer}></Route>
+                                    <Route path="/fueltypes" component={FueltypesContainer}></Route>
+                                    <Route path="/transmissions" component={TransmissionContainer}></Route>
+                                    <Route path="/companies" component={CompaniesContainer}></Route>
+                                    <Route path="/options" component={OptionsContainer} />
+
+                                    {/* <Redirect to='/'/> */}
+                                </Switch>
+                            </div>
+                            {/* end container */}
+                        </section>
+                        {/* END CONTENT */}
+                        <FloatingActionButton />
+                        <RightSidebarNav />
+                    </div>
+                    {/* END WRAPPER */}
+                </div>
+                {/* END MAIN */}
+ 	            <Footer />
+            </div>
+        );
+};
+
+export default DashboardLayout;

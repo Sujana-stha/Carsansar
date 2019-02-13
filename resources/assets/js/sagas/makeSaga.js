@@ -9,8 +9,10 @@ import {notify} from 'react-notify-toast';
 export function* MakeWatcher() {
     yield takeLatest(types.REQUEST_MAKES, MakeSaga)
 }
-function* MakeSaga() {
-    const response = yield call(api.getMakes);
+function* MakeSaga(action) {
+    console.log('acti', action)
+    const token = action.token
+    const response = yield call(api.getMakes, token);
     const makes = response.data
     yield put({type: types.GET_MAKES_SUCCESS, makes});
 }

@@ -24,7 +24,8 @@ class MakesListContainer extends Component {
 
     componentDidMount() {
         // call action to run the relative saga
-        this.props.requestMakes();
+        console.log("token", this.props.token)
+        this.props.requestMakes(this.props.token);
 
     }
 
@@ -152,7 +153,8 @@ function mapStateToProps(store) {
         itemsCountPerPage: store.makeState.itemsCountPerPage,
         totalItemsCount: store.makeState.totalItemsCount,
         pageRangeDisplayed: store.makeState.pageRangeDisplayed,
-        fetching: store.makeState.fetching
+        fetching: store.makeState.fetching,
+        token: store.loginState.token
     }
 }
 
