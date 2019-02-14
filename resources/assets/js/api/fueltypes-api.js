@@ -1,21 +1,23 @@
-import axios from 'axios';
+// import axios from 'axios';
+// const URL = `http://127.0.0.1:8000`
+import axios from './axiosInstance'
 
-const URL = `http://127.0.0.1:8000`
-
+const access_token = window.localStorage.getItem('access_token')
+const headers = {Accept: "application/json", Authorization: `Bearer ${access_token}`};
 //GET ALL FUELTYPES API
 export function getFueltypes() {
-    return axios.get(`${URL}/api/fueltypes`)
+    return axios.get('/api/fueltypes',{headers})
 }
 
 //GET FUELTYPES BY PAGINATION API
 export function getFueltypesPages(pageNumber) {
-    return axios.get(`${URL}/api/fueltypes?page=${pageNumber}`)
+    return axios.get(`/api/fueltypes?page=${pageNumber}`,{headers})
 }
 
 // ADD NEW FUELTYPES API
 export function addFueltypes(values) {
     values.created_by = 1;
-    return axios.post(`${URL}/api/fueltypes`, values)
+    return axios.post('/api/fueltypes', values,{headers})
     .catch(error=> {
         console.log(error)
         return {
@@ -26,7 +28,7 @@ export function addFueltypes(values) {
 
 //DELETE FUELTYPES API
 export function deleteFueltype(fueltypeId) {
-    return axios.delete(`${URL}/api/fueltypes/`+ fueltypeId)
+    return axios.delete('/api/fueltypes/'+ fueltypeId,{headers})
     .catch(error=> {
         console.log(error)
         return {
@@ -37,7 +39,7 @@ export function deleteFueltype(fueltypeId) {
 
 // UPDATE FUELTYPES API
 export function updateFueltype(fueltypeId, values) {
-    return axios.put(`${URL}/api/fueltypes/`+ fueltypeId, values)
+    return axios.put('/api/fueltypes/'+ fueltypeId, values,{headers})
     .catch(error=> {
         console.log(error)
         return {
@@ -48,7 +50,7 @@ export function updateFueltype(fueltypeId, values) {
 
 // TOGGLE STATUS API
 export function updateFueltypeStatus (fueltypeId, values) {
-    return axios.put(`${URL}/api/fueltypes/`+ fueltypeId, values)
+    return axios.put('/api/fueltypes/'+ fueltypeId, values,{headers})
     .catch(error=> {
         console.log(error)
         return {
@@ -58,7 +60,7 @@ export function updateFueltypeStatus (fueltypeId, values) {
 }
 // GET SINGLE DATA OF Fueltypes
 export function getSingleFueltypes (fueltypeId) {
-    return axios.get(`${URL}/api/fueltypes/`+fueltypeId)
+    return axios.get('/api/fueltypes/'+fueltypeId,{headers})
     .catch(error=> {
         console.log(error)
         return {

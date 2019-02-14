@@ -1,10 +1,10 @@
-import axios from 'axios';
-import store from '../store';
-// import { getColorsSuccess } from '../actions/color-actions';
+// import axios from 'axios';
+import axios from './axiosInstance'
 
+const access_token = window.localStorage.getItem('access_token')
+const headers = {Accept: "application/json", Authorization: `Bearer ${access_token}`};
 
-
-const URL = `http://127.0.0.1:8000`
+// const URL = `http://127.0.0.1:8000`
 
 
 /**
@@ -21,18 +21,18 @@ const URL = `http://127.0.0.1:8000`
 
 //GET ALL COLORS API
 export function getColors() {
-    return axios.get(`${URL}/api/colors`)
+    return axios.get('/api/colors',{headers})
 }
 
 //GET COLORS BY PAGINATION API
 export function getColorsPages(pageNumber) {
-    return axios.get(`${URL}/api/colors?page=${pageNumber}`)
+    return axios.get(`/api/colors?page=${pageNumber}`,{headers})
 }
 
 // ADD NEW COLORS API
 export function addColors(values) {
     values.created_by = 1;
-    return axios.post(`${URL}/api/colors`, values)
+    return axios.post('/api/colors', values,{headers})
     .catch(error=> {
         console.log(error)
         return {
@@ -43,7 +43,7 @@ export function addColors(values) {
 
 //DELETE COLORS API
 export function deleteColors(colorId) {
-    return axios.delete(`${URL}/api/colors/`+ colorId)
+    return axios.delete('/api/colors/'+ colorId,{headers})
     .catch(error=> {
         console.log(error)
         return {
@@ -54,7 +54,7 @@ export function deleteColors(colorId) {
 
 // UPDATE COLORS API
 export function updateColors(colorId, values) {
-    return axios.put(`${URL}/api/colors/`+ colorId, values)
+    return axios.put('/api/colors/'+ colorId, values,{headers})
     .catch(error=> {
         console.log(error)
         return {
@@ -65,7 +65,7 @@ export function updateColors(colorId, values) {
 
 // TOGGLE STATUS API OF COLORS
 export function updateColorsStatus (colorId, values) {
-    return axios.put(`${URL}/api/colors/`+ colorId, values)
+    return axios.put('/api/colors/'+ colorId, values,{headers})
     .catch(error=> {
         console.log(error)
         return {
@@ -76,7 +76,7 @@ export function updateColorsStatus (colorId, values) {
 
 // GET SINGLE DATA OF COLORS
 export function getSingleColors (colorId) {
-    return axios.get(`${URL}/api/colors/`+colorId)
+    return axios.get('/api/colors/'+colorId,{headers})
     .catch(error=> {
         console.log(error)
         return {

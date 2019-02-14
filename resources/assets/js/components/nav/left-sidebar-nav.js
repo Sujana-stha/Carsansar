@@ -70,52 +70,53 @@ const LeftSidebarNav = () => {
 									<li>
 										<NavLink to="/insert-vehicle-attribute"><i className="material-icons">keyboard_arrow_right</i><span>Add Custom Attribute</span></NavLink>
 									</li>
+									<li className="bold">
+										<NavLink to="/color" className="waves-effect waves-cyan"><i className="material-icons">keyboard_arrow_right</i><span> Colors</span></NavLink>
+									</li>
+									<li className="bold">
+										<NavLink to="/makes" className="waves-effect waves-cyan"><i className="material-icons">keyboard_arrow_right</i><span> Makes</span></NavLink>
+									</li>
+									<li className="bold">
+										<NavLink to="/models" className="waves-effect waves-cyan"><i className="material-icons">keyboard_arrow_right</i><span> Models</span></NavLink>
+									</li>
+									<li className="bold">
+										<NavLink to="/options-categories" className="waves-effect waves-cyan"><i className="material-icons">keyboard_arrow_right</i><span> Options Categories</span></NavLink>
+									</li>
+									<li className="bold">
+										<NavLink to="/categories" className="waves-effect waves-cyan"><i className="material-icons">keyboard_arrow_right</i><span>Categories</span></NavLink>
+									</li>
+									<li className="bold">
+										<NavLink to="/drives" className="waves-effect waves-cyan"><i className="material-icons">keyboard_arrow_right</i><span>Drives</span></NavLink>
+									</li>
+									<li className="bold">
+										<NavLink to="/bodies" className="waves-effect waves-cyan"><i className="material-icons">keyboard_arrow_right</i><span>Bodies</span></NavLink>
+									</li>
+									<li className="bold">
+										<NavLink to="/enginesizes" className="waves-effect waves-cyan"><i className="material-icons">keyboard_arrow_right</i><span>Engine</span></NavLink>
+									</li>
+									<li className="bold">
+										<NavLink to="/fueltypes" className="waves-effect waves-cyan"><i className="material-icons">keyboard_arrow_right</i><span>Fuel</span></NavLink>
+									</li>
+									<li className="bold">
+										<NavLink to="/transmissions" className="waves-effect waves-cyan"><i className="material-icons">keyboard_arrow_right</i><span>Transmissions</span></NavLink>
+									</li>
+									<li className="bold">
+										<NavLink to="/companies" className="waves-effect waves-cyan"><i className="material-icons">keyboard_arrow_right</i><span>Companies</span></NavLink>
+									</li>
+									<li className="bold">
+										<NavLink to="/options" className="waves-effect waves-cyan"><i className="material-icons">keyboard_arrow_right</i><span>Options</span></NavLink>
+									</li>
 								</ul>
 							</div>
-							<div className="collapsible-body">
+							{/* <div className="collapsible-body">
 								<ul>
 									<li>
 										<NavLink to="/color"><i className="material-icons">keyboard_arrow_right</i><span> Colors</span></NavLink>
 									</li>
 								</ul>
-							</div>
+							</div> */}
 						</li>
-						<li className="bold">
-							<NavLink to="/color" className="waves-effect waves-cyan"><i className="material-icons">keyboard_arrow_right</i><span> Colors</span></NavLink>
-						</li>
-						<li className="bold">
-							<NavLink to="/makes" className="waves-effect waves-cyan"><i className="material-icons">keyboard_arrow_right</i><span> Makes</span></NavLink>
-						</li>
-						<li className="bold">
-							<NavLink to="/models" className="waves-effect waves-cyan"><i className="material-icons">keyboard_arrow_right</i><span> Models</span></NavLink>
-						</li>
-						<li className="bold">
-							<NavLink to="/options-categories" className="waves-effect waves-cyan"><i className="material-icons">keyboard_arrow_right</i><span> Options Categories</span></NavLink>
-						</li>
-						<li className="bold">
-							<NavLink to="/categories" className="waves-effect waves-cyan"><i className="material-icons">keyboard_arrow_right</i><span>Categories</span></NavLink>
-						</li>
-						<li className="bold">
-							<NavLink to="/drives" className="waves-effect waves-cyan"><i className="material-icons">keyboard_arrow_right</i><span>Drives</span></NavLink>
-						</li>
-						<li className="bold">
-							<NavLink to="/bodies" className="waves-effect waves-cyan"><i className="material-icons">keyboard_arrow_right</i><span>Bodies</span></NavLink>
-						</li>
-						<li className="bold">
-							<NavLink to="/enginesizes" className="waves-effect waves-cyan"><i className="material-icons">keyboard_arrow_right</i><span>Engine</span></NavLink>
-						</li>
-						<li className="bold">
-							<NavLink to="/fueltypes" className="waves-effect waves-cyan"><i className="material-icons">keyboard_arrow_right</i><span>Fuel</span></NavLink>
-						</li>
-						<li className="bold">
-							<NavLink to="/transmissions" className="waves-effect waves-cyan"><i className="material-icons">keyboard_arrow_right</i><span>Transmissions</span></NavLink>
-						</li>
-						<li className="bold">
-							<NavLink to="/companies" className="waves-effect waves-cyan"><i className="material-icons">keyboard_arrow_right</i><span>Companies</span></NavLink>
-						</li>
-						<li className="bold">
-							<NavLink to="/options" className="waves-effect waves-cyan"><i className="material-icons">keyboard_arrow_right</i><span>Options</span></NavLink>
-						</li>
+						
 						<li className="bold">
 							<a className="collapsible-header waves-effect waves-cyan active">
 								<i className="material-icons">account_circle</i>

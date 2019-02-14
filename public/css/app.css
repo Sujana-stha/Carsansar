@@ -18918,7 +18918,7 @@ h4.wr-header2 {
 .wr-auth-container,
 .wr-auth-form,
 #login-page {
-  height: 100%;
+  height: 100vh;
 }
 
 .wr-auth-form {

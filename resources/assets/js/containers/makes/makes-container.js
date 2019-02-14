@@ -24,9 +24,7 @@ class MakesListContainer extends Component {
 
     componentDidMount() {
         // call action to run the relative saga
-        console.log("token", this.props.token)
-        this.props.requestMakes(this.props.token);
-
+        this.props.requestMakes();
     }
 
     // submit function for new data

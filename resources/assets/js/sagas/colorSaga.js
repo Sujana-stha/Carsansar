@@ -47,7 +47,7 @@ function* callColorsSubmit(action) {
     } else {
         // yield put({type: types.ADD_MAKES_SUCCESS, resp, message: result.statusText});
         yield put({type: types.REQUEST_COLORS});
-        notify.show(`${resp.color_desc} Color Added Successfully!`, "success", 5000);
+        notify.show("Color Added Successfully!", "success", 5000);
 
     }
     yield put(stopSubmit('PostColors', error));

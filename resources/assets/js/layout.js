@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {Route, Switch, Redirect} from 'react-router-dom';
 import Notifications from 'react-notify-toast';
-import {PrivateRoute} from './privateRouter';
+import PrivateRoute from './privateRouter';
 
 //includes
 import Header from './components/header'
@@ -36,8 +36,9 @@ import TransmissionContainer from './containers/transmissions/transmission-conta
 import CompaniesContainer from './containers/companies/companies-container'
 import OptionsContainer from './containers/options/options-container'
 
-const DashboardLayout =() =>  {
+class DashboardLayout extends Component  {
     // console.log('sdss', match)
+    render() {
         return (
             <div className="app">
                 <Header/>
@@ -59,24 +60,21 @@ const DashboardLayout =() =>  {
                                     <Route path="/vehicle-attributes" component={VehicleAttributes}/>
 							        <Route path="/insert-vehicle-attribute" component={InsertVehicleAttribute}/>
 							        <Route path="/color" component={ColorListContainer}/>
-							        
-							        <Route path="/users" component={UsersListing}></Route>
-							        <Route path="/insert-user" component={InsertUser}></Route>
-							        <Route path="/user-profile" component={UserProfile}></Route>
-							        <Route path="/makes" component={MakesListContainer}></Route>
-							
-                                    <Route path="/models" component={ModelListContainer}></Route>
-                                    <Route path="/options-categories" component={OptionCategoriesContainer}></Route>
-                                    <Route path="/categories" component={CategoriesContainer}></Route>
-                                    <Route path="/drives" component={DrivesContainer}></Route>
-                                    <Route path="/bodies" component={BodiesContainer}></Route>
-                                    <Route path="/enginesizes" component={EnginesizesContainer}></Route>
-                                    <Route path="/fueltypes" component={FueltypesContainer}></Route>
-                                    <Route path="/transmissions" component={TransmissionContainer}></Route>
-                                    <Route path="/companies" component={CompaniesContainer}></Route>
+							        <Route path="/users" component={UsersListing}/>
+							        <Route path="/insert-user" component={InsertUser}/>
+							        <Route path="/user-profile" component={UserProfile}/>
+							        <Route path="/makes" component={MakesListContainer}/>
+                                    <Route path="/models" component={ModelListContainer}/>
+                                    <Route path="/options-categories" component={OptionCategoriesContainer}/>
+                                    <Route path="/categories" component={CategoriesContainer}/>
+                                    <Route path="/drives" component={DrivesContainer}/>
+                                    <Route path="/bodies" component={BodiesContainer}/>
+                                    <Route path="/enginesizes" component={EnginesizesContainer}/>
+                                    <Route path="/fueltypes" component={FueltypesContainer}/>
+                                    <Route path="/transmissions" component={TransmissionContainer}/>
+                                    <Route path="/companies" component={CompaniesContainer}/>
                                     <Route path="/options" component={OptionsContainer} />
-
-                                    {/* <Redirect to='/'/> */}
+                                    <Redirect to='/'/>
                                 </Switch>
                             </div>
                             {/* end container */}
@@ -91,6 +89,7 @@ const DashboardLayout =() =>  {
  	            <Footer />
             </div>
         );
+    }
 };
 
 export default DashboardLayout;

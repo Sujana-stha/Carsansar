@@ -1,10 +1,14 @@
-import axios from 'axios';
+// import axios from 'axios';
+// const URL = `http://127.0.0.1:8000`
 
-const URL = `http://127.0.0.1:8000`
+import axios from './axiosInstance'
+
+const access_token = window.localStorage.getItem('access_token')
+const headers = {Accept: "application/json", Authorization: `Bearer ${access_token}`};
 
 //GET ALL OPTION CATEGORIES API
 export function getOptionsCategories() {
-    return axios.get(`${URL}/api/optionsCategories`)
+    return axios.get('/api/optionsCategories',{headers})
 }
 
 //GET OPTION CATEGORIES BY PAGINATION API
@@ -15,7 +19,7 @@ export function getOptionsCategories() {
 // ADD NEW OPTION CATEGORIES API
 export function addOptionsCategories(values) {
     values.created_by = 1;
-    return axios.post(`${URL}/api/optionsCategories`, values)
+    return axios.post('/api/optionsCategories', values,{headers})
     .catch(error=> {
         console.log(error)
         return {
@@ -25,8 +29,7 @@ export function addOptionsCategories(values) {
 }
 //DELETE OPTION CATEGORIES API
 export function deleteOptionsCategories(optCatId) {
-    console.log('ddd', optCatId);
-    return axios.delete(`${URL}/api/optionsCategories/`+ optCatId)
+    return axios.delete('/api/optionsCategories/'+ optCatId,{headers})
     .catch(error=> {
         console.log(error)
         return {
@@ -37,7 +40,7 @@ export function deleteOptionsCategories(optCatId) {
 
 // UPDATE OPTION CATEGORIES API
 export function updateOptionsCategories(optCatId, values) {
-    return axios.put(`${URL}/api/optionsCategories/`+ optCatId, values)
+    return axios.put('/api/optionsCategories/'+ optCatId, values,{headers})
     .catch(error=> {
         console.log(error)
         return {
@@ -48,7 +51,7 @@ export function updateOptionsCategories(optCatId, values) {
 
 // TOGGLE STATUS API
 export function updateOptionsCategoriesStatus (optCatId, values) {
-    return axios.put(`${URL}/api/optionsCategories/`+ optCatId, values)
+    return axios.put('/api/optionsCategories/'+ optCatId, values,{headers})
     .catch(error=> {
         console.log(error)
         return {
@@ -59,7 +62,7 @@ export function updateOptionsCategoriesStatus (optCatId, values) {
 
 // GET SINGLE DATA OF OptionsCategories
 export function getSingleOptionsCategories (optCatId) {
-    return axios.get(`${URL}/api/optionsCategories/`+optCatId)
+    return axios.get('/api/optionsCategories/'+optCatId,{headers})
     .catch(error=> {
         console.log(error)
         return {

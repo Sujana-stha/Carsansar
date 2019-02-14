@@ -1,21 +1,25 @@
-import axios from 'axios';
+// import axios from 'axios';
+// const URL = `http://127.0.0.1:8000`
 
-const URL = `http://127.0.0.1:8000`
+import axios from './axiosInstance'
+
+const access_token = window.localStorage.getItem('access_token')
+const headers = {Accept: "application/json", Authorization: `Bearer ${access_token}`};
 
 //GET ALL CATEGORIES API
 export function getCategories() {
-    return axios.get(`${URL}/api/categories`)
+    return axios.get('/api/categories',{headers})
 }
 
 //GET CATEGORIES BY PAGINATION API
 export function getCategoriesPages(pageNumber) {
-    return axios.get(`${URL}/api/categories?page=${pageNumber}`)
+    return axios.get(`/api/categories?page=${pageNumber}`,{headers})
 }
 
 // ADD NEW CATEGORIES API
 export function addCategories(values) {
     values.created_by = 1;
-    return axios.post(`${URL}/api/categories`, values)
+    return axios.post('/api/categories', values,{headers})
     .catch(error=> {
         console.log(error)
         return {
@@ -26,7 +30,7 @@ export function addCategories(values) {
 
 //DELETE CATEGORIES API
 export function deleteCategories(categoryId) {
-    return axios.delete(`${URL}/api/categories/`+ categoryId)
+    return axios.delete('/api/categories/'+ categoryId,{headers})
     .catch(error=> {
         console.log(error)
         return {
@@ -37,7 +41,7 @@ export function deleteCategories(categoryId) {
 
 // UPDATE CATEGORIES API
 export function updateCategories(categoryId, values) {
-    return axios.put(`${URL}/api/categories/`+ categoryId, values)
+    return axios.put('/api/categories/'+ categoryId, values,{headers})
     .catch(error=> {
         console.log(error)
         return {
@@ -48,7 +52,7 @@ export function updateCategories(categoryId, values) {
 
 // TOGGLE STATUS API
 export function updateCategoriesStatus (categoryId, values) {
-    return axios.put(`${URL}/api/categories/`+ categoryId, values)
+    return axios.put('/api/categories/'+ categoryId, values,{headers})
     .catch(error=> {
         console.log(error)
         return {
@@ -59,7 +63,7 @@ export function updateCategoriesStatus (categoryId, values) {
 
 // GET SINGLE DATA OF CAtegories
 export function getSingleCategories (categoryId) {
-    return axios.get(`${URL}/api/categories/`+categoryId)
+    return axios.get('/api/categories/'+categoryId,{headers})
     .catch(error=> {
         console.log(error)
         return {

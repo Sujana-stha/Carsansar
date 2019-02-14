@@ -7,7 +7,7 @@ const axiosInstance = axios.create ({
 })
 
 export const getHeaders = (access_token) => (
-    {Accept: "application/json", Authorization: `Bearer ${access_token}`}
+    {Accept: "application/json", Authorization: `Bearer${access_token}`}
 );
 
 export default axiosInstance;
