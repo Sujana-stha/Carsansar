@@ -2,9 +2,11 @@
 
 import axios from './axiosInstance'
 
-const URL = `http://127.0.0.1:8000`
 const access_token = window.localStorage.getItem('access_token')
 const headers = {Accept: "application/json", Authorization: `Bearer ${access_token}`};
+
+// const URL = `http://127.0.0.1:8000`
+
 //GET ALL MAKES API
 export function getMakes() {
     return axios.get('/api/makes',{headers})
@@ -18,7 +20,7 @@ export function getMakesPages(pageNumber) {
 // ADD NEW MAKES API
 export function addMakes(values) {
     values.created_by = 1;
-    return axios.post(`${URL}/api/makes`,{headers},values)
+    return axios.post('/api/makes',values, {headers})
     .catch(error=> {
         console.log(error)
         return {
@@ -29,7 +31,7 @@ export function addMakes(values) {
 
 //DELETE MAKES API
 export function deleteMake(makeId) {
-    return axios.delete(`${URL}/api/makes/`+ makeId)
+    return axios.delete('/api/makes/'+ makeId,{headers})
     .catch(error=> {
         console.log(error)
         return {
@@ -40,7 +42,7 @@ export function deleteMake(makeId) {
 
 // UPDATE MAKES API
 export function updateMake(makeId, values) {
-    return axios.put(`${URL}/api/makes/`+ makeId, values)
+    return axios.put('/api/makes/'+ makeId,values,{headers})
     .catch(error=> {
         console.log(error)
         return {
@@ -51,7 +53,7 @@ export function updateMake(makeId, values) {
 
 // TOGGLE STATUS API
 export function updateMakeStatus (makeId, values) {
-    return axios.put(`${URL}/api/makes/`+ makeId, values)
+    return axios.put('/api/makes/'+ makeId,values,{headers})
     .catch(error=> {
         console.log(error)
         return {
@@ -62,7 +64,7 @@ export function updateMakeStatus (makeId, values) {
 
 // GET SINGLE DATA OF MAKES
 export function getSingleMakes (makeId) {
-    return axios.get(`${URL}/api/makes/`+makeId)
+    return axios.get('/api/makes/'+makeId,{headers})
     .catch(error=> {
         console.log(error)
         return {

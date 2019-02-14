@@ -1,10 +1,13 @@
-import axios from 'axios';
+// import axios from 'axios';
+// const URL = `http://127.0.0.1:8000`
+import axios from './axiosInstance'
 
-const URL = `http://127.0.0.1:8000`
+const access_token = window.localStorage.getItem('access_token')
+const headers = {Accept: "application/json", Authorization: `Bearer ${access_token}`};
 
 //GET LISTS OF MAKES
 export function getMakesList() {
-    return axios.get(`${URL}/api/makes/getList`)
+    return axios.get('/api/makes/getList',{headers})
     .catch(error=> {
         console.log(error)
         return {
@@ -15,7 +18,7 @@ export function getMakesList() {
 
 //GET LIST OF MODELS
 export function getModelsList() {
-    return axios.get(`${URL}/api/models/getList`)
+    return axios.get('/api/models/getList',{headers})
     .catch(error=> {
         console.log(error)
         return {
@@ -26,7 +29,7 @@ export function getModelsList() {
 
 //GET LIST OF BODIES
 export function getBodiesList() {
-    return axios.get(`${URL}/api/bodies/getList`)
+    return axios.get('/api/bodies/getList',{headers})
     .catch(error=> {
         console.log(error)
         return {
@@ -37,7 +40,7 @@ export function getBodiesList() {
 
 //GET LIST OF ENGINESIZE
 export function getEnginesizeList() {
-    return axios.get(`${URL}/api/enginesizes/getList`)
+    return axios.get('/api/enginesizes/getList',{headers})
     .catch(error=> {
         console.log(error)
         return {
@@ -48,7 +51,7 @@ export function getEnginesizeList() {
 
 //GET LIST OF TRANSMISSION
 export function getTransmissionList() {
-    return axios.get(`${URL}/api/transmissions/getList`)
+    return axios.get('/api/transmissions/getList',{headers})
     .catch(error=> {
         console.log(error)
         return {
@@ -59,7 +62,7 @@ export function getTransmissionList() {
 
 //GET COLORS LIST
 export function getColorsList() {
-    return axios.get(`${URL}/api/colors/getList`)
+    return axios.get('/api/colors/getList',{headers})
     .catch(error=> {
         console.log(error)
         return {
@@ -70,7 +73,7 @@ export function getColorsList() {
 
 //GET FUELTYPES LIST
 export function getFueltypesList() {
-    return axios.get(`${URL}/api/fueltypes/getList`)
+    return axios.get('/api/fueltypes/getList',{headers})
     .catch(error=> {
         console.log(error)
         return {
@@ -81,7 +84,7 @@ export function getFueltypesList() {
 
 // GET DRIVES LIST 
 export function getDRivesist() {
-    return axios.get(`${URL}/api/drives/getList`)
+    return axios.get('/api/drives/getList',{headers})
     .catch(error=> {
         console.log(error)
         return {
@@ -92,7 +95,7 @@ export function getDRivesist() {
 
 //GET OPTIONS LIST
 export function getOptionsList() {
-    return axios.get(`${URL}/api/options/getList`)
+    return axios.get('/api/options/getList',{headers})
     .catch(error=> {
         console.log(error)
         return {
@@ -104,7 +107,7 @@ export function getOptionsList() {
 // POST VEHICLES FORM
 export function addVehicles(values) {
     console.log('val',values);
-    return axios.post(`${URL}/api/vehicles`, values)
+    return axios.post('/api/vehicles', values,{headers})
     .catch(error=> {
         console.log(error)
         return {

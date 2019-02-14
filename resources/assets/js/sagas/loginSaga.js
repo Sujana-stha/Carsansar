@@ -26,8 +26,8 @@ function* loginFlow(action) {
         const data= response.data
         console.log('resp', response)
         if(response.status === 200) {
-            window.localStorage.setItem("access_token", response.data.token);
-            window.localStorage.setItem("refresh_token", response.data.token);
+            window.localStorage.setItem("access_token", response.data.success.token);
+            window.localStorage.setItem("refresh_token", response.data.success.token);
             yield put({ type: types.LOGIN_SUCCESS, data});
             yield put(push('/'));
             notify.show("Login Successfull!", "success", 5000);

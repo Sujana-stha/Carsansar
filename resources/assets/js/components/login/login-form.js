@@ -4,10 +4,7 @@ import { Input } from 'react-materialize';
 import { NavLink } from 'react-router-dom';
 
 class LoginForm extends Component {
-    componentDidMount() {
-
-        // document.body.classList.add('wr-login');
-    }
+   
     renderInputField({input, label, id, type, iconName, meta: {touched, error}}) {
         return(
             <div className="row margin">
@@ -71,14 +68,14 @@ class LoginForm extends Component {
                                     <button type="submit" className="btn waves-effect waves-light col s12">Login</button>
                                 </div>
                             </div>
-                            <div className="row">
+                            {/* <div className="row">
                                 <div className="input-field col s6 m6 l6">
                                     <p className="margin medium-small"><NavLink to="/register">Register Now!</NavLink></p>
                                 </div>
                                 <div className="input-field col s6 m6 l6">
                                     <p className="margin right-align medium-small"><NavLink to="/forgot-password">Forgot password ?</NavLink></p>
                                 </div>
-                            </div>
+                            </div> */}
                         </form>
                     </div>
                 </div>

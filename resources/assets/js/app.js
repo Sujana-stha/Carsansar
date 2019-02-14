@@ -52,14 +52,13 @@ import Notifications from 'react-notify-toast';
 ReactDOM.render(
 	<Provider store={store}>
 		<ConnectedRouter history = {history}>
-				<div>
-				<Notifications options={{top: '50px', right: '0px', width: '100%', margin:0, left: 'none'}}/>
+			
+				{/* <Notifications options={{top: '50px', right: '0px', width: '100%', margin:0, left: 'none'}}/> */}
 				<Switch>
 					<Route path="/login" component={LoginFormContainer}/>
 					<PrivateRoute path="/" component={DashboardLayout}/>
 					<Redirect to="/login"/>
 				</Switch>
-				</div>
 		</ConnectedRouter>
 	</Provider>,
 	document.getElementById('root')
