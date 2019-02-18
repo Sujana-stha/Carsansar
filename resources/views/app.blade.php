@@ -18,9 +18,12 @@
 		<link href="{{asset('materialize-admin/vendors/dropify/css/dropify.min.css')}}" type="text/css" rel="stylesheet">
 		<link rel="stylesheet" href="//cdn.quilljs.com/1.2.6/quill.snow.css">
 		<link href="{{asset('css/app.css')}}" rel="stylesheet" type="text/css">
+		
 		<script>
 			window.Laravel = {!! json_encode([
-				'csrfToken' => csrf_token()
+				'csrfToken' => csrf_token(),
+				'base_url' => env("BASE_URL"),
+				'client_secret' => env("PASSWORD_CLIENT_SECRET")
 			]) !!}
 		</script>
 		
@@ -31,7 +34,8 @@
         <!-- ================================================
 	    Scripts
 	    ================================================ -->
-        <script src="{{asset('js/app.js')}}" ></script>
+	   
+		<script src="{{asset('js/app.js')}}" ></script>
 	    <!-- jQuery Library -->
 	    <script type="text/javascript" src="{{asset('vendors/jquery-3.2.1.min.js')}}"></script>
 		<!--materialize js-->
@@ -49,6 +53,10 @@
 	    <script type="text/javascript" src="{{asset('vendors/jvectormap/jquery-jvectormap-world-mill-en.js')}}"></script>
 		<script type="text/javascript" src="{{asset('vendors/jvectormap/vectormap-script.js')}}"></script>
 		<script type="text/javascript" src="{{asset('vendors/dropify/js/dropify.min.js')}}"></script>
+		 
+		
+
+		<?php /* ?>
 	    <!--google map-->
 <!-- 	    <script type="text/javascript" src="{{asset('js/scripts/google-map-script.js')}}"></script> -->
 	    <!--plugins.js - Some Specific JS codes for Plugin Settings-->
@@ -58,6 +66,7 @@
 		  <!--form-file-uploads.js - Page Specific JS codes-->
 		  <script type="text/javascript" src="{{asset('js/scripts/form-file-uploads.js')}}"></script>
 		<!--custom-script.js - Add your own theme custom JS-->
-	    <script type="text/javascript" src="{{asset('js/custom-script.js')}}"></script>
+		<script type="text/javascript" src="{{asset('js/custom-script.js')}}"></script>
+		<?php */ ?>
     </body>
 </html>

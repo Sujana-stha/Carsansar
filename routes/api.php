@@ -13,17 +13,26 @@ use Illuminate\Http\Request;
 |
 */
 
+Route::post('register', 'Auth\RegisterController@register');
+Route::post('logout', 'AuthenticationController@logoutAPI');
+
 //Public Route
-Route::post('/login','AuthenticationController@login')->name('login');
+//Route::post('/login','AuthenticationController@login')->name('login');
 
 // Route::middleware('auth:api')->get('/user', function (Request $request) {
 //     return $request->user();
 // });
 
+//Route::post('/register','AuthenticationController@register')->name('register');
+
+Route::middleware('auth:api')->get('/user', function (Request $request) {
+    return response()->json($request->user());
+});
+
 //Private Route
  Route::middleware('auth:api')->group(function () {
-    Route::get('/logout','AuthenticationController@logout')->name('logout');
-    Route::post('/register','AuthenticationController@register')->name('register');
+    //Route::get('/logout','AuthenticationController@logout')->name('logout');
+    
 
     //makes
     Route::get('makes', 'MakesController@index');
