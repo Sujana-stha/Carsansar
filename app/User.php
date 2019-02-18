@@ -28,6 +28,10 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    public function AauthAcessToken(){
+        return $this->hasMany('App\OauthAccessToken', 'user_id', 'id');
+    }
+
     // public function color()
     // {
     //     return $this->hasOne('App\Color');
