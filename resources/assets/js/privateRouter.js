@@ -32,12 +32,13 @@ import store from './store'
 
 class PrivateRoute extends React.Component {
 
-  // componentWillMount() {
-  //   getLoggedUser()
+  // componentWillReceiveProps() {
+  //   // getLoggedUser()
+  //   window.location.reload()
   // }
 
   render() {
-    const { component: Component, pending, token, ...rest } = this.props
+    const { component: Component, token, ...rest } = this.props
     
     return (
       <Route {...rest} render={props => {

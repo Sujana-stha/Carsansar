@@ -16,13 +16,14 @@ import RightSidebarNav from './components/nav/right-sidebar-nav'
 import DashboardAnalytics from './components/dashboard/dashboard-analytics'
 import VehiclesListing from './components/vehicles/vehicles-listing'
 import UsersListing from './components/users/users'
-import InsertUser from './components/users/insert-user'
+
 import UserProfile from './components/users/user-profile'
 import InsertVehicleAttribute from './components/vehicles/insert-vehicle-attribute'
 import VehicleAttributes from './components/vehicles/vehicle-attributes'
 
 //Containers
 import InsertVehicleContainer from './containers/vehicles/insert-vehicle-containers'
+import InsertUserContainer from './containers/users/insertUsers-containers'
 import ColorListContainer from './containers/color/color-container'
 import MakesListContainer from './containers/makes/makes-container'
 import ModelListContainer from './containers/model/model-container'
@@ -38,6 +39,14 @@ import OptionsContainer from './containers/options/options-container'
 
 class DashboardLayout extends Component  {
     // console.log('sdss', match)
+    // componentWillMount() {
+    //     loadjs('/static/js/jquery.min.js', function() {
+    //       loadjs('/static/js/plugins.js', function() {
+    //         loadjs('/static/js/custom-script.js');
+    //       });
+    //     });
+    //   }
+   
     render() {
         return (
             <div className="app">
@@ -61,7 +70,7 @@ class DashboardLayout extends Component  {
 							        <Route path="/insert-vehicle-attribute" component={InsertVehicleAttribute}/>
 							        <Route path="/color" component={ColorListContainer}/>
 							        <Route path="/users" component={UsersListing}/>
-							        <Route path="/insert-user" component={InsertUser}/>
+							        <Route path="/insert-user" component={InsertUserContainer}/>
 							        <Route path="/user-profile" component={UserProfile}/>
 							        <Route path="/makes" component={MakesListContainer}/>
                                     <Route path="/models" component={ModelListContainer}/>

@@ -15,6 +15,7 @@ import * as optionSaga from './optionsSaga'
 import * as colorSaga from './colorSaga'
 import * as dealSaga from './dealsSaga';
 import * as loginSaga from './loginSaga';
+import * as userSaga from './usersSaga';
 
 export default function* rootSaga() {
     yield all (
@@ -31,7 +32,8 @@ export default function* rootSaga() {
             ...Object.values(optionSaga),
             ...Object.values(colorSaga),
             ...Object.values(dealSaga),
-            ...Object.values(loginSaga)
+            ...Object.values(loginSaga),
+            ...Object.values(userSaga)
         ].map(fork)
     );
 }

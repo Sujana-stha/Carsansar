@@ -1,6 +1,5 @@
 import * as types from '../actions/action-types';
 
-
 export function requestMakes(token) {
     return {
         type: types.REQUEST_MAKES,

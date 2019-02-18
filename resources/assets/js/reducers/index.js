@@ -19,6 +19,7 @@ import companyReducer from './company_reducer';
 import dealsReducer from './deals_reducer';
 import loginReducer from './login_reducers'
 import LoggedUserReducer from './loggedUserReducer'
+import UsersReducer from './users_reducer'
 
 const rootReducer = (history) => combineReducers({
     form: formReducer,
@@ -38,7 +39,8 @@ const rootReducer = (history) => combineReducers({
     companyState: companyReducer,
     dealState: dealsReducer,
     loginState: loginReducer,
-    loggedUserState:LoggedUserReducer
+    loggedUserState:LoggedUserReducer,
+    userState: UsersReducer
 });
 
 export default rootReducer;

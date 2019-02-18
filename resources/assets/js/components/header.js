@@ -1,9 +1,19 @@
 // Header
 
-import React, { Component } from 'react'
+import React, {Component} from 'react'
 import { NavLink } from 'react-router-dom'
+import {connect} from 'react-redux';
+import {logoutRequest} from '../actions/login-action'
 
-const Header = () => {
+
+class Header extends Component {
+	// constructor(props) {
+	// 	super(props);
+	// }
+	// logout() {
+	// 	this.props.logoutRequest();
+	// }
+	render() {
     return(
       <div>
 			
@@ -113,24 +123,25 @@ const Header = () => {
 		          {/* profile-dropdown */}
 		            <ul id="profile-dropdown" className="dropdown-content">
 		              <li>
-		                <a href="#" className="grey-text text-darken-1">
-		                  <i className="material-icons">face</i> Profile</a>
+										<NavLink to="/user-profile" className="grey-text text-darken-1">
+		                	<i className="material-icons">face</i> Profile
+										</NavLink>
 		              </li>
-		              <li>
+		              {/* <li>
 		                <a href="#" className="grey-text text-darken-1">
 		                  <i className="material-icons">settings</i> Settings</a>
-		              </li>
+		              </li> */}
 		              <li>
 		                <a href="#" className="grey-text text-darken-1">
 		                  <i className="material-icons">live_help</i> Help</a>
 		              </li>
 		              <li className="divider"></li>
-		              <li>
+		              {/* <li>
 		                <a href="#" className="grey-text text-darken-1">
 		                  <i className="material-icons">lock_outline</i> Lock</a>
-		              </li>
+		              </li> */}
 		              <li>
-		                <a href="#" className="grey-text text-darken-1">
+		                <a href="#" className="grey-text text-darken-1" onClick={this.props.logoutRequest}>
 		                  <i className="material-icons">keyboard_tab</i> Logout</a>
 		              </li>
 		            </ul>
@@ -141,7 +152,8 @@ const Header = () => {
      
     </header>
         </div>
-    )
+		)
+	}
 }
 
-export default Header;
+export default connect(null, {logoutRequest})(Header);

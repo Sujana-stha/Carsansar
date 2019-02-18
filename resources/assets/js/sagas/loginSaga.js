@@ -39,3 +39,27 @@ function* loginFlow(action) {
     yield put(stopSubmit('LoginForm'));
     yield put(reset('LoginForm'));
 }
+
+//logout Request
+
+export function* logoutWatcher() {
+    yield takeLatest(types.LOGOUT_REQUEST, logoutFlow)
+}
+
+function* logoutFlow() {
+    try {
+        const response = yield call(api.logout)
+        console.log('resp', response)
+        if(response.success) {
+            window.localStorage.removeItem('access_token');
+            window.localStorage.removeItem('refresh_token');
+            yield put({type: types.LOGOUT_SUCCESS})
+            yield put(push('/login'));
+            notify.show("You are successfully Logout!", "success", 5000)
+        }
+    } 
+    catch (error) {
+        yield put({type: types.LOGOUT_ERROR, error})
+        notify.show("Something went Wrong. Please Try Again!", "error", 5000)
+    }
+}
