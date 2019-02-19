@@ -64,7 +64,7 @@ class InsertUser extends Component{
                                 <Field name="password" type="password" label="Password" component={this.renderInputField}/>
                             </div>
                             <div className="col s6">
-                                <Field name="c_password" type="password" label="Confirm Password" component={this.renderInputField}/>
+                                <Field name="password_confirmation" type="password" label="Confirm Password" component={this.renderInputField}/>
                             </div>
                             <button type="submit" className="btn waves-effect waves-light">Add New User</button>
                         </Row>
@@ -97,10 +97,10 @@ function validate(values) {
     } else if(values.password.length > 191) {
         errors.password = "Must be 191 character or Less!"
     }
-    if (!values.c_password) {
-        errors.c_password = "You must Confirm your password!"
-    } else if(values.c_password != values.password) {
-        errors.c_password = "Password Mismatched!"
+    if (!values.password_confirmation) {
+        errors.password_confirmation = "You must Confirm your password!"
+    } else if(values.password_confirmation != values.password) {
+        errors.password_confirmation = "Password Mismatched!"
     }
     return errors;
 }

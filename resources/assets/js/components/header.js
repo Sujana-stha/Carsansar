@@ -4,15 +4,25 @@ import React, {Component} from 'react'
 import { NavLink } from 'react-router-dom'
 import {connect} from 'react-redux';
 import {logoutRequest} from '../actions/login-action'
-
+import * as api from '../api/users-api'
 
 class Header extends Component {
-	// constructor(props) {
-	// 	super(props);
-	// }
-	// logout() {
-	// 	this.props.logoutRequest();
-	// }
+	constructor(props) {
+		super(props);
+		this.state = {
+			user: {}
+		}
+	}
+	componentDidMount() {
+		api.getUsers().then(response=> {
+			console.log(response);
+			this.setState({
+				user: response.data
+			})
+
+		})
+	}
+	
 	render() {
     return(
       <div>
@@ -57,6 +67,7 @@ class Header extends Component {
 		                <a href="javascript:void(0);" className="waves-effect waves-block waves-light profile-button" data-activates="profile-dropdown">
 		                  <span className="avatar-status avatar-online">
 		                    <img src="images/avatar/avatar-7.png" alt="avatar" />
+											
 		                    <i></i>
 		                  </span>
 		                </a>
@@ -122,6 +133,10 @@ class Header extends Component {
 		            </ul>
 		          {/* profile-dropdown */}
 		            <ul id="profile-dropdown" className="dropdown-content">
+									<li>
+										<a href="#" className="grey-text text-darken-1">{this.state.user.name}
+										</a>
+									</li>
 		              <li>
 										<NavLink to="/user-profile" className="grey-text text-darken-1">
 		                	<i className="material-icons">face</i> Profile

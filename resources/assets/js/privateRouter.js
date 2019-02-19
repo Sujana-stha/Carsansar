@@ -5,7 +5,7 @@
 
 // export const PrivateRoute =({ component: Component, ...rest }) => {
 //     console.log('res', rest)
-//     return 
+//     return (
 //     <Route
 //     {...rest}
 //     render={props =>
@@ -24,13 +24,13 @@
 //   )
 // } 
 
-import React from 'react'
+import React, {Component} from 'react'
 import { Route, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 // import { getLoggedUser } from './helpers/check-auth'
 import store from './store'
 
-class PrivateRoute extends React.Component {
+class PrivateRoute extends Component {
 
   // componentWillReceiveProps() {
   //   // getLoggedUser()
@@ -41,16 +41,21 @@ class PrivateRoute extends React.Component {
     const { component: Component, token, ...rest } = this.props
     
     return (
-      <Route {...rest} render={props => {
-        // if (pending) return <div id="loader-wrapper">
-				//   <div id="loader"></div>
-				//   <div className="loader-section section-left"></div>
-				//   <div className="loader-section section-right"></div>
-			  // </div>
-        return localStorage['access_token']
-          ? <Component {...props} />
-          : <Redirect to="/login" />
-      }} />
+      <Route
+        {...rest}
+        render={props =>
+        localStorage['access_token'] ? (
+        <Component {...props} />
+        ) : (
+        <Redirect
+          to={{
+            pathname: "/login",
+            state: { from: props.location }
+          }}
+        />
+      )
+    }
+  />
     )
   }
 }

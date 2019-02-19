@@ -38,14 +38,6 @@ import CompaniesContainer from './containers/companies/companies-container'
 import OptionsContainer from './containers/options/options-container'
 
 class DashboardLayout extends Component  {
-    // console.log('sdss', match)
-    // componentWillMount() {
-    //     loadjs('/static/js/jquery.min.js', function() {
-    //       loadjs('/static/js/plugins.js', function() {
-    //         loadjs('/static/js/custom-script.js');
-    //       });
-    //     });
-    //   }
    
     render() {
         return (
