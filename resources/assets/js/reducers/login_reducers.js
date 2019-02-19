@@ -2,40 +2,41 @@ import * as types from '../actions/action-types';
 
 const initialState = {
     requesting: false,
-    successful: false,
-    errors: [],
-    token: []
+    isAuthenticated: false,
 }
 
 const loginReducer = function(state = initialState, action) {
     switch(action.type) {
         case types.LOGIN_REQUEST:
             return {
+                ...state,
                 requesting: true,
-                successful: false,
-                errors: []
             }
         case types.LOGIN_SUCCESS:
-            console.log('action', action)
             return {
+                ...state,
                 requesting: false,
-                successful: true,
-                errors: [],
-                token: action.data.token
+                isAuthenticated: true,
             }
         case types.LOGIN_ERROR:
             return {
+                ...state,
                 requesting: false,
-                successful: false,
-                errors: state.errors.concat([
-                    {body: action.error.toString()}
-                ])
+                isAuthenticated: false,
+                // errors: state.errors.concat([
+                //     {body: action.error.toString()}
+                // ])
             }
+        
         case types.LOGOUT_SUCCESS:
             return {
                 requesting: false,
-                successful: false,
-                errors: []
+                isAuthenticated: false,
+            }
+        case types.LOGOUT_ERROR:
+            return {
+                requesting: false,
+                isAuthenticated: true,
             }
         default:
         return state;

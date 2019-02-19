@@ -11,8 +11,8 @@ export function* MakeWatcher() {
 }
 function* MakeSaga(action) {
     console.log('acti', action)
-    const token = action.token
-    const response = yield call(api.getMakes, token);
+    
+    const response = yield call(api.getMakes);
     const makes = response.data
     yield put({type: types.GET_MAKES_SUCCESS, makes});
 }

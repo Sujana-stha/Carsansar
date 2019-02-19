@@ -1,8 +1,8 @@
 // import axios from 'axios';
-import axios from './axiosInstance'
+import axios, {getHeaders} from './axiosInstance'
 
 const access_token = window.localStorage.getItem('access_token')
-const headers = {Accept: "application/json", Authorization: `Bearer ${access_token}`};
+const headers = getHeaders(access_token)
 
 // const URL = `http://127.0.0.1:8000`
 

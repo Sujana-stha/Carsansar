@@ -1,9 +1,29 @@
 // Header
 
-import React, { Component } from 'react'
+import React, {Component} from 'react'
 import { NavLink } from 'react-router-dom'
+import {connect} from 'react-redux';
+import {logoutRequest} from '../actions/login-action'
+import * as api from '../api/users-api'
 
-const Header = () => {
+class Header extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			user: {}
+		}
+	}
+	componentDidMount() {
+		api.getUsers().then(response=> {
+			console.log(response);
+			this.setState({
+				user: response.data
+			})
+
+		})
+	}
+	
+	render() {
     return(
       <div>
 			
@@ -47,6 +67,7 @@ const Header = () => {
 		                <a href="javascript:void(0);" className="waves-effect waves-block waves-light profile-button" data-activates="profile-dropdown">
 		                  <span className="avatar-status avatar-online">
 		                    <img src="images/avatar/avatar-7.png" alt="avatar" />
+											
 		                    <i></i>
 		                  </span>
 		                </a>
@@ -112,25 +133,30 @@ const Header = () => {
 		            </ul>
 		          {/* profile-dropdown */}
 		            <ul id="profile-dropdown" className="dropdown-content">
+									<li>
+										<a href="#" className="grey-text text-darken-1">{this.state.user.name}
+										</a>
+									</li>
 		              <li>
-		                <a href="#" className="grey-text text-darken-1">
-		                  <i className="material-icons">face</i> Profile</a>
+										<NavLink to="/user-profile" className="grey-text text-darken-1">
+		                	<i className="material-icons">face</i> Profile
+										</NavLink>
 		              </li>
-		              <li>
+		              {/* <li>
 		                <a href="#" className="grey-text text-darken-1">
 		                  <i className="material-icons">settings</i> Settings</a>
-		              </li>
+		              </li> */}
 		              <li>
 		                <a href="#" className="grey-text text-darken-1">
 		                  <i className="material-icons">live_help</i> Help</a>
 		              </li>
 		              <li className="divider"></li>
-		              <li>
+		              {/* <li>
 		                <a href="#" className="grey-text text-darken-1">
 		                  <i className="material-icons">lock_outline</i> Lock</a>
-		              </li>
+		              </li> */}
 		              <li>
-		                <a href="#" className="grey-text text-darken-1">
+		                <a href="#" className="grey-text text-darken-1" onClick={this.props.logoutRequest}>
 		                  <i className="material-icons">keyboard_tab</i> Logout</a>
 		              </li>
 		            </ul>
@@ -141,7 +167,8 @@ const Header = () => {
      
     </header>
         </div>
-    )
+		)
+	}
 }
 
-export default Header;
+export default connect(null, {logoutRequest})(Header);
