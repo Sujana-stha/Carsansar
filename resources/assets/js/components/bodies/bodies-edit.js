@@ -1,12 +1,6 @@
 import React, { Component } from 'react';
-// import store from '../../store';
 import { Field, reduxForm } from 'redux-form';
-// import {connect} from 'react-redux';
 import * as bodyApi from '../../api/bodies-api';
-
-
-// var globalData = null;
-
 
 class EditBody extends Component {
     componentDidMount() {
@@ -17,17 +11,6 @@ class EditBody extends Component {
         })
     }
     
-    // handleInitialize() {
-    //     const id = this.props.editId;
-        
-    //     console.log('length',this.props.bodies[0].id);
-    //     for (var i = 0; i < this.props.bodies.length; i++ ) {
-    //         if(this.props.bodies[i].id == id) {
-    //             globalData = this.props.bodies[i]
-    //         }
-    //     }
-    //     this.props.initialize(globalData);
-    // }
     renderInputField({input, label, type, meta: {touched, error}}) {
         return (
             <div>
@@ -84,11 +67,7 @@ function validate(values) {
     
     return errors;
 }
-// function mapStateToProps(store) {
-//     return {
-//         bodies: store.bodyState.bodies
-//     }
-// }
+
 export default reduxForm({
     validate,
     form: 'EditBodies'

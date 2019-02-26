@@ -7,16 +7,13 @@ class BodiesList extends Component {
             confirm: false,
             showItem: null
         };
-        // this.deleteItem = this.deleteItem.bind(this);
     }
     componentDidMount() {
         this.setState({
             confirm: false
         })
     }
-
     deleteItem(id){
-        console.log(id);
         this.setState({showItem: id})
     }
 
@@ -24,7 +21,6 @@ class BodiesList extends Component {
         this.setState({showItem: null})
     }
     render() {
-        console.log('tab', this.props)
     return (
         <tbody>
             {

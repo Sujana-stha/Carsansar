@@ -78,27 +78,7 @@ class OptionsListContainer extends Component {
         }
         this.props.requestOptionsStatus(optionId, newOptionsStatus, page)
     }
-    // renderList() {
-    //     if(this.props.fetching) {
-    //         return (
-    //             <tbody>
-    //                 <tr><td></td></tr>
-    //             </tbody>
-    //         )
-    //     } else {
-    //         if(this.props.options.length) {
-    //             return (
-    //                 <OptionsList options= {this.props.options} onEditOptions = {this.editOptions} deleteOption = {this.props.requestDeleteOptions} OptionStatus = {this.toggleStatus}/>
-    //             )
-    //         } else {
-    //             return (
-    //                 <tbody>
-    //                     <tr><td>No Results Found !</td></tr>
-    //                 </tbody>
-    //             )
-    //         }
-    //     }
-    // }
+    
     render() {
         return (
             <div>

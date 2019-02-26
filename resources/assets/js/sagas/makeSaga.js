@@ -10,8 +10,6 @@ export function* MakeWatcher() {
     yield takeLatest(types.REQUEST_MAKES, MakeSaga)
 }
 function* MakeSaga(action) {
-    console.log('acti', action)
-    
     const response = yield call(api.getMakes);
     const makes = response.data
     yield put({type: types.GET_MAKES_SUCCESS, makes});

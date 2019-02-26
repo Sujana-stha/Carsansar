@@ -1,12 +1,10 @@
-// import axios from 'axios';
-// const URL = `http://127.0.0.1:8000`
-import axios, {getHeaders} from './axiosInstance'
 
-const access_token = window.localStorage.getItem('access_token')
-const headers = getHeaders(access_token);
+import axios, {getHeaders} from './axiosInstance'
 
 //GET LISTS OF MAKES
 export function getMakesList() {
+    const access_token = window.localStorage.getItem('access_token')
+    const headers = getHeaders(access_token)
     return axios.get('/api/makes/getList',{headers})
     .catch(error=> {
         console.log(error)
@@ -18,6 +16,8 @@ export function getMakesList() {
 
 //GET LIST OF MODELS
 export function getModelsList() {
+    const access_token = window.localStorage.getItem('access_token')
+    const headers = getHeaders(access_token)
     return axios.get('/api/models/getList',{headers})
     .catch(error=> {
         console.log(error)
@@ -29,6 +29,8 @@ export function getModelsList() {
 
 //GET LIST OF BODIES
 export function getBodiesList() {
+    const access_token = window.localStorage.getItem('access_token')
+    const headers = getHeaders(access_token)
     return axios.get('/api/bodies/getList',{headers})
     .catch(error=> {
         console.log(error)
@@ -40,6 +42,8 @@ export function getBodiesList() {
 
 //GET LIST OF ENGINESIZE
 export function getEnginesizeList() {
+    const access_token = window.localStorage.getItem('access_token')
+    const headers = getHeaders(access_token)
     return axios.get('/api/enginesizes/getList',{headers})
     .catch(error=> {
         console.log(error)
@@ -51,6 +55,8 @@ export function getEnginesizeList() {
 
 //GET LIST OF TRANSMISSION
 export function getTransmissionList() {
+    const access_token = window.localStorage.getItem('access_token')
+    const headers = getHeaders(access_token)
     return axios.get('/api/transmissions/getList',{headers})
     .catch(error=> {
         console.log(error)
@@ -62,6 +68,8 @@ export function getTransmissionList() {
 
 //GET COLORS LIST
 export function getColorsList() {
+    const access_token = window.localStorage.getItem('access_token')
+    const headers = getHeaders(access_token)
     return axios.get('/api/colors/getList',{headers})
     .catch(error=> {
         console.log(error)
@@ -73,6 +81,8 @@ export function getColorsList() {
 
 //GET FUELTYPES LIST
 export function getFueltypesList() {
+    const access_token = window.localStorage.getItem('access_token')
+    const headers = getHeaders(access_token)
     return axios.get('/api/fueltypes/getList',{headers})
     .catch(error=> {
         console.log(error)
@@ -84,6 +94,8 @@ export function getFueltypesList() {
 
 // GET DRIVES LIST 
 export function getDRivesist() {
+    const access_token = window.localStorage.getItem('access_token')
+    const headers = getHeaders(access_token)
     return axios.get('/api/drives/getList',{headers})
     .catch(error=> {
         console.log(error)
@@ -95,6 +107,8 @@ export function getDRivesist() {
 
 //GET OPTIONS LIST
 export function getOptionsList() {
+    const access_token = window.localStorage.getItem('access_token')
+    const headers = getHeaders(access_token)
     return axios.get('/api/options/getList',{headers})
     .catch(error=> {
         console.log(error)
@@ -106,6 +120,8 @@ export function getOptionsList() {
 
 // POST VEHICLES FORM
 export function addVehicles(values) {
+    const access_token = window.localStorage.getItem('access_token')
+    const headers = getHeaders(access_token)
     console.log('val',values);
     return axios.post('/api/vehicles', values,{headers})
     .catch(error=> {

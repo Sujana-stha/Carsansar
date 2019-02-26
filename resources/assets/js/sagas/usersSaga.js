@@ -27,3 +27,22 @@ function* addUserFlow(action) {
     yield put(stopSubmit('RegisterForm'));
     yield put(reset('RegisterForm'));
 }
+
+// get logged users
+export function* getLoggedUserWatcher() {
+    yield takeLatest(types.REQUEST_LOGGED_USER, getLoggedUserFlow)
+}
+
+function* getLoggedUserFlow() {
+    try {
+        const result = yield call(api.getLoggedUser)
+        console.log('logg', result)
+        const resp = result.data
+        if(result.status==200) {
+            yield put({type: types.GET_LOGGED_USER, resp})
+        }
+
+    } catch (error) {
+        notify.show("Cannot get User Details!","error",5000)
+    }
+}

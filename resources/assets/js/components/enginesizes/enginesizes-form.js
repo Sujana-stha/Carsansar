@@ -1,27 +1,24 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Field, reduxForm } from 'redux-form';
-import store from '../../store';
 
 
-class EnginesizeForm extends Component {
-    renderInputField({input, label, type, meta: {touched, error}}) {
-        return (
-            <div>
-                <div className="row">
-					<div className="input-field col s12">
-                        <input type={type} {...input}/>
-                        <label>{label}</label>
-                        <div className="error">
-                            {touched ? error: ''}
-                        </div>
+renderInputField=({input, label, type, meta: {touched, error}})=> {
+    return (
+            <div className="row">
+                <div className="input-field col s12">
+                    <input type={type} {...input}/>
+                    <label>{label}</label>
+                    <div className="error">
+                        {touched ? error: ''}
                     </div>
                 </div>
             </div>
-        )
-    }
+    )
+}
+
+const EnginesizeForm = props=> {
     
-    render() {
-        const { handleSubmit } = this.props;
+        const { handleSubmit } = props;
         return (
             <div>
                 <h4 className="header2">Add New Enginesize</h4>
@@ -33,7 +30,7 @@ class EnginesizeForm extends Component {
                                 label="Enginesize Desciption"
                                 name="enginesize_desc"
                                 type="text"
-                                component={this.renderInputField} 
+                                component={renderInputField} 
                             />
                             
                             <div className="row">
@@ -48,7 +45,6 @@ class EnginesizeForm extends Component {
                 </div>
             </div>
         );
-    }
 }
 
 function validate(values) {

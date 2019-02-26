@@ -11,6 +11,7 @@ const loginReducer = function(state = initialState, action) {
             return {
                 ...state,
                 requesting: true,
+                isAuthenticated: false
             }
         case types.LOGIN_SUCCESS:
             return {

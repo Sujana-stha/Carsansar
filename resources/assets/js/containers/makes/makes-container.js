@@ -66,25 +66,7 @@ class MakesListContainer extends Component {
         }
         this.props.requestMakesStatus(makeId, newMakesStatus, page)
     }
-    // renderList() {
-    //     if(this.props.fetching) {
-    //         return (
-    //             <Loading />
-    //         )
-    //     } else {
-    //         if(this.props.makes.length) {
-    //             return (
-    //                 <MakesList makes= {this.props.makes} onEdit = {this.editMakes} deleteMake = {this.props.requestDeleteMakes} makeStatus = {this.toggleStatus}/>
-    //             )
-    //         } else {
-    //             return (
-    //                 <tbody>
-    //                     <tr><td>No Results Found !</td></tr>
-    //                 </tbody>
-    //             )
-    //         }
-    //     }
-    // }
+    
     render() {
         return (
             <div>
@@ -114,7 +96,6 @@ class MakesListContainer extends Component {
                                     <th>Status</th>
                                 </tr>
                             </thead>
-                            {/* {this.renderList()} */}
                             {this.props.makes.length ? (
                                 <MakesList makes= {this.props.makes} onEdit = {this.editMakes} deleteMake = {this.props.requestDeleteMakes} makeStatus = {this.toggleStatus}/>
 

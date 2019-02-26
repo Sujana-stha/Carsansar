@@ -23,14 +23,7 @@ class EnginesizesListContainer extends Component {
         this.editEnginesizes = this.editEnginesizes.bind(this)
         this.toggleStatus = this.toggleStatus.bind(this)
     }
-
-    // hideMessage (e) {
-    //     e.preventDefault();
-    //     this.setState ({
-    //         hide: false
-    //     })
-    // }
-
+    
     componentDidMount() {
         // call action to run the relative saga
         this.props.requestEnginesizes();
@@ -81,29 +74,8 @@ class EnginesizesListContainer extends Component {
         }
         this.props.requestEnginesizesStatus(enginesizeId, newEnginesizesStatus, page)
     }
-    // renderList() {
-    //     if(this.props.fetching) {
-    //         return (
-    //             <tbody>
-    //                 <tr><td></td></tr>
-    //             </tbody>
-    //         )
-    //     } else {
-    //         if(this.props.enginesizes.length) {
-    //             return (
-    //                 <EnginesizesList enginesizes= {this.props.enginesizes} onEditEnginesize = {this.editEnginesizes} deleteEnginesize = {this.props.requestDeleteEnginesizes} enginesizeStatus = {this.toggleStatus}/>
-    //             )
-    //         } else {
-    //             return (
-    //                 <tbody>
-    //                     <tr><td>No Results Found !</td></tr>
-    //                 </tbody>
-    //             )
-    //         }
-    //     }
-    // }
+    
     render() {
-        console.log('prop', this.props.enginesizes)
         return (
             <div>
                 <div className="row">
@@ -131,7 +103,6 @@ class EnginesizesListContainer extends Component {
                                     <th>Status</th>
                                 </tr>
                             </thead>
-                            {/* {this.renderList()} */}
                             {this.props.enginesizes.length ? (
                                 <EnginesizesList enginesizes= {this.props.enginesizes} onEditEnginesize = {this.editEnginesizes} deleteEnginesize = {this.props.requestDeleteEnginesizes} enginesizeStatus = {this.toggleStatus}/>
 

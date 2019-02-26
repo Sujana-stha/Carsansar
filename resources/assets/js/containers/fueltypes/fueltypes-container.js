@@ -24,13 +24,6 @@ class FueltypesListContainer extends Component {
         this.toggleStatus = this.toggleStatus.bind(this)
     }
 
-    // hideMessage (e) {
-    //     e.preventDefault();
-    //     this.setState ({
-    //         hide: false
-    //     })
-    // }
-
     componentDidMount() {
         // call action to run the relative saga
         this.props.requestFueltypes();
@@ -80,27 +73,7 @@ class FueltypesListContainer extends Component {
         }
         this.props.requestFueltypesStatus(fueltypeId, newFueltypeStatus, page)
     }
-    // renderList() {
-    //     if(this.props.fetching) {
-    //         return (
-    //             <tbody>
-    //                 <tr><td></td></tr>
-    //             </tbody>
-    //         )
-    //     } else {
-    //         if(this.props.fueltypes.length) {
-    //             return (
-    //                 <FueltypesList fueltypes= {this.props.fueltypes} onEditFueltype = {this.editFueltype} deleteFueltype = {this.props.requestDeleteFueltypes} fueltypeStatus = {this.toggleStatus}/>
-    //             )
-    //         } else {
-    //             return (
-    //                 <tbody>
-    //                     <tr><td>No Results Found !</td></tr>
-    //                 </tbody>
-    //             )
-    //         }
-    //     }
-    // }
+    
     render() {
         return (
             <div>
@@ -129,7 +102,6 @@ class FueltypesListContainer extends Component {
                                     <th>Status</th>
                                 </tr>
                             </thead>
-                            {/* {this.renderList()} */}
                             {this.props.fueltypes.length ? (
                                 <FueltypesList fueltypes= {this.props.fueltypes} onEditFueltype = {this.editFueltype} deleteFueltype = {this.props.requestDeleteFueltypes} fueltypeStatus = {this.toggleStatus}/>
 

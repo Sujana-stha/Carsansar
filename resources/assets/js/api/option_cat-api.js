@@ -1,21 +1,18 @@
 
 import axios, {getHeaders} from './axiosInstance'
 
-const access_token = window.localStorage.getItem('access_token')
-const headers = getHeaders(access_token);
-
 //GET ALL OPTION CATEGORIES API
 export function getOptionsCategories() {
+    const access_token = window.localStorage.getItem('access_token')
+    const headers = getHeaders(access_token)
     return axios.get('/api/optionsCategories',{headers})
 }
 
-//GET OPTION CATEGORIES BY PAGINATION API
-// export function getOptionsCategoriesPages(pageNumber) {
-//     return axios.get(`${URL}/api/optionsCategories?page=${pageNumber}`)
-// }
 
 // ADD NEW OPTION CATEGORIES API
 export function addOptionsCategories(values) {
+    const access_token = window.localStorage.getItem('access_token')
+    const headers = getHeaders(access_token)
     values.created_by = 1;
     return axios.post('/api/optionsCategories', values,{headers})
     .catch(error=> {
@@ -25,8 +22,11 @@ export function addOptionsCategories(values) {
         }
     });
 }
+
 //DELETE OPTION CATEGORIES API
 export function deleteOptionsCategories(optCatId) {
+    const access_token = window.localStorage.getItem('access_token')
+    const headers = getHeaders(access_token)
     return axios.delete('/api/optionsCategories/'+ optCatId,{headers})
     .catch(error=> {
         console.log(error)
@@ -38,6 +38,8 @@ export function deleteOptionsCategories(optCatId) {
 
 // UPDATE OPTION CATEGORIES API
 export function updateOptionsCategories(optCatId, values) {
+    const access_token = window.localStorage.getItem('access_token')
+    const headers = getHeaders(access_token)
     return axios.put('/api/optionsCategories/'+ optCatId, values,{headers})
     .catch(error=> {
         console.log(error)
@@ -49,6 +51,8 @@ export function updateOptionsCategories(optCatId, values) {
 
 // TOGGLE STATUS API
 export function updateOptionsCategoriesStatus (optCatId, values) {
+    const access_token = window.localStorage.getItem('access_token')
+    const headers = getHeaders(access_token)
     return axios.put('/api/optionsCategories/'+ optCatId, values,{headers})
     .catch(error=> {
         console.log(error)
@@ -60,6 +64,8 @@ export function updateOptionsCategoriesStatus (optCatId, values) {
 
 // GET SINGLE DATA OF OptionsCategories
 export function getSingleOptionsCategories (optCatId) {
+    const access_token = window.localStorage.getItem('access_token')
+    const headers = getHeaders(access_token)
     return axios.get('/api/optionsCategories/'+optCatId,{headers})
     .catch(error=> {
         console.log(error)

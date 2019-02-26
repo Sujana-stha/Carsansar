@@ -1,7 +1,6 @@
 // import axios from 'axios';
 import axios, {getHeaders} from './axiosInstance'
-const access_token = window.localStorage.getItem('access_token')
-const headers = getHeaders(access_token);
+
 //register users 
 export function registerUsers(values) {
     return axios.post('/api/register', values)
@@ -13,7 +12,9 @@ export function registerUsers(values) {
 }
 
 //get users 
-export function getUsers() {
+export function getLoggedUser() {
+    const access_token = window.localStorage.getItem('access_token')
+    const headers = getHeaders(access_token);
     return axios.get('/api/user', {headers})
     .catch(error => {
         return {

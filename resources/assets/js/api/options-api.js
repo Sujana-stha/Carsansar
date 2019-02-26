@@ -1,21 +1,24 @@
 
 import axios, {getHeaders} from './axiosInstance'
 
-const access_token = window.localStorage.getItem('access_token')
-const headers = getHeaders(access_token);
-
 //GET ALL OPTIONS API
 export function getOptions() {
+    const access_token = window.localStorage.getItem('access_token')
+    const headers = getHeaders(access_token)
     return axios.get('/api/options',{headers})
 }
 
 //GET OPTIONS BY PAGINATION API
 export function getOptionsPages(pageNumber) {
+    const access_token = window.localStorage.getItem('access_token')
+    const headers = getHeaders(access_token)
     return axios.get(`/api/options?page=${pageNumber}`,{headers})
 }
 
 // ADD NEW OPTIONS API
 export function addOptions(values) {
+    const access_token = window.localStorage.getItem('access_token')
+    const headers = getHeaders(access_token)
     values.created_by = 1;
     return axios.post('/api/options', values,{headers})
     .catch(error=> {
@@ -28,6 +31,8 @@ export function addOptions(values) {
 
 //DELETE OPTIONS API
 export function deleteOptions(optionId) {
+    const access_token = window.localStorage.getItem('access_token')
+    const headers = getHeaders(access_token)
     return axios.delete('/api/options/'+ optionId,{headers})
     .catch(error=> {
         console.log(error)
@@ -39,6 +44,8 @@ export function deleteOptions(optionId) {
 
 // UPDATE OPTIONS API
 export function updateOptions(optionId, values) {
+    const access_token = window.localStorage.getItem('access_token')
+    const headers = getHeaders(access_token)
     return axios.put('/api/options/'+ optionId, values,{headers})
     .catch(error=> {
         console.log(error)
@@ -50,6 +57,8 @@ export function updateOptions(optionId, values) {
 
 // TOGGLE STATUS API
 export function updateOptionsStatus (optionId, values) {
+    const access_token = window.localStorage.getItem('access_token')
+    const headers = getHeaders(access_token)
     return axios.put('/api/options/'+ optionId, values,{headers})
     .catch(error=> {
         console.log(error)
@@ -61,6 +70,8 @@ export function updateOptionsStatus (optionId, values) {
 
 // GET SINGLE DATA OF Options
 export function getSingleOptions (optionId) {
+    const access_token = window.localStorage.getItem('access_token')
+    const headers = getHeaders(access_token)
     return axios.get('/api/options/'+optionId,{headers})
     .catch(error=> {
         console.log(error)

@@ -1,5 +1,5 @@
 // Vehicles Listing
-import React, { Component } from 'react';
+import React from 'react';
 import { NavLink } from 'react-router-dom';
 
 const VehiclesListing = () => {
@@ -7,7 +7,7 @@ const VehiclesListing = () => {
 	    <div>
 	    <div className="row">
 						<div className="col s12 mt-2 mb-2 right-align">
-								<NavLink to="/insert-vehicle" className="btn waves-effect waves-light"><i className="material-icons left">add</i><span> Add Vehicle</span></NavLink>
+								<NavLink to="/dashboard/insert-vehicle" className="btn waves-effect waves-light"><i className="material-icons left">add</i><span> Add Vehicle</span></NavLink>
 						</div>
 				</div>	
 

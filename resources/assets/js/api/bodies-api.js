@@ -1,24 +1,25 @@
-// import axios from 'axios';
 
 import axios, {getHeaders} from './axiosInstance'
-
-const access_token = window.localStorage.getItem('access_token')
-const headers = getHeaders(access_token)
-// const URL = `http://127.0.0.1:8000`
 
 
 //GET ALL BODIES API
 export function getBodies() {
+    const access_token = window.localStorage.getItem('access_token')
+    const headers = getHeaders(access_token)
     return axios.get('/api/bodies',{headers})
 }
 
 //GET BODIES BY PAGINATION API
 export function getBodiesPages(pageNumber) {
+    const access_token = window.localStorage.getItem('access_token')
+    const headers = getHeaders(access_token)
     return axios.get(`/api/bodies?page=${pageNumber}`,{headers})
 }
 
 // ADD NEW BODIES API
 export function addBodies(values) {
+    const access_token = window.localStorage.getItem('access_token')
+    const headers = getHeaders(access_token)
     values.created_by = 1;
     return axios.post('/api/bodies',values,{headers})
     .catch(error=> {
@@ -31,6 +32,8 @@ export function addBodies(values) {
 
 //DELETE BODIES API
 export function deleteBody(bodyId) {
+    const access_token = window.localStorage.getItem('access_token')
+    const headers = getHeaders(access_token)
     return axios.delete('/api/bodies/'+ bodyId,{headers})
     .catch(error=> {
         console.log(error)
@@ -42,6 +45,8 @@ export function deleteBody(bodyId) {
 
 // UPDATE BODIES API
 export function updateBodies(bodyId, values) {
+    const access_token = window.localStorage.getItem('access_token')
+    const headers = getHeaders(access_token)
     return axios.put('/api/bodies/'+ bodyId, values,{headers})
     .catch(error=> {
         console.log(error)
@@ -53,6 +58,8 @@ export function updateBodies(bodyId, values) {
 
 // TOGGLE STATUS API
 export function updateBodiesStatus (bodyId, values) {
+    const access_token = window.localStorage.getItem('access_token')
+    const headers = getHeaders(access_token)
     return axios.put('/api/bodies/'+ bodyId, values,{headers})
     .catch(error=> {
         console.log(error)
@@ -63,6 +70,8 @@ export function updateBodiesStatus (bodyId, values) {
 }
 // GET SINGLE DATA OF BODIES
 export function getSingleBodies (bodyId) {
+    const access_token = window.localStorage.getItem('access_token')
+    const headers = getHeaders(access_token)
     return axios.get('/api/bodies/'+bodyId,{headers})
     .catch(error=> {
         console.log(error)

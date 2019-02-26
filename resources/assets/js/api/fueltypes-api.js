@@ -1,21 +1,24 @@
-// import axios from 'axios';
-// const URL = `http://127.0.0.1:8000`
+
 import axios, {getHeaders} from './axiosInstance'
 
-const access_token = window.localStorage.getItem('access_token')
-const headers = getHeaders(access_token);
 //GET ALL FUELTYPES API
 export function getFueltypes() {
+    const access_token = window.localStorage.getItem('access_token')
+    const headers = getHeaders(access_token)
     return axios.get('/api/fueltypes',{headers})
 }
 
 //GET FUELTYPES BY PAGINATION API
 export function getFueltypesPages(pageNumber) {
+    const access_token = window.localStorage.getItem('access_token')
+    const headers = getHeaders(access_token)
     return axios.get(`/api/fueltypes?page=${pageNumber}`,{headers})
 }
 
 // ADD NEW FUELTYPES API
 export function addFueltypes(values) {
+    const access_token = window.localStorage.getItem('access_token')
+    const headers = getHeaders(access_token)
     values.created_by = 1;
     return axios.post('/api/fueltypes', values,{headers})
     .catch(error=> {
@@ -28,6 +31,8 @@ export function addFueltypes(values) {
 
 //DELETE FUELTYPES API
 export function deleteFueltype(fueltypeId) {
+    const access_token = window.localStorage.getItem('access_token')
+    const headers = getHeaders(access_token)
     return axios.delete('/api/fueltypes/'+ fueltypeId,{headers})
     .catch(error=> {
         console.log(error)
@@ -39,6 +44,8 @@ export function deleteFueltype(fueltypeId) {
 
 // UPDATE FUELTYPES API
 export function updateFueltype(fueltypeId, values) {
+    const access_token = window.localStorage.getItem('access_token')
+    const headers = getHeaders(access_token)
     return axios.put('/api/fueltypes/'+ fueltypeId, values,{headers})
     .catch(error=> {
         console.log(error)
@@ -50,6 +57,8 @@ export function updateFueltype(fueltypeId, values) {
 
 // TOGGLE STATUS API
 export function updateFueltypeStatus (fueltypeId, values) {
+    const access_token = window.localStorage.getItem('access_token')
+    const headers = getHeaders(access_token)
     return axios.put('/api/fueltypes/'+ fueltypeId, values,{headers})
     .catch(error=> {
         console.log(error)
@@ -60,6 +69,8 @@ export function updateFueltypeStatus (fueltypeId, values) {
 }
 // GET SINGLE DATA OF Fueltypes
 export function getSingleFueltypes (fueltypeId) {
+    const access_token = window.localStorage.getItem('access_token')
+    const headers = getHeaders(access_token)
     return axios.get('/api/fueltypes/'+fueltypeId,{headers})
     .catch(error=> {
         console.log(error)

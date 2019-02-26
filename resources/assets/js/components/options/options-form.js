@@ -1,52 +1,34 @@
-import React, { Component } from 'react';
-import { Field, reduxForm, formValueSelector } from 'redux-form';
-import store from '../../store';
-import {connect} from 'react-redux';
+import React from 'react';
+import { Field, reduxForm } from 'redux-form';
 
-
-class OptionsForm extends Component {
-    constructor() {
-        super();
-        this.state = {
-            value: 1
-        }
-    }
-    componentDidMount() {
-        // $('select').material_select('destroy');
-       
-    }
-
-    renderInputField({input, label, type, meta: {touched, error}}) {
-        return (
-            <div>
-                <div className="row">
-					<div className="input-field col s12">
-                        <input  type={type} {...input}/>
-                        <label>{label}</label>
-                        <div className="error">
-                            {touched ? error: ''}
-                        </div>
+const renderInputField=({input, label, type, meta: {touched, error}})=> {
+    return (
+            <div className="row">
+                <div className="input-field col s12">
+                    <input  type={type} {...input}/>
+                    <label>{label}</label>
+                    <div className="error">
+                        {touched ? error: ''}
                     </div>
                 </div>
             </div>
-        )
-    }
-    renderSelectField({input, label, meta: {touched, error}, defaultValue, children}) {
-        return (
-            <div>
-                <label>{label}</label>
-                <select value={defaultValue} {...input} className="browser-default">
-                    {children}
-                </select>
-                <div className="error">
-                    {touched ? error: ''}
-                </div>
+    )
+}
+const renderSelectField=({input, label, meta: {touched, error}, defaultValue, children})=> {
+    return (
+        <div>
+            <label>{label}</label>
+            <select value={defaultValue} {...input} className="browser-default">
+                {children}
+            </select>
+            <div className="error">
+                {touched ? error: ''}
             </div>
-        )
-    }
-    render() {
-        const { handleSubmit } = this.props;
-        console.log('ppp', this.props)
+        </div>
+    )
+}
+const OptionsForm = props => {
+        const { handleSubmit } = props;
         return (
             <div>
                 <h4 className="header2">Add New Options</h4>
@@ -58,17 +40,17 @@ class OptionsForm extends Component {
                                 label="Options Desciption"
                                 name="option_desc"
                                 type="text"
-                                component={this.renderInputField} 
+                                component={renderInputField} 
                             />
                             <div>
                                 
                                 <Field 
                                     name="oc_id"
-                                    component={this.renderSelectField}
+                                    component={renderSelectField}
                                     label="Option Categories"
                                     value = "4"
                                 >
-                                    {this.props.optionLists.map((optionList) => {
+                                    {props.optionLists.map((optionList) => {
                                         return (
                                             <option key= {optionList.id} value={optionList.id} >{optionList.optioncategory_desc}</option>
                                         )
@@ -87,7 +69,6 @@ class OptionsForm extends Component {
                 </div>
             </div>
         );
-    }
 }
 
 function validate(values) {
@@ -107,4 +88,4 @@ function validate(values) {
 export default reduxForm({
     form: 'PostOptions', // a unique identifier for this form
     validate,
-  })(OptionsForm)
+})(OptionsForm)

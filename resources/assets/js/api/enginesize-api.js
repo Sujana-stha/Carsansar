@@ -1,23 +1,24 @@
-// import axios from 'axios';
-// const URL = `http://127.0.0.1:8000`
 
 import axios, {getHeaders} from './axiosInstance'
 
-const access_token = window.localStorage.getItem('access_token')
-const headers = getHeaders(access_token);
-
 //GET ALL MAKES API
 export function getEnginesizes() {
+    const access_token = window.localStorage.getItem('access_token')
+    const headers = getHeaders(access_token)
     return axios.get('/api/enginesizes',{headers})
 }
 
 //GET MAKES BY PAGINATION API
 export function getEnginesizesPages(pageNumber) {
+    const access_token = window.localStorage.getItem('access_token')
+    const headers = getHeaders(access_token)
     return axios.get(`/api/enginesizes?page=${pageNumber}`,{headers})
 }
 
 // ADD NEW MAKES API
 export function addEnginesizes(values) {
+    const access_token = window.localStorage.getItem('access_token')
+    const headers = getHeaders(access_token)
     values.created_by = 1;
     return axios.post('/api/enginesizes', values,{headers})
     .catch(error=> {
@@ -30,6 +31,8 @@ export function addEnginesizes(values) {
 
 //DELETE MAKES API
 export function deleteEnginesizes(enginesizesId) {
+    const access_token = window.localStorage.getItem('access_token')
+    const headers = getHeaders(access_token)
     return axios.delete('/api/enginesizes/'+ enginesizesId,{headers})
     .catch(error=> {
         console.log(error)
@@ -41,6 +44,8 @@ export function deleteEnginesizes(enginesizesId) {
 
 // UPDATE MAKES API
 export function updateEnginesizes(enginesizesId, values) {
+    const access_token = window.localStorage.getItem('access_token')
+    const headers = getHeaders(access_token)
     return axios.put('/api/enginesizes/'+ enginesizesId, values,{headers})
     .catch(error=> {
         console.log(error)
@@ -52,6 +57,8 @@ export function updateEnginesizes(enginesizesId, values) {
 
 // TOGGLE STATUS API
 export function updateEnginesizesStatus (enginesizesId, values) {
+    const access_token = window.localStorage.getItem('access_token')
+    const headers = getHeaders(access_token)
     return axios.put('/api/enginesizes/'+ enginesizesId, values,{headers})
     .catch(error=> {
         console.log(error)
@@ -63,6 +70,8 @@ export function updateEnginesizesStatus (enginesizesId, values) {
 
 // GET SINGLE DATA OF Enginesizes
 export function getSingleEnginesizes (enginesizesId) {
+    const access_token = window.localStorage.getItem('access_token')
+    const headers = getHeaders(access_token)
     return axios.get('/api/enginesizes/'+enginesizesId,{headers})
     .catch(error=> {
         console.log(error)

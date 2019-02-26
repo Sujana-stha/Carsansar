@@ -45,3 +45,17 @@ export function userUpdateSuccess(values, userId) {
         values, userId
     }
 }
+
+//get logged users
+export function requestLoggedUser() {
+    return {
+        type: types.REQUEST_LOGGED_USER
+    }
+}
+
+export function getLoggedUser(user) {
+    return {
+        type: types.GET_LOGGED_USER,
+        user
+    }
+}

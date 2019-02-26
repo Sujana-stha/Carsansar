@@ -1,27 +1,21 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Field, reduxForm } from 'redux-form';
-import store from '../../store';
 
-
-class CompanyForm extends Component {
-    renderInputField({input, label, type, meta: {touched, error}}) {
-        return (
-            <div>
-                <div className="row">
-					<div className="input-field col s12">
-                        <input type={type} {...input}/>
-                        <label>{label}</label>
-                        <div className="error">
-                            {touched ? error: ''}
-                        </div>
+const renderInputField=({input, label, type, meta: {touched, error}})=> {
+    return (
+            <div className="row">
+                <div className="input-field col s12">
+                    <input type={type} {...input}/>
+                    <label>{label}</label>
+                    <div className="error">
+                        {touched ? error: ''}
                     </div>
                 </div>
             </div>
-        )
-    }
-    
-    render() {
-        const { handleSubmit } = this.props;
+    )
+}
+const CompanyForm=props=> {
+        const { handleSubmit } = props;
         return (
             <div>
                 <h4 className="header2">Add New Company</h4>
@@ -34,7 +28,7 @@ class CompanyForm extends Component {
                                     label="Company Code"
                                     name="company_cd"
                                     type="text"
-                                    component={this.renderInputField} 
+                                    component={renderInputField} 
                                 />
                             </div>
                             <div className="col s12 m4 l4">
@@ -42,7 +36,7 @@ class CompanyForm extends Component {
                                     label="Company Name"
                                     name="name"
                                     type="text"
-                                    component={this.renderInputField} 
+                                    component={renderInputField} 
                                 />
                             </div>
                             <div className="col s12 m4 l4">
@@ -50,7 +44,7 @@ class CompanyForm extends Component {
                                     label="Contact Number"
                                     name="contact_no"
                                     type="number"
-                                    component={this.renderInputField} 
+                                    component={renderInputField} 
                                 />
                             </div>
                             <div className="col s12 m6 l6">
@@ -58,7 +52,7 @@ class CompanyForm extends Component {
                                     label="Company Address"
                                     name="address"
                                     type="text"
-                                    component={this.renderInputField} 
+                                    component={renderInputField} 
                                 />
                             </div>
                             
@@ -67,7 +61,7 @@ class CompanyForm extends Component {
                                     label="Company Email"
                                     name="email"
                                     type="email"
-                                    component={this.renderInputField} 
+                                    component={renderInputField} 
                                 />
                             </div>
                             
@@ -83,7 +77,6 @@ class CompanyForm extends Component {
                 </div>
             </div>
         );
-    }
 }
 
 function validate(values) {

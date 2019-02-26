@@ -1,7 +1,5 @@
-// Vehicles Listing
 
 import React, { Component } from 'react';
-// import { NavLink } from 'react-router-dom';
 import Pagination from "react-js-pagination";
 import { connect } from 'react-redux';
 import store from '../../store';
@@ -76,11 +74,7 @@ class ColorListContainer extends Component {
     render(){
         return(
             <div className="row"> 
-                {/* <div className="row">
-                    <div className="col s12 mt-2 mb-2 right-align">
-                        <NavLink to="/insert-color" className="btn waves-effect waves-light"><i className="material-icons left">add</i><span> Add Color</span></NavLink>
-                    </div>
-                </div> */}
+                
                 <div className="col s12 m3 l3">
                     {this.state.isEditing ? (
                         <EditColor onSubmit = {this.submitEditColor.bind(this)} editId = {this.state.isEditing} />
@@ -120,20 +114,7 @@ class ColorListContainer extends Component {
                               
                      
                     </table> 
-                    {/* <div className="divider"></div>
-                    <div className="row" style={{marginBottom:50 + 'px'}}>
-                        <div className="col s12 mt-2 mb-2 right-align">
-                            <ul className="pagination">
-                                <li className="disabled"><a href="#!"><i className="material-icons">chevron_left</i></a></li>
-                                <li className="active"><a href="#!">1</a></li>
-                                <li className="waves-effect"><a href="#!">2</a></li>
-                                <li className="waves-effect"><a href="#!">3</a></li>
-                                <li className="waves-effect"><a href="#!">4</a></li>
-                                <li className="waves-effect"><a href="#!">5</a></li>
-                                <li className="waves-effect"><a href="#!"><i className="material-icons">chevron_right</i></a></li>
-                            </ul>
-                        </div>
-                    </div>   */}
+                    
                     <div className="col s12 mt-2 mb-2 left-align">
                         <Pagination
                         activePage={this.props.activePage}
@@ -163,9 +144,5 @@ function mapStateToProps(store) {
         
     }
 }
-
-// function mapDispatchToProps(dispatch){
-//     return bindActionCreators({}, dispatch);
-// }
 
 export default connect(mapStateToProps, {requestColors, requestDeleteColors, requestSubmitColor, requestColorsPages,requestUpdateColors, requestColorStatus})(ColorListContainer);

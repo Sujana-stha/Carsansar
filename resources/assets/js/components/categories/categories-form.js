@@ -1,27 +1,22 @@
 import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
-import store from '../../store';
 
-
-class CategoryForm extends Component {
-    renderInputField({input, label, type, meta: {touched, error}}) {
-        return (
-            <div>
-                <div className="row">
-					<div className="input-field col s12">
-                        <input type={type} {...input}/>
-                        <label>{label}</label>
-                        <div className="error">
-                            {touched ? error: ''}
-                        </div>
+const renderInputField= ({input, label, type, meta: {touched, error}})=> {
+    return (
+            <div className="row">
+                <div className="input-field col s12">
+                    <input type={type} {...input}/>
+                    <label>{label}</label>
+                    <div className="error">
+                        {touched ? error: ''}
                     </div>
                 </div>
             </div>
-        )
-    }
-    
-    render() {
-        const { handleSubmit } = this.props;
+    )
+}
+
+const CategoryForm = props => {
+        const { handleSubmit } = props;
         return (
             <div>
                 <h4 className="header2">Add New Categories</h4>
@@ -33,7 +28,7 @@ class CategoryForm extends Component {
                                 label="Category Desciption"
                                 name="category_desc"
                                 type="text"
-                                component={this.renderInputField} 
+                                component={renderInputField} 
                             />
                             
                             <div className="row">
@@ -48,10 +43,10 @@ class CategoryForm extends Component {
                 </div>
             </div>
         );
-    }
+    
 }
 
-function validate(values) {
+const validate =(values) => {
     const errors = {}
     if(!values.category_desc) {
         errors.category_desc = "The Field is empty"
