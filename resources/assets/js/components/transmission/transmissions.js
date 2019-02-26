@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 
-
 class TransmissionList extends Component {
     constructor() {
         super();
@@ -9,7 +8,6 @@ class TransmissionList extends Component {
             showItem: null
         };
     }
-    
 
     deleteItem(id){
         this.setState({showItem: id})

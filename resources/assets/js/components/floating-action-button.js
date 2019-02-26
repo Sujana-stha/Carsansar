@@ -1,11 +1,11 @@
 // Floating Action Button
 
-import React, { Component } from 'react';
+import React from 'react';
 
 var fltBtnStyle = {
   bottom: '50px',
   right: '19px'
- };
+};
 
 const FloatingActionButton = () => {
     return(

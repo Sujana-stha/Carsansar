@@ -1,27 +1,22 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Field, reduxForm } from 'redux-form';
-import store from '../../store';
 
-
-class OptionCategoryForm extends Component {
-    renderInputField({input, label, type, meta: {touched, error}}) {
-        return (
-            <div>
-                <div className="row">
-					<div className="input-field col s12">
-                        <input type={type} {...input}/>
-                        <label>{label}</label>
-                        <div className="error">
-                            {touched ? error: ''}
-                        </div>
+const renderInputField=({input, label, type, meta: {touched, error}})=> {
+    return (
+            <div className="row">
+                <div className="input-field col s12">
+                    <input type={type} {...input}/>
+                    <label>{label}</label>
+                    <div className="error">
+                        {touched ? error: ''}
                     </div>
                 </div>
             </div>
-        )
-    }
+    )
+}
+const OptionCategoryForm =props=> {
     
-    render() {
-        const { handleSubmit } = this.props;
+        const { handleSubmit } = props;
         return (
             <div>
                 <h4 className="header2">Add New Option Categories</h4>
@@ -33,7 +28,7 @@ class OptionCategoryForm extends Component {
                                 label="Option Category Desciption"
                                 name="optioncategory_desc"
                                 type="text"
-                                component={this.renderInputField} 
+                                component={renderInputField} 
                             />
                             
                             <div className="row">
@@ -48,7 +43,7 @@ class OptionCategoryForm extends Component {
                 </div>
             </div>
         );
-    }
+    
 }
 
 function validate(values) {

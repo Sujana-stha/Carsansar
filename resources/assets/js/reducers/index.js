@@ -18,7 +18,6 @@ import transmissionReducer from './transmission_reducer';
 import companyReducer from './company_reducer';
 import dealsReducer from './deals_reducer';
 import loginReducer from './login_reducers'
-import LoggedUserReducer from './loggedUserReducer'
 import UsersReducer from './users_reducer'
 
 const rootReducer = (history) => combineReducers({
@@ -39,7 +38,6 @@ const rootReducer = (history) => combineReducers({
     companyState: companyReducer,
     dealState: dealsReducer,
     loginState: loginReducer,
-    loggedUserState:LoggedUserReducer,
     userState: UsersReducer
 });
 

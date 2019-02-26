@@ -1,23 +1,24 @@
-// import axios from 'axios';
-// const URL = `http://127.0.0.1:8000`
 
 import axios, {getHeaders} from './axiosInstance'
 
-const access_token = window.localStorage.getItem('access_token')
-const headers = getHeaders(access_token)
-
 //GET ALL CATEGORIES API
 export function getCategories() {
+    const access_token = window.localStorage.getItem('access_token')
+    const headers = getHeaders(access_token)
     return axios.get('/api/categories',{headers})
 }
 
 //GET CATEGORIES BY PAGINATION API
 export function getCategoriesPages(pageNumber) {
+    const access_token = window.localStorage.getItem('access_token')
+    const headers = getHeaders(access_token)
     return axios.get(`/api/categories?page=${pageNumber}`,{headers})
 }
 
 // ADD NEW CATEGORIES API
 export function addCategories(values) {
+    const access_token = window.localStorage.getItem('access_token')
+    const headers = getHeaders(access_token)
     values.created_by = 1;
     return axios.post('/api/categories', values,{headers})
     .catch(error=> {
@@ -30,6 +31,8 @@ export function addCategories(values) {
 
 //DELETE CATEGORIES API
 export function deleteCategories(categoryId) {
+    const access_token = window.localStorage.getItem('access_token')
+    const headers = getHeaders(access_token)
     return axios.delete('/api/categories/'+ categoryId,{headers})
     .catch(error=> {
         console.log(error)
@@ -41,6 +44,8 @@ export function deleteCategories(categoryId) {
 
 // UPDATE CATEGORIES API
 export function updateCategories(categoryId, values) {
+    const access_token = window.localStorage.getItem('access_token')
+    const headers = getHeaders(access_token)
     return axios.put('/api/categories/'+ categoryId, values,{headers})
     .catch(error=> {
         console.log(error)
@@ -52,6 +57,8 @@ export function updateCategories(categoryId, values) {
 
 // TOGGLE STATUS API
 export function updateCategoriesStatus (categoryId, values) {
+    const access_token = window.localStorage.getItem('access_token')
+    const headers = getHeaders(access_token)
     return axios.put('/api/categories/'+ categoryId, values,{headers})
     .catch(error=> {
         console.log(error)
@@ -63,6 +70,8 @@ export function updateCategoriesStatus (categoryId, values) {
 
 // GET SINGLE DATA OF CAtegories
 export function getSingleCategories (categoryId) {
+    const access_token = window.localStorage.getItem('access_token')
+    const headers = getHeaders(access_token)
     return axios.get('/api/categories/'+categoryId,{headers})
     .catch(error=> {
         console.log(error)

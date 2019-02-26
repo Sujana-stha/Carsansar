@@ -7,13 +7,6 @@ export function loginRequest(data) {
     }
 }
 
-// export function loginSubmit(data) {
-//     return {
-//         type: types.LOGIN_SUBMIT,
-//         data
-//     }
-// }
-
 export function loginSuccess(data) {
     return {
         type: types.LOGIN_SUCCESS,

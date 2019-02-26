@@ -12,7 +12,6 @@ class EditOptionCategory extends Component {
         })
     }
     
-    
     renderInputField({input, label, type, meta: {touched, error}}) {
         return (
             <div>

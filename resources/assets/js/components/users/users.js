@@ -1,17 +1,16 @@
 // Users Listing
-import React, { Component } from 'react';
+import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { Table, Button, Card, Row, Col, Input } from 'react-materialize';
 
 const UsersListing = () => {
     return(
 	    <div>
 	        <div className="row">
 				<div className="col s12 mt-2 mb-2 right-align">
-					<NavLink to="/insert-user" className="btn waves-effect waves-light"><i className="material-icons left">add</i><span> Add User</span></NavLink>
+					<NavLink to="/dashboard/insert-user" className="btn waves-effect waves-light"><i className="material-icons left">add</i><span> Add User</span></NavLink>
 				</div>
 			</div>
-            <Table>
+            <table>
                 <thead>
                     <tr>
                     <th data-field="id">#</th>
@@ -87,7 +86,7 @@ const UsersListing = () => {
                     </td>
                     </tr>
                 </tbody>
-            </Table>
+            </table>
         </div>
 	    	    
     )

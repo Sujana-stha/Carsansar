@@ -23,12 +23,6 @@ class DrivesListContainer extends Component {
         this.toggleStatus = this.toggleStatus.bind(this)
     }
 
-    // hideMessage (e) {
-    //     e.preventDefault();
-    //     this.setState ({
-    //         hide: false
-    //     })
-    // }
 
     componentDidMount() {
         // call action to run the relative saga
@@ -81,29 +75,8 @@ class DrivesListContainer extends Component {
         }
         this.props.requestDrivesStatus(driveId, newDrivesStatus, page)
     }
-    // renderList() {
-    //     if(this.props.fetching) {
-    //         return (
-    //             <tbody>
-    //                 <tr><td></td></tr>
-    //             </tbody>
-    //         )
-    //     } else {
-    //         if(this.props.drives.length) {
-    //             return (
-    //                 <DrivesList drives= {this.props.drives} onEditDrive = {this.editDrives} deleteDrive = {this.props.requestDeleteDrives} driveStatus = {this.toggleStatus}/>
-    //             )
-    //         } else {
-    //             return (
-    //                 <tbody>
-    //                     <tr><td>No Results Found !</td></tr>
-    //                 </tbody>
-    //             )
-    //         }
-    //     }
-    // }
+    
     render() {
-        console.log('prop', this.props.drives)
         return (
             <div>
                 <div className="row">
@@ -131,7 +104,7 @@ class DrivesListContainer extends Component {
                                     <th>Status</th>
                                 </tr>
                             </thead>
-                            {/* {this.renderList()} */}
+                            
                             {this.props.drives.length ? (
                                 <DrivesList drives= {this.props.drives} onEditDrive = {this.editDrives} deleteDrive = {this.props.requestDeleteDrives} driveStatus = {this.toggleStatus}/>
 

@@ -12,16 +12,7 @@ class EditModel extends Component {
         })
     }
     
-    handleInitialize() {
-        
-        console.log('length',this.props.models[0].id);
-        for (var i = 0; i < this.props.models.length; i++ ) {
-            if(this.props.models[i].id == id) {
-                globalData = this.props.models[i]
-            }
-        }
-        this.props.initialize(globalData);
-    }
+    
     renderInputField({input, label, type, meta: {touched, error}}) {
         return (
             <div>

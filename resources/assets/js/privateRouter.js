@@ -25,37 +25,29 @@
 // } 
 
 import React, {Component} from 'react'
-import { Route, Redirect } from 'react-router-dom'
+import { Route, Redirect, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
-// import { getLoggedUser } from './helpers/check-auth'
+// import { requestLoggedUser } from './actions/users-action'
 import store from './store'
 
 class PrivateRoute extends Component {
 
-  // componentWillReceiveProps() {
-  //   // getLoggedUser()
-  //   window.location.reload()
+  // componentWillMount() {
+  //   requestLoggedUser();
   // }
 
   render() {
-    const { component: Component, token, ...rest } = this.props
+    const { component: Component, ...rest } = this.props
     
     return (
       <Route
         {...rest}
         render={props =>
-        localStorage['access_token'] ? (
+        localStorage['access_token'] ? 
         <Component {...props} />
-        ) : (
-        <Redirect
-          to={{
-            pathname: "/login",
-            state: { from: props.location }
-          }}
-        />
-      )
-    }
-  />
+        : <Redirect to="/auth/login"/>
+        }
+      />
     )
   }
 }
@@ -64,10 +56,10 @@ class PrivateRoute extends Component {
 //   pending: loggedUserState.pending,
 //   logged: loggedUserState.logged
 // })
-// function mapStateToProps(store) {
-//   return {
-//     pending: store.loggedUserState.pending
-//   }
-// }
+function mapStateToProps(store) {
+  return {
+    isAuthenticated: store.loginState.isAuthenticated
+  }
+}
 
-export default PrivateRoute;
+export default withRouter(connect(mapStateToProps)(PrivateRoute));

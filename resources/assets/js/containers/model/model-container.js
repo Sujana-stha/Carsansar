@@ -73,27 +73,7 @@ class ModelsListContainer extends Component {
         }
         this.props.requestModelStatus(modelId, newModelStatus, page);
     }
-    // renderList() {
-    //     if(this.props.fetching) {
-    //         return (
-    //             <tbody>
-    //                 <tr><td></td></tr>
-    //             </tbody>
-    //         )
-    //     } else {
-    //         if(this.props.models.length) {
-    //             return (
-    //                 <ModelList models= {this.props.models} onEditModel = {this.editModels} deleteModel = {this.props.requestDeleteModel} modelStatus = {this.toggleStatus}/>
-    //             )
-    //         } else {
-    //             return (
-    //                 <tbody>
-    //                     <tr><td>No Results Found !</td></tr>
-    //                 </tbody>
-    //             )
-    //         }
-    //     }
-    // }
+    
     render() {
         return (
             <div>
@@ -122,7 +102,6 @@ class ModelsListContainer extends Component {
                                     <th>Status</th>
                                 </tr>
                             </thead>
-                            {/* {this.renderList()} */}
                             {this.props.models.length ? (
                                 <ModelList models= {this.props.models} onEditModel = {this.editModels} deleteModel = {this.props.requestDeleteModel} modelStatus = {this.toggleStatus}/>
 

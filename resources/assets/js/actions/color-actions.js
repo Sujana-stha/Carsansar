@@ -89,18 +89,3 @@ export function ColorsStatusSuccess (colorId, values, page) {
       page
   }
 }
-
-
-// export function deleteUserSuccess(userId) {
-//   return {
-//     type: types.DELETE_USER_SUCCESS,
-//     userId
-//   };
-// }
-
-// export function userProfileSuccess(userProfile) {
-//   return {
-//     type: types.USER_PROFILE_SUCCESS,
-//     userProfile
-//   };
-// }

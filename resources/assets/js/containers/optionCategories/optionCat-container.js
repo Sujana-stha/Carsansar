@@ -59,12 +59,6 @@ class OptionCategoryListContainer extends Component {
         this.props.requestDeleteOptionCategories(optCatId);
     }
 
-    // pagination function
-    // handlePageChange(pageNumber) {
-    //     console.log(`active page is ${pageNumber}`);
-    //     this.props.requestOptionCategoriesPages(pageNumber)
-        
-    // }
     // toggle status value
     toggleStatus (optCatId, status) {
        
@@ -73,27 +67,7 @@ class OptionCategoryListContainer extends Component {
         }
         this.props.requestOptionCategoriesStatus(optCatId, newOptCatStatus)
     }
-    // renderList() {
-    //     if(this.props.fetching) {
-    //         return (
-    //             <tbody>
-    //                 <tr><td></td></tr>
-    //             </tbody>
-    //         )
-    //     } else {
-    //         if(this.props.optionCategories.length) {
-    //             return (
-    //                 <OptionCategoryList optionCategories= {this.props.optionCategories} onEditOptionCategory = {this.editOptionCategory} deleteOptionCategory = {this.props.requestDeleteOptionCategories} optionCategoryStatus={this.toggleStatus}/>
-    //             )
-    //         } else {
-    //             return (
-    //                 <tbody>
-    //                     <tr><td>No Results Found !</td></tr>
-    //                 </tbody>
-    //             )
-    //         }
-    //     }
-    // }
+    
     render() {
         return (
             <div>
@@ -122,7 +96,6 @@ class OptionCategoryListContainer extends Component {
                                     <th>Status</th>
                                 </tr>
                             </thead>
-                            {/* {this.renderList()} */}
                             {this.props.optionCategories.length ? (
                                 <OptionCategoryList optionCategories= {this.props.optionCategories} onEditOptionCategory = {this.editOptionCategory} deleteOptionCategory = {this.props.requestDeleteOptionCategories} optionCategoryStatus={this.toggleStatus}/>
 
@@ -134,17 +107,7 @@ class OptionCategoryListContainer extends Component {
                                 </tbody>
                             )}
                         </table>
-                        {/* <div className="col s12 mt-2 mb-2 left-align">
-                            <Pagination
-                            activePage={this.props.activePage}
-                            itemsCountPerPage={this.props.itemsCountPerPage}
-                            totalItemsCount={this.props.totalItemsCount}
-                            pageRangeDisplayed={this.props.pageRangeDisplayed}
-                            onChange={this.handlePageChange}
-                            firstPageText='First'
-                            lastPageText='Last'
-                            />
-                        </div> */}
+                        
                     </div>
                 </div>
             </div>
@@ -156,10 +119,7 @@ function mapStateToProps(store) {
     return {
         optionCategories: store.OptCatState.optionCategories,
         fetching: store.OptCatState.fetching,
-        // activePage: store.OptCatState.activePage,
-        // itemsCountPerPage: store.OptCatState.itemsCountPerPage,
-        // totalItemsCount: store.OptCatState.totalItemsCount,
-        // pageRangeDisplayed: store.OptCatState.pageRangeDisplayed,
+        
     }
 }
 

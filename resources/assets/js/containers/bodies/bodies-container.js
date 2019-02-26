@@ -22,13 +22,6 @@ class BodiesListContainer extends Component {
         this.toggleStatus = this.toggleStatus.bind(this)
     }
 
-    // hideMessage (e) {
-    //     e.preventDefault();
-    //     this.setState ({
-    //         hide: false
-    //     })
-    // }
-
     componentDidMount() {
         // call action to run the relative saga
         this.props.requestBodies();
@@ -76,44 +69,10 @@ class BodiesListContainer extends Component {
         }
         this.props.requestBodiesStatus(bodyId, newBodyStatus, page)
     }
-    // renderList() {
-    //     if(this.props.fetching) {
-    //         return (
-    //             <tbody>
-    //                 <tr><td></td></tr>
-    //             </tbody>
-    //         )
-    //     } else {
-    //         if(this.props.makes.length) {
-    //             return (
-    //                 <BodiesList bodies= {this.props.bodies} onEditBody = {this.editBodies} deleteBody = {this.props.requestDeleteBodies} bodyStatus = {this.toggleStatus}/>
-    //             )
-    //         } else {
-    //             return (
-    //                 <tbody>
-    //                     <tr><td>No Results Found !</td></tr>
-    //                 </tbody>
-    //             )
-    //         }
-    //     }
-    // }
+    
     render() {
-        console.log('prop', this.props.bodies)
         return (
             <div>
-                {/* {this.props.message.trim().length && this.state.hide ? (
-                   
-                    <div id="card-alert" className="card green">
-                        <div className="card-content white-text">
-                            <p>{this.props.message}</p>
-                        </div>
-                        <button type="button" className="close white-text" data-dismiss="alert" aria-label="Close">
-                            <span onClick={this.hideMessage.bind(this)} aria-hidden="true">×</span>
-                        </button>
-                    </div>
-                ): (
-                    <div></div>
-                )} */}
                 
                 <div className="row">
                     <div className="col s12 m3 l3">
@@ -140,7 +99,6 @@ class BodiesListContainer extends Component {
                                     <th>Status</th>
                                 </tr>
                             </thead>
-                            {/* {this.renderList()} */}
                             {this.props.bodies.length ? (
                                 <BodiesList bodies= {this.props.bodies} onEditBody = {this.editBodies} deleteBody = {this.props.requestDeleteBodies} bodyStatus = {this.toggleStatus}/>
 

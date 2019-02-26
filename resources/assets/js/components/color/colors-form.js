@@ -1,27 +1,23 @@
 import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
-import store from '../../store';
 import { connect } from 'react-redux';
 
-class ColorForm extends Component {
-    renderInputField({input, label, type, meta: {touched, error}}) {
-        return (
-            <div>
-                <div className="row">
-					<div className="input-field col s12">
-                        <input type={type} {...input}/>
-                        <label>{label}</label>
-                        <div className="error">
-                            {touched ? error: ''}
-                        </div>
+const renderInputField=({input, label, type, meta: {touched, error}})=> {
+    return (
+            <div className="row">
+                <div className="input-field col s12">
+                    <input type={type} {...input}/>
+                    <label>{label}</label>
+                    <div className="error">
+                        {touched ? error: ''}
                     </div>
                 </div>
             </div>
-        )
-    }
-    
-    render() {
-        const { handleSubmit } = this.props;
+    )
+}
+
+const ColorForm =props => {
+        const { handleSubmit } = props;
         return (
             <div>
                 <h4 className="header2 wr-header2">Add New Color</h4>
@@ -33,18 +29,18 @@ class ColorForm extends Component {
                                 label="Color Code"
                                 name="color_cd"
                                 type="text"
-                                component={this.renderInputField} 
+                                component={renderInputField} 
                             />
                             <Field 
                                 label="Color Desciption"
                                 name="color_desc"
                                 type="text"
-                                component={this.renderInputField} 
+                                component={renderInputField} 
                             />
                             
                             <div className="row">
                                 <div className="input-field col s12">
-                                    {this.props.sending ? (
+                                    {props.sending ? (
                                         <button className="btn cyan waves-effect waves-light right" type="submit" name="action">Sending...
                                         </button>
                                     ): (
@@ -59,10 +55,10 @@ class ColorForm extends Component {
                 </div>
             </div>
         );
-    }
+    
 }
 
-function validate(values) {
+const validate=(values)=> {
     const errors = {}
     if(!values.color_cd) {
         errors.color_cd = "The Field is Empty!"

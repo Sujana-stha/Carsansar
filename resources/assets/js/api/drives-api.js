@@ -1,23 +1,24 @@
-// import axios from 'axios';
-// const URL = `http://127.0.0.1:8000`
 
 import axios, {getHeaders} from './axiosInstance'
 
-const access_token = window.localStorage.getItem('access_token')
-const headers = getHeaders(access_token);
-
 //GET ALL DRIVES API
 export function getDrives() {
+    const access_token = window.localStorage.getItem('access_token')
+    const headers = getHeaders(access_token)
     return axios.get('/api/drives',{headers})
 }
 
 //GET DRIVES BY PAGINATION API
 export function getDrivesPages(pageNumber) {
+    const access_token = window.localStorage.getItem('access_token')
+    const headers = getHeaders(access_token)
     return axios.get(`/api/drives?page=${pageNumber}`,{headers})
 }
 
 // ADD NEW DRIVES API
 export function addDrives(values) {
+    const access_token = window.localStorage.getItem('access_token')
+    const headers = getHeaders(access_token)
     values.created_by = 1;
     return axios.post('/api/drives', values,{headers})
     .catch(error=> {
@@ -30,6 +31,8 @@ export function addDrives(values) {
 
 //DELETE DRIVES API
 export function deleteDrives(driveId) {
+    const access_token = window.localStorage.getItem('access_token')
+    const headers = getHeaders(access_token)
     return axios.delete('/api/drives/'+ driveId,{headers})
     .catch(error=> {
         console.log(error)
@@ -41,6 +44,8 @@ export function deleteDrives(driveId) {
 
 // UPDATE DRIVES API
 export function updateDrives(driveId, values) {
+    const access_token = window.localStorage.getItem('access_token')
+    const headers = getHeaders(access_token)
     return axios.put('/api/drives/'+ driveId, values,{headers})
     .catch(error=> {
         console.log(error)
@@ -52,6 +57,8 @@ export function updateDrives(driveId, values) {
 
 // TOGGLE STATUS API
 export function updateDrivesStatus (driveId, values) {
+    const access_token = window.localStorage.getItem('access_token')
+    const headers = getHeaders(access_token)
     return axios.put('/api/drives/'+ driveId, values,{headers})
     .catch(error=> {
         console.log(error)
@@ -63,6 +70,8 @@ export function updateDrivesStatus (driveId, values) {
 
 // GET SINGLE DATA OF Drives
 export function getSingleDrives (driveId) {
+    const access_token = window.localStorage.getItem('access_token')
+    const headers = getHeaders(access_token)
     return axios.get('/api/drives/'+driveId,{headers})
     .catch(error=> {
         console.log(error)

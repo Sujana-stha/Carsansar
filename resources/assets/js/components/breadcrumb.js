@@ -35,8 +35,8 @@ const Breadcrumb = () => {
                 <div className="col s10 m6 l6">
                   <h5 className="breadcrumbs-title">Get Page Title</h5>
                   <ol className="breadcrumbs">
-                    <li><NavLink to="/">Dashboard</NavLink></li>
-                    <li><NavLink to="/">Parent Page Title</NavLink></li>
+                    <li><NavLink to="/dashboard">Dashboard</NavLink></li>
+                    <li><NavLink to="/dashboard">Parent Page Title</NavLink></li>
                     <li className="active">Get Page Title</li>
                   </ol>
                 </div>

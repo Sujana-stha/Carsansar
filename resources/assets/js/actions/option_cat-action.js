@@ -25,18 +25,7 @@ export function getOptionCategoriesSuccess(optCat) {
         optCat
     }
 }
-// export function requestOptionCategoriesPages(pageNumber) {
-//     return {
-//         type: types.REQUEST_OPT_CAT_PAGES,
-//         pageNumber
-//     }
-// }
-// export function getOptionCategoriesPages(optCat) {
-//     return {
-//         type: types.GET_OPT_CAT_PAGES,
-//         optCat
-//     }
-// }
+
 export function addOptionCategoriesSuccess(values) {
     return {
         type: types.ADD_OPT_CAT_SUCCESS,

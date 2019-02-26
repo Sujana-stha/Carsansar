@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 
-
 class CategoriesList extends Component {
     constructor() {
         super();

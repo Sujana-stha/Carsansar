@@ -1,27 +1,26 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Field, reduxForm } from 'redux-form';
 import store from '../../store';
 import { connect } from 'react-redux';
 
-class MakeForm extends Component {
-    renderInputField({input, label, type, meta: {touched, error}}) {
-        return (
-            <div>
-                <div className="row">
-					<div className="input-field col s12">
-                        <input type={type} {...input}/>
-                        <label>{label}</label>
-                        <div className="error">
-                            {touched ? error: ''}
-                        </div>
+const renderInputField=({input, label, type, meta: {touched, error}})=> {
+    return (
+            <div className="row">
+                <div className="input-field col s12">
+                    <input type={type} {...input}/>
+                    <label>{label}</label>
+                    <div className="error">
+                        {touched ? error: ''}
                     </div>
                 </div>
             </div>
-        )
-    }
+    )
+}
+
+
+const MakeForm =props=> {
     
-    render() {
-        const { handleSubmit } = this.props;
+        const { handleSubmit } = props;
         return (
             <div>
                 <h4 className="header2 wr-header2">Add New Make</h4>
@@ -30,10 +29,10 @@ class MakeForm extends Component {
 					<div className="row">
                         <form className="col s12" onSubmit= { handleSubmit  } >
                             <Field 
-                                label="Make Desciption"
+                                label="Makes"
                                 name="make_desc"
                                 type="text"
-                                component={this.renderInputField} 
+                                component={renderInputField} 
                             />
                             
                             <div className="row">
@@ -53,7 +52,7 @@ class MakeForm extends Component {
                 </div>
             </div>
         );
-    }
+    
 }
 
 function validate(values) {

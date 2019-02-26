@@ -1,6 +1,4 @@
 import React, {Component} from 'react';
-//import { Link } from 'react-router';
-// Using "Class Based Components"
 
 class ColorsList extends Component {
   constructor() {
@@ -9,7 +7,6 @@ class ColorsList extends Component {
           confirm: false,
           showItem: null
       };
-      // this.deleteItem = this.deleteItem.bind(this);
   }
 
   deleteItem(id){

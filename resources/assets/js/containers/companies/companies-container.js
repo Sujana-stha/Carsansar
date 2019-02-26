@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Pagination from "react-js-pagination";
-// import { NavLink } from 'react-router-dom';
 import store from '../../store';
 import { requestCompanies, requestDeleteCompanies, requestSubmitCompanies, requestCompaniesPages,requestUpdateCompanies, requestCompaniesStatus } from  '../../actions/companies-action';
 
@@ -75,27 +74,7 @@ class CompaniesListContainer extends Component {
         }
         this.props.requestCompaniesStatus(companyId, newCompanyStatus, page)
     }
-    // renderList() {
-    //     if(this.props.fetching) {
-    //         return (
-    //             <tbody>
-    //                 <tr><td></td></tr>
-    //             </tbody>
-    //         )
-    //     } else {
-    //         if(this.props.companies.length) {
-    //             return (
-    //                 <CompaniesList companies= {this.props.companies} onEditCompany = {this.editCompanies} deleteCompany = {this.props.requestDeleteCompanies} companyStatus = {this.toggleStatus}/>
-    //             )
-    //         } else {
-    //             return (
-    //                 <tbody>
-    //                     <tr><td>No Results Found !</td></tr>
-    //                 </tbody>
-    //             )
-    //         }
-    //     }
-    // }
+    
     render() {
         return (
             <div>
@@ -143,7 +122,6 @@ class CompaniesListContainer extends Component {
                                     <th>Status</th>
                                 </tr>
                             </thead>
-                            {/* {this.renderList()} */}
                             {this.props.companies.length ? (
                                 <CompaniesList companies= {this.props.companies} onEditCompany = {this.editCompanies} deleteCompany = {this.props.requestDeleteCompanies} companyStatus = {this.toggleStatus}/>
 
