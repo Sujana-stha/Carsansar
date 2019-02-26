@@ -37,7 +37,7 @@ const MakeForm =props=> {
                             
                             <div className="row">
                                 <div className="input-field col s12">
-                                    {this.props.sending ? (
+                                    {props.sending ? (
                                         <button className="btn cyan waves-effect waves-light right" type="submit" name="action">Sending...
                                         </button>
                                     ): (

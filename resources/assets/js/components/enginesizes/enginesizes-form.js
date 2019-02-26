@@ -2,7 +2,7 @@ import React from 'react';
 import { Field, reduxForm } from 'redux-form';
 
 
-renderInputField=({input, label, type, meta: {touched, error}})=> {
+const renderInputField=({input, label, type, meta: {touched, error}})=> {
     return (
             <div className="row">
                 <div className="input-field col s12">

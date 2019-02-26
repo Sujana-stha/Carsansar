@@ -74,7 +74,7 @@ const Header =props=> {
 							<li><a class="grey-text text-darken-1" href="page-faq.html"><i class="material-icons">help_outline</i> Help</a></li>
 							<li><a class="grey-text text-darken-1" href="user-lock-screen.html"><i class="material-icons">lock_outline</i> Lock</a></li> */}
 							<li className="divider"></li>
-							<li><a className="grey-text text-darken-1" href="javascript:void(0);" onClick={this.props.logoutRequest}><i className="material-icons">keyboard_tab</i> Logout</a></li>
+							<li><a className="grey-text text-darken-1" href="javascript:void(0);" onClick={props.logoutRequest}><i className="material-icons">keyboard_tab</i> Logout</a></li>
 						</ul>
 					</div>
 					<nav className="display-none search-sm">

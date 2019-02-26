@@ -23,14 +23,7 @@ class CategoriesListContainer extends Component {
         this.editCategories = this.editCategories.bind(this)
         this.toggleStatus = this.toggleStatus.bind(this)
     }
-
-    // hideMessage (e) {
-    //     e.preventDefault();
-    //     this.setState ({
-    //         hide: false
-    //     })
-    // }
-
+    
     componentDidMount() {
         // call action to run the relative saga
         this.props.requestCategories();
@@ -81,29 +74,8 @@ class CategoriesListContainer extends Component {
         }
         this.props.requestCategoriesStatus(categoryId, newCategoriesStatus, page)
     }
-    // renderList() {
-    //     if(this.props.fetching) {
-    //         return (
-    //             <tbody>
-    //                 <tr><td></td></tr>
-    //             </tbody>
-    //         )
-    //     } else {
-    //         if(this.props.categories.length) {
-    //             return (
-    //                 <CategoriesList categories= {this.props.categories} onEditCategory = {this.editCategories} deleteCategory = {this.props.requestDeleteCategories} categoryStatus = {this.toggleStatus}/>
-    //             )
-    //         } else {
-    //             return (
-    //                 <tbody>
-    //                     <tr><td>No Results Found !</td></tr>
-    //                 </tbody>
-    //             )
-    //         }
-    //     }
-    // }
+    
     render() {
-        console.log('prop', this.props)
         return (
             <div>
                 
@@ -132,7 +104,6 @@ class CategoriesListContainer extends Component {
                                     <th>Status</th>
                                 </tr>
                             </thead>
-                            {/* {this.renderList()} */}
                             {this.props.categories.length ? (
                                 <CategoriesList categories= {this.props.categories} onEditCategory = {this.editCategories} deleteCategory = {this.props.requestDeleteCategories} categoryStatus = {this.toggleStatus}/>
 
