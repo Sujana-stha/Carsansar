@@ -26,7 +26,10 @@ class DealsController extends Controller
  
     public function store(Request $request)
     {
-        //var_dump($request->all());
+        $file = $request->file('files');
+        $ext = $file->extension();
+        echo $ext;
+        // dd($request->all());
         // $request->get('file');
         // $res = $request->hasFile('files');
         //  if($res) {
@@ -37,6 +40,7 @@ class DealsController extends Controller
        
         // // print_r($request);
         // // exit;
+       
         $vehicle_info = new VehicleInfo([
              'vin' => $request->get('vin'),
              'category_id' => $request->get('category_id'),
