@@ -5,7 +5,11 @@ import { connect } from 'react-redux';
 
 class VehicleFormContainer extends Component {
     onSubmit(values) {
-        console.log(this.props);
+        console.log('value', values);
+        
+        // Object.keys(values).forEach((key)=> {
+        //     formData.append(key, values[key])
+        // })
         this.props.requestSubmitVehicle(values);
     }
 

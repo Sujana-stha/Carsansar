@@ -1,8 +1,7 @@
 // Insert Vehicle
 
 import React, { Component } from 'react';
-import Dropzone from 'react-dropzone';
-
+import DropZone from "react-dropzone";
 import { NavLink } from 'react-router-dom';
 import ReactQuill from 'react-quill';
 import { Tabs, Tab, TabPanel, TabList, TabProvider } from 'react-web-tabs';
@@ -12,13 +11,15 @@ import 'react-web-tabs/dist/react-web-tabs.css';
 import * as api from '../../api/deals-api';
 import * as optCatapi from '../../api/option_cat-api';
 import { Field, reduxForm } from 'redux-form';
+// import DropzoneField from './Dropzonefield'
+
 
 class InsertVehicle extends Component {
 	constructor() {
-	  	super()
+	  	super();
 	  	this.state = { 
-			text: 'Vehicle Description',
 			images:[],
+			text: 'Vehicle Description',
 			makes: {},
 			models:{},
 			bodies: {},
@@ -28,9 +29,11 @@ class InsertVehicle extends Component {
 			fueltypes: {},
 			drives: {},
 			options: [],
-			optCategories: []
-		} // You can also pass a Quill Delta here
+			optCategories: [],
+			hide: true
+		}; // You can also pass a Quill Delta here
 		this.handleChange = this.handleChange.bind(this);
+		// this.onDrop = this.onDrop.bind(this);
 	}
 	componentDidMount() {
 		api.getMakesList().then((response)=> {
@@ -66,11 +69,10 @@ class InsertVehicle extends Component {
 			this.setState({optCategories: response.data})
 		})
     }
-	handleChange(value) {
-	  this.setState({ text: value })
+	handleChange(files) {
+		console.log('fff', files)
 	}
 
-	
 	renderInputField({input, label, type, meta: {touched, error}}) {
 		
         return (
@@ -118,12 +120,14 @@ class InsertVehicle extends Component {
 						return(
 						<div key={i}>
 							{optCategory.id== option.oc_id ? (
-								<p>
-									<input {...input}
+								<label>
+									<input
 									name={`${input.name}`}
 									type="checkbox"
-									value={input.value.indexOf(option.id) !== -1}
-									onClick={(event) => {
+									className="filled-in"
+									value={option.id}
+									checked={input.value.indexOf(option.id) !== -1}
+									onChange={(event) => {
 									const checkedValues= [...input.value];
 									console.log('new', checkedValues)
 									if(event.target.checked) {
@@ -133,8 +137,8 @@ class InsertVehicle extends Component {
 									}
 									return input.onChange(checkedValues)
 									}}/>
-									<label>{option.option_desc}</label>
-								</p>
+									<span>{option.option_desc}</span>
+								</label>
 							): null }
 						</div>
 						)
@@ -144,92 +148,63 @@ class InsertVehicle extends Component {
 		})
 		
 	}
-	
-	renderDropzoneField(field) {
-		const files = field.input.value;
-		let dropzoneRef;
-		var images=[]
-		const onDrop =(files) => {
-			files.map(file => Object.assign(file, {
-				preview: URL.createObjectURL(file)
-			}))
-			field.input.onChange(files);
+	// onDrop(images){
+    //     console.log('tss', images)
+    //     this.setState({
+    //         images : this.state.images.concat([...images])
+    //     });
 
+    // }
+	renderDropzoneField (field) {
+		const files = field.input.value;
+		const onDrop =(files)=> {
+			
 			console.log('fileV',files);
-			images = files;
-			console.log('img', images)
-		}
-		
-  		return ( 
-      		<div className="col s12">
-				<div className="row">
-					<Dropzone
+			field.input.onChange(files);
+    	}
+		return (
+			<div className="row">
+				<div className="col s12">
+					<DropZone
 						name={field.name}
 						onDrop={onDrop.bind(files)}
-						ref={(node) => { dropzoneRef = node; }}
 						maxSize={5242880}
 						multiple={true}
 						accept={'image/*'}
 						className="drop-zone"
-						
 					>
-					{({getRootProps, getInputProps, isDragActive, isDragAccept, isDragReject}) => {
-						
-						return (
-							<div>
-								<div style={{
-									width: '200px',
-									height: '200px',
-									borderWidth: '2px',
-									borderColor: 'rgb(102, 102, 102)',
-									borderStyle: 'dashed',
-									borderRadius: '5px',
-									padding: '20px',
-								}}  {...getRootProps()}>
-									<input 
-									{...getInputProps()} 
-									/>
-									<p>
-										{isDragAccept ? 'Drop' : 'Drag'} files here...
-									</p>
-									<div>{isDragReject && <p>Unsupported file type...</p>}</div>
-								</div>
-							</div>
-						)
-					}}
-					</Dropzone>
-					{field.meta.touched &&
-					field.meta.error &&
-					<span className="error">{field.meta.error}</span>}
+						Drag and Drop Images Here!
+					</DropZone>
+					{field.meta.touched && field.meta.error && <span className="error">{field.meta.error}</span>}
 					{files && Array.isArray(files) && (
-						<ul>
-						{files.map((file, i) =>
-							<li key={i} >
-								<div className="wr-preview-image-block">
-							   		<img src={file.preview} alt="preview" className="wr-preview-image"/>
-							   	</div>
-							  	<p>{file.name}</p>
-							</li>
-						)}
-					  </ul>
+						
+						<div className="col s12">
+							{files.map((file, i) =>
+								<div key={i} className="wr-preview-image-block">
+									{/* {this.state.hide ? (
+										<i className="material-icons">check</i>
+									):null } */}
+									<img src={file.preview} alt="preview" className="wr-preview-image"/>
+								</div>
+							)}
+						</div>
 					)}
-					
 				</div>
-				<div className="row">
-					<button type="button" style={{margin: '5px'}} 
-					onClick={() => { dropzoneRef.open(); }}> Add An Image
-					</button>
-				</div>
-      		</div>
-  		);
+			</div>
+		)
 	}
+	
+	componentWillUnmount() {
+		// Make sure to revoke the data uris to avoid memory leaks
+		this.state.images.forEach(image => URL.revokeObjectURL(image.preview))
+	  }	
 	onSubmit(values) {
 		console.log('valuessss', this.props)
 		this.props.requestSubmitVehicle(values);
 	}
 	render() {
-		const FILE_FIELD_NAME = 'files';
 		const { handleSubmit } = this.props
+		
 	  	return (
 			<div>
 				<div className="row">
@@ -553,7 +528,12 @@ class InsertVehicle extends Component {
 											{/* <div className="input-field col s12">
 												<input type="file" id="input-file-now" className="dropify" multiple />
 											</div> */}
-											<Field name={FILE_FIELD_NAME} component={this.renderDropzoneField} />
+											<Field name="files" 
+											component={this.renderDropzoneField} 
+											type="file"
+											images={this.state.images} 
+											// handleOnDrop={this.onDrop}
+											/>
 										</div>
 									</TabPanel>
 									<TabPanel tabId="vehicle-location">

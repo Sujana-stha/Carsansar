@@ -21,10 +21,10 @@ import RightSidebarNav from '../components/nav/right-sidebar-nav'
 import DashboardAnalytics from '../components/dashboard/dashboard-analytics'
 import VehiclesListing from '../components/vehicles/vehicles-listing'
 import UsersListing from '../components/users/users'
-
 import UserProfile from '../components/users/user-profile'
 import InsertVehicleAttribute from '../components/vehicles/insert-vehicle-attribute'
 import VehicleAttributes from '../components/vehicles/vehicle-attributes'
+import ImagesPreview from '../components/vehicles/imagePreview'
 
 //Containers
 import InsertVehicleContainer from '../containers/vehicles/insert-vehicle-containers'
@@ -99,6 +99,7 @@ class DashboardLayout extends Component {
                                         <Route path={`${match.path}/transmissions`} component={TransmissionContainer}/>
                                         <Route path={`${match.path}/companies`} component={CompaniesContainer}/>
                                         <Route path={`${match.path}/options`} component={OptionsContainer}/>
+                                        <Route path={`${match.path}/images`} component={ImagesPreview}/>
                                         <Redirect to={`${match.url}`} />
                                     </Switch>
                                     <RightSidebarNav />

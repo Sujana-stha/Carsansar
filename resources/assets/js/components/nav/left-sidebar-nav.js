@@ -27,6 +27,9 @@ const LeftSidebarNav = () => {
 							<li>
 								<NavLink to="/dashboard/insert-vehicle" className="collapsible-body collapsible-header waves-effect waves-cyan"><i className="material-icons">radio_button_unchecked</i><span>Add Vehicle</span></NavLink>
 							</li>
+							<li>
+								<NavLink to="/dashboard/images" className="collapsible-body collapsible-header waves-effect waves-cyan"><i className="material-icons">radio_button_unchecked</i><span>Images</span></NavLink>
+							</li>
 						</ul>
 					</div>
 				</li>

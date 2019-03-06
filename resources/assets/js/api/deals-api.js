@@ -123,7 +123,14 @@ export function addVehicles(values) {
     const access_token = window.localStorage.getItem('access_token')
     const headers = getHeaders(access_token)
     console.log('val',values);
-    return axios.post('/api/vehicles', values,{headers})
+    let images = values.files
+    var formData = new FormData();
+    formData.append('title', values.title);
+    // formData.append('files', images);
+    images.map(image=>{
+        formData.append('files', image)
+    })
+    return axios.post('/api/vehicles', formData,{headers})
     .catch(error=> {
         console.log(error)
         return {
