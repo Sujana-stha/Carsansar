@@ -18496,54 +18496,6 @@ h4.wr-header2 {
   padding: 20px;
 }
 
-.wr-preview-image-block {
-  width: 230px;
-  height: 230px;
-  border: 1px solid #ccc;
-  padding: 0;
-  margin: 8px 5px;
-}
-
-.wr-preview-image {
-  width: 100%;
-  height: 100%;
-  padding: 3px;
-}
-
-.image-container {
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  width: 85%;
-  height: 80%;
-  float: left;
-  margin: 15px 10px 10px 37px;
-  text-align: center;
-}
-
-.preview-container {
-  height: 335px;
-  width: 100%;
-  margin-bottom: 10px;
-}
-
-.placeholder-preview,
-.render-preview {
-  text-align: center;
-  background-color: #efebeb;
-  height: 100%;
-  width: 100%;
-  border-radius: 5px;
-}
-
-.upload-container {
-  cursor: pointer;
-  height: 300px;
-}
-
 .wr-uploader .wr-images {
   height: auto;
   width: 100%;
@@ -18553,21 +18505,24 @@ h4.wr-header2 {
 .wr-uploader .wr-images .wr-image {
   position: relative;
   height: 150px;
-  width: 150px;
-  overflow: auto;
+  width: 175px;
   display: inline-block;
-  float: left;
   margin: 10px;
 }
 
+.wr-uploader .wr-images .wr-image span {
+  padding-left: 25px !important;
+}
+
 .wr-uploader .wr-images .wr-image img {
-  width: 100%;
+  width: 150px;
+  height: 150px;
 }
 
 .wr-uploader .wr-images .wr-image .close {
   display: none;
   position: absolute;
-  left: -5px;
+  left: 25px;
   top: 0px;
   padding: 2px 8px;
   width: 25px;

@@ -99,7 +99,6 @@ class DashboardLayout extends Component {
                                         <Route path={`${match.path}/transmissions`} component={TransmissionContainer}/>
                                         <Route path={`${match.path}/companies`} component={CompaniesContainer}/>
                                         <Route path={`${match.path}/options`} component={OptionsContainer}/>
-                                        <Route path={`${match.path}/images`} component={ImagesPreview}/>
                                         <Redirect to={`${match.url}`} />
                                     </Switch>
                                     <RightSidebarNav />
