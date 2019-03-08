@@ -1,7 +1,6 @@
 // Insert Vehicle
 
 import React, { Component } from 'react';
-import DropZone from "react-dropzone";
 import { NavLink } from 'react-router-dom';
 import ReactQuill from 'react-quill';
 import { Tabs, Tab, TabPanel, TabList, TabProvider } from 'react-web-tabs';
@@ -11,14 +10,12 @@ import 'react-web-tabs/dist/react-web-tabs.css';
 import * as api from '../../api/deals-api';
 import * as optCatapi from '../../api/option_cat-api';
 import { Field, reduxForm } from 'redux-form';
-// import DropzoneField from './Dropzonefield'
-
+import ImagePreviewField from './imagePreview';
 
 class InsertVehicle extends Component {
 	constructor() {
 	  	super();
 	  	this.state = { 
-			images:[],
 			text: 'Vehicle Description',
 			makes: {},
 			models:{},
@@ -30,10 +27,8 @@ class InsertVehicle extends Component {
 			drives: {},
 			options: [],
 			optCategories: [],
-			hide: true
 		}; // You can also pass a Quill Delta here
 		this.handleChange = this.handleChange.bind(this);
-		// this.onDrop = this.onDrop.bind(this);
 	}
 	componentDidMount() {
 		api.getMakesList().then((response)=> {
@@ -128,14 +123,14 @@ class InsertVehicle extends Component {
 									value={option.id}
 									checked={input.value.indexOf(option.id) !== -1}
 									onChange={(event) => {
-									const checkedValues= [...input.value];
-									console.log('new', checkedValues)
-									if(event.target.checked) {
-										checkedValues.push(option.id);
-									} else {
-										checkedValues.splice(checkedValues.indexOf(option.id), 1);
-									}
-									return input.onChange(checkedValues)
+										const checkedValues= [...input.value];
+										console.log('new', checkedValues)
+										if(event.target.checked) {
+											checkedValues.push(option.id);
+										} else {
+											checkedValues.splice(checkedValues.indexOf(option.id), 1);
+										}
+										return input.onChange(checkedValues)
 									}}/>
 									<span>{option.option_desc}</span>
 								</label>
@@ -148,63 +143,14 @@ class InsertVehicle extends Component {
 		})
 		
 	}
-	// onDrop(images){
-    //     console.log('tss', images)
-    //     this.setState({
-    //         images : this.state.images.concat([...images])
-    //     });
-
-    // }
-	renderDropzoneField (field) {
-		const files = field.input.value;
-		const onDrop =(files)=> {
-			
-			console.log('fileV',files);
-			field.input.onChange(files);
-    	}
-		return (
-			<div className="row">
-				<div className="col s12">
-					<DropZone
-						name={field.name}
-						onDrop={onDrop.bind(files)}
-						maxSize={5242880}
-						multiple={true}
-						accept={'image/*'}
-						className="drop-zone"
-					>
-						Drag and Drop Images Here!
-					</DropZone>
-					{field.meta.touched && field.meta.error && <span className="error">{field.meta.error}</span>}
-					{files && Array.isArray(files) && (
-						
-						<div className="col s12">
-							{files.map((file, i) =>
-								<div key={i} className="wr-preview-image-block">
-									{/* {this.state.hide ? (
-										<i className="material-icons">check</i>
-									):null } */}
-									<img src={file.preview} alt="preview" className="wr-preview-image"/>
-								</div>
-							)}
-						</div>
-					)}
-				</div>
-			</div>
-		)
-	}
 	
-	componentWillUnmount() {
-		// Make sure to revoke the data uris to avoid memory leaks
-		this.state.images.forEach(image => URL.revokeObjectURL(image.preview))
-	  }	
 	onSubmit(values) {
 		console.log('valuessss', this.props)
 		this.props.requestSubmitVehicle(values);
 	}
 	render() {
 		const { handleSubmit } = this.props
-		
+
 	  	return (
 			<div>
 				<div className="row">
@@ -525,14 +471,8 @@ class InsertVehicle extends Component {
 									</TabPanel>
 									<TabPanel tabId="gallery">
 										<div className="row section">
-											{/* <div className="input-field col s12">
-												<input type="file" id="input-file-now" className="dropify" multiple />
-											</div> */}
 											<Field name="files" 
-											component={this.renderDropzoneField} 
-											type="file"
-											images={this.state.images} 
-											// handleOnDrop={this.onDrop}
+											component={ImagePreviewField} 
 											/>
 										</div>
 									</TabPanel>
