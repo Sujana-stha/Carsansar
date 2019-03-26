@@ -63,7 +63,7 @@ function validate(values) {
         errors.email = "Must be 191 character or Less!"
     }
     if(!values.password) {
-        errors.password = 'You must have Password'
+        errors.password = 'You must enter Password'
     } else if(values.password.length > 191) {
         errors.password = "Must be 191 character or Less!"
     }

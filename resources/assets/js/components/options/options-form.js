@@ -31,35 +31,33 @@ const OptionsForm = props => {
         const { handleSubmit } = props;
         return (
             <div>
-                <h4 className="header2">Add New Options</h4>
+                <h4 className="wr-header2">Add Options</h4>
 
                 <div className="card-panel">
 					<div className="row">
                         <form className="col s12" onSubmit= { handleSubmit  } >
                             <Field 
-                                label="Options Desciption"
+                                label="Enter Options"
                                 name="option_desc"
                                 type="text"
                                 component={renderInputField} 
                             />
-                            <div>
                                 
-                                <Field 
-                                    name="oc_id"
-                                    component={renderSelectField}
-                                    label="Option Categories"
-                                    value = "4"
-                                >
-                                    {props.optionLists.map((optionList) => {
-                                        return (
-                                            <option key= {optionList.id} value={optionList.id} >{optionList.optioncategory_desc}</option>
-                                        )
-                                    })}
-                                </Field>
-                            </div>
+                            <Field 
+                                name="oc_id"
+                                component={renderSelectField}
+                                label="Option Categories"
+                                value = "4"
+                            >
+                                {props.optionLists.map((optionList) => {
+                                    return (
+                                        <option key= {optionList.id} value={optionList.id} >{optionList.optioncategory_desc}</option>
+                                    )
+                                })}
+                            </Field>
                             <div className="row">
-                                <div className="input-field col s12">
-                                    <button className="btn cyan waves-effect waves-light right" type="submit" name="action">Save
+                                <div className="col s12">
+                                    <button className="btn cyan waves-effect waves-light" type="submit" name="action">Add
                                         <i className="material-icons right">send</i>
                                     </button>
                                 </div>

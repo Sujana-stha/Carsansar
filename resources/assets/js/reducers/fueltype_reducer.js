@@ -26,18 +26,7 @@ const fueltypeReducer =  function(state = initialState, action) {
                 sending: false
             })
 
-        case types.REQUEST_FUELTYPES_PAGES: 
-            return {...state, fetching: true};
-
-        case types.GET_FUELTYPES_PAGES:
-            return Object.assign({}, state, {
-                fueltypes: action.resp.data,
-                itemsCountPerPage: action.resp.per_page,
-                totalItemsCount: action.resp.total,
-                activePage: action.resp.current_page,
-                fetching: false,
-                sending: false
-            })
+        
         case types.REQUEST_FUELTYPES_SUBMIT: 
             return {...state, sending: true};
 

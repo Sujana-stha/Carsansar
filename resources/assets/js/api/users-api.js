@@ -22,3 +22,16 @@ export function getLoggedUser() {
         }
     })
 }
+
+//GET COMPANIES LIST
+export function getCompaniesList() {
+    const access_token = window.localStorage.getItem('access_token')
+    const headers = getHeaders(access_token)
+    return axios.get('/api/companies/getList',{headers})
+    .catch(error=> {
+        console.log(error)
+        return {
+            errors: error
+        }
+    })
+}

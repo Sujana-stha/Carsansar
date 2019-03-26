@@ -17,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'role', 'company_id'
     ];
 
     /**
@@ -33,6 +33,9 @@ class User extends Authenticatable
         return $this->hasMany('App\OauthAccessToken', 'user_id', 'id');
     }
 
+    public function CompanyId() {
+        return $this->belongsTo('App\Company','company_id','id');
+    }
     // public function color()
     // {
     //     return $this->hasOne('App\Color');

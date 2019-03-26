@@ -46,7 +46,7 @@ const UserProfile = () => {
                         </div>
                                
                         <div className="clearfix"></div>
-                        <div clasName="form-field col s12">
+                        <div className="form-field col s12">
                             <input type="email" defaultValue="bmaharjan@techtatva.co"/>
                             <label>Email</label>
                         </div>

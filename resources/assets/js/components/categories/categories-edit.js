@@ -14,14 +14,12 @@ class EditCategory extends Component {
     
     renderInputField({input, label, value, type, meta: {touched, error}}) {
         return (
-            <div>
-                <div className="row">
-					<div className="input-field col s12">
-                        <input value={value} type={type} {...input}/>
-                        <label className="active">{label}</label>
-                        <div className="error">
-                            {touched ? error: ''}
-                        </div>
+            <div className="row">
+				<div className="input-field col s12">
+                    <input value={value} type={type} {...input}/>
+                    <label className="active">{label}</label>
+                    <div className="error">
+                        {touched ? error: ''}
                     </div>
                 </div>
             </div>
@@ -32,13 +30,12 @@ class EditCategory extends Component {
         const { handleSubmit } = this.props;
         return (
             <div>
-                
-                <h4 className="header2">Update Category</h4>
+                <h4 className="wr-header2">Edit Category</h4>
                 <div className="card-panel">
 					<div className="row">
                         <form className="col s12" onSubmit= { handleSubmit  }>
                         <Field 
-                            label="Category Desciption"
+                            label="Enter Category"
                             name="category_desc"
                             type="text"
                             value="category_desc"
@@ -46,8 +43,8 @@ class EditCategory extends Component {
                         />
                         
                         <div className="row">
-								<div className="input-field col s12">
-									<button className="btn cyan waves-effect waves-light right" type="submit" name="action">Update
+								<div className="col s12">
+									<button className="btn cyan waves-effect waves-light" type="submit" name="action">Update
 										<i className="material-icons right">send</i>
 									</button>
 								</div>

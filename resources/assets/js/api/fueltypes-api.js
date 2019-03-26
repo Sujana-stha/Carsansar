@@ -2,14 +2,7 @@
 import axios, {getHeaders} from './axiosInstance'
 
 //GET ALL FUELTYPES API
-export function getFueltypes() {
-    const access_token = window.localStorage.getItem('access_token')
-    const headers = getHeaders(access_token)
-    return axios.get('/api/fueltypes',{headers})
-}
-
-//GET FUELTYPES BY PAGINATION API
-export function getFueltypesPages(pageNumber) {
+export function getFueltypes(pageNumber) {
     const access_token = window.localStorage.getItem('access_token')
     const headers = getHeaders(access_token)
     return axios.get(`/api/fueltypes?page=${pageNumber}`,{headers})

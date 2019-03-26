@@ -1,10 +1,10 @@
 import * as types from '../actions/action-types';
 
 
-export function requestEnginesizes(values) {
+export function requestEnginesizes(pageNumber) {
     return {
         type: types.REQUEST_ENGINESIZES,
-        values
+        pageNumber
     }
 }
 export function requestSubmitEnginesizes(values) {
@@ -25,18 +25,7 @@ export function getEnginesizesSuccess(enginesizes) {
         enginesizes
     }
 }
-export function requestEnginesizesPages(pageNumber) {
-    return {
-        type: types.REQUEST_ENGINESIZES_PAGES,
-        pageNumber
-    }
-}
-export function getEnginesizesPages(enginesizes) {
-    return {
-        type: types.GET_ENGINESIZES_PAGES,
-        enginesizes
-    }
-}
+
 export function addEnginesizesSuccess(values) {
     return {
         type: types.ADD_ENGINESIZES_SUCCESS,

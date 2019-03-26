@@ -26,18 +26,7 @@ const categoriesReducer =  function(state = initialState, action) {
                 activePage: action.categories.current_page,
                 sending: false
             })
-        case types.REQUEST_CATEGORIES_PAGES:
-            return {...state, fetching: true}
-
-        case types.GET_CATEGORIES_PAGES:
-            return Object.assign({}, state, {
-                categories: action.resp.data,
-                itemsCountPerPage: action.resp.per_page,
-                totalItemsCount: action.resp.total,
-                fetching: false,
-                activePage: action.resp.current_page,
-                sending: false
-            })
+        
         case types.REQUEST_CATEGORIES_SUBMIT:
             return {...state, sending: true}
 

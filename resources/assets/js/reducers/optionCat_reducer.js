@@ -5,10 +5,7 @@ const initialState = {
     optionCategories: [],
     fetching: false,
     sending: false
-    // activePage: 1,
-    // itemsCountPerPage: 3,
-    // totalItemsCount: 1,
-    // pageRangeDisplayed: 3,
+    
 }
 
 const optionCategoriesReducer =  function(state = initialState, action) {
@@ -21,18 +18,9 @@ const optionCategoriesReducer =  function(state = initialState, action) {
                 optionCategories: action.optionCategories,
                 fetching: false,
                 sending: false
-                // itemsCountPerPage: action.optionCategories.per_page,
-                // totalItemsCount: action.optionCategories.total,
-                // activePage: action.optionCategories.current_page
+                
             })
         
-        // case types.GET_OPT_CAT_PAGES:
-        //     return Object.assign({}, state, {
-        //         optionCategories: action.resp.data,
-        //         itemsCountPerPage: action.resp.per_page,
-        //         totalItemsCount: action.resp.total,
-        //         activePage: action.resp.current_page
-        //     })
         case types.REQUEST_OPT_CAT_SUBMIT: 
             return {...state, sending: true};
        

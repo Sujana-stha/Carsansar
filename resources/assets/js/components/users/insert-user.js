@@ -3,6 +3,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { Field, reduxForm } from 'redux-form';
 
+
 const renderInputField=({input, label, type, meta: {touched, error}})=> {
     return(
         <div className="input-field">
@@ -17,7 +18,7 @@ const renderInputField=({input, label, type, meta: {touched, error}})=> {
 
 const renderSelectField=({input, label, children, meta: {touched, error}})=> {
     return (
-        <div>
+        <div className="">
             <label>{label}</label>
             <select {...input} className="browser-default">
                 {children}
@@ -43,10 +44,18 @@ const InsertUser =props=> {
             <form className="col s12" onSubmit={ handleSubmit}>
                 <div className="card-panel">
                     <div className="row">
-                        <div className="col s12">
+                        <div className="col s6">
                             <Field name="name" type="text" label="Full Name" component={renderInputField}/>
                         </div>
-                           
+                        <div className="col s6">
+                            <Field name="email" type="text" label="Email" component={renderInputField}/>
+                        </div> 
+                        <div className="col s6">
+                            <Field name="password" type="password" label="Password" component={renderInputField}/>
+                        </div>
+                        <div className="col s6">
+                            <Field name="password_confirmation" type="password" label="Confirm Password" component={renderInputField}/>
+                        </div>
                         <div className="col s6">
                             <Field name="role" label="Role" component={renderSelectField}>
                                 <option value="" disabled>Choose one</option>
@@ -55,16 +64,18 @@ const InsertUser =props=> {
                             </Field>
                         </div>
                         <div className="col s6">
-                            <Field name="email" type="text" label="Email" component={renderInputField}/>
+                            <Field name="company_id" label="Company" component={renderSelectField}>
+                                <option value="" disabled>Choose one</option>
+                                {Object.keys(props.companyList).map((company, i)=> {
+                                    return (
+                                        <option key={i} value={company}>{props.companyList[company]}</option>
+                                    )
+                                })}
+                            </Field>
                         </div>
-
-                        <div className="col s6">
-                            <Field name="password" type="password" label="Password" component={renderInputField}/>
+                        <div className="col s12 mt-2">
+                            <button type="submit" className="waves-effect waves-light  btn">Add New User</button>
                         </div>
-                        <div className="col s6">
-                            <Field name="password_confirmation" type="password" label="Confirm Password" component={renderInputField}/>
-                        </div>
-                        <button type="submit" className="btn waves-effect waves-light">Add New User</button>
                     </div>
                 
                 </div>
@@ -98,6 +109,12 @@ function validate(values) {
         errors.password_confirmation = "You must Confirm your password!"
     } else if(values.password_confirmation != values.password) {
         errors.password_confirmation = "Password Mismatched!"
+    }
+    if(!values.role) {
+        errors.role = "This Field is Empty!"
+    }
+    if(!values.company_id) {
+        errors.company_id ="This Field is Empty!"
     }
     return errors;
 }

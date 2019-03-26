@@ -9,29 +9,18 @@ import {notify} from 'react-notify-toast'
 export function* EnginesizeWatcher() {
     yield takeLatest(types.REQUEST_ENGINESIZES, EnginesizeSaga)
 }
-function* EnginesizeSaga() {
-    const response = yield call(api.getEnginesizes);
+function* EnginesizeSaga(action) {
+    const response = yield call(api.getEnginesizes, action.pageNumber);
     const enginesizes = response.data
     yield put({type: types.GET_ENGINESIZES_SUCCESS, enginesizes});
-}
-
-// Get Enginesize pagination in table
-export function* EnginesizePagesWatcher() {
-    yield takeLatest(types.REQUEST_ENGINESIZES_PAGES, callEnginesizesPages)
-}
-function* callEnginesizesPages(action) {
-    const result =  yield call(api.getEnginesizesPages, action.pageNumber);
-    const resp = result.data
-
-    if (result.errors) {
-        yield put({ type: types.REQUEST_ENGINESIZES_FAILED, errors: result.error});
-        error = result.error;
+    if (response.errors) {
+        yield put({ type: types.REQUEST_ENGINESIZES_FAILED, errors: response.error});
+        error = response.error;
         notify.show("Cannot Get all Engine", "error", 5000)
     } else {
-        yield put({type: types.GET_ENGINESIZES_PAGES, resp});
+        yield put({type: types.GET_ENGINESIZES_SUCCESS, enginesizes});
     }
 }
-
 
 // Submit form data of Enginesize
 export function* submitEnginesizeSaga() {
@@ -74,7 +63,7 @@ function* callEditEnginesize (action) {
 
     } else {
         // yield put({type: types.UPDATE_ENGINESIZES_SUCCESS, resp, message: result.statusText});
-        yield put({type: types.REQUEST_ENGINESIZES_PAGES, pageNumber})
+        yield put({type: types.REQUEST_ENGINESIZES, pageNumber})
         notify.show("Engine Updated Successfully!", "success", 5000)
     }
     yield put(stopSubmit('EditEnginesizes', error));
@@ -87,8 +76,6 @@ export function* toggleEnginesizeStatusSaga() {
 }
 
 function* callToggleEnginesizeStatus(action) {
-    let error = {};
-    console.log('action', action)
     const result =  yield call(api.updateEnginesizesStatus, action.enginesizeId, action.values);
     const resp = result.data;
     const pageNumber = action.page
@@ -99,7 +86,7 @@ function* callToggleEnginesizeStatus(action) {
 
     } else {
         // yield put({type: types.ENGINESIZES_STATUS_SUCCESS, resp, message: result.statusText});
-        yield put({type: types.REQUEST_ENGINESIZES_PAGES, pageNumber})
+        yield put({type: types.REQUEST_ENGINESIZES, pageNumber})
         notify.show(`Status of ${resp.enginesize_desc} Updated!`, "success", 3000)
     }
 

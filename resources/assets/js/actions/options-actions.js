@@ -1,10 +1,10 @@
 import * as types from '../actions/action-types';
 
 
-export function requestOptions(values) {
+export function requestOptions(pageNumber) {
     return {
         type: types.REQUEST_OPTIONS,
-        values
+        pageNumber
     }
 }
 export function requestSubmitOptions(values) {
@@ -25,18 +25,7 @@ export function getOptionsSuccess(options) {
         options
     }
 }
-export function requestOptionsPages(pageNumber) {
-    return {
-        type: types.REQUEST_OPTIONS_PAGES,
-        pageNumber
-    }
-}
-export function getOptionsPages(options) {
-    return {
-        type: types.GET_OPTIONS_PAGES,
-        options
-    }
-}
+
 export function addOptionsSuccess(values) {
     return {
         type: types.ADD_OPTIONS_SUCCESS,

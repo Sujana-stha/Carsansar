@@ -3,14 +3,7 @@ import axios, {getHeaders} from './axiosInstance'
 
 
 //GET ALL BODIES API
-export function getBodies() {
-    const access_token = window.localStorage.getItem('access_token')
-    const headers = getHeaders(access_token)
-    return axios.get('/api/bodies',{headers})
-}
-
-//GET BODIES BY PAGINATION API
-export function getBodiesPages(pageNumber) {
+export function getBodies(pageNumber) {
     const access_token = window.localStorage.getItem('access_token')
     const headers = getHeaders(access_token)
     return axios.get(`/api/bodies?page=${pageNumber}`,{headers})

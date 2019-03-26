@@ -10,27 +10,9 @@ export function* optCatWatcher() {
 }
 function* OptCatSaga() {
     const response = yield call(api.getOptionsCategories);
-    console.log('resp', response)
     const optionCategories = response.data
     yield put({type: types.GET_OPT_CAT_SUCCESS, optionCategories});
 }
-
-// Get Makes pagination in table
-// export function* OptCatPagesWatcher() {
-//     yield takeLatest(types.REQUEST_OPT_CAT_PAGES, callOptCatPages)
-// }
-// function* callOptCatPages(action) {
-//     const result =  yield call(api.getOptionsCategoriesPages, action.pageNumber);
-//     const resp = result.data
-
-//     if (result.errors) {
-//         yield put({ type: types.REQUEST_OPT_CAT_FAILED, errors: result.error});
-//         error = result.error;
-//     } else {
-//         yield put({type: types.GET_OPT_CAT_PAGES, resp});
-//     }
-// }
-
 
 // Submit form data of makes
 export function* submitOptCatSaga() {
@@ -87,8 +69,6 @@ export function* toggleOptCatStatusSaga() {
 }
 
 function* callToggleOptCatStatus(action) {
-    let error = {};
-    console.log('action', action)
     const result =  yield call(api.updateOptionsCategoriesStatus, action.optCatId, action.values);
     const resp = result.data;
 
@@ -100,7 +80,6 @@ function* callToggleOptCatStatus(action) {
         // yield put({type: types.OPT_CAT_STATUS_SUCCESS, resp, message: result.statusText});
         yield put({type: types.REQUEST_OPTION_CATEGORIES})
         notify.show(`Status of ${resp.optioncategory_desc} Updated!`, "success", 5000)
-
     }
 }
 
@@ -113,7 +92,6 @@ export function* deleteOptCatSaga() {
 function* callDeleteOptCat(action) {
     const result = yield call(api.deleteOptionsCategories, action.optCatId);
     const optCatId= action.optCatId
-    console.log('res', result)
     if(result.errors) {
         yield put({ type: types.REQUEST_OPT_CAT_FAILED, errors: result.error});
         error = result.error;
@@ -122,7 +100,6 @@ function* callDeleteOptCat(action) {
         // yield put(makeOptCatAction.deleteOptionCategoriesSuccess(action.optCatId, result.statusText));
         yield put({type: types.DELETE_OPT_CAT_SUCCESS, optCatId, message: result.statusText});
         notify.show("Option Category Deleted Successfully", "error", 5000)
-        
     }
 } 
 

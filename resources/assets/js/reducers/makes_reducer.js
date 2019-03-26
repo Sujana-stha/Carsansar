@@ -8,7 +8,9 @@ const initialState = {
     itemsCountPerPage: 3,
     totalItemsCount: 1,
     pageRangeDisplayed: 3,
-    sending: false
+    sending: false,
+    order: 'desc',
+    sorted_column: 'id'
 }
 
 const makeReducer =  function(state = initialState, action) {
@@ -26,20 +28,7 @@ const makeReducer =  function(state = initialState, action) {
                 sending: false
             })
         
-        case types.REQUEST_MAKES_PAGES:
-            return Object.assign({}, state, {
-                fetching: true
-            })
-        case types.GET_MAKES_PAGES:
-            return Object.assign({}, state, {
-                makes: action.resp.data,
-                itemsCountPerPage: action.resp.per_page,
-                totalItemsCount: action.resp.total,
-                activePage: action.resp.current_page,
-                fetching: false,
-                sending: false
-            })
-
+        
         case types.REQUEST_SUBMIT:
             return Object.assign({}, state, {
                 sending: true

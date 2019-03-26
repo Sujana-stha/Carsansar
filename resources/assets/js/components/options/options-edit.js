@@ -16,7 +16,6 @@ class EditOption extends Component {
     
     renderInputField({input, label, type, meta: {touched, error}}) {
         return (
-            <div>
                 <div className="row">
 					<div className="input-field col s12">
                         <input type={type} {...input}/>
@@ -26,7 +25,6 @@ class EditOption extends Component {
                         </div>
                     </div>
                 </div>
-            </div>
         )
     }
     
@@ -34,13 +32,12 @@ class EditOption extends Component {
         const { handleSubmit } = this.props;
         return (
             <div>
-                
-                <h4 className="header2">Update Options</h4>
+                <h4 className="wr-header2">Edit Options</h4>
                 <div className="card-panel">
 					<div className="row">
                         <form className="col s12" onSubmit= { handleSubmit  }>
                         <Field 
-                            label="Options Desciption"
+                            label="Enter Options"
                             name="option_desc"
                             type="text"
                             value="option_desc"
@@ -62,8 +59,8 @@ class EditOption extends Component {
                             </Field>
                         </div>
                         <div className="row">
-								<div className="input-field col s12">
-									<button className="btn cyan waves-effect waves-light right" type="submit" name="action">Update
+								<div className="col s12">
+									<button className="btn cyan waves-effect waves-light" type="submit" name="action">Update
 										<i className="material-icons right">send</i>
 									</button>
 								</div>

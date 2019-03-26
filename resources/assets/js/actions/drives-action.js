@@ -1,10 +1,10 @@
 import * as types from '../actions/action-types';
 
 
-export function requestDrives(values) {
+export function requestDrives(pageNumber) {
     return {
         type: types.REQUEST_DRIVES,
-        values
+        pageNumber
     }
 }
 export function requestSubmitDrives(values) {
@@ -25,18 +25,7 @@ export function getDrivesSuccess(drives) {
         drives
     }
 }
-export function requestDrivesPages(pageNumber) {
-    return {
-        type: types.REQUEST_DRIVES_PAGES,
-        pageNumber
-    }
-}
-export function getDrivesPages(drives) {
-    return {
-        type: types.GET_DRIVES_PAGES,
-        drives
-    }
-}
+
 export function addDrivesSuccess(values) {
     return {
         type: types.ADD_DRIVES_SUCCESS,

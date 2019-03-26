@@ -12,7 +12,6 @@ export function* loginWatcher() {
 
 function* loginFlow(action) {
     yield put(startSubmit('LoginForm'))
-    console.log('act', action)
     const data = {
         grant_type: "password",
         client_id: "2",
@@ -24,7 +23,6 @@ function* loginFlow(action) {
     try {
         const result = yield call(api.login, data)
         const resp= result.data
-        console.log('resp', result)
         if(result.status == 200) {
             window.localStorage.setItem("access_token", resp.access_token);
             window.localStorage.setItem("refresh_token", resp.refresh_token);
@@ -52,7 +50,6 @@ export function* logoutWatcher() {
 function* logoutFlow() {
     try {
         const response = yield call(api.logout)
-        console.log('resp', response)
         if(response.status === 200) {
             window.localStorage.removeItem('access_token');
             window.localStorage.removeItem('refresh_token');

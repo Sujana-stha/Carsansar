@@ -1,10 +1,10 @@
 import * as types from './action-types';
 
 
-export function requestCategories(values) {
+export function requestCategories(pageNumber) {
     return {
         type: types.REQUEST_CATEGORIES,
-        values
+        pageNumber
     }
 }
 export function requestSubmitCategories(values) {
@@ -25,18 +25,8 @@ export function getCategoriesSuccess(categories) {
         categories
     }
 }
-export function requestCategoriesPages(pageNumber) {
-    return {
-        type: types.REQUEST_CATEGORIES_PAGES,
-        pageNumber
-    }
-}
-export function getCategoriesPages(categories) {
-    return {
-        type: types.GET_CATEGORIES_SUCCESS,
-        categories
-    }
-}
+
+
 export function addCategoriesSuccess(values, message) {
     return {
         type: types.ADD_CATEGORIES_SUCCESS,

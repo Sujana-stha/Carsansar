@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Pagination from "react-js-pagination";
 import EnginesizesList from '../../components/enginesizes/enginesizes';
 import store from '../../store';
-import { requestEnginesizes, requestDeleteEnginesizes, requestSubmitEnginesizes, requestEnginesizesPages,requestUpdateEnginesizes, requestEnginesizesStatus } from  '../../actions/enginesizes-action';
+import { requestEnginesizes, requestDeleteEnginesizes, requestSubmitEnginesizes,requestUpdateEnginesizes, requestEnginesizesStatus } from  '../../actions/enginesizes-action';
 
 
 //COMPONENT
@@ -26,7 +26,8 @@ class EnginesizesListContainer extends Component {
     
     componentDidMount() {
         // call action to run the relative saga
-        this.props.requestEnginesizes();
+        const page = this.props.activePage;
+        this.props.requestEnginesizes(page);
     }
 
     // submit function for new data
@@ -63,7 +64,7 @@ class EnginesizesListContainer extends Component {
     // pagination function
     handlePageChange(pageNumber) {
         console.log(`active page is ${pageNumber}`);
-        this.props.requestEnginesizesPages(pageNumber)
+        this.props.requestEnginesizes(pageNumber)
         
     }
     
@@ -79,7 +80,7 @@ class EnginesizesListContainer extends Component {
         return (
             <div>
                 <div className="row">
-                    <div className="col s12 m3 l3">
+                    <div className="col s12 m3 l3 mt-3">
                         {this.state.isEditing ? (
                             <EditEnginesize onSubmit = {this.submitEditEnginesize.bind(this)} editId = {this.state.isEditing} />
                         ): (
@@ -143,4 +144,4 @@ function mapStateToProps(store) {
     }
 }
 
-export default connect(mapStateToProps, { requestEnginesizes, requestDeleteEnginesizes, requestSubmitEnginesizes, requestEnginesizesPages,requestUpdateEnginesizes, requestEnginesizesStatus })(EnginesizesListContainer);
+export default connect(mapStateToProps, { requestEnginesizes, requestDeleteEnginesizes, requestSubmitEnginesizes,requestUpdateEnginesizes, requestEnginesizesStatus })(EnginesizesListContainer);

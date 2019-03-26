@@ -10,7 +10,6 @@ export function* submitVehicleSaga() {
 }
 
 function* callVehicleSubmit(action) {
-    console.log('acc', action)
     yield put(startSubmit('PostVehicles'));
     let error = {};
     const result =  yield call(api.addVehicles, action.values);
@@ -24,8 +23,51 @@ function* callVehicleSubmit(action) {
         yield put({type: types.ADD_VEHICLES_SUCCESS, resp});
         // yield put({type: types.REQUEST_COMPANIES})
         notify.show("Vehicle Added Successfully!", "success", 5000);
-
     }
     yield put(stopSubmit('PostVehicles', error));
     yield put(reset('PostVehicles'));
+}
+
+//saga for search vehicles by attr
+export function* SearchVehicleSaga() {
+    yield takeLatest(types.REQUEST_VEHICLES_ATTR_SEARCH, callVehiclesSearch);
+}
+
+function* callVehiclesSearch(action) {
+    yield put(startSubmit('VehicleSearchForm'));
+    let error = {}
+    try {
+        // const response = yield call(api.searchVechiles, action.values)
+        const resp = response.data
+        if(response.status === 200 ) {
+            yield put({type: types.VEHICLES_ATTR_SEARCH_SUCCESS, resp})
+        }
+    } 
+    catch (error) {
+        yield put({type: types.REQUEST_VEHICLES_FAILED})
+    }
+    yield put(stopSubmit('VehicleSearchForm', error));
+    yield put(reset('VehicleSearchForm'));
+}
+
+// saga for creating vehicles attr
+export function* createVehiclesAttrSaga() {
+    yield takeLatest(types.REQUEST_VEHICLES_ATTR_CREATE, callVehiclesAttrCreate)
+}
+
+function* callVehiclesAttrCreate(action) {
+    console.log('act', action)
+    let error ={}
+    try {
+        const response = yield call(api.vehicleAttr, action.values, action.apiName)
+        const resp = response.data
+        console.log('reess', response)
+        const apiName = action.apiName
+        if(resp) {
+            yield put({type: types.ADD_VEHICLES_ATTR_SUCCESS, resp,apiName})
+            notify.show(`${action.values} has been added`, "success", 5000)
+        }
+    } catch (error) {
+        
+    }
 }

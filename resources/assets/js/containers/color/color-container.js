@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import Pagination from "react-js-pagination";
 import { connect } from 'react-redux';
 import store from '../../store';
-import { requestColors, requestDeleteColors, requestSubmitColor, requestColorsPages,requestUpdateColors, requestColorStatus } from  '../../actions/color-actions';
+import { requestColors, requestDeleteColors, requestSubmitColor,requestUpdateColors, requestColorStatus } from  '../../actions/color-actions';
 
 
 //COMPONENTS
@@ -26,7 +26,8 @@ class ColorListContainer extends Component {
 
     componentDidMount(){
         // call action to run the relative saga
-        this.props.requestColors();         
+        const page = this.props.activePage;
+        this.props.requestColors(page);         
     } 
 
     // submit function for new data
@@ -57,7 +58,7 @@ class ColorListContainer extends Component {
     // pagination function
     handlePageChange(pageNumber) {
         console.log(`active page is ${pageNumber}`);
-        this.props.requestColorsPages(pageNumber)
+        this.props.requestColors(pageNumber)
         
     }
     
@@ -67,7 +68,6 @@ class ColorListContainer extends Component {
             status: !status
         }
         console.log('status', newColorsStatus)
-
         this.props.requestColorStatus(colorId, newColorsStatus, page)
     }
 
@@ -75,7 +75,7 @@ class ColorListContainer extends Component {
         return(
             <div className="row"> 
                 
-                <div className="col s12 m3 l3">
+                <div className="col s12 m3 l3 mt-3">
                     {this.state.isEditing ? (
                         <EditColor onSubmit = {this.submitEditColor.bind(this)} editId = {this.state.isEditing} />
                     ): (
@@ -145,4 +145,4 @@ function mapStateToProps(store) {
     }
 }
 
-export default connect(mapStateToProps, {requestColors, requestDeleteColors, requestSubmitColor, requestColorsPages,requestUpdateColors, requestColorStatus})(ColorListContainer);
+export default connect(mapStateToProps, {requestColors, requestDeleteColors, requestSubmitColor,requestUpdateColors, requestColorStatus})(ColorListContainer);

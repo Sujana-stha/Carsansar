@@ -24,10 +24,10 @@ class CreateDealsTable extends Migration
             $table->enum('vehicle_status',['Used','New']);
             $table->string('trim',200)->nullable();
             $table->string('ad_desc',600)->nullable();
-            $table->tinyInteger('warranty_flag')->default(0);
+            $table->tinyInteger('warranty_flag')->default('1');
             $table->string('warranty_desc',100)->nullable();
-            $table->tinyInteger('financing_flag')->default(0);
-            $table->tinyInteger('available_flag')->default(1);
+            $table->tinyInteger('financing_flag')->default('1');
+            $table->tinyInteger('available_flag')->default('1');
             $table->tinyInteger('status')->default('1');
             $table->integer('created_by');
             $table->integer('updated_by')->nullable();

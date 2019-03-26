@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Pagination from "react-js-pagination";
 import ModelList from '../../components/models/models';
 import store from '../../store';
-import { requestModel, requestModelPages, requestDeleteModel, requestSubmitModel, requestUpdateModel, requestModelStatus } from  '../../actions/model-action';
+import { requestModel, requestDeleteModel, requestSubmitModel, requestUpdateModel, requestModelStatus } from  '../../actions/model-action';
 
 
 //COMPONENT
@@ -25,7 +25,8 @@ class ModelsListContainer extends Component {
     
     componentDidMount() {
         // call action to run the relative saga
-        this.props.requestModel();
+        const page = this.props.activePage;
+        this.props.requestModel(page);
     }
 
     // submit function for new data
@@ -61,7 +62,7 @@ class ModelsListContainer extends Component {
     // pagination function
     handlePageChange(pageNumber) {
         console.log(`active page is ${pageNumber}`);
-        this.props.requestModelPages(pageNumber)
+        this.props.requestModel(pageNumber)
         
     }
     // toggle status value
@@ -78,7 +79,7 @@ class ModelsListContainer extends Component {
         return (
             <div>
                 <div className="row">
-                    <div className="col s12 m3 l3">
+                    <div className="col s12 m3 l3 mt-3">
                         {this.state.isEditing ? (
                             <EditModel onSubmit = {this.submitEditModel.bind(this)} editId = {this.state.isEditing} />
                         ): (
@@ -142,4 +143,4 @@ function mapStateToProps(store) {
     }
 }
 
-export default connect(mapStateToProps, {requestModel, requestModelPages, requestDeleteModel, requestSubmitModel, requestUpdateModel, requestModelStatus })(ModelsListContainer);
+export default connect(mapStateToProps, {requestModel, requestDeleteModel, requestSubmitModel, requestUpdateModel, requestModelStatus })(ModelsListContainer);

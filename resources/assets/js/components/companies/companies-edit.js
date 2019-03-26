@@ -9,13 +9,10 @@ class EditCompany extends Component {
             const data =  response.data;
             this.props.initialize(data);
         })
-
     }
-    
     
     renderInputField({input, label, type, meta: {touched, error}}) {
         return (
-            <div>
                 <div className="row">
 					<div className="input-field col s12">
                         <input type={type} {...input}/>
@@ -25,7 +22,6 @@ class EditCompany extends Component {
                         </div>
                     </div>
                 </div>
-            </div>
         )
     }
     
@@ -33,14 +29,13 @@ class EditCompany extends Component {
         const { handleSubmit } = this.props;
         return (
             <div>
-                
-                <h4 className="header2">Update Company</h4>
+                <h4 className="wr-header2">Edit Company</h4>
                 <div className="card-panel">
 					<div className="row">
                         <form className="col s12" onSubmit= { handleSubmit  }>
                         <div className="col s12 14 m4">
                             <Field 
-                                label="Company Code"
+                                label="Enter Company Code"
                                 name="company_cd"
                                 type="text"
                                 value="company_cd"
@@ -49,7 +44,7 @@ class EditCompany extends Component {
                         </div>
                         <div className="col s12 14 m4">
                             <Field 
-                                label="Company Name"
+                                label="Enter Company Name"
                                 name="name"
                                 type="text"
                                 value="name"
@@ -85,8 +80,8 @@ class EditCompany extends Component {
                         </div>
                         
                         <div className="row">
-								<div className="input-field col s12">
-									<button className="btn cyan waves-effect waves-light right" type="submit" name="action">Update
+								<div className="col s12">
+									<button className="btn cyan waves-effect waves-light" type="submit" name="action">Update
 										<i className="material-icons right">send</i>
 									</button>
 								</div>

@@ -72,7 +72,7 @@ class OptionCategoryListContainer extends Component {
         return (
             <div>
                 <div className="row">
-                    <div className="col s12 m3 l3">
+                    <div className="col s12 m3 l3 mt-3">
                         {this.state.isEditing ? (
                             <EditOptionCategory onSubmit = {this.submitEditOptionCategory.bind(this)} editId = {this.state.isEditing} />
                         ): (

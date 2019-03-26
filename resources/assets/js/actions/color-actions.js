@@ -1,10 +1,10 @@
 import * as types from '../actions/action-types';
 
 
-export function requestColors(values) {
+export function requestColors(pageNumber) {
   return {
       type: types.REQUEST_COLORS,
-      values
+      pageNumber
   }
 }
 export function requestSubmitColor(values) {
@@ -25,18 +25,7 @@ export function getColorsSuccess(colors) {
     colors
   };
 }
-export function requestColorsPages(pageNumber) {
-  return {
-      type: types.REQUEST_COLORS_PAGES,
-      pageNumber
-  }
-}
-export function getColorsPages(colors) {
-  return {
-      type: types.GET_COLORS_PAGES,
-      colors
-  }
-}
+
 export function addColorsSuccess(values) {
   return {
       type: types.ADD_COLORS_SUCCESS,

@@ -1,10 +1,10 @@
 import * as types from '../actions/action-types';
 
 
-export function requestTransmissions(values) {
+export function requestTransmissions(pageNumber) {
     return {
         type: types.REQUEST_TRANSMISSONS,
-        values
+        pageNumber
     }
 }
 export function requestSubmitTransmission(values) {
@@ -25,18 +25,7 @@ export function getTransmissionSuccess(transmission) {
         transmission
     }
 }
-export function requestTransmissionPages(pageNumber) {
-    return {
-        type: types.REQUEST_TRANSMISSONS_PAGES,
-        pageNumber
-    }
-}
-export function getTransmissionPages(transmission) {
-    return {
-        type: types.GET_TRANSMISSONS_PAGES,
-        transmission
-    }
-}
+
 export function addTransmissionSuccess(values) {
     return {
         type: types.ADD_TRANSMISSONS_SUCCESS,

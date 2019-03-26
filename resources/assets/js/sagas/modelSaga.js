@@ -9,29 +9,18 @@ import {notify} from 'react-notify-toast';
 export function* ModelWatcher() {
     yield takeLatest(types.REQUEST_MODEL, ModelSaga)
 }
-function* ModelSaga() {
-    const response = yield call(api.getModel);
+function* ModelSaga(action) {
+    const response = yield call(api.getModel, action.pageNumber);
     const models = response.data
-    yield put({type: types.GET_MODEL_SUCCESS, models});
-}
-
-// Get Models pagination in table
-export function* ModelPagesWatcher() {
-    yield takeLatest(types.REQUEST_MODEL_PAGES, callModelPages)
-}
-function* callModelPages(action) {
-    const result =  yield call(api.getModelPages, action.pageNumber);
-    const resp = result.data
-
-    if (result.errors) {
-        yield put({ type: types.REQUEST_MODEL_FAILED, errors: result.error});
-        error = result.error;
+    
+    if (response.errors) {
+        yield put({ type: types.REQUEST_MODEL_FAILED, errors: response.error});
+        error = response.error;
         notify.show("Cannot Get all Models!", "error", 5000)
     } else {
-        yield put({type: types.GET_MODEL_PAGES, resp});
+        yield put({type: types.GET_MODEL_SUCCESS, models});
     }
 }
-
 
 // Submit form data of models
 export function* submitModelSaga() {
@@ -74,12 +63,11 @@ function* callModelEdit (action) {
         notify.show(`Cannot Update ${resp.model_desc}`, "error", 5000)
     } else {
         // yield put({type: types.UPDATE_MODEL_SUCCESS, resp, message: result.statusText});
-        yield put({type: types.REQUEST_MODEL_PAGES, pageNumber});
+        yield put({type: types.REQUEST_MODEL, pageNumber});
         notify.show(`${resp.model_desc} Updated Successfully`, "success", 5000)
     }
     yield put(stopSubmit('EditModels', error));
     yield put(reset('EditModels'));
-
 }
 
 // change status value
@@ -88,8 +76,6 @@ export function* toggleModelsStatusSaga() {
 }
 
 function* callModelToggleStatus(action) {
-    let error = {};
-    console.log('action', action)
     const result =  yield call(api.updateModel, action.modelId, action.values);
     const resp = result.data;
     const pageNumber = action.page
@@ -99,9 +85,8 @@ function* callModelToggleStatus(action) {
         notify.show(`Cannot Change Status of ${resp.model_desc}`, "error", 5000)
     } else {
         // yield put({type: types.MODEL_STATUS_SUCCESS, resp, message: result.statusText});
-        yield put({type: types.REQUEST_MODEL_PAGES, pageNumber});
+        yield put({type: types.REQUEST_MODEL, pageNumber});
         notify.show(`Status of ${resp.model_desc} Updated!`, "success", 5000)
-
     }
 }
 

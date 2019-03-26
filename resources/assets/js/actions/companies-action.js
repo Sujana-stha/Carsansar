@@ -1,10 +1,10 @@
 import * as types from '../actions/action-types';
 
 
-export function requestCompanies(values) {
+export function requestCompanies(pageNumber) {
     return {
         type: types.REQUEST_COMPANIES,
-        values
+        pageNumber
     }
 }
 export function requestSubmitCompanies(values) {
@@ -25,18 +25,7 @@ export function getCompaniesSuccess(companies) {
         companies
     }
 }
-export function requestCompaniesPages(pageNumber) {
-    return {
-        type: types.REQUEST_COMPANIES_PAGES,
-        pageNumber
-    }
-}
-export function getCompaniesPages(companies) {
-    return {
-        type: types.GET_COMPANIES_PAGES,
-        companies
-    }
-}
+
 export function addCompaniesSuccess(values) {
     return {
         type: types.ADD_COMPANIES_SUCCESS,

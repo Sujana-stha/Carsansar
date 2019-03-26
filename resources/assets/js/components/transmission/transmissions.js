@@ -21,13 +21,13 @@ class TransmissionList extends Component {
         this.setState({showItem: null})
     }
     render() {
+        
         return (
             <tbody>
                 {
                     this.props.transmissions.map((transmission) => {
                         return (
                             <tr key={transmission.id} className={`row-${transmission.id}`}>
-                                            
                                 <td>{transmission.id}</td>
                                 <td>{transmission.transmission_desc}</td>
                                 <td>{transmission.created_by.name}</td>

@@ -8,28 +8,18 @@ import {notify} from 'react-notify-toast';
 
 //Get bodies data in table
 export function* BodyWatcher() {
-    yield takeLatest(types.REQUEST_BODIES, BodySaga)
+    yield takeLatest(types.REQUEST_BODIES, callBodiesSaga)
 }
-function* BodySaga() {
-    const response = yield call(api.getBodies);
-    const bodies = response.data
-    yield put({type: types.GET_BODIES_SUCCESS, bodies});
-}
-
-// Get Makes pagination in table
-export function* BodiesPagesWatcher() {
-    yield takeLatest(types.REQUEST_BODIES_PAGES, callBodiesPages)
-}
-function* callBodiesPages(action) {
-    const result =  yield call(api.getBodiesPages, action.pageNumber);
-    const resp = result.data
+function* callBodiesSaga(action) {
+    const result =  yield call(api.getBodies, action.pageNumber);
+    const bodies = result.data
 
     if (result.errors) {
         yield put({ type: types.REQUEST_BODIES_FAILED, errors: result.error});
         error = result.error;
         notify.show("Cannot Get all Bodies", "error", 5000);
     } else {
-        yield put({type: types.GET_BODIES_PAGES, resp});
+        yield put({type: types.GET_BODIES_SUCCESS, bodies});
     }
 }
 
@@ -42,7 +32,7 @@ function* callBodySubmit(action) {
     yield put(startSubmit('PostBodies'));
     let error = {};
     const result =  yield call(api.addBodies, action.values);
-    const resp = result.data
+    // const resp = result.data
 
     if (result.errors) {
         yield put({ type: types.REQUEST_BODIES_FAILED, errors: result.errors});
@@ -77,7 +67,7 @@ function* callEditBody (action) {
 
     } else {
         // yield put({type: types.UPDATE_BODIES_SUCCESS, resp, message: result.statusText});
-        yield put({type: types.REQUEST_BODIES_PAGES, pageNumber})
+        yield put({type: types.REQUEST_BODIES, pageNumber})
         notify.show("Body Updated successfully!", "success", 5000)
         
     }
@@ -92,8 +82,6 @@ export function* toggleBodyStatusSaga() {
 }
 
 function* callToggleBodyStatus(action) {
-    let error = {};
-    console.log('action', action)
     const result =  yield call(api.updateBodiesStatus, action.bodyId, action.values);
     const resp = result.data;
     const pageNumber = action.page
@@ -104,7 +92,7 @@ function* callToggleBodyStatus(action) {
 
     } else {
         // yield put({type: types.BODIES_STATUS_SUCCESS, resp, message: result.statusText});
-        yield put({type: types.REQUEST_BODIES_PAGES, pageNumber})
+        yield put({type: types.REQUEST_BODIES, pageNumber})
         notify.show("Status changed successfully!", "success", 5000)
     }
 

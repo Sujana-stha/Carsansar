@@ -2,14 +2,7 @@
 import axios, {getHeaders} from './axiosInstance'
 
 //GET ALL MAKES API
-export function getEnginesizes() {
-    const access_token = window.localStorage.getItem('access_token')
-    const headers = getHeaders(access_token)
-    return axios.get('/api/enginesizes',{headers})
-}
-
-//GET MAKES BY PAGINATION API
-export function getEnginesizesPages(pageNumber) {
+export function getEnginesizes(pageNumber) {
     const access_token = window.localStorage.getItem('access_token')
     const headers = getHeaders(access_token)
     return axios.get(`/api/enginesizes?page=${pageNumber}`,{headers})

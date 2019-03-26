@@ -14,7 +14,6 @@ class EditEnginesize extends Component {
     
     renderInputField({input, label, type, meta: {touched, error}}) {
         return (
-            <div>
                 <div className="row">
 					<div className="input-field col s12">
                         <input type={type} {...input}/>
@@ -24,7 +23,6 @@ class EditEnginesize extends Component {
                         </div>
                     </div>
                 </div>
-            </div>
         )
     }
     
@@ -33,12 +31,12 @@ class EditEnginesize extends Component {
         return (
             <div>
                 
-                <h4 className="header2">Update Enginesize</h4>
+                <h4 className="wr-header2">Edit Enginesize</h4>
                 <div className="card-panel">
 					<div className="row">
                         <form className="col s12" onSubmit= { handleSubmit  }>
                         <Field 
-                            label="Enginesize Desciption"
+                            label="Enter Enginesize"
                             name="enginesize_desc"
                             type="text"
                             value="enginesize_desc"
@@ -46,8 +44,8 @@ class EditEnginesize extends Component {
                         />
                         
                         <div className="row">
-								<div className="input-field col s12">
-									<button className="btn cyan waves-effect waves-light right" type="submit" name="action">Update
+								<div className="col s12">
+									<button className="btn cyan waves-effect waves-light" type="submit" name="action">Update
 										<i className="material-icons right">send</i>
 									</button>
 								</div>

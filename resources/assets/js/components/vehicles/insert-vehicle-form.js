@@ -11,13 +11,14 @@ import * as api from '../../api/deals-api';
 import * as optCatapi from '../../api/option_cat-api';
 import { Field, reduxForm } from 'redux-form';
 import ImagePreviewField from './imagePreview';
+import AutocompleteField from './autocomplete-field';
 
 class InsertVehicle extends Component {
 	constructor() {
 	  	super();
 	  	this.state = { 
 			text: 'Vehicle Description',
-			makes: {},
+			makes: [],
 			models:{},
 			bodies: {},
 			enginesizes:{},
@@ -32,9 +33,11 @@ class InsertVehicle extends Component {
 	}
 	componentDidMount() {
 		api.getMakesList().then((response)=> {
+			console.log('opt',response)
 			this.setState({ makes: response.data })
 		})
 		api.getModelsList().then((response) => {
+			console.log('model',response)
 			this.setState({ models: response.data })
 		})
 		api.getBodiesList().then((response) => {
@@ -56,7 +59,7 @@ class InsertVehicle extends Component {
 			this.setState({drives: response.data })
 		})
 		api.getOptionsList().then((response)=> {
-			console.log('opt',response)
+			
 			this.setState({options: response.data})
 		})
 		optCatapi.getOptionsCategories().then((response) => {
@@ -73,7 +76,7 @@ class InsertVehicle extends Component {
         return (
 			<div className="input-field col s12">
                 <input  type={type} {...input}/>
-                <label>{label}</label>
+                <label htmlFor={input.name}>{label}</label>
                 <div className="error">
                     {touched ? error: ''}
                 </div>
@@ -109,7 +112,7 @@ class InsertVehicle extends Component {
 	renderOptionsList({input, options, optCategories, meta: {touched, error}}) {
 		return optCategories.map((optCategory, i)=> {
 			return (
-				<div key={i}>
+				<div key={i} className="col s12 m4 mb-3">
 					<strong>{optCategory.optioncategory_desc}</strong>
 					{options.map((option, i) => {
 						return(
@@ -197,13 +200,13 @@ class InsertVehicle extends Component {
 									</TabList>
 									<TabPanel tabId="general">
 										<div className="row">
-											<Field name="condition"
+											<Field name="vehicle_status"
 											label="Condition"
 											component={this.renderSelectField}
 											>
 												<option value="">Choose your option</option>
-												<option value="1">Used</option>
-												<option value="2">New</option>
+												<option value="Used">Used</option>
+												<option value="New">New</option>
 											</Field>
 
 											<Field
@@ -237,29 +240,20 @@ class InsertVehicle extends Component {
 									<TabPanel tabId="vehicle-attributes">
 										<div className="row">
 											<Field
-											name="stock-number"
+											name="stock_number"
 											label="Stock Number"
-											value="1"
-											component={this.renderSelectField}
-											>
-												<option value="" >Choose your option</option>
-												<option value="1">W1001</option>
-												<option value="2">W1002</option>
-												<option value="2">W1003</option>
-											</Field>
+											id="stock_number"
+											type="text"
+											component={this.renderInputField}
+											/>
 
 											<Field
 											name="vin"
 											label="Vin Number"
-											value="1"
-											component={this.renderSelectField}
-											>
-												<option value="">Choose your option</option>
-												<option value="1">1FVACWDU1BHBB3474</option>
-												<option value="2">JH4DB1670MS000448</option>
-												<option value="2">1YVHZ8CH2A5M03260</option>
-											</Field>
-
+											type="text"
+											id="vin"
+											component={this.renderInputField}
+											/>
 											<Field
 											name="year"
 											label="Year"
@@ -272,7 +266,15 @@ class InsertVehicle extends Component {
 												<option value="3">2018</option>
 											</Field>
 
-											<Field
+											<Field name="make_id"
+											label="Makes"
+											itemList={this.state.makes}
+											apiName="makes"
+											component={AutocompleteField}
+											>
+											</Field> 
+
+											{/* <Field
 											name="make_id"
 											label="Make"
 											value="1"
@@ -284,121 +286,70 @@ class InsertVehicle extends Component {
 														<option key={i} value={make}>{this.state.makes[make]}</option>
 													)
 												})}
-											</Field>
-							  				<Field
-											name="model_id"
+											</Field> */}
+											<Field name="model_id" 
 											label="Model"
-											value="2"
-											component={this.renderSelectField}
-											>
-												<option value="">Choose your option</option>
-												{Object.keys(this.state.models).map((model, i)=> {
-													return (
-														<option key={i} value={model}>{this.state.models[model]}</option>
-													)
-												})}
-											</Field>
+											itemList={this.state.models}
+											apiName="models"
+											component={AutocompleteField}
+											/>
 
 							  				<Field 
 											name="body_id"
-											value="2"
 											label="Body"
-											component={this.renderSelectField}
-											>
-												<option value="">Choose your option</option>
-												{Object.keys(this.state.bodies).map((body, i)=> {
-													return(
-														<option key={i} value={body}>{this.state.bodies[body]}</option>
-													)
-												})}
-											</Field>
-											
+											itemList={this.state.bodies}
+											apiName="bodies"
+											component={AutocompleteField}
+											/>
+												
 											<Field
 											name="enginesize_id"
 											label="Engine"
-											value="2"
-											component={this.renderSelectField}
-											>
-												<option value="">Choose your option</option>
-												{Object.keys(this.state.enginesizes).map((enginesize, i)=> {
-													return(
-														<option key={i} value={enginesize}>{this.state.enginesizes[enginesize]}</option>
-													)
-												})}
-												
-											</Field>
-											
+											itemList={this.state.enginesizes}
+											apiName="enginesizes"
+											component={AutocompleteField}
+											/>
+										
 											<Field
 											name="drive_id"
 											label="Drivetrain"
-											value="2"
-											component={this.renderSelectField}
-											>
-												<option value="">Choose your option</option>
-												{Object.keys(this.state.drives).map((drive, i)=> {
-													return(
-														<option key={i} value={drive}>{this.state.drives[drive]}</option>
-													)
-												})}
-											</Field>
-											
+											itemList={this.state.drives}
+											apiName="drives"
+											component={AutocompleteField}
+											/>
+
 											<Field
 											name="transmission_id"
-											value="2"
 											label="Transmission"
-											component={this.renderSelectField}
-											>
-												<option value="">Choose your option</option>
-												{Object.keys(this.state.transmissions).map((transmission, i)=>{
-													return(
-														<option key={i} value={transmission}>{this.state.transmissions[transmission]}</option>
-													)
-												})}
-												
-											</Field>
+											itemList={this.state.transmissions}
+											apiName="transmissions"
+											component={AutocompleteField}
+											/>
 							  				
 											<Field
 											name="exterior_color_id"
-											value="2"
 											label="Exterior Color"
-											component={this.renderSelectField}
-											>
-												<option value="">Choose your option</option>
-												{Object.keys(this.state.colors).map((color, i)=>{
-													return(
-														<option key={i} value={color}>{this.state.colors[color]}</option>
-													)
-												})}
-											</Field>
+											itemList={this.state.colors}
+											apiName="colors"
+											component={AutocompleteField}
+											/>
 
 											<Field
 											name="interior_color_id"
-											value="2"
 											label="Interior Color"
-											component={this.renderSelectField}
-											>
-												<option value="">Choose your option</option>
-												{Object.keys(this.state.colors).map((color, i)=>{
-													return(
-														<option key={i} value={color}>{this.state.colors[color]}</option>
-													)
-												})}
-											</Field>
+											itemList={this.state.colors}
+											apiName="colors"
+											component={AutocompleteField}
+											/>
 											
 											<Field
 											name="fueltype_id"
-											value="2"
 											label="Fuel Type"
-											component={this.renderSelectField}
-											>
-												<option value="">Choose your option</option>
-												{Object.keys(this.state.fueltypes).map((fueltype, i)=> {
-													return(
-														<option key={i} value={fueltype}>{this.state.fueltypes[fueltype]}</option>
-													)
-												})}
-											</Field>
-											
+											itemList={this.state.fueltypes}
+											apiName="fueltypes"
+											component={AutocompleteField}
+											/>
+												
 											<Field
 											name="fuel_economy"
 											type="text"
@@ -469,8 +420,8 @@ class InsertVehicle extends Component {
 											
 										</div>
 									</TabPanel>
-									<TabPanel tabId="gallery">
-										<div className="row section">
+									<TabPanel tabId="gallery" className="col s12">
+										<div className="row">
 											<Field name="files" 
 											component={ImagePreviewField} 
 											/>

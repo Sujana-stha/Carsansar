@@ -25,18 +25,7 @@ const enginesizeReducer =  function(state = initialState, action) {
                 activePage: action.enginesizes.current_page,
                 sending: false
             })
-        case types.REQUEST_ENGINESIZES_PAGES:
-            return {...state, fetching: true}
-            
-        case types.GET_ENGINESIZES_PAGES:
-            return Object.assign({}, state, {
-                enginesizes: action.resp.data,
-                itemsCountPerPage: action.resp.per_page,
-                totalItemsCount: action.resp.total,
-                activePage: action.resp.current_page,
-                sending: false,
-                fetching: false
-            })
+        
         case types.REQUEST_ENGINESIZES_SUBMIT:
             return {...state, sending: true}
 

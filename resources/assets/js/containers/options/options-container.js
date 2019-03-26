@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Pagination from "react-js-pagination";
 import OptionsList from '../../components/options/options';
 import store from '../../store';
-import { requestOptions, requestDeleteOptions, requestSubmitOptions, requestOptionsPages,requestUpdateOptions, requestOptionsStatus } from  '../../actions/options-actions';
+import { requestOptions, requestDeleteOptions, requestSubmitOptions,requestUpdateOptions, requestOptionsStatus } from  '../../actions/options-actions';
 import {requestOptionCategories} from '../../actions/option_cat-action';
 
 //COMPONENT
@@ -33,7 +33,8 @@ class OptionsListContainer extends Component {
 
     componentDidMount() {
         // call action to run the relative saga
-        this.props.requestOptions();
+        const page = this.props.activePage;
+        this.props.requestOptions(page);
         this.props.requestOptionCategories();
     }
 
@@ -67,7 +68,7 @@ class OptionsListContainer extends Component {
     // pagination function
     handlePageChange(pageNumber) {
         console.log(`active page is ${pageNumber}`);
-        this.props.requestOptionsPages(pageNumber)
+        this.props.requestOptions(pageNumber)
         
     }
     
@@ -83,7 +84,7 @@ class OptionsListContainer extends Component {
         return (
             <div>
                 <div className="row">
-                    <div className="col s12 m3 l3">
+                    <div className="col s12 m3 l3 mt-3">
                         {this.state.isEditing ? (
                             <EditOptions onSubmit = {this.submitEditOption.bind(this)} editId = {this.state.isEditing} optionLists = {this.props.optionCategories}/>
                         ): (
@@ -149,4 +150,4 @@ function mapStateToProps(store) {
     }
 }
 
-export default connect(mapStateToProps, {requestOptions,requestOptionCategories, requestDeleteOptions, requestSubmitOptions, requestOptionsPages,requestUpdateOptions, requestOptionsStatus})(OptionsListContainer);
+export default connect(mapStateToProps, {requestOptions,requestOptionCategories, requestDeleteOptions, requestSubmitOptions,requestUpdateOptions, requestOptionsStatus})(OptionsListContainer);

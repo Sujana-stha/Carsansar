@@ -23,7 +23,6 @@ const UsersReducer = function(state = initialState, action) {
                 requesting: true
             })
         case types.GET_LOGGED_USER:
-            console.log('a', action)
             return Object.assign({}, state, {
                 loggedUser: action.resp
             })

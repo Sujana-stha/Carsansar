@@ -10,10 +10,8 @@ export function* addUserWatcher() {
 
 function* addUserFlow(action) {
     yield put(startSubmit('RegisterForm'))
-    console.log('act', action)
     try {
         const response = yield call(api.registerUsers, action.values)
-        console.log('resp', response)
         const resp = response.data
         if(response.status === 200 ) {
             yield put({type: types.REGISTER_SUCCESS, resp})
@@ -36,12 +34,10 @@ export function* getLoggedUserWatcher() {
 function* getLoggedUserFlow() {
     try {
         const result = yield call(api.getLoggedUser)
-        console.log('logg', result)
         const resp = result.data
         if(result.status==200) {
             yield put({type: types.GET_LOGGED_USER, resp})
         }
-
     } catch (error) {
         notify.show("Cannot get User Details!","error",5000)
     }

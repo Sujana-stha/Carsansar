@@ -3,7 +3,7 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 
-const LeftSidebarNav = () => {
+const LeftSidebarNav = (props) => {
 	return(
 		<aside className="sidenav-main nav-expanded nav-lock nav-collapsible sidenav-light navbar-full sidenav-active-rounded">
 			<div className="brand-sidebar">
@@ -84,6 +84,7 @@ const LeftSidebarNav = () => {
 						</ul>
 					</div>
 		  		</li>
+				{props.userRole === props.authUser.name ? (
 		  		<li className="bold"><a className="collapsible-header waves-effect waves-cyan " href="#"><i className="material-icons">face</i><span className="menu-title" data-i18n="">Users</span></a>
 					<div className="collapsible-body">
 						<ul className="collapsible collapsible-sub" data-collapsible="accordion">
@@ -99,6 +100,7 @@ const LeftSidebarNav = () => {
 						</ul>
 					</div>
 		  		</li>
+				):null}
 			</ul>
 			<div className="navigation-background"></div><a className="sidenav-trigger btn-sidenav-toggle btn-floating btn-medium waves-effect waves-light hide-on-large-only" href="#" data-target="slide-out"><i className="material-icons">menu</i></a>
 	  	</aside>

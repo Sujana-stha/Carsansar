@@ -26,20 +26,6 @@ const colorReducer =  function(state = initialState, action) {
                 sending: false
             })
         
-        case types.REQUEST_COLORS_PAGES:
-            return Object.assign({}, state, {
-                fetching: true
-            })
-        case types.GET_COLORS_PAGES:
-            return Object.assign({}, state, {
-                colors: action.resp.data,
-                itemsCountPerPage: action.resp.per_page,
-                totalItemsCount: action.resp.total,
-                activePage: action.resp.current_page,
-                fetching: false,
-                sending: false
-            })
-
         case types.REQUEST_COLORS_SUBMIT:
             return Object.assign({}, state, {
                 sending: true

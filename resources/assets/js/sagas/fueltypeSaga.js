@@ -9,29 +9,18 @@ import {notify} from 'react-notify-toast'
 export function* FueltypeWatcher() {
     yield takeLatest(types.REQUEST_FUELTYPES, FueltypeSaga)
 }
-function* FueltypeSaga() {
-    const response = yield call(api.getFueltypes);
+function* FueltypeSaga(action) {
+    const response = yield call(api.getFueltypes, action.pageNumber);
     const fueltypes = response.data
-    yield put({type: types.GET_FUELTYPES_SUCCESS, fueltypes});
-}
-
-// Get Makes pagination in table
-export function* FueltypesPagesWatcher() {
-    yield takeLatest(types.REQUEST_FUELTYPES_PAGES, callFueltypesPages)
-}
-function* callFueltypesPages(action) {
-    const result =  yield call(api.getFueltypesPages, action.pageNumber);
-    const resp = result.data
-
-    if (result.errors) {
-        yield put({ type: types.REQUEST_FUELTYPES_FAILED, errors: result.error});
-        error = result.error;
+    
+    if (response.errors) {
+        yield put({ type: types.REQUEST_FUELTYPES_FAILED, errors: response.error});
+        error = response.error;
         notify.show("Cannot get all Fuels", "error", 5000)
     } else {
-        yield put({type: types.GET_FUELTYPES_PAGES, resp});
+        yield put({type: types.GET_FUELTYPES_SUCCESS, fueltypes});
     }
 }
-
 
 // Submit form data of makes
 export function* submitFueltypeSaga() {
@@ -75,7 +64,7 @@ function* callEditFueltype (action) {
 
     } else {
         // yield put({type: types.UPDATE_FUELTYPES_SUCCESS, resp, message: result.statusText});
-        yield put({type: types.REQUEST_FUELTYPES_PAGES, pageNumber})
+        yield put({type: types.REQUEST_FUELTYPES, pageNumber})
         notify.show(`${resp.fueltype_desc} Updated Successfully!`, "success", 5000)
 
     }
@@ -89,8 +78,6 @@ export function* toggleFueltypeStatusSaga() {
 }
 
 function* callToggleFueltypeStatus(action) {
-    let error = {};
-    console.log('action', action)
     const result =  yield call(api.updateFueltypeStatus, action.fueltypeId, action.values);
     const resp = result.data;
     const pageNumber = action.page
@@ -101,7 +88,7 @@ function* callToggleFueltypeStatus(action) {
 
     } else {
         // yield put({type: types.FUELTYPES_STATUS_SUCCESS, resp, message: result.statusText});
-        yield put({type: types.REQUEST_FUELTYPES_PAGES, pageNumber})
+        yield put({type: types.REQUEST_FUELTYPES, pageNumber})
         notify.show(`Status of ${resp.fueltype_desc} Changed`, "success", 5000)
 
     }

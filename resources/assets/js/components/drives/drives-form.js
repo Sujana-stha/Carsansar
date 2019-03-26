@@ -19,21 +19,21 @@ const DriveForm = props=> {
         const { handleSubmit } = props;
         return (
             <div>
-                <h4 className="header2">Add New Drive</h4>
+                <h4 className="wr-header2">Add Drive</h4>
 
                 <div className="card-panel">
 					<div className="row">
                         <form className="col s12" onSubmit= { handleSubmit  } >
                             <Field 
-                                label="Drive Desciption"
+                                label="Enter Drive"
                                 name="drive_desc"
                                 type="text"
                                 component={renderInputField} 
                             />
                             
                             <div className="row">
-                                <div className="input-field col s12">
-                                    <button className="btn cyan waves-effect waves-light right" type="submit" name="action">Save
+                                <div className="col s12">
+                                    <button className="btn cyan waves-effect waves-light" type="submit" name="action">Add
                                         <i className="material-icons right">send</i>
                                     </button>
                                 </div>

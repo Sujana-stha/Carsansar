@@ -19,7 +19,6 @@ import RightSidebarNav from '../components/nav/right-sidebar-nav'
 //Components
 
 import DashboardAnalytics from '../components/dashboard/dashboard-analytics'
-import VehiclesListing from '../components/vehicles/vehicles-listing'
 import UsersListing from '../components/users/users'
 import UserProfile from '../components/users/user-profile'
 import InsertVehicleAttribute from '../components/vehicles/insert-vehicle-attribute'
@@ -27,6 +26,7 @@ import VehicleAttributes from '../components/vehicles/vehicle-attributes'
 import ImagesPreview from '../components/vehicles/imagePreview'
 
 //Containers
+import VehiclesListingContainer from '../containers/vehicles/vehicles-listing-container'
 import InsertVehicleContainer from '../containers/vehicles/insert-vehicle-containers'
 import InsertUserContainer from '../containers/users/insertUsers-containers'
 import ColorListContainer from '../containers/color/color-container'
@@ -59,28 +59,29 @@ class DashboardLayout extends Component {
     }
     render() {
         const {match} = this.props
+        const userName = window.Laravel.super_admin
         return (
             <div className="app">
+                <Notifications options={{top: '50px', right: '0px', width: '100%', margin:0, left: 'none'}}/>
                 {/* BEGIN: Header */}
                 <Header authUser ={ this.props.loggedUser}/>
                 {/* END: Header */}
 
                 {/* BEGIN: SideNav */}
-                <LeftSidebarNav />
+                <LeftSidebarNav userRole ={userName} authUser ={ this.props.loggedUser}/>
                 {/* END: SideNav */}
 
                 { /* BEGIN: Page Main */}
                     <div id="main">
                         <div className="row">
-                            <div className="content-wrapper-before blue-grey lighten-5"></div>
+                            {/* <div className="content-wrapper-before blue-grey lighten-5"></div> */}
                             <div className="col s12">
                                 <Breadcrumb/>
-                                <Notifications options={{top: '50px', right: '0px', width: '100%', margin:0, left: 'none'}}/>
                                 {/* start container */}
                                 <div className="container">
                                     <Switch>
                                         <Route exact path={`${match.path}`} component={DashboardAnalytics}/>
-                                        <Route path={`${match.path}/vehicles`} component={VehiclesListing}/>
+                                        <Route path={`${match.path}/vehicles`} component={VehiclesListingContainer}/>
                                         <Route path={`${match.path}/insert-vehicle`} component={InsertVehicleContainer}/>
                                         <Route path={`${match.path}/vehicle-attributes`} component={VehicleAttributes}/>
                                         <Route path={`${match.path}/insert-vehicle-attribute`} component={InsertVehicleAttribute}/>
