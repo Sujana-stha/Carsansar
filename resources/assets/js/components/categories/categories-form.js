@@ -19,21 +19,20 @@ const CategoryForm = props => {
         const { handleSubmit } = props;
         return (
             <div>
-                <h4 className="header2">Add New Categories</h4>
-
+                <h4 className="wr-header2">Add Categories</h4>
                 <div className="card-panel">
 					<div className="row">
                         <form className="col s12" onSubmit= { handleSubmit  } >
                             <Field 
-                                label="Category Desciption"
+                                label="Enter Category"
                                 name="category_desc"
                                 type="text"
                                 component={renderInputField} 
                             />
                             
                             <div className="row">
-                                <div className="input-field col s12">
-                                    <button className="btn cyan waves-effect waves-light right" type="submit" name="action">Save
+                                <div className="col s12">
+                                    <button className="btn cyan waves-effect waves-light" type="submit" name="action">Save
                                         <i className="material-icons right">send</i>
                                     </button>
                                 </div>

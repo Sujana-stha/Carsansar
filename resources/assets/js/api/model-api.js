@@ -2,14 +2,7 @@
 import axios, {getHeaders} from './axiosInstance'
 
 //GET ALL MODEL API
-export function getModel() {
-    const access_token = window.localStorage.getItem('access_token')
-    const headers = getHeaders(access_token)
-    return axios.get('/api/models',{headers})
-}
-
-//GET MODEL BY PAGINATION API
-export function getModelPages(pageNumber) {
+export function getModel(pageNumber) {
     const access_token = window.localStorage.getItem('access_token')
     const headers = getHeaders(access_token)
     return axios.get(`/api/models?page=${pageNumber}`,{headers})

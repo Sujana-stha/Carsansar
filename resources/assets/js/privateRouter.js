@@ -1,29 +1,3 @@
-// import React from 'react';
-// import { Route, Redirect } from 'react-router-dom';
-// import {fakeAuth}  from './helpers/check-auth';
-
-
-// export const PrivateRoute =({ component: Component, ...rest }) => {
-//     console.log('res', rest)
-//     return (
-//     <Route
-//     {...rest}
-//     render={props =>
-//       fakeAuth.isAuthenticated ? (
-//         <Component {...props} />
-//       ) : (
-//         <Redirect
-//           to={{
-//             pathname: "/login",
-//             state: { from: props.location }
-//           }}
-//         />
-//       )
-//     }
-//   />
-//   )
-// } 
-
 import React, {Component} from 'react'
 import { Route, Redirect, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'

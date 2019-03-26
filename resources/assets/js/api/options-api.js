@@ -2,14 +2,7 @@
 import axios, {getHeaders} from './axiosInstance'
 
 //GET ALL OPTIONS API
-export function getOptions() {
-    const access_token = window.localStorage.getItem('access_token')
-    const headers = getHeaders(access_token)
-    return axios.get('/api/options',{headers})
-}
-
-//GET OPTIONS BY PAGINATION API
-export function getOptionsPages(pageNumber) {
+export function getOptions(pageNumber) {
     const access_token = window.localStorage.getItem('access_token')
     const headers = getHeaders(access_token)
     return axios.get(`/api/options?page=${pageNumber}`,{headers})

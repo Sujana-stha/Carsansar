@@ -13,23 +13,24 @@ class ImagesPreview extends Component {
 
     onDrop(images){
         console.log('tss', images)
-        // const imagesList = images.map((image, index)=> {
-        //     if(index === 0) {
-        //         return Object.assign(image, {
-        //             main_flag: true
-        //         })
-        //     } else {
-        //         return Object.assign(image, {
-        //             main_flag: false
-        //         })
-        //     }
-           
-        // })
+        
         this.setState({
             images : this.state.images.concat([...images]),
         });
-        console.log('main', images)
-        this.props.input.onChange(this.state.images);
+        const imagesList = this.state.images.map((image, index)=> {
+            if(index === 0) {
+                return Object.assign(image, {
+                    main_flag: true
+                })
+            } else {
+                return Object.assign(image, {
+                    main_flag: false
+                })
+            }
+           
+        })
+        console.log('main', imagesList)
+        this.props.input.onChange(imagesList);
     }
     onDropRejected(images){
         if(images.length){
@@ -78,23 +79,24 @@ class ImagesPreview extends Component {
     render() {
         const { input } = this.props;
         return (
-            <div className="wr-uploader">
-                <div className="text-center">
+            <div className="wr-uploader col s12">
+                <div className="wr-dropzone-wrapper">
                     <DropZone
                         onDropAccepted={this.onDrop.bind(this)}
                         onDropRejected={this.onDropRejected.bind(this)}
-                        className="drop-zone"
+                        className="drop-zone center-align"
                         accept="image/jpeg, image/png, image/gif, image/bmp"
                         // onChange= {this.handleChange.bind(this)}
                         // onChange={input.onChange(this.state.images)}
                     >
-                       Drag n Drop Images Here !
+                        <i className="material-icons">cloud_upload</i><br/>
+                        <span className="dropzone-text">Drag n Drop Images Here !</span>
                     </DropZone>
                 </div>
                 {this.state.images.length ? (
                     <div className="wr-images">
                         {this.state.images.map((file, index)=>
-                            <div key={index} className="wr-image">
+                            <div key={index} className="wr-image-list">
                                 <label>
                                     {index === 0 ? (
                                         <input type="radio" className="with-gap"
@@ -109,13 +111,14 @@ class ImagesPreview extends Component {
                                         />
                                     )}
                                     <span>
-                                        <i className="close"
-                                        onClick={this.removeDroppedFile.bind(this, file.preview)}
-                                        >X</i>
+                                        <div className="overlay">
+                                            <button type="button" className="close"
+                                            onClick={this.removeDroppedFile.bind(this, file.preview)}
+                                            >REMOVE</button>
+                                        </div>
                                         <img src={file.preview} alt=""/>
                                     </span>
                                 </label>
-                                
                             </div>
                         )}
                     </div>

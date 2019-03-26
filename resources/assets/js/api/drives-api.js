@@ -2,14 +2,7 @@
 import axios, {getHeaders} from './axiosInstance'
 
 //GET ALL DRIVES API
-export function getDrives() {
-    const access_token = window.localStorage.getItem('access_token')
-    const headers = getHeaders(access_token)
-    return axios.get('/api/drives',{headers})
-}
-
-//GET DRIVES BY PAGINATION API
-export function getDrivesPages(pageNumber) {
+export function getDrives(pageNumber) {
     const access_token = window.localStorage.getItem('access_token')
     const headers = getHeaders(access_token)
     return axios.get(`/api/drives?page=${pageNumber}`,{headers})

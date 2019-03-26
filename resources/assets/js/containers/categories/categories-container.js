@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Pagination from "react-js-pagination";
-import MakesList from '../../components/categories/categories';
 import store from '../../store';
-import { requestCategories, requestDeleteCategories, requestSubmitCategories, requestCategoriesPages,requestUpdateCategories, requestCategoriesStatus } from  '../../actions/categories-action';
+import { requestCategories, requestDeleteCategories, requestSubmitCategories,requestUpdateCategories, requestCategoriesStatus } from  '../../actions/categories-action';
 
 
 //COMPONENT
@@ -11,7 +10,6 @@ import CategoryForm from '../../components/categories/categories-form';
 import EditCategory from '../../components/categories/categories-edit';
 import CategoriesList from '../../components/categories/categories';
 import Loading from '../../components/loading';
-
 
 class CategoriesListContainer extends Component {
     constructor() {
@@ -26,7 +24,8 @@ class CategoriesListContainer extends Component {
     
     componentDidMount() {
         // call action to run the relative saga
-        this.props.requestCategories();
+        const page = this.props.activePage;
+        this.props.requestCategories(page);
     }
 
     // submit function for new data
@@ -49,11 +48,9 @@ class CategoriesListContainer extends Component {
 
     //function to call form of edit
     editCategories(values) {
-     
         this.setState ({
             isEditing : values
         })
-        
     }
 
     deleteCategoryAction(categoryId) {
@@ -63,7 +60,7 @@ class CategoriesListContainer extends Component {
     // pagination function
     handlePageChange(pageNumber) {
         console.log(`active page is ${pageNumber}`);
-        this.props.requestCategoriesPages(pageNumber)
+        this.props.requestCategories(pageNumber)
         
     }
     
@@ -80,7 +77,7 @@ class CategoriesListContainer extends Component {
             <div>
                 
                 <div className="row">
-                    <div className="col s12 m3 l3">
+                    <div className="col s12 m3 l3 mt-3">
                         {this.state.isEditing ? (
                             <EditCategory onSubmit = {this.submitEditCategory.bind(this)} editId = {this.state.isEditing} />
                         ): (
@@ -144,4 +141,4 @@ function mapStateToProps(store) {
     }
 }
 
-export default connect(mapStateToProps, { requestCategories, requestDeleteCategories, requestSubmitCategories, requestCategoriesPages,requestUpdateCategories, requestCategoriesStatus})(CategoriesListContainer);
+export default connect(mapStateToProps, { requestCategories, requestDeleteCategories, requestSubmitCategories,requestUpdateCategories, requestCategoriesStatus})(CategoriesListContainer);

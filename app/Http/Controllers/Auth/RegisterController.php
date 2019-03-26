@@ -49,11 +49,16 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
+
+    public $successStatus = 200;
+    
     protected function validator(array $data)
     {
         return Validator::make($data, [
             'name' => 'required|string|max:45',
             'email' => 'required|string|email|max:255|unique:users',
+            'role' => 'required',
+            'company_id'=> 'required|integer',
             'password' => 'required|string|min:6|confirmed',
             'password_confirmation' => 'required|string|min:6',
             // 'address1' => 'required|string|max:255',
@@ -75,6 +80,8 @@ class RegisterController extends Controller
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
+            'role' => $data['role'],
+            'company_id'=> $data['company_id'],
             'password' => Hash::make($data['password']),
         ]);
     }
@@ -91,6 +98,8 @@ class RegisterController extends Controller
         $user = User::create([
             'name' => $request['name'],
             'email' => $request['email'],
+            'role' => $request['role'],
+            'company_id'=> $request['company_id'],
             'password' => Hash::make($request['password']),
             //'userTypeId' => User::BUYER
         ]);
@@ -105,6 +114,6 @@ class RegisterController extends Controller
         //     'userId' => $user->id
         // ]);
 
-        return response("success", 200);
+        return response()->json(['data'=>$user],$this->successStatus);
     }
 }

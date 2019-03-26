@@ -26,15 +26,6 @@ const driveReducer =  function(state = initialState, action) {
                 sending: false
             })
         
-        case types.GET_DRIVES_PAGES:
-            return Object.assign({}, state, {
-                drives: action.resp.data,
-                itemsCountPerPage: action.resp.per_page,
-                totalItemsCount: action.resp.total,
-                activePage: action.resp.current_page,
-                sending: false,
-                fetching: false
-            })
         
         case types.REQUEST_DRIVES_SUBMIT:
             return {...state, sending: true}

@@ -14,7 +14,6 @@ class EditOptionCategory extends Component {
     
     renderInputField({input, label, type, meta: {touched, error}}) {
         return (
-            <div>
                 <div className="row">
 					<div className="input-field col s12">
                         <input type={type} {...input}/>
@@ -24,7 +23,6 @@ class EditOptionCategory extends Component {
                         </div>
                     </div>
                 </div>
-            </div>
         )
     }
     
@@ -33,20 +31,20 @@ class EditOptionCategory extends Component {
         return (
             <div>
                 
-                <h4 className="header2">Update Option Categories</h4>
+                <h4 className="wr-header2">Edit Option Categories</h4>
                 <div className="card-panel">
 					<div className="row">
                         <form className="col s12" onSubmit= { handleSubmit  }>
                             <Field 
-                                label="Make Desciption"
+                                label="Enter Option Categories"
                                 name="optioncategory_desc"
                                 type="text"
                                 component={this.renderInputField} 
                             />
                         
                             <div className="row">
-								<div className="input-field col s12">
-									<button className="btn cyan waves-effect waves-light right" type="submit" name="action">Update
+								<div className="col s12">
+									<button className="btn cyan waves-effect waves-light" type="submit" name="action">Update
 										<i className="material-icons right">send</i>
 									</button>
 								</div>

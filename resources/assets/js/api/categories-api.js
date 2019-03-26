@@ -2,14 +2,7 @@
 import axios, {getHeaders} from './axiosInstance'
 
 //GET ALL CATEGORIES API
-export function getCategories() {
-    const access_token = window.localStorage.getItem('access_token')
-    const headers = getHeaders(access_token)
-    return axios.get('/api/categories',{headers})
-}
-
-//GET CATEGORIES BY PAGINATION API
-export function getCategoriesPages(pageNumber) {
+export function getCategories(pageNumber) {
     const access_token = window.localStorage.getItem('access_token')
     const headers = getHeaders(access_token)
     return axios.get(`/api/categories?page=${pageNumber}`,{headers})

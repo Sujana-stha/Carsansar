@@ -1,10 +1,10 @@
 import * as types from '../actions/action-types';
 
 
-export function requestBodies(values) {
+export function requestBodies(pageNumber) {
     return {
         type: types.REQUEST_BODIES,
-        values
+        pageNumber
     }
 }
 export function requestSubmitBodies(values) {
@@ -25,18 +25,7 @@ export function getBodiesSuccess(bodies) {
         bodies
     }
 }
-export function requestBodiesPages(pageNumber) {
-    return {
-        type: types.REQUEST_BODIES_PAGES,
-        pageNumber
-    }
-}
-export function getBodiesPages(bodies) {
-    return {
-        type: types.GET_BODIES_PAGES,
-        bodies
-    }
-}
+
 export function addBodiesSuccess(values, message) {
     return {
         type: types.ADD_BODIES_SUCCESS,

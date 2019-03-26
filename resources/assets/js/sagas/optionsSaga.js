@@ -9,29 +9,18 @@ import {notify} from 'react-notify-toast'
 export function* OptionWatcher() {
     yield takeLatest(types.REQUEST_OPTIONS, OptionSaga)
 }
-function* OptionSaga() {
-    const response = yield call(api.getOptions);
+function* OptionSaga(action) {
+    const response = yield call(api.getOptions, action.pageNumber);
     const options = response.data
-    yield put({type: types.GET_OPTIONS_SUCCESS, options});
-}
-
-// Get Options pagination in table
-export function* OptionsPagesWatcher() {
-    yield takeLatest(types.REQUEST_OPTIONS_PAGES, callOptionsPages)
-}
-function* callOptionsPages(action) {
-    const result =  yield call(api.getOptionsPages, action.pageNumber);
-    const resp = result.data
-
-    if (result.errors) {
-        yield put({ type: types.REQUEST_OPTIONS_FAILED, errors: result.error});
-        error = result.error;
+    
+    if (response.errors) {
+        yield put({ type: types.REQUEST_OPTIONS_FAILED, errors: response.error});
+        error = response.error;
         notify.show("Cannot Get all Options!","error", 5000)
     } else {
-        yield put({type: types.GET_OPTIONS_PAGES, resp});
+        yield put({type: types.GET_OPTIONS_SUCCESS, options});
     }
 }
-
 
 // Submit form data of Options
 export function* submitOptionsSaga() {
@@ -42,7 +31,6 @@ function* callOptionSubmit(action) {
     let error = {};
     const result =  yield call(api.addOptions, action.values);
     const resp = result.data
-    console.log('resp',resp)
     if (result.errors) {
         yield put({ type: types.REQUEST_OPTIONS_FAILED, errors: result.error});
         error = result.error;
@@ -54,7 +42,6 @@ function* callOptionSubmit(action) {
     }
     yield put(stopSubmit('PostOptions', error));
     yield put(reset('PostOptions'));
-
 }
 
 //edit form data of Options
@@ -74,12 +61,11 @@ function* callEditOption (action) {
         notify.show(`Cannot Update ${resp.option_desc}!`, "error", 5000)
     } else {
         // yield put({type: types.UPDATE_OPTIONS_SUCCESS, resp, message: result.statusText});
-        yield put ({type: types.REQUEST_OPTIONS_PAGES, pageNumber})
+        yield put ({type: types.REQUEST_OPTIONS, pageNumber})
         notify.show(`${resp.option_desc} Updated Successfully!`, "success", 5000)
     }
     yield put(stopSubmit('EditOptions', error));
     yield put(reset('EditOptions'));
-
 }
 
 // change status value
@@ -88,8 +74,6 @@ export function* toggleStatusSaga() {
 }
 
 function* callOptToggleStatus(action) {
-    let error = {};
-    console.log('action', action)
     const result =  yield call(api.updateOptionsStatus, action.optionId, action.values);
     const resp = result.data;
     const pageNumber = action.page
@@ -99,12 +83,10 @@ function* callOptToggleStatus(action) {
         notify.show(`Cannot Change Status of ${resp.option_desc}`, "error", 5000)
     } else {
         // yield put({type: types.OPTIONS_STATUS_SUCCESS, resp, message: result.statusText});
-        yield put ({type: types.REQUEST_OPTIONS_PAGES, pageNumber})
+        yield put ({type: types.REQUEST_OPTIONS, pageNumber})
         notify.show(`Status of ${resp.option_desc} Updated!`, "success", 5000)
-
     }
 }
-
 
 // delete Options data from table
 export function* deleteOptionsSaga() {
@@ -123,4 +105,3 @@ function* callDeleteOption(action) {
         notify.show("Options Deleted Successfully!", "error", 5000)
     }
 } 
-

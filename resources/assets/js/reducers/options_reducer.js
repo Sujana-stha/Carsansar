@@ -25,18 +25,7 @@ const optionReducer =  function(state = initialState, action) {
                 activePage: action.options.current_page,
                 sending: false
             })
-        case types.REQUEST_OPTIONS_PAGES:
-            return {...state, fetching: true}
-
-        case types.GET_OPTIONS_PAGES:
-            return Object.assign({}, state, {
-                options: action.resp.data,
-                itemsCountPerPage: action.resp.per_page,
-                totalItemsCount: action.resp.total,
-                activePage: action.resp.current_page,
-                fetching: false,
-                sending: false
-            })
+        
         case types.REQUEST_OPTIONS_SUBMIT: 
             return {...state, sending: true};
           

@@ -10,27 +10,15 @@ export function* MakeWatcher() {
     yield takeLatest(types.REQUEST_MAKES, MakeSaga)
 }
 function* MakeSaga(action) {
-    const response = yield call(api.getMakes);
+    const response = yield call(api.getMakes,action.pageNumber,action.sorted_column, action.order);
     const makes = response.data
-    yield put({type: types.GET_MAKES_SUCCESS, makes});
-}
-
-// Get Makes pagination in table
-export function* MakesPagesWatcher() {
-    yield takeLatest(types.REQUEST_MAKES_PAGES, callMakesPages)
-}
-function* callMakesPages(action) {
-    const result =  yield call(api.getMakesPages, action.pageNumber);
-    const resp = result.data
-
-    if (result.errors) {
+    if (response.errors) {
         yield put({ type: types.REQUEST_FAILED});
         notify.show("Cannot Get All Makes", "error", 5000);
     } else {
-        yield put({type: types.GET_MAKES_PAGES, resp});
+        yield put({type: types.GET_MAKES_SUCCESS, makes});
     }
 }
-
 
 // Submit form data of makes
 export function* submitMakesSaga() {
@@ -48,8 +36,7 @@ function* callMakesSubmit(action) {
     } else {
         // yield put({type: types.ADD_MAKES_SUCCESS, resp, message: result.statusText});
         yield put({type: types.REQUEST_MAKES});
-        notify.show(`${resp.make_desc} Make Added Successfully!`, "success", 5000);
-
+        // notify.show(`${resp.make_desc} Make Added Successfully!`, "success", 5000);
     }
     yield put(stopSubmit('PostMakes', error));
     yield put(reset('PostMakes'));
@@ -73,7 +60,7 @@ function* callEditMake (action) {
 
     } else {
         // yield put({type: types.UPDATE_MAKES_SUCCESS, resp, message: result.statusText});
-        yield put ({type: types.REQUEST_MAKES_PAGES, pageNumber})
+        yield put ({type: types.REQUEST_MAKES, pageNumber})
         notify.show(`${resp.make_desc} Make Updated Successfully!`, "success", 5000);
 
     }
@@ -98,10 +85,9 @@ function* callToggleStatus(action) {
 
     } else {
         // yield put({type: types.MAKES_STATUS_SUCCESS, resp});
-        yield put ({type: types.REQUEST_MAKES_PAGES, pageNumber})
+        yield put ({type: types.REQUEST_MAKES, pageNumber})
         notify.show(`Status of ${resp.make_desc} Updated!`, "success",5000);
     }
-
 }
 
 
@@ -121,7 +107,6 @@ function* callDeleteMake(action) {
     } else {
         yield put(makeAction.deleteMakesSuccess(action.makeId, result.statusText));
         notify.show("Make Deleted Successfully!", "error", 5000);
-
     }
 } 
 

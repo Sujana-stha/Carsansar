@@ -1,10 +1,10 @@
 import * as types from '../actions/action-types';
 
 
-export function requestModel(values) {
+export function requestModel(pageNumber) {
     return {
         type: types.REQUEST_MODEL,
-        values
+        pageNumber
     }
 }
 export function requestSubmitModel(values) {
@@ -25,18 +25,7 @@ export function getModelSuccess(models) {
         models
     }
 }
-export function requestModelPages(pageNumber) {
-    return {
-        type: types.REQUEST_MODEL_PAGES,
-        pageNumber
-    }
-}
-export function getModelPages(models) {
-    return {
-        type: types.GET_MODEL_PAGES,
-        models
-    }
-}
+
 export function addModelSuccess(values) {
     return {
         type: types.ADD_MODEL_SUCCESS,

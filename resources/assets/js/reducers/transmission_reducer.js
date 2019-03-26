@@ -26,19 +26,6 @@ const transmissionReducer =  function(state = initialState, action) {
                 sending: false
             })
 
-        case types.REQUEST_TRANSMISSONS_PAGES: 
-            return {...state, fetching: true};
-           
-        case types.GET_TRANSMISSONS_PAGES:
-            return Object.assign({}, state, {
-                transmissions: action.resp.data,
-                itemsCountPerPage: action.resp.per_page,
-                totalItemsCount: action.resp.total,
-                activePage: action.resp.current_page,
-                sending: false,
-                fetching: false
-            })
-
         case types.REQUEST_TRANSMISSONS_SUBMIT: 
             return {...state, sending: true};
            

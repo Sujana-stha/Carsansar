@@ -15,25 +15,24 @@ const renderInputField=({input, label, type, meta: {touched, error}})=> {
     )
 }
 const OptionCategoryForm =props=> {
-    
         const { handleSubmit } = props;
         return (
             <div>
-                <h4 className="header2">Add New Option Categories</h4>
+                <h4 className="wr-header2">Add Option Categories</h4>
 
                 <div className="card-panel">
 					<div className="row">
                         <form className="col s12" onSubmit= { handleSubmit  } >
                             <Field 
-                                label="Option Category Desciption"
+                                label="Enter Option Category"
                                 name="optioncategory_desc"
                                 type="text"
                                 component={renderInputField} 
                             />
                             
                             <div className="row">
-                                <div className="input-field col s12">
-                                    <button className="btn cyan waves-effect waves-light right" type="submit" name="action">Save
+                                <div className="col s12">
+                                    <button className="btn cyan waves-effect waves-light" type="submit" name="action">Add
                                         <i className="material-icons right">send</i>
                                     </button>
                                 </div>

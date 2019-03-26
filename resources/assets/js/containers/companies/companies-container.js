@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Pagination from "react-js-pagination";
 import store from '../../store';
-import { requestCompanies, requestDeleteCompanies, requestSubmitCompanies, requestCompaniesPages,requestUpdateCompanies, requestCompaniesStatus } from  '../../actions/companies-action';
-
+import { requestCompanies, requestDeleteCompanies, requestSubmitCompanies,requestUpdateCompanies, requestCompaniesStatus } from  '../../actions/companies-action';
+import loadjs from 'loadjs'
 
 //COMPONENT
 import CompanyForm from '../../components/companies/companies-form';
@@ -22,11 +22,17 @@ class CompaniesListContainer extends Component {
         this.editCompanies = this.editCompanies.bind(this)
         this.toggleStatus = this.toggleStatus.bind(this)
     }
-
-    
+    componentWillMount() {
+        loadjs('/js/materialize-admin/vendors.min.js', function() {
+            loadjs('/js/materialize-admin/plugins.js', function() {
+                loadjs('/js/materialize-admin/custom/custom-script.js');
+            });
+        });
+    }
     componentDidMount() {
         // call action to run the relative saga
-        this.props.requestCompanies();
+        const page = this.props.activePage;
+        this.props.requestCompanies(page);
     }
 
     // submit function for new data
@@ -62,7 +68,7 @@ class CompaniesListContainer extends Component {
     // pagination function
     handlePageChange(pageNumber) {
         console.log(`active page is ${pageNumber}`);
-        this.props.requestCompaniesPages(pageNumber)
+        this.props.requestCompanies(pageNumber)
         
     }
     
@@ -162,4 +168,4 @@ function mapStateToProps(store) {
     }
 }
 
-export default connect(mapStateToProps, {requestCompanies, requestDeleteCompanies, requestSubmitCompanies, requestCompaniesPages,requestUpdateCompanies, requestCompaniesStatus})(CompaniesListContainer);
+export default connect(mapStateToProps, {requestCompanies, requestDeleteCompanies, requestSubmitCompanies,requestUpdateCompanies, requestCompaniesStatus})(CompaniesListContainer);

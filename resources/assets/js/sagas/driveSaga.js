@@ -9,29 +9,18 @@ import {notify} from 'react-notify-toast'
 export function* DriveWatcher() {
     yield takeLatest(types.REQUEST_DRIVES, DriveSaga)
 }
-function* DriveSaga() {
-    const response = yield call(driveApi.getDrives);
+function* DriveSaga(action) {
+    const response = yield call(driveApi.getDrives, action.pageNumber);
     const drives = response.data
-    yield put({type: types.GET_DRIVES_SUCCESS, drives});
-}
-
-// Get Makes pagination in table
-export function* DrivesPagesWatcher() {
-    yield takeLatest(types.REQUEST_DRIVES_PAGES, callDrivesPages)
-}
-function* callDrivesPages(action) {
-    const result =  yield call(driveApi.getDrivesPages, action.pageNumber);
-    const resp = result.data
-
-    if (result.errors) {
-        yield put({ type: types.REQUEST_DRIVES_FAILED, errors: result.error});
-        error = result.error;
+    
+    if (response.errors) {
+        yield put({ type: types.REQUEST_DRIVES_FAILED, errors: response.error});
+        error = response.error;
         notify.show("Cannot Get all Drives", "error", 5000)
     } else {
-        yield put({type: types.GET_DRIVES_PAGES, resp});
+        yield put({type: types.GET_DRIVES_SUCCESS, drives});
     }
 }
-
 
 // Submit form data of makes
 export function* submitDriveSaga() {
@@ -74,7 +63,7 @@ function* callEditDrive (action) {
 
     } else {
         // yield put({type: types.UPDATE_DRIVES_SUCCESS, resp, message: result.statusText});
-        yield put({type: types.REQUEST_DRIVES_PAGES, pageNumber})
+        yield put({type: types.REQUEST_DRIVES, pageNumber})
 
         notify.show(`${resp.drive_desc} Updated Successfully!`, "success", 5000)
     }
@@ -88,8 +77,6 @@ export function* toggleDrivesStatusSaga() {
 }
 
 function* callDriveToggleStatus(action) {
-    let error = {};
-    console.log('action', action)
     const result =  yield call(driveApi.updateDrivesStatus, action.driveId, action.values);
     const resp = result.data;
     const pageNumber = action.page
@@ -100,7 +87,7 @@ function* callDriveToggleStatus(action) {
 
     } else {
         // yield put({type: types.DRIVES_STATUS_SUCCESS, resp, message: result.statusText});
-        yield put({type: types.REQUEST_DRIVES_PAGES, pageNumber})
+        yield put({type: types.REQUEST_DRIVES, pageNumber})
 
         notify.show("Status Updated Successfully!", "success", 5000)
     }

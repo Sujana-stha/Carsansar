@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Pagination from "react-js-pagination";
 import DrivesList from '../../components/drives/drives';
 import store from '../../store';
-import { requestDrives, requestDeleteDrives, requestSubmitDrives, requestDrivesPages,requestUpdateDrives, requestDrivesStatus } from  '../../actions/drives-action';
+import { requestDrives, requestDeleteDrives, requestSubmitDrives,requestUpdateDrives, requestDrivesStatus } from  '../../actions/drives-action';
 
 
 //COMPONENT
@@ -25,8 +25,9 @@ class DrivesListContainer extends Component {
 
 
     componentDidMount() {
-        // call action to run the relative saga
-        this.props.requestDrives();
+        // call action to run the relative 
+        const page = this.props.activePage;
+        this.props.requestDrives(page);
     }
 
     // submit function for new data
@@ -63,7 +64,7 @@ class DrivesListContainer extends Component {
     // pagination function
     handlePageChange(pageNumber) {
         console.log(`active page is ${pageNumber}`);
-        this.props.requestDrivesPages(pageNumber)
+        this.props.requestDrives(pageNumber)
         
     }
     
@@ -80,7 +81,7 @@ class DrivesListContainer extends Component {
         return (
             <div>
                 <div className="row">
-                    <div className="col s12 m3 l3">
+                    <div className="col s12 m3 l3 mt-3">
                         {this.state.isEditing ? (
                             <EditDrive onSubmit = {this.submitEditDrive.bind(this)} editId = {this.state.isEditing} />
                         ): (
@@ -145,4 +146,4 @@ function mapStateToProps(store) {
     }
 }
 
-export default connect(mapStateToProps, {requestDrives, requestDeleteDrives, requestSubmitDrives, requestDrivesPages,requestUpdateDrives, requestDrivesStatus})(DrivesListContainer);
+export default connect(mapStateToProps, {requestDrives, requestDeleteDrives, requestSubmitDrives,requestUpdateDrives, requestDrivesStatus})(DrivesListContainer);

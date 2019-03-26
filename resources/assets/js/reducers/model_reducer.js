@@ -25,19 +25,6 @@ const modelReducer =  function(state = initialState, action) {
                 activePage: action.models.current_page,
                 sending: false
             })
-        case types.REQUEST_MODEL_PAGES:
-            return {...state, fetching: true}
-
-        case types.GET_MODEL_PAGES:
-            return Object.assign({}, state, {
-                models: action.resp.data,
-                itemsCountPerPage: action.resp.per_page,
-                totalItemsCount: action.resp.total,
-                activePage: action.resp.current_page,
-                fetching: false,
-                sending: false
-            })
-        
         
         case types.REQUEST_MODEL_SUBMIT:
             return  Object.assign({}, state, {

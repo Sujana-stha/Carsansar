@@ -1,9 +1,9 @@
 import * as types from '../actions/action-types';
 
-export function requestMakes(token) {
+export function requestMakes(pageNumber,sorted_column, order) {
     return {
         type: types.REQUEST_MAKES,
-        token
+        sorted_column, order, pageNumber
     }
 }
 export function requestSubmitMake(values) {
@@ -24,18 +24,7 @@ export function getMakesSuccess(makes) {
         makes
     }
 }
-export function requestMakesPages(pageNumber) {
-    return {
-        type: types.REQUEST_MAKES_PAGES,
-        pageNumber
-    }
-}
-export function getMakesPages(makes) {
-    return {
-        type: types.GET_MAKES_PAGES,
-        makes
-    }
-}
+
 export function addMakesSuccess(values) {
     return {
         type: types.ADD_MAKES_SUCCESS,

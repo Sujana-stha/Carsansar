@@ -3,14 +3,7 @@ import axios, {getHeaders} from './axiosInstance'
 
 
 //GET ALL TRANSMISSION API
-export function getTransmission() {
-    const access_token = window.localStorage.getItem('access_token')
-    const headers = getHeaders(access_token)
-    return axios.get('/api/transmissions',{headers})
-}
-
-//GET TRANSMISSION BY PAGINATION API
-export function getTransmissionPages(pageNumber) {
+export function getTransmission(pageNumber) {
     const access_token = window.localStorage.getItem('access_token')
     const headers = getHeaders(access_token)
     return axios.get(`/api/transmissions?page=${pageNumber}`,{headers})

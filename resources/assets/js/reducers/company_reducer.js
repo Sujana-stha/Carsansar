@@ -25,18 +25,7 @@ const companyReducer =  function(state = initialState, action) {
                 activePage: action.companies.current_page,
                 sending: false
             })
-        case types.REQUEST_COMPANIES_PAGES:
-            return {...state, fetching: true}
-
-        case types.GET_COMPANIES_PAGES:
-            return Object.assign({}, state, {
-                companies: action.resp.data,
-                itemsCountPerPage: action.resp.per_page,
-                totalItemsCount: action.resp.total,
-                activePage: action.resp.current_page,
-                sending: false,
-                fetching: false
-            })
+        
         case types.REQUEST_COMPANIES_SUBMIT:
             return {...state, sending: true}
         

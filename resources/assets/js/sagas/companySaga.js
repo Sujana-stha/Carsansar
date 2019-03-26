@@ -9,29 +9,17 @@ import {notify} from 'react-notify-toast'
 export function* CompanyWatcher() {
     yield takeLatest(types.REQUEST_COMPANIES, CompanySaga)
 }
-function* CompanySaga() {
-    const response = yield call(Api.getCompanies);
+function* CompanySaga(action) {
+    const response = yield call(Api.getCompanies, action.pageNumber);
     const companies = response.data
-    yield put({type: types.GET_COMPANIES_SUCCESS, companies});
-}
-
-// Get Makes pagination in table
-export function* CompaniesPagesWatcher() {
-    yield takeLatest(types.REQUEST_COMPANIES_PAGES, callCompaniesPages)
-}
-function* callCompaniesPages(action) {
-    const result =  yield call(Api.getCompaniesPages, action.pageNumber);
-    const resp = result.data
-
-    if (result.errors) {
-        yield put({ type: types.REQUEST_COMPANIES_FAILED, errors: result.error});
-        error = result.error;
+    if (response.errors) {
+        yield put({ type: types.REQUEST_COMPANIES_FAILED, errors: response.error});
+        error = response.error;
         notify.show("Cannot Get all Company", "error", 5000)
     } else {
-        yield put({type: types.GET_COMPANIES_PAGES, resp});
+        yield put({type: types.GET_COMPANIES_SUCCESS, companies});
     }
 }
-
 
 // Submit form data of makes
 export function* submitCompanySaga() {
@@ -74,7 +62,7 @@ function* callEditCompany (action) {
         notify.show(`Cannot Update ${resp.name}!`, "error", 5000)
     } else {
         // yield put({type: types.UPDATE_COMPANIES_SUCCESS, resp, message: result.statusText});
-        yield put({type: types.REQUEST_COMPANIES_PAGES, pageNumber})
+        yield put({type: types.REQUEST_COMPANIES, pageNumber})
         notify.show(`${resp.name} Company Updated Successfully!`, "success", 5000);
 
     }
@@ -90,7 +78,6 @@ export function* toggleCompaniesStatusSaga() {
 
 function* callCompanyToggleStatus(action) {
     let error = {};
-    console.log('action', action)
     const result =  yield call(Api.updateCompaniesStatus, action.companyId, action.values);
     const resp = result.data;
     const pageNumber = action.page
@@ -101,7 +88,7 @@ function* callCompanyToggleStatus(action) {
 
     } else {
         // yield put({type: types.COMPANIES_STATUS_SUCCESS, resp, message: result.statusText});
-        yield put({type: types.REQUEST_COMPANIES_PAGES, pageNumber})
+        yield put({type: types.REQUEST_COMPANIES, pageNumber})
         notify.show("Status Changed Successfully!", "success", 5000);
     }
 }

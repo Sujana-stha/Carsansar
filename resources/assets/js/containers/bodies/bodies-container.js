@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Pagination from "react-js-pagination";
 import BodiesList from '../../components/bodies/bodies';
 import store from '../../store';
-import { requestBodies, requestDeleteBodies, requestSubmitBodies, requestBodiesPages,requestUpdateBodies, requestBodiesStatus } from  '../../actions/bodies-action';
+import { requestBodies, requestDeleteBodies, requestSubmitBodies,requestUpdateBodies, requestBodiesStatus } from  '../../actions/bodies-action';
 
 
 //COMPONENT
@@ -24,13 +24,13 @@ class BodiesListContainer extends Component {
 
     componentDidMount() {
         // call action to run the relative saga
-        this.props.requestBodies();
+        const page = this.props.activePage;
+        this.props.requestBodies(page);
     }
 
     // submit function for new data
     submitBody(values) {
         this.props.requestSubmitBodies(values);
-        
     }
 
     // submit function to update data
@@ -50,15 +50,14 @@ class BodiesListContainer extends Component {
         
     }
 
-    deleteBodyAction(makeId) {
+    deleteBodyAction(bodyId) {
         this.props.requestDeleteBodies(bodyId);
     }
 
     // pagination function
     handlePageChange(pageNumber) {
         console.log(`active page is ${pageNumber}`);
-        this.props.requestBodiesPages(pageNumber)
-        
+        this.props.requestBodies(pageNumber)
     }
     
     toggleStatus (bodyId, status) {
@@ -75,7 +74,7 @@ class BodiesListContainer extends Component {
             <div>
                 
                 <div className="row">
-                    <div className="col s12 m3 l3">
+                    <div className="col s12 m3 l3 mt-3">
                         {this.state.isEditing ? (
                             <EditBody onSubmit = {this.submitEditBody.bind(this)} editId = {this.state.isEditing} />
                         ): (
@@ -139,4 +138,4 @@ function mapStateToProps(store) {
     }
 }
 
-export default connect(mapStateToProps, {requestBodies, requestDeleteBodies, requestSubmitBodies, requestBodiesPages,requestUpdateBodies, requestBodiesStatus})(BodiesListContainer);
+export default connect(mapStateToProps, {requestBodies, requestDeleteBodies, requestSubmitBodies,requestUpdateBodies, requestBodiesStatus})(BodiesListContainer);

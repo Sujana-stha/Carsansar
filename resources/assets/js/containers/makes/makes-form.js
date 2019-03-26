@@ -5,53 +5,49 @@ import { connect } from 'react-redux';
 
 const renderInputField=({input, label, type, meta: {touched, error}})=> {
     return (
-            <div className="row">
-                <div className="input-field col s12">
-                    <input type={type} {...input}/>
-                    <label>{label}</label>
-                    <div className="error">
-                        {touched ? error: ''}
-                    </div>
+        <div className="row">
+            <div className="input-field col s12">
+                <input type={type} {...input}/>
+                <label>{label}</label>
+                <div className="error">
+                    {touched ? error: ''}
                 </div>
             </div>
+        </div>
     )
 }
 
 
 const MakeForm =props=> {
-    
-        const { handleSubmit } = props;
-        return (
-            <div>
-                <h4 className="header2 wr-header2">Add New Make</h4>
-
-                <div className="card-panel">
-					<div className="row">
-                        <form className="col s12" onSubmit= { handleSubmit  } >
-                            <Field 
-                                label="Makes"
-                                name="make_desc"
-                                type="text"
-                                component={renderInputField} 
-                            />
-                            
-                            <div className="row">
-                                <div className="input-field col s12">
-                                    {props.sending ? (
-                                        <button className="btn cyan waves-effect waves-light right" type="submit" name="action">Sending...
-                                        </button>
-                                    ): (
-                                        <button className="btn cyan waves-effect waves-light right" type="submit" name="action">Save
-                                            <i className="material-icons right">send</i>
-                                        </button>
-                                    )}
-                                </div>
+    const { handleSubmit } = props;
+    return (
+        <div>
+            <h4 className="wr-header2">Add Make</h4>
+            <div className="card-panel">
+                <div className="row">
+                    <form className="col s12" onSubmit= { handleSubmit  } >
+                        <Field 
+                            label="Enter Make"
+                            name="make_desc"
+                            type="text"
+                            component={renderInputField} 
+                        />
+                        <div className="row">
+                            <div className="col s12">
+                                {props.sending ? (
+                                    <button className="btn cyan waves-effect waves-light" type="submit" name="action">Sending...
+                                    </button>
+                                ): (
+                                    <button className="btn cyan waves-effect waves-light" type="submit" name="action">Add <i className="material-icons right">send</i>
+                                    </button>
+                                )}
                             </div>
-                        </form>
-                    </div>
+                        </div>
+                    </form>
                 </div>
             </div>
-        );
+        </div>
+    );
     
 }
 

@@ -32,12 +32,12 @@ class EditTransmission extends Component {
         return (
             <div>
                 
-                <h4 className="header2">Update Transmission</h4>
+                <h4 className="header2">Edit Transmission</h4>
                 <div className="card-panel">
 					<div className="row">
                         <form className="col s12" onSubmit= { handleSubmit  }>
                         <Field 
-                            label="Transmission Desciption"
+                            label="Enter Transmission"
                             name="transmission_desc"
                             type="text"
                             value="transmission_desc"
@@ -45,8 +45,8 @@ class EditTransmission extends Component {
                         />
                         
                         <div className="row">
-								<div className="input-field col s12">
-									<button className="btn cyan waves-effect waves-light right" type="submit" name="action">Update
+								<div className="col s12">
+									<button className="btn cyan waves-effect waves-light" type="submit" name="action">Update
 										<i className="material-icons right">send</i>
 									</button>
 								</div>

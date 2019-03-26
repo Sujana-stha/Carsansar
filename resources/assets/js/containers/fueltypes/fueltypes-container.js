@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Pagination from "react-js-pagination";
 import FueltypesList from '../../components/fueltypes/fueltypes';
 import store from '../../store';
-import { requestFueltypes, requestDeleteFueltypes, requestSubmitFueltypes, requestFueltypesPages,requestUpdateFueltypes, requestFueltypesStatus } from  '../../actions/fueltypes-action';
+import { requestFueltypes, requestDeleteFueltypes, requestSubmitFueltypes,requestUpdateFueltypes, requestFueltypesStatus } from  '../../actions/fueltypes-action';
 
 
 //COMPONENT
@@ -26,7 +26,8 @@ class FueltypesListContainer extends Component {
 
     componentDidMount() {
         // call action to run the relative saga
-        this.props.requestFueltypes();
+        const page = this.props.activePage;
+        this.props.requestFueltypes(page);
     }
 
     // submit function for new data
@@ -62,7 +63,7 @@ class FueltypesListContainer extends Component {
     // pagination function
     handlePageChange(pageNumber) {
         console.log(`active page is ${pageNumber}`);
-        this.props.requestFueltypesPages(pageNumber)
+        this.props.requestFueltypes(pageNumber)
         
     }
     
@@ -78,7 +79,7 @@ class FueltypesListContainer extends Component {
         return (
             <div>
                 <div className="row">
-                    <div className="col s12 m3 l3">
+                    <div className="col s12 m3 l3 mt-3">
                         {this.state.isEditing ? (
                             <EditFueltype onSubmit = {this.submitEditFueltypes.bind(this)} editId = {this.state.isEditing} />
                         ): (
@@ -142,4 +143,4 @@ function mapStateToProps(store) {
     }
 }
 
-export default connect(mapStateToProps, { requestFueltypes, requestDeleteFueltypes, requestSubmitFueltypes, requestFueltypesPages,requestUpdateFueltypes, requestFueltypesStatus })(FueltypesListContainer);
+export default connect(mapStateToProps, { requestFueltypes, requestDeleteFueltypes, requestSubmitFueltypes,requestUpdateFueltypes, requestFueltypesStatus })(FueltypesListContainer);

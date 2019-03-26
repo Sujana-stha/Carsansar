@@ -20,31 +20,31 @@ const ColorForm =props => {
         const { handleSubmit } = props;
         return (
             <div>
-                <h4 className="header2 wr-header2">Add New Color</h4>
+                <h4 className="wr-header2">Add Color</h4>
 
                 <div className="card-panel">
 					<div className="row">
                         <form className="col s12" onSubmit= { handleSubmit  } >
                             <Field 
-                                label="Color Code"
+                                label="Enter Color Code"
                                 name="color_cd"
                                 type="text"
                                 component={renderInputField} 
                             />
                             <Field 
-                                label="Color Desciption"
+                                label="Enter Color Name"
                                 name="color_desc"
                                 type="text"
                                 component={renderInputField} 
                             />
                             
                             <div className="row">
-                                <div className="input-field col s12">
+                                <div className="col s12">
                                     {props.sending ? (
-                                        <button className="btn cyan waves-effect waves-light right" type="submit" name="action">Sending...
+                                        <button className="btn cyan waves-effect waves-light" type="submit" name="action">Sending...
                                         </button>
                                     ): (
-                                        <button className="btn cyan waves-effect waves-light right" type="submit" name="action">Save
+                                        <button className="btn cyan waves-effect waves-light" type="submit" name="action">Save
                                             <i className="material-icons right">send</i>
                                         </button>
                                     )}

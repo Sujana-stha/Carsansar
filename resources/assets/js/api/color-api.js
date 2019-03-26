@@ -2,14 +2,7 @@
 import axios, {getHeaders} from './axiosInstance'
 
 //GET ALL COLORS API
-export function getColors() {
-    const access_token = window.localStorage.getItem('access_token')
-    const headers = getHeaders(access_token)
-    return axios.get('/api/colors',{headers})
-}
-
-//GET COLORS BY PAGINATION API
-export function getColorsPages(pageNumber) {
+export function getColors(pageNumber) {
     const access_token = window.localStorage.getItem('access_token')
     const headers = getHeaders(access_token)
     return axios.get(`/api/colors?page=${pageNumber}`,{headers})

@@ -7,10 +7,10 @@ use App\Make;
 
 class MakesController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         // Color::with('createdBy:user_id,name')->get();
-        $make = Make::with('createdBy:id,name')->orderBy('id', 'desc')->paginate(3);
+        $make = Make::with('createdBy:id,name')->orderBy($request->column, $request->order)->paginate(3);
         return $make;
     }
  

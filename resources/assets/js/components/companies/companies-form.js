@@ -18,14 +18,14 @@ const CompanyForm=props=> {
         const { handleSubmit } = props;
         return (
             <div>
-                <h4 className="header2">Add New Company</h4>
+                <h4 className="wr-header2">Add Company</h4>
 
                 <div className="card-panel">
 					<div className="row">
                         <form className="col s12" onSubmit= { handleSubmit  } >
                             <div className="col s12 m4 l4">
                                 <Field 
-                                    label="Company Code"
+                                    label="Enter Company Code"
                                     name="company_cd"
                                     type="text"
                                     component={renderInputField} 
@@ -33,7 +33,7 @@ const CompanyForm=props=> {
                             </div>
                             <div className="col s12 m4 l4">
                                 <Field 
-                                    label="Company Name"
+                                    label="Enter Company Name"
                                     name="name"
                                     type="text"
                                     component={renderInputField} 
@@ -66,8 +66,8 @@ const CompanyForm=props=> {
                             </div>
                             
                             <div className="row">
-                                <div className="input-field col s12">
-                                    <button className="btn cyan waves-effect waves-light right" type="submit" name="action">Save
+                                <div className="col s12">
+                                    <button className="btn cyan waves-effect waves-light" type="submit" name="action">Save
                                         <i className="material-icons right">send</i>
                                     </button>
                                 </div>

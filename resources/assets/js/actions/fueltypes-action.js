@@ -1,10 +1,10 @@
 import * as types from '../actions/action-types';
 
 
-export function requestFueltypes(values) {
+export function requestFueltypes(pageNumber) {
     return {
         type: types.REQUEST_FUELTYPES,
-        values
+        pageNumber
     }
 }
 export function requestSubmitFueltypes(values) {
@@ -25,18 +25,7 @@ export function getFueltypesSuccess(fueltypes) {
         fueltypes
     }
 }
-export function requestFueltypesPages(pageNumber) {
-    return {
-        type: types.REQUEST_FUELTYPES_PAGES,
-        pageNumber
-    }
-}
-export function getFueltypesPages(fueltypes) {
-    return {
-        type: types.GET_FUELTYPES_PAGES,
-        fueltypes
-    }
-}
+
 export function addFueltypesSuccess(values) {
     return {
         type: types.ADD_FUELTYPES_SUCCESS,

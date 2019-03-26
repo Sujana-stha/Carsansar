@@ -25,18 +25,7 @@ const bodyReducer =  function(state = initialState, action) {
                 activePage: action.bodies.current_page,
                 sending: false
             })
-        case types.REQUEST_BODIES_PAGES:
-            return {...state, fetching: true}
-
-        case types.GET_BODIES_PAGES:
-            return Object.assign({}, state, {
-                bodies: action.resp.data,
-                fetching: false,
-                itemsCountPerPage: action.resp.per_page,
-                totalItemsCount: action.resp.total,
-                activePage: action.resp.current_page,
-                sending: false
-            })
+        
         case types.REQUEST_BODIES_SUBMIT:
             return {...state, sending: true}
         

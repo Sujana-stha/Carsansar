@@ -15,7 +15,6 @@ class DealsController extends Controller
 {
     public function index()
     {
-
         return Deal::with('vehicleInfo','company','attribute','financing','images','options','createdBy:id,name')->get();
     }
  
@@ -28,7 +27,7 @@ class DealsController extends Controller
     {
         $file = $request->file('files');
         $ext = $file->extension();
-        echo $ext;
+        // echo $ext;
         // dd($request->all());
         // $request->get('file');
         // $res = $request->hasFile('files');
@@ -140,7 +139,7 @@ class DealsController extends Controller
         } catch (\Exception $e) {
             
             DB::rollback(); 
-            return response()->json('Insert Failed.');          
+            return response()->json($e);          
         }
 
         //$images

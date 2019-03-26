@@ -3,14 +3,7 @@ import axios, {getHeaders} from './axiosInstance'
 
 
 //GET ALL COMPANIES API
-export function getCompanies() {
-    const access_token = window.localStorage.getItem('access_token')
-    const headers = getHeaders(access_token)
-    return axios.get('/api/companies',{headers})
-}
-
-//GET COMPANIES BY PAGINATION API
-export function getCompaniesPages(pageNumber) {
+export function getCompanies(pageNumber) {
     const access_token = window.localStorage.getItem('access_token')
     const headers = getHeaders(access_token)
     return axios.get(`/api/companies?page=${pageNumber}`,{headers})

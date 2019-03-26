@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Pagination from "react-js-pagination";
 import TransmissionList from '../../components/transmission/transmissions';
 import store from '../../store';
-import { requestTransmissions, requestDeleteTransmission, requestSubmitTransmission, requestTransmissionPages,requestUpdateTransmission, requestTransmissionStatus } from  '../../actions/transmissons-actions';
+import { requestTransmissions, requestDeleteTransmission, requestSubmitTransmission,requestUpdateTransmission, requestTransmissionStatus } from  '../../actions/transmissons-actions';
 
 
 //COMPONENT
@@ -25,7 +25,8 @@ class TransmissionsListContainer extends Component {
 
     componentDidMount() {
         // call action to run the relative saga
-        this.props.requestTransmissions();
+        const page = this.props.activePage;
+        this.props.requestTransmissions(page);
     }
 
     // submit function for new data
@@ -58,7 +59,7 @@ class TransmissionsListContainer extends Component {
     // pagination function
     handlePageChange(pageNumber) {
         console.log(`active page is ${pageNumber}`);
-        this.props.requestTransmissionPages(pageNumber)
+        this.props.requestTransmissions(pageNumber)
         
     }
     
@@ -75,7 +76,7 @@ class TransmissionsListContainer extends Component {
             <div>
                 
                 <div className="row">
-                    <div className="col s12 m3 l3">
+                    <div className="col s12 m3 l3 mt-3">
                         {this.state.isEditing ? (
                             <EditTransmission onSubmit = {this.submitEditTransmissions.bind(this)} editId = {this.state.isEditing} />
                         ): (
@@ -139,4 +140,4 @@ function mapStateToProps(store) {
     }
 }
 
-export default connect(mapStateToProps, { requestTransmissions, requestDeleteTransmission, requestSubmitTransmission, requestTransmissionPages,requestUpdateTransmission, requestTransmissionStatus })(TransmissionsListContainer);
+export default connect(mapStateToProps, { requestTransmissions, requestDeleteTransmission, requestSubmitTransmission,requestUpdateTransmission, requestTransmissionStatus })(TransmissionsListContainer);
