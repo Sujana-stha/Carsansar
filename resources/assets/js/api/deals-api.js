@@ -125,6 +125,7 @@ export function addVehicles(values) {
     console.log('val',values);
     let images = values.files
     var formData = new FormData();
+    //var imageData
     formData.append('title', values.title);
     if(values.year){formData.append('year', values.year)}
     if(values.vehicle_status){formData.append('vehicle_status', values.vehicle_status)}
@@ -138,12 +139,17 @@ export function addVehicles(values) {
     if(values.fueltype_id){formData.append('fueltype_id', values.fueltype_id)}
     if(images) {
         images.map(image=>{
-            formData.append('files', image)
+            // console.log('image',image);
+            // debugger;
+            formData.append('files[]', image)
+            formData.append('imagemeta[]',image['main_flag'])
         })
     }
+    //formData.append('files', image)
     return axios.post('/api/vehicles', formData,{headers})
     .catch(error=> {
-        console.log(error)
+        debugger;
+        console.log("eeee",error)
         return {
             errors: error
         }
