@@ -26,22 +26,22 @@ class Deal extends Model
 
     public function attribute()
     {
-        return $this->hasOne('App\Attribute', 'id', 'd_id');
+        return $this->hasOne('App\Attribute', 'd_id','id');
     }
 
     public function financing()
     {
-        return $this->hasOne('App\Financing', 'id', 'd_id');        
+        return $this->hasOne('App\Financing','d_id','id');        
     }
 
     public function images()
     {
-        return $this->hasMany('App\Image', 'id', 'd_id');        
+        return $this->hasMany('App\Image', 'd_id', 'id');        
     }
 
-    public function options()
-    {
-        return $this->hasMany('App\VehicleOption','id','d_id');
-    }
+    // public function options()
+    // {
+    //     return $this->hasMany('App\VehicleOption','id','d_id');
+    // }
     
 }

@@ -4,12 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use Intervention\Image\Facades\Image as ImageInt;
+use Intervention\Image\Facades\Image as Image;
 use App\VehicleInfo;
 use App\Deal;
 use App\Attribute;
 use App\Financing;
-use App\Image;
+use App\Image as VehicleImage;
 use App\VehicleOption;
 use DB;
 
@@ -18,7 +18,21 @@ class DealsController extends Controller
     private $user_id = 1;
     public function index()
     {
-        return Deal::with('vehicleInfo','company','attribute','financing','images','options','createdBy:id,name')->get();
+        return Deal::with('vehicleInfo.categoryId:id,category_desc',
+                        'vehicleInfo.makeId:id,make_desc',
+                        'vehicleInfo.modelId:id,model_desc',
+                        'vehicleInfo.fueltypeId:id,fueltype_desc',
+                        'vehicleInfo.driveId:id,drive_desc',
+                        'vehicleInfo.enginesizeId:id,enginesize_desc',
+                        'vehicleInfo.transmissionId:id,transmission_desc',
+                        'vehicleInfo.mfgexteriorcolorId:id,color_cd,color_desc',
+                        'company',
+                        'attribute.exteriorcolorId:id,color_cd,color_desc',
+                        'attribute.interiorcolorId:id,color_cd,color_desc',
+                        'attribute.bodyId:id,body_desc',
+                        'financing',
+                        'images',
+                        'createdBy:id,name')->get();
     }
  
     public function show(Deal $deal)
@@ -33,6 +47,8 @@ class DealsController extends Controller
  
     public function store(Request $request)
     {
+        
+        //echo public_path();exit;
         $vehicle_info = new VehicleInfo([
              'vin' => $request->get('vin'),
              'category_id' => $request->get('category_id'),
@@ -48,18 +64,18 @@ class DealsController extends Controller
              'created_by' => $this->user_id
         ]);
         $deal = new Deal([
-           'title' => $request->get('title'),
-           'stock_number' => $request->get('stock_number'),
-           'company_id' => $request->get('company_id'),
-           'kms' => $request->get('kms'),
-           'price' => $request->get('price'),
-           'vehicle_status' => $request->get('vehicle_status'),
-           'trim' => $request->get('trim'),
-           'ad_desc' => $request->get('ad_desc'),
-           'warranty_flag' => $request->get('warranty_flag'),
-           'warranty_desc' => $request->get('warranty_desc'),
-           'financing_flag' => $request->get('financing_flag'),
-           'created_by' => $this->user_id
+            'title' => $request->get('title'),
+            'stock_number' => $request->get('stock_number'),
+            'company_id' => $request->get('company_id'),
+            'kms' => $request->get('kms'),
+            'price' => $request->get('price'),
+            'vehicle_status' => $request->get('vehicle_status'),
+            'trim' => $request->get('trim'),
+            'ad_desc' => $request->get('ad_desc'),
+            'warranty_flag' => $request->get('warranty_flag'),
+            'warranty_desc' => $request->get('warranty_desc'),
+            'financing_flag' => $request->get('financing_flag'),
+            'created_by' => $this->user_id
         ]);
 
         $attribute = new Attribute([
@@ -68,6 +84,7 @@ class DealsController extends Controller
             'doors' => $request->get('doors'),
             'passenger' => $request->get('passenger'),
             'body_id' => $request->get('body_id'),
+            'option_ids' => $request->get('option_id'),
             'created_by' => $this->user_id
         ]);
 
@@ -83,7 +100,7 @@ class DealsController extends Controller
             'created_by' => $this->user_id
         ]); 
 
-        $options_array=$request->get('option_id');
+        //$options_array=$request->get('option_id');
          
         $file = $request->file('files');
 
@@ -115,7 +132,7 @@ class DealsController extends Controller
             
             $attribute->vi_id = $vi_id;
             $attribute->d_id = $d_id;
-            $attribute->option_ids = $options_array;
+            //$attribute->option_ids = $options_array;
             $attribute->save();
 
             if($deal->financing_flag){
@@ -140,7 +157,7 @@ class DealsController extends Controller
             if(count($file)>0){
                 for($i=0;$i<count($file);$i++){
                     Storage::putFileAs('public/whrepo/'.$stock_number.'/', $file[$i],$file[$i]->getClientOriginalName());
-                    $image = new Image([]);
+                    $image = new VehicleImage([]);
                     $image->d_id = $d_id;
                     $image->vi_id = $vi_id;
                     $image->path = 'public/whrepo/'.$stock_number.'/'.$file[$i]->getClientOriginalName();
@@ -158,21 +175,16 @@ class DealsController extends Controller
                     $filename=pathinfo($file[$i]->getClientOriginalName(),PATHINFO_FILENAME);
                     $extension = pathinfo($file[$i]->getClientOriginalName(),PATHINFO_EXTENSION);
                     
-                    // $img = ImageInt::make($file[$i]);
-                    // dd($img);exit;
-                    // // // now you are able to resize the instance
-                    //  $img->resize(300, 300);
-
-                    //  $img->save();
-
-                    // dd($img);exit;
-
-                    // and insert a watermark for example
-                    //$img->insert('public/watermark.png');
-
-                    // finally we save the image as a new file
-                    //$img->save('public/whrepo/WH2/foo150150.jpg');
-                        
+                   
+                    $img = Image::make($file[$i]);
+                    
+                    $img->resize(150, null, function ($constraint) { $constraint->aspectRatio(); } )->encode($extension);
+                    Storage::put('public/whrepo/'.$stock_number.'/'.$filename.'-150X150.'.$extension, $img);
+                    $img->resize(300, null, function ($constraint) { $constraint->aspectRatio(); } )->encode($extension);
+                    Storage::put('public/whrepo/'.$stock_number.'/'.$filename.'-300X300.'.$extension, $img);
+                    $img->resize(1024, null, function ($constraint) { $constraint->aspectRatio(); } )->encode($extension);
+                    Storage::put('public/whrepo/'.$stock_number.'/'.$filename.'-1024X768.'.$extension, $img);
+                    
                 }
             }
         
@@ -182,6 +194,7 @@ class DealsController extends Controller
         } catch (\Exception $e) {
             
             DB::rollback(); 
+            print_r($e);exit;
             //File::deleteDirectory($path);
             return response()->json($e);          
         }
@@ -191,11 +204,66 @@ class DealsController extends Controller
         
     }
  
-    public function update(Request $request, Deal $deal)
+    public function update(Request $request, VehicleInfo $vehicleinfo, Deal $deal, Attribute $attribute, Image $image, Financing $financing )
     {
-        // $color->update($request->all());
+        
+        $vehicleinfo->update([
+            'vin' => $request->get('vin'),
+            'category_id' => $request->get('category_id'),
+            'year' => $request->get('year'),
+            'make_id' => $request->get('make_id'),
+            'model_id' => $request->get('model_id'),
+            'fueltype_id' => $request->get('category_id'),
+            'drive_id' => $request->get('drive_id'),
+            'enginesize_id' => $request->get('enginesize_id'),
+            'cylinder' => $request->get('cylinder'),
+            'transmission_id' => $request->get('transmission_id'),
+            'mfg_exterior_color_id' => $request->get('mfg_exterior_color_id'), 
+            'updated_by' => $this->user_id,
+            'updated_at' => Carbon::now()
+        ]);
+
+        $deal->update([
+            'title' => $request->get('title'),
+            'stock_number' => $request->get('stock_number'),
+            'company_id' => $request->get('company_id'),
+            'kms' => $request->get('kms'),
+            'price' => $request->get('price'),
+            'vehicle_status' => $request->get('vehicle_status'),
+            'trim' => $request->get('trim'),
+            'ad_desc' => $request->get('ad_desc'),
+            'warranty_flag' => $request->get('warranty_flag'),
+            'warranty_desc' => $request->get('warranty_desc'),
+            'financing_flag' => $request->get('financing_flag'),
+            'updated_by' => $this->user_id,
+            'updated_at' => Carbon::now()
+        ]);
+
+        $attribute->update([
+            'exterior_color_id' => $request->get('exterior_color_id'),
+            'interior_color_id' => $request->get('interior_color_id'),
+            'doors' => $request->get('doors'),
+            'passenger' => $request->get('passenger'),
+            'body_id' => $request->get('body_id'),
+            'option_ids' => $request->get('option_id'),
+            'updated_by' => $this->user_id,
+            'updated_at' => Carbon::now()
+        ]);
+
+        $financing->update([            
+            'type' => $request->get('type'),
+            'payment' => $request->get('payment'),
+            'payment_type' => $request->get('payment_type'),
+            'downpayment' => $request->get('downpayment'),
+            'number_of_payment' => $request->get('number_of_payment'),
+            'source' => $request->get('source'),
+            'odometer' => $request->get('odometer'),
+            'description' => $request->get('description'),
+            'updated_by' => $this->user_id,
+            'updated_at' => Carbon::now()
+        ]); 
  
-        // return response()->json($color, 200);
+        return response()->json($vehicleinfo,$deal,$attribute,$image,$financing, 200);
     }
  
     public function delete(Deal $deal)
