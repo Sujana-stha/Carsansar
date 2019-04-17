@@ -10,7 +10,7 @@ export function* DriveWatcher() {
     yield takeLatest(types.REQUEST_DRIVES, DriveSaga)
 }
 function* DriveSaga(action) {
-    const response = yield call(driveApi.getDrives, action.pageNumber);
+    const response = yield call(driveApi.getDrives, action.pageNumber, action.sorted_column, action.order);
     const drives = response.data
     
     if (response.errors) {
@@ -31,15 +31,17 @@ function* callDriveSubmit(action) {
     let error = {};
     const result =  yield call(driveApi.addDrives, action.values);
     const resp = result.data
-
+    const pageNumber= action.pageNumber
+    const sorted_column=action.sorted_column
+    const order= action.order
     if (result.errors) {
         yield put({ type: types.REQUEST_DRIVES_FAILED, errors: result.error});
         error = result.error;
         notify.show("Cannot Add Drive!", "error",5000)
     } else {
         // yield put({type: types.ADD_DRIVES_SUCCESS, resp, message: result.statusText});
-        yield put({type: types.REQUEST_DRIVES})
-        notify.show("Drive Added Successfully!", "success", 5000)
+        yield put({type: types.REQUEST_DRIVES, pageNumber, sorted_column, order})
+        notify.show(`${resp.drive_desc} Drive Added Successfully!`, "success", 5000)
     }
     yield put(stopSubmit('PostDrives', error));
     yield put(reset('PostDrives'));
@@ -55,7 +57,9 @@ function* callEditDrive (action) {
     let error = {};
     const result =  yield call(driveApi.updateDrives, action.values.id, action.values);
     const resp = result.data;
-    const pageNumber = action.page
+    const pageNumber = action.pageNumber
+    const sorted_column=action.sorted_column
+    const order= action.order
     if (result.errors) {
         yield put({ type: types.REQUEST_DRIVES_FAILED, errors: result.error});
         error = result.error;
@@ -63,8 +67,7 @@ function* callEditDrive (action) {
 
     } else {
         // yield put({type: types.UPDATE_DRIVES_SUCCESS, resp, message: result.statusText});
-        yield put({type: types.REQUEST_DRIVES, pageNumber})
-
+        yield put({type: types.REQUEST_DRIVES, pageNumber, sorted_column, order})
         notify.show(`${resp.drive_desc} Updated Successfully!`, "success", 5000)
     }
     yield put(stopSubmit('EditDrives', error));
@@ -79,7 +82,9 @@ export function* toggleDrivesStatusSaga() {
 function* callDriveToggleStatus(action) {
     const result =  yield call(driveApi.updateDrivesStatus, action.driveId, action.values);
     const resp = result.data;
-    const pageNumber = action.page
+    const pageNumber = action.pageNumber
+    const sorted_column=action.sorted_column
+    const order= action.order
     if (result.errors) {
         yield put({ type: types.REQUEST_DRIVES_FAILED, errors: result.error});
         error = result.error;
@@ -87,12 +92,10 @@ function* callDriveToggleStatus(action) {
 
     } else {
         // yield put({type: types.DRIVES_STATUS_SUCCESS, resp, message: result.statusText});
-        yield put({type: types.REQUEST_DRIVES, pageNumber})
-
+        yield put({type: types.REQUEST_DRIVES, pageNumber, sorted_column, order})
         notify.show("Status Updated Successfully!", "success", 5000)
     }
 }
-
 
 // delete makes data from table
 export function* deleteDriveSaga() {

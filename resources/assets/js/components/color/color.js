@@ -10,7 +10,6 @@ class ColorsList extends Component {
   }
 
   deleteItem(id){
-      console.log(id);
       this.setState({showItem: id})
   }
   componentDidMount() {

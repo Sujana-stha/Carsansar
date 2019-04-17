@@ -15,33 +15,39 @@ class ModelsListContainer extends Component {
     constructor() {
         super();
         this.state= {
-            isEditing: false
+            isEditing: false,
+            sorted_column: 'id',
+            order: 'desc',
+            current_page: 1
         }
         this.handlePageChange = this.handlePageChange.bind(this)
         this.editModels = this.editModels.bind(this)
         this.toggleStatus = this.toggleStatus.bind(this)
     }
-
     
     componentDidMount() {
         // call action to run the relative saga
-        const page = this.props.activePage;
-        this.props.requestModel(page);
+        const pageNumber = this.props.activePage;
+        let sorted_column = this.state.sorted_column
+        let order = this.state.order
+        this.props.requestModel(pageNumber, sorted_column, order);
     }
 
     // submit function for new data
     submitModel(values) {
-        this.props.requestSubmitModel(values);
-        this.setState ({
-            hide: true
-        })
+        const pageNumber = this.props.activePage;
+        let sorted_column = this.state.sorted_column
+        let order = this.state.order
+        this.props.requestSubmitModel(values, pageNumber, sorted_column, order);
+        
     }
 
     // submit function to update data
     submitEditModel(values) {
-        const page = this.props.activePage;
-        console.log('pp', page);
-        this.props.requestUpdateModel(values, page);
+        const pageNumber = this.props.activePage;
+        let sorted_column = this.state.sorted_column
+        let order = this.state.order
+        this.props.requestUpdateModel(values, pageNumber, sorted_column, order);
         this.setState({
             isEditing : false
         })
@@ -62,19 +68,34 @@ class ModelsListContainer extends Component {
     // pagination function
     handlePageChange(pageNumber) {
         console.log(`active page is ${pageNumber}`);
-        this.props.requestModel(pageNumber)
+        let sorted_column = this.state.sorted_column
+        let order = this.state.order
+        this.props.requestModel(pageNumber, sorted_column, order)
         
     }
     // toggle status value
     toggleStatus(modelId, status) {
-        const page = this.props.activePage;
-        console.log('pp', page);
+        const pageNumber = this.props.activePage;
+        let sorted_column = this.state.sorted_column
+        let order = this.state.order
         const newModelStatus = {
             status: !status
         }
-        this.props.requestModelStatus(modelId, newModelStatus, page);
+        this.props.requestModelStatus(modelId, newModelStatus, pageNumber, sorted_column, order);
     }
-    
+    sortByColumn(column) {
+        if (column === this.state.sorted_column) {
+           this.state.order === 'desc' ? this.setState({order: 'asc'}, ()=>{
+               this.props.requestModel(this.state.current_page, this.state.sorted_column, this.state.order)
+            }):this.setState({order: 'desc'}, ()=>{
+                this.props.requestModel(this.state.current_page, this.state.sorted_column, this.state.order)
+            })
+        } else {
+            this.setState({sorted_column: column, order: 'desc', current_page: 1}, ()=>{
+                this.props.requestModel(this.state.current_page, this.state.sorted_column, this.state.order)
+            })
+        }
+    }
     render() {
         return (
             <div>
@@ -96,9 +117,21 @@ class ModelsListContainer extends Component {
                         <table>
                             <thead>
                                 <tr>
-                                    <th>S.N</th>
-                                    <th>Title</th>
-                                    <th>Added by</th>
+                                    <th onClick={()=>this.sortByColumn('id')}>S.N 
+                                        {this.state.order==='desc'?
+                                            <i className="material-icons wr-sorting-icon">arrow_drop_down</i>
+                                        :<i className="material-icons wr-sorting-icon">arrow_drop_up</i>}
+                                    </th>
+                                    <th onClick={()=>this.sortByColumn('model_desc')}>Title
+                                        {this.state.order==='desc'?
+                                            <i className="material-icons wr-sorting-icon">arrow_drop_down</i>
+                                        :<i className="material-icons wr-sorting-icon">arrow_drop_up</i>}
+                                    </th>
+                                    <th onClick={()=>this.sortByColumn('created_by')}>Added by
+                                        {this.state.order==='desc'?
+                                            <i className="material-icons wr-sorting-icon">arrow_drop_down</i>
+                                        :<i className="material-icons wr-sorting-icon">arrow_drop_up</i>}
+                                    </th>
                                     <th>Action</th>
                                     <th>Status</th>
                                 </tr>

@@ -7,9 +7,9 @@ use App\Body;
 
 class BodiesController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $body= Body::with('createdBy:id,name')->orderBy('id', 'desc')->paginate(3);
+        $body= Body::with('createdBy:id,name')->orderBy($request->column, $request->order)->paginate(3);
         return $body;
     }
 

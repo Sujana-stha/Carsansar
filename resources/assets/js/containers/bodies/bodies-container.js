@@ -15,7 +15,10 @@ class BodiesListContainer extends Component {
     constructor() {
         super();
         this.state= {
-            isEditing: false
+            isEditing: false,
+            sorted_column: 'id',
+            order: 'desc',
+            current_page: 1
         }
         this.handlePageChange = this.handlePageChange.bind(this)
         this.editBodies = this.editBodies.bind(this)
@@ -24,19 +27,26 @@ class BodiesListContainer extends Component {
 
     componentDidMount() {
         // call action to run the relative saga
-        const page = this.props.activePage;
-        this.props.requestBodies(page);
+        const pageNumber = this.props.activePage;
+        let sorted_column = this.state.sorted_column
+        let order = this.state.order
+        this.props.requestBodies(pageNumber, sorted_column, order);
     }
 
     // submit function for new data
     submitBody(values) {
-        this.props.requestSubmitBodies(values);
+        const pageNumber = this.props.activePage;
+        let sorted_column = this.state.sorted_column
+        let order = this.state.order
+        this.props.requestSubmitBodies(values, pageNumber, sorted_column, order);
     }
 
     // submit function to update data
     submitEditBody(values) {
-        const page = this.props.activePage;
-        this.props.requestUpdateBodies(values, page);
+        const pageNumber = this.props.activePage;
+        let sorted_column = this.state.sorted_column
+        let order = this.state.order
+        this.props.requestUpdateBodies(values, pageNumber, sorted_column, order);
         this.setState({
             isEditing : false
         })
@@ -57,22 +67,37 @@ class BodiesListContainer extends Component {
     // pagination function
     handlePageChange(pageNumber) {
         console.log(`active page is ${pageNumber}`);
-        this.props.requestBodies(pageNumber)
+        let sorted_column = this.state.sorted_column
+        let order = this.state.order
+        this.props.requestBodies(pageNumber, sorted_column, order)
     }
     
     toggleStatus (bodyId, status) {
-        const page = this.props.activePage;
-
+        const pageNumber = this.props.activePage;
+        let sorted_column = this.state.sorted_column
+        let order = this.state.order
         const newBodyStatus = {
             status: !status
         }
-        this.props.requestBodiesStatus(bodyId, newBodyStatus, page)
+        this.props.requestBodiesStatus(bodyId, newBodyStatus, pageNumber, sorted_column, order)
     }
-    
+    sortByColumn(column) {
+        const pageNumber = this.props.activePage
+        if (column === this.state.sorted_column) {
+           this.state.order === 'desc' ? this.setState({order: 'asc'}, ()=>{
+               this.props.requestBodies(pageNumber, this.state.sorted_column, this.state.order)
+            }):this.setState({order: 'desc'}, ()=>{
+                this.props.requestBodies(pageNumber, this.state.sorted_column, this.state.order)
+            })
+        } else {
+            this.setState({sorted_column: column, order: 'desc'}, ()=>{
+                this.props.requestBodies(pageNumber, this.state.sorted_column, this.state.order)
+            })
+        }
+    }
     render() {
         return (
             <div>
-                
                 <div className="row">
                     <div className="col s12 m3 l3 mt-3">
                         {this.state.isEditing ? (
@@ -91,9 +116,21 @@ class BodiesListContainer extends Component {
                         <table>
                             <thead>
                                 <tr>
-                                    <th>S.N</th>
-                                    <th>Title</th>
-                                    <th>Added by</th>
+                                    <th onClick={()=>this.sortByColumn('id')}>S.N
+                                        {this.state.order==='desc'?
+                                            <i className="material-icons wr-sorting-icon">arrow_drop_down</i>
+                                        :<i className="material-icons wr-sorting-icon">arrow_drop_up</i>}
+                                    </th>
+                                    <th onClick={()=>this.sortByColumn('body_desc')}>Title
+                                        {this.state.order==='desc'?
+                                            <i className="material-icons wr-sorting-icon">arrow_drop_down</i>
+                                        :<i className="material-icons wr-sorting-icon">arrow_drop_up</i>}
+                                    </th>
+                                    <th onClick={()=>this.sortByColumn('created_by')}>Added by
+                                        {this.state.order==='desc'?
+                                            <i className="material-icons wr-sorting-icon">arrow_drop_down</i>
+                                        :<i className="material-icons wr-sorting-icon">arrow_drop_up</i>}
+                                    </th>
                                     <th>Action</th>
                                     <th>Status</th>
                                 </tr>

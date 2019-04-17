@@ -1,5 +1,19 @@
 import * as types from '../actions/action-types';
 
+//GET VEHICLES LIST
+export function requestVehicles() {
+    return {
+        type: types.REQUEST_VEHICLES
+    }
+}
+
+export function getVehcilesSuccess(vehicles) {
+    return {
+        type: types.GET_VEHICLES_SUCCESS,
+        vehicles
+    }
+}
+
 //ADD VEHICLES
 export function requestSubmitVehicle(values) {
     return {
@@ -11,6 +25,21 @@ export function requestSubmitVehicle(values) {
 export function addVehicleSuccess(values) {
     return {
         type: types.ADD_VEHICLES_SUCCESS,
+        values
+    }
+}
+
+//edit vehicles
+export function requestVehiclesUpdate(values) {
+    return {    
+        type: types.REQUEST_VEHICLES_UPDATE,
+        values
+    }
+}
+
+export function UpdateVehiclesSuccess(values) {
+    return {
+        type: types.UPDATE_VEHICLES_SUCCESS,
         values
     }
 }

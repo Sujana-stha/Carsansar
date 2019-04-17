@@ -2,10 +2,10 @@
 import axios, {getHeaders} from './axiosInstance'
 
 //GET ALL OPTIONS API
-export function getOptions(pageNumber) {
+export function getOptions(pageNumber, sorted_column, order) {
     const access_token = window.localStorage.getItem('access_token')
     const headers = getHeaders(access_token)
-    return axios.get(`/api/options?page=${pageNumber}`,{headers})
+    return axios.get(`/api/options?page=${pageNumber}&column=${sorted_column}&order=${order}`,{headers})
 }
 
 // ADD NEW OPTIONS API

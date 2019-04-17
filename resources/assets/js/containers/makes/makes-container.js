@@ -6,7 +6,7 @@ import store from '../../store';
 import { requestMakes, requestDeleteMakes, requestSubmitMake,requestUpdateMakes, requestMakesStatus } from  '../../actions/makes-action';
 
 //COMPONENT
-import MakeForm from './makes-form';
+import MakeForm from '../../components/makes/makes-form';
 import EditMake from '../../components/makes/makes-edit';
 import Loading from '../../components/loading';
 
@@ -16,35 +16,35 @@ class MakesListContainer extends Component {
         this.state= {
             isEditing: false,
             sorted_column: 'id',
-            order: 'desc',
-            current_page: 1
+            order: 'desc'
         }
         this.handlePageChange = this.handlePageChange.bind(this)
         this.editMakes = this.editMakes.bind(this)
         this.toggleStatus = this.toggleStatus.bind(this)
-
     }
 
     componentDidMount() {
         // call action to run the relative saga
         let sorted_column = this.state.sorted_column
         let order = this.state.order
-        let pageNumber = this.state.current_page
+        let pageNumber = this.props.activePage
         this.props.requestMakes(pageNumber,sorted_column, order);
     }
 
     // submit function for new data
     submitMake(values) {
-        const page = this.props.activePage;
+        const pageNumber = this.props.activePage;
         let sorted_column = this.state.sorted_column
         let order = this.state.order
-        this.props.requestSubmitMake(values,page,sorted_column,order);
+        this.props.requestSubmitMake(values,pageNumber,sorted_column,order);
     }
 
     // submit function to update data
     submitEditMake(values) {
-        const page = this.props.activePage;
-        this.props.requestUpdateMakes(values, page);
+        const pageNumber = this.props.activePage;
+        let sorted_column = this.state.sorted_column
+        let order = this.state.order
+        this.props.requestUpdateMakes(values, pageNumber, sorted_column, order);
         this.setState({
             isEditing : false
         })
@@ -70,23 +70,25 @@ class MakesListContainer extends Component {
     }
     
     toggleStatus (makeId, status) {
-        const page = this.props.activePage;
+        const pageNumber = this.props.activePage;
+        let sorted_column = this.state.sorted_column
+        let order = this.state.order
         const newMakesStatus = {
             status: !status
         }
-        this.props.requestMakesStatus(makeId, newMakesStatus, page)
+        this.props.requestMakesStatus(makeId, newMakesStatus, pageNumber, sorted_column, order)
     }
     sortByColumn(column) {
-        console.log('col', column)
+        const pageNumber = this.props.activePage
         if (column === this.state.sorted_column) {
            this.state.order === 'desc' ? this.setState({order: 'asc'}, ()=>{
-               this.props.requestMakes(this.state.current_page, this.state.sorted_column, this.state.order)
+               this.props.requestMakes(pageNumber, this.state.sorted_column, this.state.order)
             }):this.setState({order: 'desc'}, ()=>{
-                this.props.requestMakes(this.state.current_page, this.state.sorted_column, this.state.order)
+                this.props.requestMakes(pageNumber, this.state.sorted_column, this.state.order)
             })
         } else {
-            this.setState({sorted_column: column, order: 'desc', current_page: 1}, ()=>{
-                this.props.requestMakes(this.state.current_page, this.state.sorted_column, this.state.order)
+            this.setState({sorted_column: column, order: 'desc'}, ()=>{
+                this.props.requestMakes(pageNumber, this.state.sorted_column, this.state.order)
             })
         }
     }
@@ -114,18 +116,18 @@ class MakesListContainer extends Component {
                                 <tr>
                                     <th onClick={()=>this.sortByColumn('id')}>S.N 
                                         {this.state.order==='desc'?
-                                            <i className="material-icons">arrow_drop_down</i>
-                                        :<i className="material-icons">arrow_drop_up</i>}
+                                            <i className="material-icons wr-sorting-icon">arrow_drop_down</i>
+                                        :<i className="material-icons wr-sorting-icon">arrow_drop_up</i>}
                                     </th>
                                     <th onClick={()=>this.sortByColumn('make_desc')}>Title
                                         {this.state.order==='desc'?
-                                            <i className="material-icons">arrow_drop_down</i>
-                                        :<i className="material-icons">arrow_drop_up</i>}
+                                            <i className="material-icons wr-sorting-icon">arrow_drop_down</i>
+                                        :<i className="material-icons wr-sorting-icon">arrow_drop_up</i>}
                                     </th>
                                     <th onClick={()=>this.sortByColumn('created_by')}>Added by
                                         {this.state.order==='desc'?
-                                            <i className="material-icons">arrow_drop_down</i>
-                                        :<i className="material-icons">arrow_drop_up</i>}
+                                            <i className="material-icons wr-sorting-icon">arrow_drop_down</i>
+                                        :<i className="material-icons wr-sorting-icon">arrow_drop_up</i>}
                                     </th>
                                     <th>Action</th>
                                     <th>Status</th>
@@ -168,7 +170,6 @@ function mapStateToProps(store) {
         totalItemsCount: store.makeState.totalItemsCount,
         pageRangeDisplayed: store.makeState.pageRangeDisplayed,
         fetching: store.makeState.fetching,
-        token: store.loginState.token
     }
 }
 

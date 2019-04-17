@@ -16,7 +16,9 @@ class ColorListContainer extends Component {
     constructor() {
         super();
         this.state= {
-            isEditing: false
+            isEditing: false,
+            sorted_column: 'id',
+            order: 'desc'
         }
         this.handlePageChange = this.handlePageChange.bind(this)
         this.editColors = this.editColors.bind(this)
@@ -26,19 +28,26 @@ class ColorListContainer extends Component {
 
     componentDidMount(){
         // call action to run the relative saga
-        const page = this.props.activePage;
-        this.props.requestColors(page);         
+        const pageNumber = this.props.activePage;
+        let sorted_column = this.state.sorted_column
+        let order = this.state.order
+        this.props.requestColors(pageNumber, sorted_column, order);         
     } 
 
     // submit function for new data
     submitColor(values) {
-        this.props.requestSubmitColor(values);
+        const pageNumber = this.props.activePage;
+        let sorted_column = this.state.sorted_column
+        let order = this.state.order
+        this.props.requestSubmitColor(values, pageNumber, sorted_column, order);
     }
 
     // submit function to update data
     submitEditColor(values) {
-        const page = this.props.activePage;
-        this.props.requestUpdateColors(values, page);
+        const pageNumber = this.props.activePage;
+        let sorted_column = this.state.sorted_column
+        let order = this.state.order
+        this.props.requestUpdateColors(values, pageNumber, sorted_column, order);
         this.setState({
             isEditing : false
         })
@@ -58,17 +67,34 @@ class ColorListContainer extends Component {
     // pagination function
     handlePageChange(pageNumber) {
         console.log(`active page is ${pageNumber}`);
-        this.props.requestColors(pageNumber)
-        
+        let sorted_column = this.state.sorted_column
+        let order = this.state.order
+        this.props.requestColors(pageNumber, sorted_column, order)
     }
     
     toggleStatus (colorId, status) {
-        const page = this.props.activePage;
+        const pageNumber = this.props.activePage;
+        let sorted_column = this.state.sorted_column
+        let order = this.state.order
         const newColorsStatus = {
             status: !status
         }
         console.log('status', newColorsStatus)
-        this.props.requestColorStatus(colorId, newColorsStatus, page)
+        this.props.requestColorStatus(colorId, newColorsStatus, pageNumber, sorted_column, order)
+    }
+    sortByColumn(column) {
+        const pageNumber = this.props.activePage
+        if (column === this.state.sorted_column) {
+           this.state.order === 'desc' ? this.setState({order: 'asc'}, ()=>{
+               this.props.requestColors(pageNumber, this.state.sorted_column, this.state.order)
+            }):this.setState({order: 'desc'}, ()=>{
+                this.props.requestColors(pageNumber, this.state.sorted_column, this.state.order)
+            })
+        } else {
+            this.setState({sorted_column: column, order: 'desc'}, ()=>{
+                this.props.requestColors(pageNumber, this.state.sorted_column, this.state.order)
+            })
+        }
     }
 
     render(){
@@ -93,10 +119,26 @@ class ColorListContainer extends Component {
                     <table>
                         <thead>
                             <tr>
-                                <th>S.N</th>
-                                <th>Hex Code</th>
-                                <th>Description</th>                        
-                                <th>User/Added By</th>
+                                <th onClick={()=>this.sortByColumn('id')}>S.N
+                                    {this.state.order==='desc'?
+                                        <i className="material-icons wr-sorting-icon">arrow_drop_down</i>
+                                    :<i className="material-icons wr-sorting-icon">arrow_drop_up</i>}
+                                </th>
+                                <th onClick={()=>this.sortByColumn('color_cd')}>Hex Code
+                                    {this.state.order==='desc'?
+                                        <i className="material-icons wr-sorting-icon">arrow_drop_down</i>
+                                    :<i className="material-icons wr-sorting-icon">arrow_drop_up</i>}
+                                </th>
+                                <th onClick={()=>this.sortByColumn('color_desc')}>Color Name
+                                    {this.state.order==='desc'?
+                                        <i className="material-icons wr-sorting-icon">arrow_drop_down</i>
+                                    :<i className="material-icons wr-sorting-icon">arrow_drop_up</i>}
+                                </th>                        
+                                <th onClick={()=>this.sortByColumn('created_by')}>Added By
+                                    {this.state.order==='desc'?
+                                        <i className="material-icons wr-sorting-icon">arrow_drop_down</i>
+                                    :<i className="material-icons wr-sorting-icon">arrow_drop_up</i>}
+                                </th>
                                 <th>Count</th>
                                 <th>Action</th>
                                 <th>Status</th>

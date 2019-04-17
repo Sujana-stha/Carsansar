@@ -3,10 +3,10 @@ import axios, {getHeaders} from './axiosInstance'
 
 
 //GET ALL BODIES API
-export function getBodies(pageNumber) {
+export function getBodies(pageNumber, sorted_column, order) {
     const access_token = window.localStorage.getItem('access_token')
     const headers = getHeaders(access_token)
-    return axios.get(`/api/bodies?page=${pageNumber}`,{headers})
+    return axios.get(`/api/bodies?page=${pageNumber}&column=${sorted_column}&order=${order}`,{headers})
 }
 
 // ADD NEW BODIES API

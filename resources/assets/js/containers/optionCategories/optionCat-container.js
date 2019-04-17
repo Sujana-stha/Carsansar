@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Pagination from "react-js-pagination";
 import OptionCategoryList from '../../components/OptionCategory/optionCategory';
 import store from '../../store';
 import { requestOptionCategories, requestDeleteOptionCategories, requestSubmitOptionCategories, requestUpdateOptionCategories, requestOptionCategoriesStatus } from  '../../actions/option_cat-action';
@@ -16,7 +15,9 @@ class OptionCategoryListContainer extends Component {
     constructor() {
         super();
         this.state= {
-            isEditing: false
+            isEditing: false,
+            sorted_column: 'id',
+            order: 'desc'
         }
         // this.handlePageChange = this.handlePageChange.bind(this)
         this.editOptionCategory = this.editOptionCategory.bind(this)

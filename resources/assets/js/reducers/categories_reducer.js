@@ -17,7 +17,6 @@ const categoriesReducer =  function(state = initialState, action) {
             return {...state, fetching: true};
            
         case types.GET_CATEGORIES_SUCCESS:
-            console.log('action', action)
             return Object.assign({}, state, {
                 categories: action.categories.data,
                 fetching: false,

@@ -1,16 +1,16 @@
 import * as types from '../actions/action-types';
 
 
-export function requestTransmissions(pageNumber) {
+export function requestTransmissions(pageNumber,sorted_column, order) {
     return {
         type: types.REQUEST_TRANSMISSONS,
-        pageNumber
+        pageNumber,sorted_column, order
     }
 }
-export function requestSubmitTransmission(values) {
+export function requestSubmitTransmission(values, pageNumber,sorted_column, order) {
     return {
         type: types.REQUEST_TRANSMISSONS_SUBMIT,
-        values
+        values, pageNumber,sorted_column, order
     }
 }
 
@@ -47,10 +47,10 @@ export function deleteTransmissionSuccess(transmissionId) {
     }
 }
 
-export function requestUpdateTransmission( values, page) {
+export function requestUpdateTransmission( values, pageNumber,sorted_column, order) {
     return {
         type: types.REQUEST_TRANSMISSONS_UPDATE,
-        values, page
+        values, pageNumber,sorted_column, order
     }
 }
 
@@ -62,11 +62,11 @@ export function updateTransmissionSuccess(transmissionId, values) {
     }
 }
 
-export function requestTransmissionStatus (transmissionId,values, page) {
+export function requestTransmissionStatus (transmissionId,values, pageNumber,sorted_column, order) {
     return {
         type: types.REQUEST_TRANSMISSONS_STATUS,
         values,
-        transmissionId, page
+        transmissionId, pageNumber,sorted_column, order
     }
 }
 

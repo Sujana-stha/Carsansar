@@ -71,7 +71,6 @@ const OptionsForm = props => {
 
 function validate(values) {
     const errors = {}
-    console.log('values', values)
     if(!values.option_desc) {
         errors.option_desc = "The Field is empty"
     } else if (values.option_desc.length > 30) {

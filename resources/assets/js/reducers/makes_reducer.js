@@ -9,8 +9,6 @@ const initialState = {
     totalItemsCount: 1,
     pageRangeDisplayed: 3,
     sending: false,
-    order: 'desc',
-    sorted_column: 'id'
 }
 
 const makeReducer =  function(state = initialState, action) {
@@ -25,7 +23,7 @@ const makeReducer =  function(state = initialState, action) {
                 itemsCountPerPage: action.makes.per_page,
                 totalItemsCount: action.makes.total,
                 activePage: action.makes.current_page,
-                sending: false
+                sending: false,
             })
         
         

@@ -10,7 +10,7 @@ export function* ModelWatcher() {
     yield takeLatest(types.REQUEST_MODEL, ModelSaga)
 }
 function* ModelSaga(action) {
-    const response = yield call(api.getModel, action.pageNumber);
+    const response = yield call(api.getModel, action.pageNumber, action.sorted_column, action.order);
     const models = response.data
     
     if (response.errors) {
@@ -31,6 +31,9 @@ function* callModelSubmit(action) {
     let error = {};
     const result =  yield call(api.addModel, action.values);
     const resp = result.data
+    const pageNumber= action.pageNumber
+    const sorted_column=action.sorted_column
+    const order= action.order
 
     if (result.errors) {
         yield put({ type: types.REQUEST_MODEL_FAILED, errors: result.error});
@@ -38,7 +41,7 @@ function* callModelSubmit(action) {
         notify.show("Cannot Add Model!", "error", 5000)
     } else {
         // yield put({type: types.ADD_MODEL_SUCCESS, resp, message: result.statusText});
-        yield put({type: types.REQUEST_MODEL})
+        yield put({type: types.REQUEST_MODEL, pageNumber, sorted_column, order})
         notify.show("Model Added Successfully!", "success", 5000)
     }
     yield put(stopSubmit('PostModels', error));
@@ -56,14 +59,16 @@ function* callModelEdit (action) {
     let error = {};
     const result =  yield call(api.updateModel, action.values.id, action.values);
     const resp = result.data;
-    const pageNumber = action.page
+    const pageNumber = action.pageNumber
+    const sorted_column=action.sorted_column
+    const order=action.order
     if (result.errors) {
         yield put({ type: types.REQUEST_MODEL_FAILED, errors: result.error});
         error = result.error;
         notify.show(`Cannot Update ${resp.model_desc}`, "error", 5000)
     } else {
         // yield put({type: types.UPDATE_MODEL_SUCCESS, resp, message: result.statusText});
-        yield put({type: types.REQUEST_MODEL, pageNumber});
+        yield put({type: types.REQUEST_MODEL, pageNumber, sorted_column, order});
         notify.show(`${resp.model_desc} Updated Successfully`, "success", 5000)
     }
     yield put(stopSubmit('EditModels', error));
@@ -78,14 +83,16 @@ export function* toggleModelsStatusSaga() {
 function* callModelToggleStatus(action) {
     const result =  yield call(api.updateModel, action.modelId, action.values);
     const resp = result.data;
-    const pageNumber = action.page
+    const pageNumber = action.pageNumber
+    const sorted_column = action.sorted_column
+    const order = action.order
     if (result.errors) {
         yield put({ type: types.REQUEST_MODEL_FAILED, errors: result.error});
         error = result.error;
         notify.show(`Cannot Change Status of ${resp.model_desc}`, "error", 5000)
     } else {
         // yield put({type: types.MODEL_STATUS_SUCCESS, resp, message: result.statusText});
-        yield put({type: types.REQUEST_MODEL, pageNumber});
+        yield put({type: types.REQUEST_MODEL, pageNumber, sorted_column, order});
         notify.show(`Status of ${resp.model_desc} Updated!`, "success", 5000)
     }
 }

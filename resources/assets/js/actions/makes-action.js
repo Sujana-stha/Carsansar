@@ -3,13 +3,13 @@ import * as types from '../actions/action-types';
 export function requestMakes(pageNumber,sorted_column, order) {
     return {
         type: types.REQUEST_MAKES,
-        sorted_column, order, pageNumber
+        pageNumber, sorted_column, order
     }
 }
-export function requestSubmitMake(values) {
+export function requestSubmitMake(values, pageNumber,sorted_column, order) {
     return {
         type: types.REQUEST_SUBMIT,
-        values
+        values, pageNumber,sorted_column, order
     }
 }
 
@@ -46,10 +46,10 @@ export function deleteMakesSuccess(makeId) {
     }
 }
 
-export function requestUpdateMakes(values, page) {
+export function requestUpdateMakes(values, pageNumber, sorted_column,order) {
     return {
         type: types.REQUEST_UPDATE,
-        values, page
+        values, pageNumber, sorted_column, order
     }
 }
 
@@ -61,20 +61,20 @@ export function updateMakesSuccess(makeId, values) {
     }
 }
 
-export function requestMakesStatus (makeId,values, page) {
+export function requestMakesStatus (makeId,values, pageNumber, sorted_column, order) {
     return {
         type: types.REQUEST_MAKES_STATUS,
         values,
-        makeId, page 
+        makeId, pageNumber, sorted_column, order
     }
 }
 
-export function MakesStatusSuccess (makeId, values, page) {
+export function MakesStatusSuccess (makeId, values, pageNumber) {
     return {
         type: types.MAKES_STATUS_SUCCESS,
         values,
         makeId,
-        page
+        pageNumber
     }
 }
 

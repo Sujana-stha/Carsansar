@@ -17,7 +17,9 @@ class EnginesizesListContainer extends Component {
     constructor() {
         super();
         this.state= {
-            isEditing: false
+            isEditing: false,
+            sorted_column: 'id',
+            order: 'desc'
         }
         this.handlePageChange = this.handlePageChange.bind(this)
         this.editEnginesizes = this.editEnginesizes.bind(this)
@@ -26,13 +28,18 @@ class EnginesizesListContainer extends Component {
     
     componentDidMount() {
         // call action to run the relative saga
-        const page = this.props.activePage;
-        this.props.requestEnginesizes(page);
+        const pageNumber = this.props.activePage;
+        let sorted_column = this.state.sorted_column
+        let order = this.state.order
+        this.props.requestEnginesizes(pageNumber, sorted_column, order);
     }
 
     // submit function for new data
     submitEnginesize(values) {
-        this.props.requestSubmitEnginesizes(values);
+        const pageNumber = this.props.activePage
+        let sorted_column = this.state.sorted_column
+        let order = this.state.order
+        this.props.requestSubmitEnginesizes(values, pageNumber, sorted_column, order);
         this.setState ({
             hide: true
         })
@@ -40,21 +47,20 @@ class EnginesizesListContainer extends Component {
 
     // submit function to update data
     submitEditEnginesize(values) {
-        const page = this.props.activePage;
-        this.props.requestUpdateEnginesizes(values, page);
+        const pageNumber = this.props.activePage;
+        let sorted_column = this.state.sorted_column
+        let order = this.state.order
+        this.props.requestUpdateEnginesizes(values, pageNumber, sorted_column, order);
         this.setState({
-            isEditing : false,
-           
+            isEditing : false
         })
     }
 
     //function to call form of edit
     editEnginesizes(values) {
-        
         this.setState ({
             isEditing : values
         })
-        
     }
 
     deleteEnginesizeAction(enginesizeId) {
@@ -64,18 +70,36 @@ class EnginesizesListContainer extends Component {
     // pagination function
     handlePageChange(pageNumber) {
         console.log(`active page is ${pageNumber}`);
-        this.props.requestEnginesizes(pageNumber)
-        
+        let sorted_column = this.state.sorted_column
+        let order = this.state.order
+        this.props.requestEnginesizes(pageNumber, sorted_column, order)
     }
     
     toggleStatus (enginesizeId, status) {
-        const page = this.props.activePage;       
+        const pageNumber = this.props.activePage;
+        let sorted_column = this.state.sorted_column
+        let order = this.state.order       
         const newEnginesizesStatus = {
             status: !status
         }
-        this.props.requestEnginesizesStatus(enginesizeId, newEnginesizesStatus, page)
+        this.props.requestEnginesizesStatus(enginesizeId, newEnginesizesStatus, pageNumber, sorted_column, order)
     }
-    
+
+    sortByColumn(column) {
+        const pageNumber = this.props.activePage
+        if (column === this.state.sorted_column) {
+           this.state.order === 'desc' ? this.setState({order: 'asc'}, ()=>{
+               this.props.requestEnginesizes(pageNumber, this.state.sorted_column, this.state.order)
+            }):this.setState({order: 'desc'}, ()=>{
+                this.props.requestEnginesizes(pageNumber, this.state.sorted_column, this.state.order)
+            })
+        } else {
+            this.setState({sorted_column: column, order: 'desc'}, ()=>{
+                this.props.requestEnginesizes(pageNumber, this.state.sorted_column, this.state.order)
+            })
+        }
+    }
+
     render() {
         return (
             <div>
@@ -97,9 +121,21 @@ class EnginesizesListContainer extends Component {
                         <table>
                             <thead>
                                 <tr>
-                                    <th>S.N</th>
-                                    <th>Title</th>
-                                    <th>Added by</th>
+                                    <th onClick={()=>this.sortByColumn('id')}>S.N
+                                        {this.state.order==='desc'?
+                                            <i className="material-icons wr-sorting-icon">arrow_drop_down</i>
+                                        :<i className="material-icons wr-sorting-icon">arrow_drop_up</i>}
+                                    </th>
+                                    <th onClick={()=>this.sortByColumn('enginesize_desc')}>Title
+                                        {this.state.order==='desc'?
+                                            <i className="material-icons wr-sorting-icon">arrow_drop_down</i>
+                                        :<i className="material-icons wr-sorting-icon">arrow_drop_up</i>}
+                                    </th>
+                                    <th onClick={()=>this.sortByColumn('created_by')}>Added by
+                                        {this.state.order==='desc'?
+                                            <i className="material-icons wr-sorting-icon">arrow_drop_down</i>
+                                        :<i className="material-icons wr-sorting-icon">arrow_drop_up</i>}
+                                    </th>
                                     <th>Action</th>
                                     <th>Status</th>
                                 </tr>

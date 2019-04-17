@@ -27,13 +27,12 @@ class ModelList extends Component {
         return (
             <tbody>
                 {
-                    this.props.models.map((model) => {
+                    this.props.models.map((model, index) => {
                         return (
                             <tr key={model.id} className={`row-${model.id}`}>
-                                            
                                 <td>{model.id}</td>
                                 <td>{model.model_desc}</td>
-                                <td>{model.created_by}</td>
+                                <td>{model.created_by.name}</td>
                                 <td className="action">
                                     <a href="javascript:void(0);" onClick={this.props.onEditModel.bind(null, model.id)} className="tooltipped" data-position="top" data-delay="50" data-tooltip="Edit"><i className="material-icons">edit</i></a>
                                     <a className="tooltip" href="javascript:void(0);" onClick={()=>this.deleteItem(model.id)} data-tooltip="Delete"><i className="material-icons">delete</i></a>

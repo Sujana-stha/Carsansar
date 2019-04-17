@@ -12,10 +12,7 @@ class CategoriesList extends Component {
     
 
     deleteItem(id){
-        console.log(id);
-        
         this.setState({showItem: id})
-        
     }
     componentDidMount() {
         this.setState({
@@ -26,7 +23,6 @@ class CategoriesList extends Component {
         this.setState({showItem: null})
     }
     render() {
-        console.log('tab', this.props)
         return (
             <tbody>
                 {this.props.categories.map((category) => {

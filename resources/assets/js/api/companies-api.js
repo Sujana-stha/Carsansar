@@ -3,10 +3,10 @@ import axios, {getHeaders} from './axiosInstance'
 
 
 //GET ALL COMPANIES API
-export function getCompanies(pageNumber) {
+export function getCompanies(pageNumber, sorted_column, order) {
     const access_token = window.localStorage.getItem('access_token')
     const headers = getHeaders(access_token)
-    return axios.get(`/api/companies?page=${pageNumber}`,{headers})
+    return axios.get(`/api/companies?page=${pageNumber}&column=${sorted_column}&order=${order}`,{headers})
 }
 
 // ADD NEW COMPANIES API

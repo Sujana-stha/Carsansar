@@ -2,10 +2,10 @@
 import axios, {getHeaders} from './axiosInstance'
 
 //GET ALL MAKES API
-export function getEnginesizes(pageNumber) {
+export function getEnginesizes(pageNumber, sorted_column, order) {
     const access_token = window.localStorage.getItem('access_token')
     const headers = getHeaders(access_token)
-    return axios.get(`/api/enginesizes?page=${pageNumber}`,{headers})
+    return axios.get(`/api/enginesizes?page=${pageNumber}&column=${sorted_column}&order=${order}`,{headers})
 }
 
 // ADD NEW MAKES API

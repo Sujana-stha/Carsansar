@@ -1,9 +1,11 @@
 import * as types from '../actions/action-types';
 
 const initialState = {
+    searchText: '',
     vehicleList: [],
     fetching: false,
-    optionList: []
+    optionList: [],
+    sending: false
 }
 
 
@@ -13,14 +15,33 @@ const dropdownList =  function(state = initialState, action) {
             return {...state, fetching: true}
         
         case types.GET_VEHICLES_SUCCESS:
+            console.log('acc', action)
             return Object.assign({}, state, {
-                vehicleList: action.vehicles.data
+                vehicleList: action.vehicles
             });
         case types.ADD_VEHICLES_SUCCESS:
-            console.log("action", action)
+            // console.log("action", action)
             return Object.assign({}, state, {
                 vehicleList: [...state.vehicleList, action.resp]
             });
+        
+        case types.REQUEST_VEHICLES_UPDATE:
+            return Object.assign({}, state, {
+                sending: true
+            })
+
+        case types.UPDATE_VEHICLES_SUCCESS:
+            return {
+                ...state, 
+                vehicleList: state.vehicleList.map(vehicle => {
+                    if (vehicle.id === action.resp.id) {
+                    return action.resp;
+                    }
+                    return vehicle;
+                }),
+                sending: false
+            };
+
         case types.VEHICLES_ATTR_SEARCH_SUCCESS:
             return Object.assign({}, state, {
                 vehicleList: [...state.vehicleList, action.resp]

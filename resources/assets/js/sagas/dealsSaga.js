@@ -3,6 +3,25 @@ import { startSubmit, stopSubmit, reset } from 'redux-form';
 import * as types from '../actions/action-types';
 import * as api from '../api/deals-api';
 import {notify} from 'react-notify-toast';
+import { push } from 'connected-react-router';
+
+//SAGA TO GET LIST OF VEHICLES
+export function* vehiclesWatcher() {
+    yield takeLatest(types.REQUEST_VEHICLES, callVehiclesSaga)
+}
+
+function* callVehiclesSaga() {
+    const response = yield call(api.getVehicles);
+    const vehicles = response.data
+    console.log('vehicles', vehicles)
+    if (response.errors) {
+        yield put({ type: types.REQUEST_VEHICLES_FAILED, errors: response.error});
+        error = response.error;
+        notify.show("Cannot Get all Vehicles", "error", 5000)
+    } else {
+        yield put({type: types.GET_VEHICLES_SUCCESS, vehicles});
+    }
+}
 
 // saga for add new vehicles
 export function* submitVehicleSaga() {
@@ -12,21 +31,49 @@ export function* submitVehicleSaga() {
 function* callVehicleSubmit(action) {
     yield put(startSubmit('PostVehicles'));
     let error = {};
+   
+    console.log('sagaValue', action.values);
     const result =  yield call(api.addVehicles, action.values);
     const resp = result.data
-
     if (result.errors) {
         yield put({ type: types.REQUEST_VEHICLES_FAILED, errors: result.error});
         error = result.error;
         notify.show("Cannot Add Vehicles!", "error", 5000)
     } else {
         yield put({type: types.ADD_VEHICLES_SUCCESS, resp});
-        // yield put({type: types.REQUEST_COMPANIES})
         notify.show("Vehicle Added Successfully!", "success", 5000);
     }
     yield put(stopSubmit('PostVehicles', error));
     yield put(reset('PostVehicles'));
+    // yield put(push('/dashboard/vehicles'));
 }
+
+//SAGA TO UPDATE VEHICLES
+export function* editVehicleSaga() {
+    yield takeLatest(types.REQUEST_VEHICLES_UPDATE, callVehicleUpdate)
+}
+
+function* callVehicleUpdate(action) {
+    yield put(startSubmit('EditVehicles'));
+    let error = {};
+    const result = yield call(api.updateVehicles, action.values.id, action.values);
+    const resp = result.data;
+    if (result.errors) {
+        yield put({ type: types.REQUEST_VEHICLES_FAILED, errors: result.errors});
+        notify.show(`Cannot Update ${resp.title}!`,"error", 5000);
+        error = result.errors
+
+    } else {
+        // yield put({type: types.UPDATE_MAKES_SUCCESS, resp, message: result.statusText});
+        yield put ({type: types.REQUEST_VEHICLES})
+        notify.show(`${resp.title} Vehicle Updated Successfully!`, "success", 5000);
+
+    }
+    yield put(stopSubmit('EditVehicles', error));
+    yield put(reset('EditVehicles'));
+    // yield put(push('/dashboard/vehicles'));
+}
+
 
 //saga for search vehicles by attr
 export function* SearchVehicleSaga() {
@@ -37,7 +84,6 @@ function* callVehiclesSearch(action) {
     yield put(startSubmit('VehicleSearchForm'));
     let error = {}
     try {
-        // const response = yield call(api.searchVechiles, action.values)
         const resp = response.data
         if(response.status === 200 ) {
             yield put({type: types.VEHICLES_ATTR_SEARCH_SUCCESS, resp})

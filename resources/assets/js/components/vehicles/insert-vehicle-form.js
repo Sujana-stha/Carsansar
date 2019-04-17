@@ -3,7 +3,7 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 import ReactQuill from 'react-quill';
-import { Tabs, Tab, TabPanel, TabList, TabProvider } from 'react-web-tabs';
+import { Tabs, Tab, TabPanel, TabList } from 'react-web-tabs';
 import 'react-web-tabs/dist/react-web-tabs.css';
 // import ReactQuill, { Quill, Mixin, Toolbar } from 'react-quill';
 // import 'react-quill/dist/quill.snow.css';
@@ -17,8 +17,8 @@ class InsertVehicle extends Component {
 	constructor() {
 	  	super();
 	  	this.state = { 
-			text: 'Vehicle Description',
 			makes: [],
+			categories: [],
 			models:{},
 			bodies: {},
 			enginesizes:{},
@@ -28,16 +28,14 @@ class InsertVehicle extends Component {
 			drives: {},
 			options: [],
 			optCategories: [],
+			showForm: false
 		}; // You can also pass a Quill Delta here
-		this.handleChange = this.handleChange.bind(this);
 	}
 	componentDidMount() {
 		api.getMakesList().then((response)=> {
-			console.log('opt',response)
 			this.setState({ makes: response.data })
 		})
 		api.getModelsList().then((response) => {
-			console.log('model',response)
 			this.setState({ models: response.data })
 		})
 		api.getBodiesList().then((response) => {
@@ -58,21 +56,18 @@ class InsertVehicle extends Component {
 		api.getDRivesist().then((response)=> {
 			this.setState({drives: response.data })
 		})
+		api.getCategoriesList().then((response)=> {
+			this.setState({categories: response.data})
+		})
 		api.getOptionsList().then((response)=> {
-			
 			this.setState({options: response.data})
 		})
 		optCatapi.getOptionsCategories().then((response) => {
-			console.log('optcat',response)
 			this.setState({optCategories: response.data})
 		})
     }
-	handleChange(files) {
-		console.log('fff', files)
-	}
-
+	
 	renderInputField({input, label, type, meta: {touched, error}}) {
-		
         return (
 			<div className="input-field col s12">
                 <input  type={type} {...input}/>
@@ -109,10 +104,21 @@ class InsertVehicle extends Component {
         )
 	}
 	
+	renderCheckboxField({input, label, type, meta: {touched, error}}) {
+		return(
+			<div className="col s6">
+				<label>
+					<input type={type} className="filled-in" {...input} />
+					<span>{label}</span>
+				</label>
+			</div>
+		)
+	}
+
 	renderOptionsList({input, options, optCategories, meta: {touched, error}}) {
 		return optCategories.map((optCategory, i)=> {
 			return (
-				<div key={i} className="col s12 m4 mb-3">
+				<div key={i}>
 					<strong>{optCategory.optioncategory_desc}</strong>
 					{options.map((option, i) => {
 						return(
@@ -144,24 +150,15 @@ class InsertVehicle extends Component {
 				</div>
 			)
 		})
-		
 	}
-	
-	onSubmit(values) {
-		console.log('valuessss', this.props)
-		this.props.requestSubmitVehicle(values);
+	financeForm(e) {
+		this.setState({
+			showForm: e.target.checked
+		})
 	}
 	render() {
 		const { handleSubmit } = this.props
-
 	  	return (
-			<div>
-				<div className="row">
-					<div className="col s12 mt-2 mb-2 right-align">
-						<NavLink to="/vehicles" className="btn waves-effect waves-light"><i className="material-icons left">view_list</i><span> All Vehicles</span></NavLink>
-					</div>
-				</div>
-				<h4 className="header2">Add New Vehicle</h4>
 				<div className="card-panel">
 					<div className="row">
 						<form onSubmit={ handleSubmit} className="col s12">
@@ -171,14 +168,7 @@ class InsertVehicle extends Component {
 								name="title"
 								component={this.renderInputField}
 							></Field>
-
-					  		{/* <Row>
-								<div className="input-field col s12">
-									<ReactQuill id="v_description" className="v-desc" value={this.state.text} onChange={this.handleChange} theme="snow"/>
-									{/* <textarea id="v_description" className="materialize-textarea"></textarea>
-									<label htmlFor="v_description">Vehicle Description</label> */}
-								{/* </div>
-					  		</Row> */} 
+					  		
 							<Field
 								name="v_description"
 								label ="Vehicle Description"
@@ -195,8 +185,9 @@ class InsertVehicle extends Component {
 										<Tab onClick={tabId => { tabId.preventDefault()}} tabFor="pricing">Pricing</Tab>
 										<Tab onClick={tabId => { tabId.preventDefault()}} tabFor="gallery">Gallery</Tab>
 										<Tab onClick={tabId => { tabId.preventDefault()}} tabFor="vehicle-location">Vehicle Location</Tab>
-										<Tab onClick={tabId => { tabId.preventDefault()}} tabFor="status">Statuses</Tab>
+										<Tab onClick={tabId => { tabId.preventDefault()}} tabFor="financing">Financing</Tab>
 										<Tab onClick={tabId => { tabId.preventDefault()}} tabFor="information">More Information</Tab>
+							  			
 									</TabList>
 									<TabPanel tabId="general">
 										<div className="row">
@@ -240,14 +231,6 @@ class InsertVehicle extends Component {
 									<TabPanel tabId="vehicle-attributes">
 										<div className="row">
 											<Field
-											name="stock_number"
-											label="Stock Number"
-											id="stock_number"
-											type="text"
-											component={this.renderInputField}
-											/>
-
-											<Field
 											name="vin"
 											label="Vin Number"
 											type="text"
@@ -261,19 +244,23 @@ class InsertVehicle extends Component {
 											component={this.renderSelectField}
 											>
 												<option value="">Choose your option</option>
-												<option value="1">2016</option>
-												<option value="2">2017</option>
-												<option value="3">2018</option>
+												<option value="2016">2016</option>
+												<option value="2017">2017</option>
+												<option value="2018">2018</option>
 											</Field>
+											<Field name="category_id"
+											label="Categories"
+											itemList={this.state.categories}
+											apiName="categories"
+											component={AutocompleteField}
+											/>
 
 											<Field name="make_id"
 											label="Makes"
 											itemList={this.state.makes}
 											apiName="makes"
 											component={AutocompleteField}
-											>
-											</Field> 
-
+											/>
 											{/* <Field
 											name="make_id"
 											label="Make"
@@ -325,7 +312,15 @@ class InsertVehicle extends Component {
 											apiName="transmissions"
 											component={AutocompleteField}
 											/>
-							  				
+
+							  				<Field
+											name="mfg_exterior_color_id"
+											label="Manufacture Exterior Color"
+											itemList={this.state.colors}
+											apiName="colors"
+											component={AutocompleteField}
+											/>
+
 											<Field
 											name="exterior_color_id"
 											label="Exterior Color"
@@ -402,22 +397,12 @@ class InsertVehicle extends Component {
 										<div className="row">
 											<div className="col s6">
 												<Field
-												name="current_price"
-												label="Current Price"
+												name="price"
+												label="Price"
 												type="text"
 												component={this.renderInputField}
 												/>
-												
 											</div>
-											<div className="col s6">
-							  					<Field
-												  name="actual_price"
-												  label="Actual Price"
-												  type="text"
-												  component={this.renderInputField}
-												/>
-											</div>
-											
 										</div>
 									</TabPanel>
 									<TabPanel tabId="gallery" className="col s12">
@@ -460,16 +445,83 @@ class InsertVehicle extends Component {
 											</div>
 										</div>
 									</TabPanel>
-									<TabPanel tabId="status">
+									<TabPanel tabId="financing">
 										<div className="row">
-											<div className="col s6">
-												<div className="switch"><label>Featured<input defaultChecked type="checkbox" /><span className="lever"></span>Active</label></div>
-											</div>
-																	
-											<div className="input-field col s6">
-												<div className="switch"><label>Sold Out<input defaultChecked type="checkbox" /><span className="lever"></span>Active</label></div>
+											<div className="col s12">
+												<h4>Finance</h4>
+												<Field name="financing_flag"
+												type="checkbox"
+												label="Financing"
+												component={this.renderCheckboxField}
+												onChange={e=> this.financeForm(e)}
+												/>
 											</div>
 										</div>
+										{this.state.showForm ? (
+										<div className="card">
+											<div className="card-content">
+												<h4 className="card-title">Finance Form</h4>
+												<div className="row">	
+													<div className="col s6">
+														<Field name="type"
+														label="Type"
+														type="text"
+														component={this.renderInputField}
+														/>
+													</div>
+													<div className="col s6">
+														<Field name="payment"
+														label="Payment"
+														type="text"
+														component={this.renderInputField}
+														/>
+													</div>
+													<div className="col s6">
+														<Field name="payment_type"
+														label="Payment Type"
+														type="text"
+														component={this.renderInputField}
+														/>
+													</div>
+													<div className="col s6">
+														<Field name="downpayment"
+														label="Down Payment"
+														type="text"
+														component={this.renderInputField}
+														/>
+													</div>
+													<div className="col s6">
+														<Field name="number_of_payment"
+														label="Number of Payment"
+														type="text"
+														component={this.renderInputField}
+														/>
+													</div>
+													<div className="col s6">
+														<Field name="source"
+														label="Source of Payment"
+														type="text"
+														component={this.renderInputField}
+														/>
+													</div>
+													<div className="col s6">
+														<Field name="odometer"
+														label="Odometer"
+														type="text"
+														component={this.renderInputField}
+														/>
+													</div>
+													<div className="col s6">
+														<Field name="description"
+														label="Description"
+														type="text"
+														component={this.renderInputField}
+														/>
+													</div>
+												</div>
+											</div>
+										</div>
+		  								):null}
 									</TabPanel>
 									<TabPanel tabId="information">
 										<div className="row">
@@ -502,16 +554,19 @@ class InsertVehicle extends Component {
 						</form>
 					</div>
 				</div>
-			</div>
 		)
-
 	}
 }
 function validate(values) {
 	const errors = {}
-    console.log('values', values)
+	console.log('value', values);
+	if(!values.title) {
+        errors.title = "This Field is empty"
+    } else if (values.title.length > 100) {
+        errors.title = "Must be 100 character or Less!"
+	}
+	return errors;
 }
-
 
 export default reduxForm({
 	form: 'PostVehicles',

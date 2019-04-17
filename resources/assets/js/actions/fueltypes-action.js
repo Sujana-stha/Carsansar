@@ -1,16 +1,16 @@
 import * as types from '../actions/action-types';
 
 
-export function requestFueltypes(pageNumber) {
+export function requestFueltypes(pageNumber,sorted_column, order) {
     return {
         type: types.REQUEST_FUELTYPES,
-        pageNumber
+        pageNumber,sorted_column, order
     }
 }
-export function requestSubmitFueltypes(values) {
+export function requestSubmitFueltypes(values, pageNumber,sorted_column, order) {
     return {
         type: types.REQUEST_FUELTYPES_SUBMIT,
-        values
+        values, pageNumber,sorted_column, order
     }
 }
 
@@ -47,10 +47,10 @@ export function deleteFueltypesSuccess(fueltypeId) {
     }
 }
 
-export function requestUpdateFueltypes( values, page) {
+export function requestUpdateFueltypes( values, pageNumber,sorted_column, order) {
     return {
         type: types.REQUEST_FUELTYPES_UPDATE,
-        values, page
+        values, pageNumber,sorted_column, order
     }
 }
 
@@ -62,11 +62,11 @@ export function updateFueltypesSuccess(fueltypeId, values) {
     }
 }
 
-export function requestFueltypesStatus (fueltypeId,values,page) {
+export function requestFueltypesStatus (fueltypeId,values,pageNumber,sorted_column, order) {
     return {
         type: types.REQUEST_FUELTYPES_STATUS,
         values,
-        fueltypeId, page 
+        fueltypeId, pageNumber,sorted_column, order 
     }
 }
 

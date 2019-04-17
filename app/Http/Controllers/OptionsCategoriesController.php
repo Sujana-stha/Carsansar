@@ -7,11 +7,9 @@ use App\OptionCategory;
 
 class OptionsCategoriesController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        
-        return OptionCategory::with('createdBy:id,name')->orderBy('id', 'desc')->get();
-        
+        return OptionCategory::with('createdBy:id,name')->get();
     }
  
     public function show(OptionCategory $optionCategories)

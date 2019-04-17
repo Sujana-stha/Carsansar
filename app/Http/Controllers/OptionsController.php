@@ -7,12 +7,12 @@ use App\Option;
 
 class OptionsController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         // return Option::all();
         // $make = Make::with('createdBy:id,name')->orderBy('id', 'desc')->paginate(3);
 
-        $option = Option::with(['ocId:id,optioncategory_desc','createdBy:id,name'])->orderBy('id','desc')->paginate(3);
+        $option = Option::with(['ocId:id,optioncategory_desc','createdBy:id,name'])->orderBy($request->column, $request->order)->paginate(3);
         return $option;
     }
 
@@ -21,7 +21,13 @@ class OptionsController extends Controller
         $option = Option::where('status','1')->get();
         return $option;
     }
- 
+    
+    public function getOptionDesc($id)
+    {
+        $option = Option::where('status','1')->where('id',$id)->pluck('option_desc');
+        return $option;
+    }
+
     public function show(Option $option)
     {
         return $option;
