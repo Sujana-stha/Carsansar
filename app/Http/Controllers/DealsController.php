@@ -37,7 +37,12 @@ class DealsController extends Controller
  
     public function show($id)
     {
-        return Deal::findorfail($id);
+        return Deal::with('vehicleInfo',
+        'company',
+        'attribute',
+        'financing',
+        'images',
+        'createdBy:id,name')->find($id);        
     }
 
     private function generateStockNo($id){
