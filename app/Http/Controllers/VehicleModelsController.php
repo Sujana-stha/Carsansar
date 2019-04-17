@@ -7,14 +7,15 @@ use App\VehicleModel;
 
 class VehicleModelsController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $model = VehicleModel::paginate(3);
+        $model = VehicleModel::with('createdBy:id,name')->orderBy($request->column, $request->order)->paginate(3);
         return $model;
     }
 
     public function getList()
     {
+        
         $model = VehicleModel::where('status','1')->pluck('model_desc','id');
         return $model;
     }

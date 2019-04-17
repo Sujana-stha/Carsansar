@@ -28,6 +28,9 @@ function* callMakesSubmit(action) {
     yield put(startSubmit('PostMakes'));
     const result =  yield call(api.addMakes, action.values);
     const resp = result.data
+    const pageNumber= action.pageNumber
+    const sorted_column=action.sorted_column
+    const order= action.order
     let error = {};
     if (result.errors) {
         yield put({ type: types.REQUEST_FAILED});
@@ -35,8 +38,8 @@ function* callMakesSubmit(action) {
         error = result.errors
     } else {
         // yield put({type: types.ADD_MAKES_SUCCESS, resp, message: result.statusText});
-        yield put({type: types.REQUEST_MAKES});
-        // notify.show(`${resp.make_desc} Make Added Successfully!`, "success", 5000);
+        yield put({type: types.REQUEST_MAKES, pageNumber, sorted_column, order});
+        notify.show(`${resp.make_desc} Make Added Successfully!`, "success", 5000);
     }
     yield put(stopSubmit('PostMakes', error));
     yield put(reset('PostMakes'));
@@ -52,7 +55,9 @@ function* callEditMake (action) {
     let error = {};
     const result =  yield call(api.updateMake, action.values.id, action.values);
     const resp = result.data;
-    const pageNumber = action.page
+    const pageNumber = action.pageNumber
+    const sorted_column=action.sorted_column
+    const order=action.order
     if (result.errors) {
         yield put({ type: types.REQUEST_FAILED, errors: result.errors});
         notify.show(`Cannot Update ${resp.make_desc}!`,"error", 5000);
@@ -60,7 +65,7 @@ function* callEditMake (action) {
 
     } else {
         // yield put({type: types.UPDATE_MAKES_SUCCESS, resp, message: result.statusText});
-        yield put ({type: types.REQUEST_MAKES, pageNumber})
+        yield put ({type: types.REQUEST_MAKES, pageNumber, sorted_column, order})
         notify.show(`${resp.make_desc} Make Updated Successfully!`, "success", 5000);
 
     }
@@ -77,15 +82,16 @@ export function* toggleStatusSaga() {
 function* callToggleStatus(action) {
     const result =  yield call(api.updateMakeStatus, action.makeId, action.values);
     const resp = result.data;
-    const pageNumber = action.page
-
+    const pageNumber = action.pageNumber
+    const sorted_column = action.sorted_column
+    const order = action.order
     if (result.errors) {
         yield put({ type: types.REQUEST_FAILED, errors: result.error});
         notify.show(`Cannot Change Status of ${resp.make_desc}!`,"error", 5000);
 
     } else {
         // yield put({type: types.MAKES_STATUS_SUCCESS, resp});
-        yield put ({type: types.REQUEST_MAKES, pageNumber})
+        yield put ({type: types.REQUEST_MAKES, pageNumber, sorted_column, order})
         notify.show(`Status of ${resp.make_desc} Updated!`, "success",5000);
     }
 }

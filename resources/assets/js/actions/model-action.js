@@ -1,16 +1,16 @@
 import * as types from '../actions/action-types';
 
 
-export function requestModel(pageNumber) {
+export function requestModel(pageNumber, sorted_column, order) {
     return {
         type: types.REQUEST_MODEL,
-        pageNumber
+        pageNumber, sorted_column, order
     }
 }
-export function requestSubmitModel(values) {
+export function requestSubmitModel(values, pageNumber, sorted_column, order) {
     return {
         type: types.REQUEST_MODEL_SUBMIT,
-        values
+        values, pageNumber, sorted_column, order
     }
 }
 
@@ -47,10 +47,10 @@ export function deleteModelSuccess(modelId) {
     }
 }
 
-export function requestUpdateModel( values, page) {
+export function requestUpdateModel( values, pageNumber, sorted_column, order) {
     return {
         type: types.REQUEST_MODEL_UPDATE,
-        values, page
+        values, pageNumber, sorted_column, order
     }
 }
 
@@ -62,11 +62,11 @@ export function updateModelSuccess(modelId, values) {
     }
 }
 
-export function requestModelStatus (modelId,values, page) {
+export function requestModelStatus (modelId,values, pageNumber, sorted_column, order) {
     return {
         type: types.REQUEST_MODEL_STATUS,
         values,
-        modelId, page
+        modelId, pageNumber, sorted_column, order
     }
 }
 

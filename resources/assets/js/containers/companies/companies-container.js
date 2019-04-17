@@ -16,7 +16,9 @@ class CompaniesListContainer extends Component {
     constructor() {
         super();
         this.state= {
-            isEditing: false
+            isEditing: false,
+            sorted_column: 'id',
+            order: 'desc'
         }
         this.handlePageChange = this.handlePageChange.bind(this)
         this.editCompanies = this.editCompanies.bind(this)
@@ -31,20 +33,27 @@ class CompaniesListContainer extends Component {
     }
     componentDidMount() {
         // call action to run the relative saga
-        const page = this.props.activePage;
-        this.props.requestCompanies(page);
+        const pageNumber = this.props.activePage;
+        let sorted_column = this.state.sorted_column
+        let order = this.state.order
+        this.props.requestCompanies(pageNumber, sorted_column, order);
     }
 
     // submit function for new data
     submitCompany(values) {
-        this.props.requestSubmitCompanies(values);
+        const pageNumber =  this.props.activePage;
+        let sorted_column = this.state.sorted_column
+        let order = this.state.order
+        this.props.requestSubmitCompanies(values, pageNumber, sorted_column, order);
         $('.collapsible').collapsible('close', 0);
     }
 
     // submit function to update data
     submitEditCompany(values) {
-        const page = this.props.activePage;
-        this.props.requestUpdateCompanies(values, page);
+        const pageNumber = this.props.activePage;
+        let sorted_column = this.state.sorted_column
+        let order = this.state.order
+        this.props.requestUpdateCompanies(values, pageNumber, sorted_column, order);
         this.setState({
             isEditing : false
         });
@@ -54,7 +63,7 @@ class CompaniesListContainer extends Component {
     //function to call form of edit
     editCompanies(values) {
         $('.collapsible').collapsible('open', 0);
-        
+    
         this.setState ({
             isEditing : values
         })
@@ -68,19 +77,34 @@ class CompaniesListContainer extends Component {
     // pagination function
     handlePageChange(pageNumber) {
         console.log(`active page is ${pageNumber}`);
-        this.props.requestCompanies(pageNumber)
-        
+        let sorted_column = this.state.sorted_column
+        let order = this.state.order
+        this.props.requestCompanies(pageNumber, sorted_column, order)
     }
     
     toggleStatus (companyId, status) {
-        const page = this.props.activePage;
-        
+        const pageNumber = this.props.activePage;
+        let sorted_column = this.state.sorted_column
+        let order = this.state.order
         const newCompanyStatus = {
             status: !status
         }
-        this.props.requestCompaniesStatus(companyId, newCompanyStatus, page)
+        this.props.requestCompaniesStatus(companyId, newCompanyStatus, pageNumber, sorted_column, order)
     }
-    
+    sortByColumn(column) {
+        const pageNumber = this.props.activePage
+        if (column === this.state.sorted_column) {
+           this.state.order === 'desc' ? this.setState({order: 'asc'}, ()=>{
+               this.props.requestCompanies(pageNumber, this.state.sorted_column, this.state.order)
+            }):this.setState({order: 'desc'}, ()=>{
+                this.props.requestCompanies(pageNumber, this.state.sorted_column, this.state.order)
+            })
+        } else {
+            this.setState({sorted_column: column, order: 'desc'}, ()=>{
+                this.props.requestCompanies(pageNumber, this.state.sorted_column, this.state.order)
+            })
+        }
+    }
     render() {
         return (
             <div>
@@ -90,9 +114,9 @@ class CompaniesListContainer extends Component {
                     ): (
                         <div className="wr-not-loading"></div>
                     )}
-                    <ul className="collapsible collapsible-accordion" data-collapsible="accordion">
+                    <ul className="collapsible" data-collapsible="accordion">
                             {this.state.isEditing ? (
-                                <li>
+                                <li className="active">
                                     <div className="collapsible-header">
                                         <a className="btn right"><i className="material-icons left">add</i><span> Update Color</span></a>
                                     </div>
@@ -117,13 +141,41 @@ class CompaniesListContainer extends Component {
                         <table>
                             <thead>
                                 <tr>
-                                    <th>S.N</th>
-                                    <th>Company Code</th>
-                                    <th>Name</th>
-                                    <th>Address</th>
-                                    <th>Email</th>
-                                    <th>Contact</th>
-                                    <th>Added by</th>
+                                    <th onClick={()=>this.sortByColumn('id')}>S.N
+                                        {this.state.order==='desc'?
+                                            <i className="material-icons wr-sorting-icon">arrow_drop_down</i>
+                                        :<i className="material-icons wr-sorting-icon">arrow_drop_up</i>}
+                                    </th>
+                                    <th onClick={()=>this.sortByColumn('company_cd')}>Company Code
+                                        {this.state.order==='desc'?
+                                            <i className="material-icons wr-sorting-icon">arrow_drop_down</i>
+                                        :<i className="material-icons wr-sorting-icon">arrow_drop_up</i>}
+                                    </th>
+                                    <th onClick={()=>this.sortByColumn('name')}>Name
+                                        {this.state.order==='desc'?
+                                            <i className="material-icons wr-sorting-icon">arrow_drop_down</i>
+                                        :<i className="material-icons wr-sorting-icon">arrow_drop_up</i>}
+                                    </th>
+                                    <th onClick={()=>this.sortByColumn('address')}>Address
+                                        {this.state.order==='desc'?
+                                            <i className="material-icons wr-sorting-icon">arrow_drop_down</i>
+                                        :<i className="material-icons wr-sorting-icon">arrow_drop_up</i>}
+                                    </th>
+                                    <th onClick={()=>this.sortByColumn('email')}>Email
+                                        {this.state.order==='desc'?
+                                            <i className="material-icons wr-sorting-icon">arrow_drop_down</i>
+                                        :<i className="material-icons wr-sorting-icon">arrow_drop_up</i>}
+                                    </th>
+                                    <th onClick={()=>this.sortByColumn('contact_no')}>Contact
+                                        {this.state.order==='desc'?
+                                            <i className="material-icons wr-sorting-icon">arrow_drop_down</i>
+                                        :<i className="material-icons wr-sorting-icon">arrow_drop_up</i>}
+                                    </th>
+                                    <th onClick={()=>this.sortByColumn('created_by')}>Added by
+                                        {this.state.order==='desc'?
+                                            <i className="material-icons wr-sorting-icon">arrow_drop_down</i>
+                                        :<i className="material-icons wr-sorting-icon">arrow_drop_up</i>}
+                                    </th>
                                     <th>Action</th>
                                     <th>Status</th>
                                 </tr>

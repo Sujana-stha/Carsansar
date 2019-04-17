@@ -2,10 +2,10 @@
 import axios, {getHeaders} from './axiosInstance'
 
 //GET ALL CATEGORIES API
-export function getCategories(pageNumber) {
+export function getCategories(pageNumber, sorted_column, order) {
     const access_token = window.localStorage.getItem('access_token')
     const headers = getHeaders(access_token)
-    return axios.get(`/api/categories?page=${pageNumber}`,{headers})
+    return axios.get(`/api/categories?page=${pageNumber}&column=${sorted_column}&order=${order}`,{headers})
 }
 
 // ADD NEW CATEGORIES API

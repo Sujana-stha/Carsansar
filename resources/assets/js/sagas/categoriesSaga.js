@@ -11,7 +11,7 @@ export function* CategoryWatcher() {
     yield takeLatest(types.REQUEST_CATEGORIES, CategorySaga)
 }
 function* CategorySaga(action) {
-    const response = yield call(api.getCategories, action.pageNumber);
+    const response = yield call(api.getCategories, action.pageNumber, action.sorted_column, action.order);
     const categories = response.data
     if (response.errors) {
         yield put({ type: types.REQUEST_CATEGORIES_FAILED, errors: result.error});
@@ -20,7 +20,6 @@ function* CategorySaga(action) {
     } else {
         yield put({type: types.GET_CATEGORIES_SUCCESS, categories});
     }
-    
 }
 
 // Submit form data of makes
@@ -31,7 +30,10 @@ function* callCategoriesSubmit(action) {
     yield put(startSubmit('PostCategories'));
     let error = {};
     const result =  yield call(api.addCategories, action.values);
-    // const resp = result.data
+    const resp = result.data
+    const pageNumber= action.pageNumber
+    const sorted_column=action.sorted_column
+    const order= action.order
 
     if (result.errors) {
         yield put({ type: types.REQUEST_CATEGORIES_FAILED, errors: result.error});
@@ -39,8 +41,8 @@ function* callCategoriesSubmit(action) {
         notify.show("Cannot Add Categories!", "error", 5000)
     } else {
         // yield put({type: types.ADD_CATEGORIES_SUCCESS, resp, message: result.statusText});
-        yield put({type: types.REQUEST_CATEGORIES})
-        notify.show("Categories Added Successfully!", "success", 5000)
+        yield put({type: types.REQUEST_CATEGORIES, pageNumber, sorted_column, order})
+        notify.show(`${resp.category_desc} Categories Added Successfully!`, "success", 5000)
 
     }
     yield put(stopSubmit('PostCategories', error));
@@ -58,15 +60,17 @@ function* callEditCategory (action) {
     let error = {};
     const result =  yield call(api.updateCategories, action.values.id, action.values);
     const resp = result.data;
-    const pageNumber = action.page
+    const pageNumber = action.pageNumber
+    const sorted_column=action.sorted_column
+    const order= action.order
     if (result.errors) {
         yield put({ type: types.REQUEST_CATEGORIES_FAILED, errors: result.error});
         error = result.error;
         notify.show(`Cannot Update ${resp.category_desc}`, "error", 5000)
     } else {
         // yield put({type: types.UPDATE_CATEGORIES_SUCCESS, resp, message: result.statusText});
-        yield put({type: types.REQUEST_CATEGORIES, pageNumber})
-        notify.show("Categories Updated Successfully!", "success", 5000)
+        yield put({type: types.REQUEST_CATEGORIES, pageNumber, sorted_column, order})
+        notify.show(`${resp.category_desc} Categories Updated Successfully!`, "success", 5000)
     }
     yield put(stopSubmit('EditCategories', error));
     yield put(reset('EditCategories'));
@@ -81,7 +85,9 @@ export function* toggleCategoriesStatusSaga() {
 function* callCategoryToggleStatus(action) {
     const result =  yield call(api.updateCategoriesStatus, action.categoryId, action.values);
     const resp = result.data;
-    const pageNumber = action.page
+    const pageNumber = action.pageNumber
+    const sorted_column=action.sorted_column
+    const order= action.order
     if (result.errors) {
         yield put({ type: types.REQUEST_CATEGORIES_FAILED, errors: result.error});
         error = result.error;
@@ -89,11 +95,9 @@ function* callCategoryToggleStatus(action) {
 
     } else {
         // yield put({type: types.CATEGORIES_STATUS_SUCCESS, resp, message: result.statusText});
-        yield put({type: types.REQUEST_CATEGORIES, pageNumber})
-        notify.show("Status Updated Successfully!", "success", 5000)
-        
+        yield put({type: types.REQUEST_CATEGORIES, pageNumber, sorted_column, order})
+        notify.show(`Status of ${resp.category_desc} Updated Successfully!`, "success", 5000)
     }
-
 }
 
 

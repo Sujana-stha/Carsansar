@@ -8,13 +8,6 @@ export function getMakes(pageNumber,sorted_column, order) {
     return axios.get(`/api/makes?page=${pageNumber}&column=${sorted_column}&order=${order}`, {headers})
 }
 
-//GET MAKES BY PAGINATION API
-export function getMakesPages(pageNumber) {
-    const access_token = window.localStorage.getItem('access_token')
-    const headers = getHeaders(access_token)
-    return axios.get(`/api/makes?page=${pageNumber}`,{headers})
-}
-
 // ADD NEW MAKES API
 export function addMakes(values, ) {
     const access_token = window.localStorage.getItem('access_token')

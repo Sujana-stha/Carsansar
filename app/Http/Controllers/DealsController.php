@@ -35,9 +35,14 @@ class DealsController extends Controller
                         'createdBy:id,name')->get();
     }
  
-    public function show(Deal $deal)
+    public function show($id)
     {
-        return $deal;
+        return Deal::with('vehicleInfo',
+        'company',
+        'attribute',
+        'financing',
+        'images',
+        'createdBy:id,name')->find($id);        
     }
 
     private function generateStockNo($id){
@@ -55,7 +60,7 @@ class DealsController extends Controller
              'year' => $request->get('year'),
              'make_id' => $request->get('make_id'),
              'model_id' => $request->get('model_id'),
-             'fueltype_id' => $request->get('category_id'),
+             'fueltype_id' => $request->get('fueltype_id'),
              'drive_id' => $request->get('drive_id'),
              'enginesize_id' => $request->get('enginesize_id'),
              'cylinder' => $request->get('cylinder'),
@@ -194,13 +199,10 @@ class DealsController extends Controller
         } catch (\Exception $e) {
             
             DB::rollback(); 
-            print_r($e);exit;
+            // print_r($e);exit;
             //File::deleteDirectory($path);
             return response()->json($e);          
         }
-
-       
-
         
     }
  

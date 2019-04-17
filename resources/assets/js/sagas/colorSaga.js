@@ -10,7 +10,7 @@ export function* ColorWatcher() {
     yield takeLatest(types.REQUEST_COLORS, ColorSaga)
 }
 function* ColorSaga(action) {
-    const response = yield call(api.getColors,action.pageNumber);
+    const response = yield call(api.getColors,action.pageNumber, action.sorted_column, action.order);
     const colors = response.data
     if (response.errors) {
         yield put({ type: types.REQUEST_COLORS_FAILED});
@@ -27,7 +27,10 @@ export function* submitColorsSaga() {
 function* callColorsSubmit(action) {
     yield put(startSubmit('PostColors'));
     const result =  yield call(api.addColors, action.values);
-    // const resp = result.data
+    const resp = result.data
+    const pageNumber= action.pageNumber
+    const sorted_column=action.sorted_column
+    const order= action.order
     let error = {};
     if (result.errors) {
         yield put({ type: types.REQUEST_COLORS_FAILED});
@@ -35,9 +38,8 @@ function* callColorsSubmit(action) {
         error = result.errors
     } else {
         // yield put({type: types.ADD_MAKES_SUCCESS, resp, message: result.statusText});
-        yield put({type: types.REQUEST_COLORS});
-        notify.show("Color Added Successfully!", "success", 5000);
-
+        yield put({type: types.REQUEST_COLORS, pageNumber, sorted_column, order});
+        notify.show(`${resp.color_desc} Color Added Successfully!`, "success", 5000);
     }
     yield put(stopSubmit('PostColors', error));
     yield put(reset('PostColors'));
@@ -53,7 +55,9 @@ function* callEditColor (action) {
     let error = {};
     const result =  yield call(api.updateColors, action.values.id, action.values);
     const resp = result.data;
-    const pageNumber = action.page
+    const pageNumber = action.pageNumber
+    const sorted_column=action.sorted_column
+    const order= action.order
     if (result.errors) {
         yield put({ type: types.REQUEST_COLORS_FAILED, errors: result.errors});
         notify.show(`Cannot Update ${resp.color_desc}!`,"error", 5000);
@@ -61,13 +65,12 @@ function* callEditColor (action) {
 
     } else {
         // yield put({type: types.UPDATE_MAKES_SUCCESS, resp, message: result.statusText});
-        yield put ({type: types.REQUEST_COLORS, pageNumber})
+        yield put ({type: types.REQUEST_COLORS, pageNumber, sorted_column, order})
         notify.show(`${resp.color_desc} Color Updated Successfully!`, "success", 5000);
 
     }
     yield put(stopSubmit('EditColors', error));
     yield put(reset('EditColors'));
-
 }
 
 // change status value
@@ -78,14 +81,16 @@ export function* toggleColorStatusSaga() {
 function* callColorToggleStatus(action) {
     const result =  yield call(api.updateColorsStatus, action.colorId, action.values);
     const resp = result.data;
-    const pageNumber = action.page
+    const pageNumber = action.pageNumber
+    const sorted_column=action.sorted_column
+    const order= action.order
     if (result.errors) {
         yield put({ type: types.REQUEST_COLORS_FAILED, errors: result.error});
         notify.show(`Cannot Change Status of ${resp.color_desc}!`,"error", 5000);
 
     } else {
         // yield put({type: types.MAKES_STATUS_SUCCESS, resp});
-        yield put ({type: types.REQUEST_COLORS, pageNumber})
+        yield put ({type: types.REQUEST_COLORS, pageNumber, sorted_column, order})
         notify.show(`Status of ${resp.color_desc} Updated!`, "success",5000);
     }
 }

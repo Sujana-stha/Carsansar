@@ -1,16 +1,16 @@
 import * as types from '../actions/action-types';
 
 
-export function requestEnginesizes(pageNumber) {
+export function requestEnginesizes(pageNumber,sorted_column, order) {
     return {
         type: types.REQUEST_ENGINESIZES,
-        pageNumber
+        pageNumber,sorted_column, order
     }
 }
-export function requestSubmitEnginesizes(values) {
+export function requestSubmitEnginesizes(values, pageNumber,sorted_column, order) {
     return {
         type: types.REQUEST_ENGINESIZES_SUBMIT,
-        values
+        values, pageNumber,sorted_column, order
     }
 }
 
@@ -47,10 +47,10 @@ export function deleteEnginesizesSuccess(enginesizeId) {
     }
 }
 
-export function requestUpdateEnginesizes( values, page) {
+export function requestUpdateEnginesizes( values, pageNumber,sorted_column, order) {
     return {
         type: types.REQUEST_ENGINESIZES_UPDATE,
-        values, page
+        values, pageNumber,sorted_column, order
     }
 }
 
@@ -62,11 +62,11 @@ export function updateEnginesizesSuccess(enginesizeId, values) {
     }
 }
 
-export function requestEnginesizesStatus (enginesizeId,values, page) {
+export function requestEnginesizesStatus (enginesizeId,values, pageNumber,sorted_column, order) {
     return {
         type: types.REQUEST_ENGINESIZES_STATUS,
         values,
-        enginesizeId, page 
+        enginesizeId, pageNumber,sorted_column, order 
     }
 }
 

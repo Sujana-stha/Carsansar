@@ -7,10 +7,10 @@ use App\Company;
 
 class CompaniesController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         // return Company::all();
-        $company = Company::with('createdBy:id,name')->orderby('id', 'desc')->paginate(3);
+        $company = Company::with('createdBy:id,name')->orderby($request->column, $request->order)->paginate(3);
         return $company;
     }
 

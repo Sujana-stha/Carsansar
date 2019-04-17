@@ -7,10 +7,9 @@ use App\Transmission;
 
 class TransmissionsController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        // return Transmission::all();
-        $transmission = Transmission::with('createdBy:id,name')->orderBy('id', 'desc')->paginate(3);
+        $transmission = Transmission::with('createdBy:id,name')->orderBy($request->column, $request->order)->paginate(3);
         return $transmission;
     }
 

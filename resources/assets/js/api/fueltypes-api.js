@@ -2,10 +2,10 @@
 import axios, {getHeaders} from './axiosInstance'
 
 //GET ALL FUELTYPES API
-export function getFueltypes(pageNumber) {
+export function getFueltypes(pageNumber, sorted_column, order) {
     const access_token = window.localStorage.getItem('access_token')
     const headers = getHeaders(access_token)
-    return axios.get(`/api/fueltypes?page=${pageNumber}`,{headers})
+    return axios.get(`/api/fueltypes?page=${pageNumber}&column=${sorted_column}&order=${order}`,{headers})
 }
 
 // ADD NEW FUELTYPES API

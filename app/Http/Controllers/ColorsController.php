@@ -7,10 +7,10 @@ use App\Color;
 
 class ColorsController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-
-        return Color::with('createdBy:id,name')->orderBy('id', 'desc')->paginate(3);
+        $color= Color::with('createdBy:id,name')->orderBy($request->column, $request->order)->paginate(3);
+        return $color;
     }
 
     public function getList()
@@ -26,15 +26,18 @@ class ColorsController extends Controller
  
     public function store(Request $request)
     {
-        $color = new Color([
-            'color_cd' => $request->get('color_cd'),
-            'color_desc' => $request->get('color_desc'),
-            'created_by' => 1
-        ]);
-        $color->save();
+        // $color = new Color([
+        //     'color_cd' => $request->get('color_cd'),
+        //     'color_desc' => $request->get('color_desc'),
+        //     'created_by' => 1
+        // ]);
+        // $color->save();
   
   
-        return response()->json('Color Added Successfully.', 201);
+        // return response()->json('Color Added Successfully.', 201);
+        $color = Color::create($request->all());
+ 
+        return response()->json($color, 201);
 
         //var_dump($request);exit;
         // $request->created_by=1;

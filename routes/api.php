@@ -165,6 +165,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
     Route::get('options/getList', 'OptionsController@getList');
     
+    Route::get('options/getDesc/{id}', 'OptionsController@getOptionDesc');
+
     Route::get('options/{option}', 'OptionsController@show');
     
     Route::post('options','OptionsController@store');

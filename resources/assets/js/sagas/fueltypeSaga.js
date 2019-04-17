@@ -10,7 +10,7 @@ export function* FueltypeWatcher() {
     yield takeLatest(types.REQUEST_FUELTYPES, FueltypeSaga)
 }
 function* FueltypeSaga(action) {
-    const response = yield call(api.getFueltypes, action.pageNumber);
+    const response = yield call(api.getFueltypes, action.pageNumber, action.sorted_column, action.order);
     const fueltypes = response.data
     
     if (response.errors) {
@@ -31,7 +31,9 @@ function* callFueltypeSubmit(action) {
     let error = {};
     const result =  yield call(api.addFueltypes, action.values);
     const resp = result.data;
-
+    const pageNumber= action.pageNumber
+    const sorted_column=action.sorted_column
+    const order= action.order
     if (result.errors) {
         yield put({ type: types.REQUEST_FUELTYPES_FAILED, errors: result.error});
         error = result.error;
@@ -39,8 +41,8 @@ function* callFueltypeSubmit(action) {
 
     } else {
         // yield put({type: types.ADD_FUELTYPES_SUCCESS, resp, message: result.statusText});
-        yield put({type: types.REQUEST_FUELTYPES})
-        notify.show("Fuel Types Added Successfully!", "success", 5000)
+        yield put({type: types.REQUEST_FUELTYPES, pageNumber, sorted_column, order})
+        notify.show(`${resp.fueltype_desc} Fuel Types Added Successfully!`, "success", 5000)
     }
     yield put(stopSubmit('PostFueltypes', error));
     yield put(reset('PostFueltypes'));
@@ -56,7 +58,9 @@ function* callEditFueltype (action) {
     let error = {};
     const result =  yield call(api.updateFueltype, action.values.id, action.values);
     const resp = result.data;
-    const pageNumber = action.page
+    const pageNumber = action.pageNumber
+    const sorted_column=action.sorted_column
+    const order= action.order
     if (result.errors) {
         yield put({ type: types.REQUEST_FUELTYPES_FAILED, errors: result.error});
         error = result.error;
@@ -64,7 +68,7 @@ function* callEditFueltype (action) {
 
     } else {
         // yield put({type: types.UPDATE_FUELTYPES_SUCCESS, resp, message: result.statusText});
-        yield put({type: types.REQUEST_FUELTYPES, pageNumber})
+        yield put({type: types.REQUEST_FUELTYPES, pageNumber, sorted_column, order})
         notify.show(`${resp.fueltype_desc} Updated Successfully!`, "success", 5000)
 
     }
@@ -80,7 +84,9 @@ export function* toggleFueltypeStatusSaga() {
 function* callToggleFueltypeStatus(action) {
     const result =  yield call(api.updateFueltypeStatus, action.fueltypeId, action.values);
     const resp = result.data;
-    const pageNumber = action.page
+    const pageNumber = action.pageNumber
+    const sorted_column=action.sorted_column
+    const order= action.order
     if (result.errors) {
         yield put({ type: types.REQUEST_FUELTYPES_FAILED, errors: result.error});
         error = result.error;
@@ -88,12 +94,10 @@ function* callToggleFueltypeStatus(action) {
 
     } else {
         // yield put({type: types.FUELTYPES_STATUS_SUCCESS, resp, message: result.statusText});
-        yield put({type: types.REQUEST_FUELTYPES, pageNumber})
+        yield put({type: types.REQUEST_FUELTYPES, pageNumber, sorted_column, order})
         notify.show(`Status of ${resp.fueltype_desc} Changed`, "success", 5000)
-
     }
 }
-
 
 // delete makes data from table
 export function* deleteFueltypeSaga() {
@@ -112,4 +116,3 @@ function* callDeleteFueltype(action) {
         notify.show("Fuel Type Deleted Successfully!", "error", 5000)
     }
 } 
-

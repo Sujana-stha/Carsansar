@@ -11,7 +11,7 @@ export function* BodyWatcher() {
     yield takeLatest(types.REQUEST_BODIES, callBodiesSaga)
 }
 function* callBodiesSaga(action) {
-    const result =  yield call(api.getBodies, action.pageNumber);
+    const result =  yield call(api.getBodies, action.pageNumber, action.sorted_column, action.order);
     const bodies = result.data
 
     if (result.errors) {
@@ -23,7 +23,6 @@ function* callBodiesSaga(action) {
     }
 }
 
-
 // Submit form data of makes
 export function* submitBodySaga() {
     yield takeLatest(types.REQUEST_BODIES_SUBMIT, callBodySubmit)
@@ -32,8 +31,10 @@ function* callBodySubmit(action) {
     yield put(startSubmit('PostBodies'));
     let error = {};
     const result =  yield call(api.addBodies, action.values);
-    // const resp = result.data
-
+    const resp = result.data
+    const pageNumber= action.pageNumber
+    const sorted_column=action.sorted_column
+    const order= action.order
     if (result.errors) {
         yield put({ type: types.REQUEST_BODIES_FAILED, errors: result.errors});
         error = result.error;
@@ -41,9 +42,8 @@ function* callBodySubmit(action) {
 
     } else {
         // yield put({type: types.ADD_BODIES_SUCCESS, resp, message: result.statusText});
-        yield put({type: types.REQUEST_BODIES})
-        notify.show("Body Added successfully!", "success", 5000)
-
+        yield put({type: types.REQUEST_BODIES, pageNumber, sorted_column, order})
+        notify.show(`${resp.body_desc} Body Added successfully!`, "success", 5000)
     }
     yield put(stopSubmit('PostBodies', error));
     yield put(reset('PostBodies'));
@@ -59,7 +59,9 @@ function* callEditBody (action) {
     let error = {};
     const result =  yield call(api.updateBodies, action.values.id, action.values);
     const resp = result.data;
-    const pageNumber = action.page
+    const pageNumber = action.pageNumber
+    const sorted_column=action.sorted_column
+    const order= action.order
     if (result.errors) {
         yield put({ type: types.REQUEST_BODIES_FAILED, errors: result.errors});
         error = result.error;
@@ -67,13 +69,12 @@ function* callEditBody (action) {
 
     } else {
         // yield put({type: types.UPDATE_BODIES_SUCCESS, resp, message: result.statusText});
-        yield put({type: types.REQUEST_BODIES, pageNumber})
-        notify.show("Body Updated successfully!", "success", 5000)
+        yield put({type: types.REQUEST_BODIES, pageNumber, sorted_column, order})
+        notify.show(`${resp.body_desc} Body Updated successfully!`, "success", 5000)
         
     }
     yield put(stopSubmit('EditBodies', error));
     yield put(reset('EditBodies'));
-
 }
 
 // change status value
@@ -84,7 +85,9 @@ export function* toggleBodyStatusSaga() {
 function* callToggleBodyStatus(action) {
     const result =  yield call(api.updateBodiesStatus, action.bodyId, action.values);
     const resp = result.data;
-    const pageNumber = action.page
+    const pageNumber = action.pageNumber
+    const sorted_column=action.sorted_column
+    const order= action.order
     if (result.errors) {
         yield put({ type: types.REQUEST_BODIES_FAILED, errors: result.error});
         error = result.error;
@@ -92,12 +95,10 @@ function* callToggleBodyStatus(action) {
 
     } else {
         // yield put({type: types.BODIES_STATUS_SUCCESS, resp, message: result.statusText});
-        yield put({type: types.REQUEST_BODIES, pageNumber})
-        notify.show("Status changed successfully!", "success", 5000)
+        yield put({type: types.REQUEST_BODIES, pageNumber, sorted_column, order})
+        notify.show(`Status of ${resp.body_desc} changed successfully!`, "success", 5000)
     }
-
 }
-
 
 // delete makes data from table
 export function* deleteBodySaga() {

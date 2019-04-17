@@ -10,7 +10,7 @@ export function* EnginesizeWatcher() {
     yield takeLatest(types.REQUEST_ENGINESIZES, EnginesizeSaga)
 }
 function* EnginesizeSaga(action) {
-    const response = yield call(api.getEnginesizes, action.pageNumber);
+    const response = yield call(api.getEnginesizes, action.pageNumber, action.sorted_column, action.order);
     const enginesizes = response.data
     yield put({type: types.GET_ENGINESIZES_SUCCESS, enginesizes});
     if (response.errors) {
@@ -31,15 +31,17 @@ function* callEnginesizeSubmit(action) {
     let error = {};
     const result =  yield call(api.addEnginesizes, action.values);
     const resp = result.data
-
+    const pageNumber= action.pageNumber
+    const sorted_column=action.sorted_column
+    const order= action.order
     if (result.errors) {
         yield put({ type: types.REQUEST_ENGINESIZES_FAILED, errors: result.error});
         error = result.error;
         notify.show("Cannot Add Engine!", "error", 5000)
     } else {
         // yield put({type: types.ADD_ENGINESIZES_SUCCESS, resp, message: result.statusText});
-        yield put({type: types.REQUEST_ENGINESIZES})
-        notify.show("Engine Added Successfully!", "success", 5000)
+        yield put({type: types.REQUEST_ENGINESIZES, pageNumber, sorted_column, order})
+        notify.show(`${resp.enginesize_desc} Engine Added Successfully!`, "success", 5000)
     }
     yield put(stopSubmit('PostEnginesizes', error));
     yield put(reset('PostEnginesizes'));
@@ -55,7 +57,9 @@ function* callEditEnginesize (action) {
     let error = {};
     const result =  yield call(api.updateEnginesizes, action.values.id, action.values);
     const resp = result.data;
-    const pageNumber = action.page
+    const pageNumber = action.pageNumber
+    const sorted_column=action.sorted_column
+    const order= action.order
     if (result.errors) {
         yield put({ type: types.REQUEST_ENGINESIZES_FAILED, errors: result.error});
         error = result.error;
@@ -63,8 +67,8 @@ function* callEditEnginesize (action) {
 
     } else {
         // yield put({type: types.UPDATE_ENGINESIZES_SUCCESS, resp, message: result.statusText});
-        yield put({type: types.REQUEST_ENGINESIZES, pageNumber})
-        notify.show("Engine Updated Successfully!", "success", 5000)
+        yield put({type: types.REQUEST_ENGINESIZES, pageNumber, sorted_column, order})
+        notify.show(`${resp.enginesize_desc} Engine Updated Successfully!`, "success", 5000)
     }
     yield put(stopSubmit('EditEnginesizes', error));
     yield put(reset('EditEnginesizes'));
@@ -78,7 +82,9 @@ export function* toggleEnginesizeStatusSaga() {
 function* callToggleEnginesizeStatus(action) {
     const result =  yield call(api.updateEnginesizesStatus, action.enginesizeId, action.values);
     const resp = result.data;
-    const pageNumber = action.page
+    const pageNumber = action.pageNumber
+    const sorted_column=action.sorted_column
+    const order= action.order
     if (result.errors) {
         yield put({ type: types.REQUEST_ENGINESIZES_FAILED, errors: result.error});
         error = result.error;
@@ -86,12 +92,10 @@ function* callToggleEnginesizeStatus(action) {
 
     } else {
         // yield put({type: types.ENGINESIZES_STATUS_SUCCESS, resp, message: result.statusText});
-        yield put({type: types.REQUEST_ENGINESIZES, pageNumber})
+        yield put({type: types.REQUEST_ENGINESIZES, pageNumber, sorted_column, order})
         notify.show(`Status of ${resp.enginesize_desc} Updated!`, "success", 3000)
     }
-
 }
-
 
 // delete Enginesize data from table
 export function* deleteEnginesizeSaga() {
@@ -110,4 +114,3 @@ function* callDeleteEnginesize(action) {
         notify.show("Engine Deleted Successfully!", "error", 5000)
     }
 } 
-

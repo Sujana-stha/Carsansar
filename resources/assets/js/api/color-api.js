@@ -2,10 +2,10 @@
 import axios, {getHeaders} from './axiosInstance'
 
 //GET ALL COLORS API
-export function getColors(pageNumber) {
+export function getColors(pageNumber,sorted_column, order) {
     const access_token = window.localStorage.getItem('access_token')
     const headers = getHeaders(access_token)
-    return axios.get(`/api/colors?page=${pageNumber}`,{headers})
+    return axios.get(`/api/colors?page=${pageNumber}&column=${sorted_column}&order=${order}`,{headers})
 }
 
 // ADD NEW COLORS API
