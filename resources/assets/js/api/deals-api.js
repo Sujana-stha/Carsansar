@@ -144,11 +144,24 @@ export function getVehicles() {
     })
 }
 
+// GET SINGLE DATA OF VEHICLES
+export function getSingleVehicles (vehicleId) {
+    const access_token = window.localStorage.getItem('access_token')
+    const headers = getHeaders(access_token)
+    return axios.get('/api/vehicles/'+vehicleId,{headers})
+    .catch(error=> {
+        console.log(error)
+        return {
+            errors: error
+        }
+    });
+}
+
 // POST VEHICLES API
 export function addVehicles(values) {
     const access_token = window.localStorage.getItem('access_token')
     const headers = getHeaders(access_token)
-    let images = values.files
+    let images = values.images
     var formData = new FormData();
     //Form Data
     formData.append('title', values.title);

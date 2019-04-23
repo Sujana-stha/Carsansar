@@ -5,6 +5,20 @@ import {  requestVehiclesUpdate} from '../../actions/deals-action'
 import { connect } from 'react-redux';
 
 class EditVehicleFormContainer extends Component {
+    constructor() {
+        super();
+        this.state = {
+            vehicleId : ''
+        }
+    }
+    componentDidMount() {
+		console.log('pr',this.props)
+        let vehicleId =  this.props.match.params.id
+        console.log('id', vehicleId); 
+        this.setState({
+            vehicleId: vehicleId
+        })    
+    }
     onSubmit(values) {
         this.props.requestSubmitVehicle(values);
     }
@@ -18,7 +32,7 @@ class EditVehicleFormContainer extends Component {
 					</div>
 				</div>
 				<h4 className="header2">Edit Vehicle</h4>
-                <EditVehicle onSubmit={this.onSubmit.bind(this)}/>
+                <EditVehicle onSubmit={this.onSubmit.bind(this)} vehicleId={this.state.vehicleId}/>
             </div>
         );
     }

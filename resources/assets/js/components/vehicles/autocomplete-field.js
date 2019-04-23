@@ -14,21 +14,14 @@ class AutocompleteField extends Component {
             placeholderText: 'Select one...'
         }
     }
-    // componentDidUpdate() {
-    //     console.log('pr', this.props);
-    //     const { itemList } = this.props
-    //     const optionList = Object.keys(itemList).map((item) => ({label:itemList[item], value: item }))
-    //     console.log('new',optionList)
-        
-    // }
+    
     optionsData(itemList) {
         console.log('itt',itemList)
         const optionList = Object.keys(itemList).map((item) => ({label:itemList[item], value: item }))
         console.log('new',optionList)
     }
-    handleChange(newValue, actionMeta) {
+    handleChange(newValue) {
         console.log(newValue);
-        console.log(`action: ${actionMeta.action}`);
         this.setState({ value: newValue });
         if(newValue) {
             this.props.input.onChange(newValue.value)
@@ -56,16 +49,16 @@ class AutocompleteField extends Component {
             }
         }, 8000);
         console.log('vaaaa', this.state.options);
-
     }   
     render() {
-        const { itemList } = this.props
-        
+        const { itemList, input } = this.props
+        console.log('pro-auto', this.props);
         return (
             <div className="col s12 wr-select-field">
                 <label>{this.props.label}</label>
                 <CreatableSelect
                 className="wr-select-box"
+                {...input}
                 isClearable
                 placeholder={this.state.placeholderText}
                 onFocus={() => {
@@ -87,7 +80,7 @@ class AutocompleteField extends Component {
                 onChange={this.handleChange.bind(this)}
                 onCreateOption={this.handleCreate.bind(this)}
                 options={this.state.options}
-                value={this.state.value}
+                defaultValue={input.value =="" ? this.state.value : input.value}
                 />
             </div>
         );

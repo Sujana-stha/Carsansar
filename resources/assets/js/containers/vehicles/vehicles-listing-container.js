@@ -81,11 +81,12 @@ class VehiclesListingContainer extends Component {
                                 <th>Transmission</th>
                                 <th>Fueltype</th>
                                 <th className="wr-vehicle-price">Warranty</th>
-                                <th>Option</th>
+                                <th className="wr-vehicles-date">Option</th>
                                 <th className="wr-vehicle-price">Body</th>
                                 <th>Manufacture Color</th>
                                 <th>Exterior Color</th>
                                 <th>Interior Color</th>
+                                <th className="wr-vehicles-date">Images</th>
                                 <th className="wr-vehicle-stock_number">Availability</th>
                                 <th >Added By</th>
                                 <th className="wr-vehicles-date">Date</th>

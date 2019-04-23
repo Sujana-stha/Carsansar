@@ -1,4 +1,4 @@
-import {takeLatest, call, put } from 'redux-saga/effects';
+import {takeLatest, call, put, all } from 'redux-saga/effects';
 import { startSubmit, stopSubmit, reset } from 'redux-form';
 import * as types from '../actions/action-types';
 import * as api from '../api/deals-api';
@@ -10,9 +10,23 @@ export function* vehiclesWatcher() {
     yield takeLatest(types.REQUEST_VEHICLES, callVehiclesSaga)
 }
 
+
 function* callVehiclesSaga() {
     const response = yield call(api.getVehicles);
-    const vehicles = response.data
+    const results = response.data
+    const options = yield all (results.map(result=> 
+        optionDesc(result.attribute.option_ids)
+    ))
+    const vehicles = results.filter(result=>{
+        const opt =  options.filter(option=> {
+            if(results.indexOf(result)===options.indexOf(option)) {
+                return Object.assign(result, {
+                    option_desc: option
+                })
+            }
+        })
+        return opt;
+    })
     console.log('vehicles', vehicles)
     if (response.errors) {
         yield put({ type: types.REQUEST_VEHICLES_FAILED, errors: response.error});
@@ -22,6 +36,13 @@ function* callVehiclesSaga() {
         yield put({type: types.GET_VEHICLES_SUCCESS, vehicles});
     }
 }
+
+function* optionDesc (optionId) {
+    console.log('optionId', optionId)
+    const optionRes = yield call(api.getOptionsDesc, optionId);
+    return optionRes.data;
+}
+
 
 // saga for add new vehicles
 export function* submitVehicleSaga() {

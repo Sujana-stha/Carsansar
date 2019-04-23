@@ -18642,6 +18642,14 @@ h4.wr-header2 {
   height: 1.5rem !important;
 }
 
+.wr-vehicles-image-thumbnail {
+  width: 50px;
+  height: 50px;
+  -o-object-fit: cover;
+     object-fit: cover;
+  margin-left: 4px;
+}
+
 @-webkit-keyframes stripes {
   from {
     background-position: 0 0;

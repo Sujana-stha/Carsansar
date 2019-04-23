@@ -37,9 +37,18 @@ class DealsController extends Controller
  
     public function show($id)
     {
-        return Deal::with('vehicleInfo',
+        return Deal::with('vehicleInfo.categoryId:id,category_desc',
+        'vehicleInfo.makeId:id,make_desc',
+        'vehicleInfo.modelId:id,model_desc',
+        'vehicleInfo.fueltypeId:id,fueltype_desc',
+        'vehicleInfo.driveId:id,drive_desc',
+        'vehicleInfo.enginesizeId:id,enginesize_desc',
+        'vehicleInfo.transmissionId:id,transmission_desc',
+        'vehicleInfo.mfgexteriorcolorId:id,color_cd,color_desc',
         'company',
-        'attribute',
+        'attribute.exteriorcolorId:id,color_cd,color_desc',
+        'attribute.interiorcolorId:id,color_cd,color_desc',
+        'attribute.bodyId:id,body_desc',
         'financing',
         'images',
         'createdBy:id,name')->find($id);        
@@ -165,7 +174,7 @@ class DealsController extends Controller
                     $image = new VehicleImage([]);
                     $image->d_id = $d_id;
                     $image->vi_id = $vi_id;
-                    $image->path = 'public/whrepo/'.$stock_number.'/'.$file[$i]->getClientOriginalName();
+                    $image->path = 'whrepo/'.$stock_number.'/'.$file[$i]->getClientOriginalName();
                     //if(count($imagemeta)>0){
                         if($imagemeta[$i]=='true'){
                             //echo $imagemeta[$i];exit;
