@@ -570,6 +570,5 @@ function validate(values) {
 
 export default reduxForm({
 	form: 'PostVehicles',
-	validate,
-	destroyOnUnmount: false,
+	validate
 })(InsertVehicle);

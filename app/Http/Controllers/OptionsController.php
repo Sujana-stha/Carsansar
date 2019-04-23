@@ -22,9 +22,24 @@ class OptionsController extends Controller
         return $option;
     }
     
-    public function getOptionDesc($id)
+    public function getOptionDesc($ids)
     {
-        $option = Option::where('status','1')->where('id',$id)->pluck('option_desc');
+        $arr_ids = array();
+        $option = "";
+        if($ids){
+            $arr_ids = explode(",",$ids);
+        }
+        
+        if(count($arr_ids)>0){
+            for($i=0;$i<count($arr_ids);$i++){
+                if($option == ""){
+                    $option = Option::where('status','1')->where('id',$arr_ids[$i])->value('option_desc'); 
+                }else{
+                    $option = $option . "," . Option::where('status','1')->where('id',$arr_ids[$i])->value('option_desc');
+                }
+            }
+            
+        }
         return $option;
     }
 

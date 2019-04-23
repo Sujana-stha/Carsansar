@@ -21,14 +21,12 @@ import RightSidebarNav from '../components/nav/right-sidebar-nav'
 import DashboardAnalytics from '../components/dashboard/dashboard-analytics'
 import UsersListing from '../components/users/users'
 import UserProfile from '../components/users/user-profile'
-import InsertVehicleAttribute from '../components/vehicles/insert-vehicle-attribute'
-import VehicleAttributes from '../components/vehicles/vehicle-attributes'
 import ImagesPreview from '../components/vehicles/imagePreview'
 
 //Containers
 import VehiclesListingContainer from '../containers/vehicles/vehicles-listing-container'
 import InsertVehicleContainer from '../containers/vehicles/insert-vehicle-containers'
-import EditVehicleContainer from '../containers/vehicles/edit-vehicle-container'
+import EditVehicleForm from '../components/vehicles/edit-vehicle-form';
 import InsertUserContainer from '../containers/users/insertUsers-containers'
 import ColorListContainer from '../containers/color/color-container'
 import MakesListContainer from '../containers/makes/makes-container'
@@ -84,9 +82,7 @@ class DashboardLayout extends Component {
                                     <Route exact path={`${match.path}`} component={DashboardAnalytics}/>
                                     <Route path={`${match.path}/vehicles`} component={VehiclesListingContainer}/>
                                     <Route path={`${match.path}/insert-vehicle`} component={InsertVehicleContainer}/>
-                                    <Route path={`${match.path}/edit-vehicle`} component={EditVehicleContainer}/>
-                                    <Route path={`${match.path}/vehicle-attributes`} component={VehicleAttributes}/>
-                                    <Route path={`${match.path}/insert-vehicle-attribute`} component={InsertVehicleAttribute}/>
+                                    <Route path={`${match.path}/edit-vehicle/:id`} component={EditVehicleForm}/>
                                     <Route path={`${match.path}/color`} component={ColorListContainer}/>
                                     <Route path={`${match.path}/users`} component={UsersListing}/>
                                     <Route path={`${match.path}/insert-user`} component={InsertUserContainer}/>

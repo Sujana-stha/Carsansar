@@ -78,16 +78,45 @@ class ImagesPreview extends Component {
     }
     render() {
         const { input } = this.props;
+        console.log('pro-image', this.props);
         return (
             <div className="wr-uploader col s12">
+                {input.value ? (
+                    <div className="wr-images">
+                        {input.value.map((image, index)=> 
+                            <div key={index} className="wr-image-list">
+                                <label>
+                                    {image.main_flag === "1" ? (
+                                        <input type="radio" className="with-gap"
+                                        defaultChecked
+                                        onChange = {this.handleCover.bind(this, image.path)}
+                                        name="file"
+                                        />   
+                                    ):(
+                                        <input type="radio" className="with-gap"
+                                        onChange = {this.handleCover.bind(this, image.path)}
+                                        name="file"
+                                        />
+                                    )}
+                                    <span>
+                                        <div className="overlay">
+                                            <button type="button" className="close"
+                                            onClick={this.removeDroppedFile.bind(this, image.path)}
+                                            >REMOVE</button>
+                                        </div>
+                                        <img src={`/storage/${image.path}`} alt=""/>
+                                    </span>
+                                </label>
+                            </div>
+                        )}
+                    </div>
+                ): null}
                 <div className="wr-dropzone-wrapper">
                     <DropZone
                         onDropAccepted={this.onDrop.bind(this)}
                         onDropRejected={this.onDropRejected.bind(this)}
                         className="drop-zone center-align"
                         accept="image/jpeg, image/png, image/gif, image/bmp"
-                        // onChange= {this.handleChange.bind(this)}
-                        // onChange={input.onChange(this.state.images)}
                     >
                         <i className="material-icons">cloud_upload</i><br/>
                         <span className="dropzone-text">Drag n Drop Images Here !</span>

@@ -17,12 +17,15 @@ class TransmissionsListContainer extends Component {
         super();
         this.state= {
             isEditing: false,
+            confirmText: null,
             sorted_column: 'id',
             order: 'desc'
         }
         this.handlePageChange = this.handlePageChange.bind(this)
         this.editTransmission = this.editTransmission.bind(this)
         this.toggleStatus = this.toggleStatus.bind(this)
+        this.deleteItem =  this.deleteItem.bind(this)
+        this.hideDiv =  this.hideDiv.bind(this)
     }
 
     componentDidMount() {
@@ -80,7 +83,16 @@ class TransmissionsListContainer extends Component {
         }
         this.props.requestTransmissionStatus(transmissionId, newTransmissionStatus, pageNumber, sorted_column, order)
     }
-
+    deleteItem(id){
+        console.log(id)
+        this.setState ({
+            confirmText: id
+        })
+    }
+    
+    hideDiv() {
+        this.setState({confirmText: null})
+    }
     sortByColumn(column) {
         const pageNumber = this.props.activePage
         if (column === this.state.sorted_column) {
@@ -95,7 +107,7 @@ class TransmissionsListContainer extends Component {
             })
         }
     }
-
+    
     render() {
         return (
             <div>
@@ -138,7 +150,7 @@ class TransmissionsListContainer extends Component {
                                 </tr>
                             </thead>
                             {this.props.transmissions.length ? (
-                                <TransmissionList transmissions= {this.props.transmissions} onEditTransmission = {this.editTransmission} deleteTransmission = {this.props.requestDeleteTransmission} transmissionStatus = {this.toggleStatus}/>
+                                <TransmissionList transmissions= {this.props.transmissions} onEditTransmission = {this.editTransmission} confirmText={this.state.confirmText} showConfirmBox={this.deleteItem} hideConfirmBox={this.hideDiv} deleteTransmission = {this.props.requestDeleteTransmission} transmissionStatus = {this.toggleStatus}/>
 
                             ) : (
                                 <tbody>
