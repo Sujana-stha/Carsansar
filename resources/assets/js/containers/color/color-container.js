@@ -17,13 +17,15 @@ class ColorListContainer extends Component {
         super();
         this.state= {
             isEditing: false,
+            confirmText: null,
             sorted_column: 'id',
             order: 'desc'
         }
         this.handlePageChange = this.handlePageChange.bind(this)
         this.editColors = this.editColors.bind(this)
         this.toggleStatus = this.toggleStatus.bind(this)
-
+        this.deleteItem =  this.deleteItem.bind(this)
+        this.hideDiv =  this.hideDiv.bind(this)
     }
 
     componentDidMount(){
@@ -79,9 +81,18 @@ class ColorListContainer extends Component {
         const newColorsStatus = {
             status: !status
         }
-        console.log('status', newColorsStatus)
         this.props.requestColorStatus(colorId, newColorsStatus, pageNumber, sorted_column, order)
     }
+    deleteItem(id){
+        this.setState ({
+            confirmText: id
+        })
+    }
+    
+    hideDiv() {
+        this.setState({confirmText: null})
+    }
+
     sortByColumn(column) {
         const pageNumber = this.props.activePage
         if (column === this.state.sorted_column) {
@@ -146,7 +157,15 @@ class ColorListContainer extends Component {
                         </thead>
                         {/* <ColorList colors={this.props.colors}/>    */}
                         {this.props.colors.length ? (
-                            <ColorList colors= {this.props.colors} onEditColor = {this.editColors} deleteColor = {this.props.requestDeleteColors} colorStatus = {this.toggleStatus}/>
+                            <ColorList 
+                                colors= {this.props.colors} 
+                                onEditColor = {this.editColors} 
+                                confirmText={this.state.confirmText} 
+                                showConfirmBox={this.deleteItem} 
+                                hideConfirmBox={this.hideDiv} 
+                                deleteColor = {this.props.requestDeleteColors} 
+                                colorStatus = {this.toggleStatus}
+                            />
 
                             ): (
                             <tbody>

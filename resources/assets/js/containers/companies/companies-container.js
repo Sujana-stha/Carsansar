@@ -17,12 +17,15 @@ class CompaniesListContainer extends Component {
         super();
         this.state= {
             isEditing: false,
+            confirmText: null,
             sorted_column: 'id',
             order: 'desc'
         }
         this.handlePageChange = this.handlePageChange.bind(this)
         this.editCompanies = this.editCompanies.bind(this)
         this.toggleStatus = this.toggleStatus.bind(this)
+        this.deleteItem =  this.deleteItem.bind(this)
+        this.hideDiv =  this.hideDiv.bind(this)
     }
     componentWillMount() {
         loadjs('/js/materialize-admin/vendors.min.js', function() {
@@ -90,6 +93,16 @@ class CompaniesListContainer extends Component {
             status: !status
         }
         this.props.requestCompaniesStatus(companyId, newCompanyStatus, pageNumber, sorted_column, order)
+    }
+
+    deleteItem(id){
+        this.setState ({
+            confirmText: id
+        })
+    }
+    
+    hideDiv() {
+        this.setState({confirmText: null})
     }
     sortByColumn(column) {
         const pageNumber = this.props.activePage
@@ -181,7 +194,15 @@ class CompaniesListContainer extends Component {
                                 </tr>
                             </thead>
                             {this.props.companies.length ? (
-                                <CompaniesList companies= {this.props.companies} onEditCompany = {this.editCompanies} deleteCompany = {this.props.requestDeleteCompanies} companyStatus = {this.toggleStatus}/>
+                                <CompaniesList 
+                                companies= {this.props.companies} 
+                                onEditCompany = {this.editCompanies} 
+                                confirmText={this.state.confirmText} 
+                                showConfirmBox={this.deleteItem} 
+                                hideConfirmBox={this.hideDiv}
+                                deleteCompany = {this.props.requestDeleteCompanies} 
+                                companyStatus = {this.toggleStatus}
+                                />
 
                             ) : (
                                 <tbody>

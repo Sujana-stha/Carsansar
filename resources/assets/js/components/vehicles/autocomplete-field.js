@@ -15,13 +15,7 @@ class AutocompleteField extends Component {
         }
     }
     
-    optionsData(itemList) {
-        console.log('itt',itemList)
-        const optionList = Object.keys(itemList).map((item) => ({label:itemList[item], value: item }))
-        console.log('new',optionList)
-    }
     handleChange(newValue) {
-        console.log(newValue);
         this.setState({ value: newValue });
         if(newValue) {
             this.props.input.onChange(newValue.value)
@@ -31,7 +25,6 @@ class AutocompleteField extends Component {
     }
     handleCreate(inputValue) {
         this.setState({ loading: true });
-        console.log('inn', inputValue);
         this.props.requestVehicleAttrCreate(inputValue, this.props.apiName)
         setTimeout(()=> {
             const{options} = this.state
@@ -48,11 +41,9 @@ class AutocompleteField extends Component {
                 this.props.input.onChange(null)
             }
         }, 8000);
-        console.log('vaaaa', this.state.options);
     }   
     render() {
         const { itemList, input } = this.props
-        console.log('pro-auto', this.props);
         return (
             <div className="col s12 wr-select-field">
                 <label>{this.props.label}</label>
@@ -68,7 +59,6 @@ class AutocompleteField extends Component {
                         options: optionsList,
                         placeholderText: 'Type new here...'
                     })
-                    console.log('op', this.state.options)
                 }}
                 onBlur={() => {
                     this.setState({

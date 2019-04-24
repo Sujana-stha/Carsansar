@@ -17,12 +17,15 @@ class OptionsListContainer extends Component {
         super();
         this.state= {
             isEditing: false,
+            confirmText: null,
             sorted_column: 'id',
             order: 'desc'
         }
         this.handlePageChange = this.handlePageChange.bind(this)
         this.editOptions = this.editOptions.bind(this)
         this.toggleStatus = this.toggleStatus.bind(this)
+        this.deleteItem =  this.deleteItem.bind(this)
+        this.hideDiv =  this.hideDiv.bind(this)
     }
 
     componentDidMount() {
@@ -80,6 +83,15 @@ class OptionsListContainer extends Component {
             status: !status
         }
         this.props.requestOptionsStatus(optionId, newOptionsStatus, pageNumber, sorted_column, order)
+    }
+    deleteItem(id){
+        this.setState ({
+            confirmText: id
+        })
+    }
+    
+    hideDiv() {
+        this.setState({confirmText: null})
     }
     sortByColumn(column) {
         const pageNumber = this.props.activePage
@@ -141,7 +153,15 @@ class OptionsListContainer extends Component {
                                 </tr>
                             </thead>
                             {this.props.options.length ? (
-                                <OptionsList options= {this.props.options} onEditOptions = {this.editOptions} deleteOption = {this.props.requestDeleteOptions} optionStatus = {this.toggleStatus}/>
+                                <OptionsList 
+                                options= {this.props.options} 
+                                onEditOptions = {this.editOptions} 
+                                confirmText={this.state.confirmText} 
+                                showConfirmBox={this.deleteItem} 
+                                hideConfirmBox={this.hideDiv} 
+                                deleteOption = {this.props.requestDeleteOptions} 
+                                optionStatus = {this.toggleStatus}
+                                />
 
                             ) : (
                                 <tbody>

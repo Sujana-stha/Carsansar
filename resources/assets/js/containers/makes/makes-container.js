@@ -15,12 +15,15 @@ class MakesListContainer extends Component {
         super();
         this.state= {
             isEditing: false,
+            confirmText: null,
             sorted_column: 'id',
             order: 'desc'
         }
         this.handlePageChange = this.handlePageChange.bind(this)
         this.editMakes = this.editMakes.bind(this)
         this.toggleStatus = this.toggleStatus.bind(this)
+        this.deleteItem =  this.deleteItem.bind(this)
+        this.hideDiv =  this.hideDiv.bind(this)
     }
 
     componentDidMount() {
@@ -78,6 +81,15 @@ class MakesListContainer extends Component {
         }
         this.props.requestMakesStatus(makeId, newMakesStatus, pageNumber, sorted_column, order)
     }
+    deleteItem(id){
+        this.setState ({
+            confirmText: id
+        })
+    }
+    
+    hideDiv() {
+        this.setState({confirmText: null})
+    }
     sortByColumn(column) {
         const pageNumber = this.props.activePage
         if (column === this.state.sorted_column) {
@@ -134,8 +146,15 @@ class MakesListContainer extends Component {
                                 </tr>
                             </thead>
                             {this.props.makes.length ? (
-                                <MakesList makes= {this.props.makes} onEdit = {this.editMakes} deleteMake = {this.props.requestDeleteMakes} makeStatus = {this.toggleStatus}/>
-
+                                <MakesList 
+                                makes= {this.props.makes} 
+                                onEdit = {this.editMakes} 
+                                confirmText={this.state.confirmText} 
+                                showConfirmBox={this.deleteItem} 
+                                hideConfirmBox={this.hideDiv}
+                                deleteMake = {this.props.requestDeleteMakes}
+                                makeStatus = {this.toggleStatus}
+                                />
                             ): (
                                 <tbody>
                                     <tr><td>No Results Found!</td></tr>

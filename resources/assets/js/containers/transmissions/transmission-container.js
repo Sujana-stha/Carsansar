@@ -83,8 +83,8 @@ class TransmissionsListContainer extends Component {
         }
         this.props.requestTransmissionStatus(transmissionId, newTransmissionStatus, pageNumber, sorted_column, order)
     }
+    
     deleteItem(id){
-        console.log(id)
         this.setState ({
             confirmText: id
         })
@@ -150,7 +150,15 @@ class TransmissionsListContainer extends Component {
                                 </tr>
                             </thead>
                             {this.props.transmissions.length ? (
-                                <TransmissionList transmissions= {this.props.transmissions} onEditTransmission = {this.editTransmission} confirmText={this.state.confirmText} showConfirmBox={this.deleteItem} hideConfirmBox={this.hideDiv} deleteTransmission = {this.props.requestDeleteTransmission} transmissionStatus = {this.toggleStatus}/>
+                                <TransmissionList 
+                                transmissions= {this.props.transmissions} 
+                                onEditTransmission = {this.editTransmission} 
+                                confirmText={this.state.confirmText} 
+                                showConfirmBox={this.deleteItem} 
+                                hideConfirmBox={this.hideDiv} 
+                                deleteTransmission = {this.props.requestDeleteTransmission} 
+                                transmissionStatus = {this.toggleStatus}
+                                />
 
                             ) : (
                                 <tbody>

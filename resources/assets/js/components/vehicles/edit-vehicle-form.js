@@ -27,12 +27,11 @@ class EditVehicles extends Component {
 			drives: {},
 			options: [],
 			optCategories: [],
+			showForm: false
         }
     }
     componentDidMount() {
-		console.log('props', this.props)
 		let vehicleId =  this.props.match.params.id
-		console.log('id', vehicleId);
 		api.getSingleVehicles(vehicleId).then((response)=> {
 			const data =  response.data;
 			const vehicles = {
@@ -96,7 +95,7 @@ class EditVehicles extends Component {
         return (
 			<div className="row">
 				<div className="input-field col s12">
-					<input  type={type} {...input}/>
+					<input id={input.name} type={type} {...input}/>
 					<label className="active" htmlFor={input.name}>{label}</label>
 					<div className="error">
 						{touched ? error: ''}
@@ -128,7 +127,17 @@ class EditVehicles extends Component {
                 </div>
             </div>
         )
-    }
+	}
+	renderCheckboxField({input, label, type, meta: {touched, error}}) {
+		return(
+			<div className="col s6">
+				<label>
+					<input type={type} className="filled-in" {...input} />
+					<span>{label}</span>
+				</label>
+			</div>
+		)
+	}
     renderOptionsList({input, options, optCategories, meta: {touched, error}}) {
 		return optCategories.map((optCategory, i)=> {
 			return (
@@ -147,7 +156,6 @@ class EditVehicles extends Component {
 									checked={input.value.indexOf(option.id) !== -1}
 									onChange={(event) => {
 										const checkedValues= [...input.value];
-										console.log('new', checkedValues)
 										if(event.target.checked) {
 											checkedValues.push(option.id);
 										} else {
@@ -165,7 +173,13 @@ class EditVehicles extends Component {
 			)
 		})
 	}
+	financeForm(e) {
+		this.setState({
+			showForm: e.target.checked
+		})
+	}
 	onSubmit(values) {
+		console.log('value', values)
 		this.props.requestVehiclesUpdate(values)
 	}
     render() {
@@ -199,13 +213,13 @@ class EditVehicles extends Component {
 							<div className="col s12 m12 l12">
 								<Tabs defaultTab="general" vertical>
 									<TabList>
-										<Tab onClick={tabId => { tabId.preventDefault()}} tabFor="general">General</Tab>
+									<Tab onClick={tabId => { tabId.preventDefault()}} tabFor="general">General</Tab>
 										<Tab onClick={tabId => { tabId.preventDefault()}} tabFor="vehicle-attributes">Vehicle Attributes</Tab>
 										<Tab onClick={tabId => { tabId.preventDefault()}} tabFor="features-options">Features and Options</Tab>
 										<Tab onClick={tabId => { tabId.preventDefault()}} tabFor="pricing">Pricing</Tab>
 										<Tab onClick={tabId => { tabId.preventDefault()}} tabFor="gallery">Gallery</Tab>
 										<Tab onClick={tabId => { tabId.preventDefault()}} tabFor="vehicle-location">Vehicle Location</Tab>
-										<Tab onClick={tabId => { tabId.preventDefault()}} tabFor="status">Statuses</Tab>
+										<Tab onClick={tabId => { tabId.preventDefault()}} tabFor="financing">Financing</Tab>
 										<Tab onClick={tabId => { tabId.preventDefault()}} tabFor="information">More Information</Tab>
 									</TabList>
 									<TabPanel tabId="general">
@@ -313,7 +327,13 @@ class EditVehicles extends Component {
 											apiName="transmissions"
 											component={AutocompleteField}
 											/>
-												
+											<Field
+											name="mfg_exterior_color_id"
+											label="Manufacture Exterior Color"
+											itemList={this.state.colors}
+											apiName="colors"
+											component={AutocompleteField}
+											/>
 											<Field
 											name="exterior_color_id"
 											label="Exterior Color"
@@ -394,7 +414,6 @@ class EditVehicles extends Component {
 												type="text"
 												component={this.renderInputField}
 												/>
-													
 											</div>
 												
 										</div>
@@ -439,16 +458,83 @@ class EditVehicles extends Component {
 											</div>
 										</div>
 									</TabPanel>
-									<TabPanel tabId="status">
+									<TabPanel tabId="financing">
 										<div className="row">
-											<div className="col s6">
-												<div className="switch"><label>Featured<input defaultChecked type="checkbox" /><span className="lever"></span>Active</label></div>
-											</div>
-																		
-											<div className="input-field col s6">
-												<div className="switch"><label>Sold Out<input defaultChecked type="checkbox" /><span className="lever"></span>Active</label></div>
+											<div className="col s12">
+												<h4>Finance</h4>
+												<Field name="financing_flag"
+												type="checkbox"
+												label="Financing"
+												component={this.renderCheckboxField}
+												onChange={(e)=> this.financeForm(e)}
+												/>
 											</div>
 										</div>
+										{this.state.showForm ? (
+										<div className="card">
+											<div className="card-content">
+												<h4 className="card-title">Finance Form</h4>
+												<div className="row">	
+													<div className="col s6">
+														<Field name="type"
+														label="Type"
+														type="text"
+														component={this.renderInputField}
+														/>
+													</div>
+													<div className="col s6">
+														<Field name="payment"
+														label="Payment"
+														type="text"
+														component={this.renderInputField}
+														/>
+													</div>
+													<div className="col s6">
+														<Field name="payment_type"
+														label="Payment Type"
+														type="text"
+														component={this.renderInputField}
+														/>
+													</div>
+													<div className="col s6">
+														<Field name="downpayment"
+														label="Down Payment"
+														type="text"
+														component={this.renderInputField}
+														/>
+													</div>
+													<div className="col s6">
+														<Field name="number_of_payment"
+														label="Number of Payment"
+														type="text"
+														component={this.renderInputField}
+														/>
+													</div>
+													<div className="col s6">
+														<Field name="source"
+														label="Source of Payment"
+														type="text"
+														component={this.renderInputField}
+														/>
+													</div>
+													<div className="col s6">
+														<Field name="odometer"
+														label="Odometer"
+														type="text"
+														component={this.renderInputField}
+														/>
+													</div>
+													<div className="col s6">
+														<Field name="description"
+														label="Description"
+														type="text"
+														component={this.renderInputField}
+														/>
+													</div>
+												</div>
+											</div>
+										</div>
+		  								): null }
 									</TabPanel>
 									<TabPanel tabId="information">
 										<div className="row">
@@ -488,7 +574,6 @@ class EditVehicles extends Component {
 
 function validate(values) {
 	const errors = {}
-	console.log('value', values);
 	if(!values.title) {
         errors.title = "This Field is empty"
     } else if (values.title.length > 100) {

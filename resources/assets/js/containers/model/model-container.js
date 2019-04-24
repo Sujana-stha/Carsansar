@@ -16,6 +16,7 @@ class ModelsListContainer extends Component {
         super();
         this.state= {
             isEditing: false,
+            confirmText: null,
             sorted_column: 'id',
             order: 'desc',
             current_page: 1
@@ -23,6 +24,8 @@ class ModelsListContainer extends Component {
         this.handlePageChange = this.handlePageChange.bind(this)
         this.editModels = this.editModels.bind(this)
         this.toggleStatus = this.toggleStatus.bind(this)
+        this.deleteItem =  this.deleteItem.bind(this)
+        this.hideDiv =  this.hideDiv.bind(this)
     }
     
     componentDidMount() {
@@ -83,6 +86,15 @@ class ModelsListContainer extends Component {
         }
         this.props.requestModelStatus(modelId, newModelStatus, pageNumber, sorted_column, order);
     }
+    deleteItem(id){
+        this.setState ({
+            confirmText: id
+        })
+    }
+    
+    hideDiv() {
+        this.setState({confirmText: null})
+    }
     sortByColumn(column) {
         if (column === this.state.sorted_column) {
            this.state.order === 'desc' ? this.setState({order: 'asc'}, ()=>{
@@ -137,8 +149,15 @@ class ModelsListContainer extends Component {
                                 </tr>
                             </thead>
                             {this.props.models.length ? (
-                                <ModelList models= {this.props.models} onEditModel = {this.editModels} deleteModel = {this.props.requestDeleteModel} modelStatus = {this.toggleStatus}/>
-
+                                <ModelList 
+                                models= {this.props.models} 
+                                onEditModel = {this.editModels} 
+                                confirmText={this.state.confirmText} 
+                                showConfirmBox={this.deleteItem} 
+                                hideConfirmBox={this.hideDiv} 
+                                deleteModel = {this.props.requestDeleteModel} 
+                                modelStatus = {this.toggleStatus}
+                                />
                             ) : (
                                 <tbody>
                                     <tr>

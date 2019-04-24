@@ -9,7 +9,7 @@ const VehiclesListing = (props) => {
                     <tr key={vehicle.id}>
                         <td>{vehicle.id}</td>
                         <td>{vehicle.title}</td>
-                        <td>{vehicle.vehicle_info === null ? '-': vehicle.vehicle_info.vin}</td>
+                        <td>{vehicle.vehicle_info.vin === null ? '-': vehicle.vehicle_info.vin}</td>
                         <td>{vehicle.stock_number}</td>
                         <td>{vehicle.price===null? '-': vehicle.price}</td>
                         <td>{vehicle.vehicle_status === null ? '-': vehicle.vehicle_status}</td>

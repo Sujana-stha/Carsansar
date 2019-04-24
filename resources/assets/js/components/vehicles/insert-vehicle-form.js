@@ -70,7 +70,7 @@ class InsertVehicle extends Component {
 	renderInputField({input, label, type, meta: {touched, error}}) {
         return (
 			<div className="input-field col s12">
-                <input  type={type} {...input}/>
+                <input id={input.name} type={type} {...input}/>
                 <label htmlFor={input.name}>{label}</label>
                 <div className="error">
                     {touched ? error: ''}

@@ -16,13 +16,15 @@ class BodiesListContainer extends Component {
         super();
         this.state= {
             isEditing: false,
+            confirmText: null,
             sorted_column: 'id',
             order: 'desc',
-            current_page: 1
         }
         this.handlePageChange = this.handlePageChange.bind(this)
         this.editBodies = this.editBodies.bind(this)
         this.toggleStatus = this.toggleStatus.bind(this)
+        this.deleteItem =  this.deleteItem.bind(this)
+        this.hideDiv =  this.hideDiv.bind(this)
     }
 
     componentDidMount() {
@@ -81,6 +83,15 @@ class BodiesListContainer extends Component {
         }
         this.props.requestBodiesStatus(bodyId, newBodyStatus, pageNumber, sorted_column, order)
     }
+    deleteItem(id){
+        this.setState ({
+            confirmText: id
+        })
+    }
+    
+    hideDiv() {
+        this.setState({confirmText: null})
+    }
     sortByColumn(column) {
         const pageNumber = this.props.activePage
         if (column === this.state.sorted_column) {
@@ -136,7 +147,15 @@ class BodiesListContainer extends Component {
                                 </tr>
                             </thead>
                             {this.props.bodies.length ? (
-                                <BodiesList bodies= {this.props.bodies} onEditBody = {this.editBodies} deleteBody = {this.props.requestDeleteBodies} bodyStatus = {this.toggleStatus}/>
+                                <BodiesList 
+                                    bodies= {this.props.bodies} 
+                                    onEditBody = {this.editBodies} 
+                                    confirmText={this.state.confirmText} 
+                                    showConfirmBox={this.deleteItem} 
+                                    hideConfirmBox={this.hideDiv} 
+                                    deleteBody = {this.props.requestDeleteBodies} 
+                                    bodyStatus = {this.toggleStatus}
+                                />
 
                             ) : (
                                 <tbody>

@@ -16,13 +16,15 @@ class OptionCategoryListContainer extends Component {
         super();
         this.state= {
             isEditing: false,
+            confirmText: null,
             sorted_column: 'id',
             order: 'desc'
         }
         // this.handlePageChange = this.handlePageChange.bind(this)
         this.editOptionCategory = this.editOptionCategory.bind(this)
         this.toggleStatus = this.toggleStatus.bind(this)
-
+        this.deleteItem =  this.deleteItem.bind(this)
+        this.hideDiv =  this.hideDiv.bind(this)
     }
 
     componentDidMount() {
@@ -68,7 +70,15 @@ class OptionCategoryListContainer extends Component {
         }
         this.props.requestOptionCategoriesStatus(optCatId, newOptCatStatus)
     }
+    deleteItem(id){
+        this.setState ({
+            confirmText: id
+        })
+    }
     
+    hideDiv() {
+        this.setState({confirmText: null})
+    }
     render() {
         return (
             <div>
@@ -98,8 +108,15 @@ class OptionCategoryListContainer extends Component {
                                 </tr>
                             </thead>
                             {this.props.optionCategories.length ? (
-                                <OptionCategoryList optionCategories= {this.props.optionCategories} onEditOptionCategory = {this.editOptionCategory} deleteOptionCategory = {this.props.requestDeleteOptionCategories} optionCategoryStatus={this.toggleStatus}/>
-
+                                <OptionCategoryList 
+                                optionCategories= {this.props.optionCategories} 
+                                onEditOptionCategory = {this.editOptionCategory} 
+                                confirmText={this.state.confirmText} 
+                                showConfirmBox={this.deleteItem} 
+                                hideConfirmBox={this.hideDiv} 
+                                deleteOptionCategory = {this.props.requestDeleteOptionCategories} 
+                                optionCategoryStatus={this.toggleStatus}
+                                />
                             ) : (
                                 <tbody>
                                     <tr>
@@ -119,8 +136,7 @@ class OptionCategoryListContainer extends Component {
 function mapStateToProps(store) {
     return {
         optionCategories: store.OptCatState.optionCategories,
-        fetching: store.OptCatState.fetching,
-        
+        fetching: store.OptCatState.fetching
     }
 }
 
