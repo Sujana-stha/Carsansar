@@ -8,7 +8,7 @@ const TransmissionList = (props) => {
                     return (
                         <tr key={transmission.id} className={`row-${transmission.id}`}>
                             <td>{transmission.id}</td>
-                            <td>{transmission.transmission_desc}</td>
+                            <td>{transmission.transmission_desc == null ? '-': transmission.transmission_desc}</td>
                             <td>{transmission.created_by.name}</td>
                             <td className="action">
                                 <a href="javascript:void(0);" onClick={props.onEditTransmission.bind(null, transmission.id)} className="tooltipped" data-position="top" data-delay="50" data-tooltip="Edit"><i className="material-icons">edit</i></a>

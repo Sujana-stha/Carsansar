@@ -78,7 +78,6 @@ class ImagesPreview extends Component {
     }
     render() {
         const { input } = this.props;
-        console.log('pro-image', this.props);
         return (
             <div className="wr-uploader col s12">
                 {input.value ? (

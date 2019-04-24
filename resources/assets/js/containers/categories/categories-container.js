@@ -16,12 +16,15 @@ class CategoriesListContainer extends Component {
         super();
         this.state= {
             isEditing: false,
+            confirmText: null,
             sorted_column: 'id',
             order: 'desc'
         }
         this.handlePageChange = this.handlePageChange.bind(this)
         this.editCategories = this.editCategories.bind(this)
         this.toggleStatus = this.toggleStatus.bind(this)
+        this.deleteItem =  this.deleteItem.bind(this)
+        this.hideDiv =  this.hideDiv.bind(this)
     }
     
     componentDidMount() {
@@ -79,6 +82,16 @@ class CategoriesListContainer extends Component {
         }
         this.props.requestCategoriesStatus(categoryId, newCategoriesStatus, pageNumber, sorted_column, order)
     }
+    deleteItem(id){
+        this.setState ({
+            confirmText: id
+        })
+    }
+    
+    hideDiv() {
+        this.setState({confirmText: null})
+    }
+
     sortByColumn(column) {
         const pageNumber = this.props.activePage
         if (column === this.state.sorted_column) {
@@ -100,7 +113,9 @@ class CategoriesListContainer extends Component {
                 <div className="row">
                     <div className="col s12 m3 l3 mt-3">
                         {this.state.isEditing ? (
-                            <EditCategory onSubmit = {this.submitEditCategory.bind(this)} editId = {this.state.isEditing} />
+                            <EditCategory 
+                            onSubmit = {this.submitEditCategory.bind(this)} 
+                            editId = {this.state.isEditing} />
                         ): (
                             <CategoryForm onSubmit = { this.submitCategory.bind(this) }/>
                         )}
@@ -135,7 +150,15 @@ class CategoriesListContainer extends Component {
                                 </tr>
                             </thead>
                             {this.props.categories.length ? (
-                                <CategoriesList categories= {this.props.categories} onEditCategory = {this.editCategories} deleteCategory = {this.props.requestDeleteCategories} categoryStatus = {this.toggleStatus}/>
+                                <CategoriesList 
+                                    categories= {this.props.categories} 
+                                    onEditCategory = {this.editCategories} 
+                                    confirmText={this.state.confirmText} 
+                                    showConfirmBox={this.deleteItem} 
+                                    hideConfirmBox={this.hideDiv} 
+                                    deleteCategory = {this.props.requestDeleteCategories} 
+                                    categoryStatus = {this.toggleStatus}
+                                />
 
                             ) : (
                                 <tbody>

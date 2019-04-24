@@ -17,12 +17,15 @@ class FueltypesListContainer extends Component {
         super();
         this.state= {
             isEditing: false,
+            confirmText: null,
             sorted_column: 'id',
             order: 'desc'
         }
         this.handlePageChange = this.handlePageChange.bind(this)
         this.editFueltype = this.editFueltype.bind(this)
         this.toggleStatus = this.toggleStatus.bind(this)
+        this.deleteItem =  this.deleteItem.bind(this)
+        this.hideDiv =  this.hideDiv.bind(this)
     }
 
     componentDidMount() {
@@ -80,7 +83,15 @@ class FueltypesListContainer extends Component {
         }
         this.props.requestFueltypesStatus(fueltypeId, newFueltypeStatus, pageNumber, sorted_column, order)
     }
+    deleteItem(id){
+        this.setState ({
+            confirmText: id
+        })
+    }
     
+    hideDiv() {
+        this.setState({confirmText: null})
+    }
     sortByColumn(column) {
         const pageNumber = this.props.activePage
         if (column === this.state.sorted_column) {
@@ -137,7 +148,15 @@ class FueltypesListContainer extends Component {
                                 </tr>
                             </thead>
                             {this.props.fueltypes.length ? (
-                                <FueltypesList fueltypes= {this.props.fueltypes} onEditFueltype = {this.editFueltype} deleteFueltype = {this.props.requestDeleteFueltypes} fueltypeStatus = {this.toggleStatus}/>
+                                <FueltypesList 
+                                fueltypes= {this.props.fueltypes} 
+                                onEditFueltype = {this.editFueltype} 
+                                confirmText={this.state.confirmText} 
+                                showConfirmBox={this.deleteItem} 
+                                hideConfirmBox={this.hideDiv} 
+                                deleteFueltype = {this.props.requestDeleteFueltypes} 
+                                fueltypeStatus = {this.toggleStatus}
+                                />
 
                             ) : (
                                 <tbody>
