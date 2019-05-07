@@ -58,7 +58,7 @@ class EditOption extends Component {
                                 })}
                             </Field>
                         </div>
-                        <div className="row">
+                        <div className="row mt-10">
 								<div className="col s12">
 									<button className="btn cyan waves-effect waves-light" type="submit" name="action">Update
 										<i className="material-icons right">send</i>
@@ -76,10 +76,12 @@ function validate(values) {
     const errors = {}
 
     if(!values.option_desc) {
-        errors.option_desc = "The Field is empty"
+        errors.option_desc = "This field is empty."
+    } else if (values.option_desc.length > 30) {
+        errors.option_desc = "Must be 30 character or less!"
     }
     if(!values.oc_id) {
-        errors.oc_id = "The Field is empty"
+        errors.oc_id = "This field is empty."
     }
     return errors;
 }

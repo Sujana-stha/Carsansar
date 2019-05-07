@@ -4,11 +4,11 @@ const BodiesList =(props)=> {
     return (
         <tbody>
             {
-                props.bodies.map((body) => {
+                props.bodies.map((body, index) => {
                     return (
                         <tr key={body.id} className={`row-${body.id}`}>
                                         
-                            <td>{body.id}</td>
+                            <td>{((props.activePage-1)*props.itemsCountPerPage)+(index+1)}</td>
                             <td>{body.body_desc== null ? '-': body.body_desc}</td>
                             <td>{body.created_by.name}</td>
                             <td className="action">
@@ -23,14 +23,14 @@ const BodiesList =(props)=> {
                             </td>
                             <td>
                                 <div className="switch">
-                                    <label>Inactive
+                                    <label>
                                         {body.status== 1 ? (
                                             <input onClick = {()=> props.bodyStatus(body.id, body.status) } defaultChecked type="checkbox" value={body.status}/>
 
                                         ):
                                             <input onClick = {()=> props.bodyStatus(body.id, body.status) }  type="checkbox" value={body.status}/>
                                         }
-                                        <span className="lever"></span>Active
+                                        <span className="lever"></span>
                                     </label>
                                 </div>
                             </td>

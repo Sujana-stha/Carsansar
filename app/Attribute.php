@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Attribute extends Model
 {
-    protected $fillable = ['d_id','vi_id','option_ids','exterior_color_id','interior_color_id','doors','passenger','body_id','created_by'];
+    protected $fillable = ['d_id','vi_id','option_ids','exterior_color_id','interior_color_id','doors','passenger','fuel_economy','mileage','city_mpg','highway_mpg','body_id','created_by'];
 
     public function exteriorcolorId()
     {

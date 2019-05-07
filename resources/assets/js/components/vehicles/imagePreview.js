@@ -7,10 +7,10 @@ class ImagesPreview extends Component {
         super(props);
         this.state = {
             images: [],
-            checked: true
+            checked: true,
         }
     }
-
+    
     onDrop(images){
         console.log('tss', images)
         
@@ -57,6 +57,7 @@ class ImagesPreview extends Component {
         this.props.input.onChange(images)
     }
     handleCover(preview, e=null) {
+
         const newImages = this.state.images.filter(image => {
             if(image.preview === preview) {
                 return Object.assign(image, {
@@ -77,39 +78,9 @@ class ImagesPreview extends Component {
         this.props.input.onChange(newImages)
     }
     render() {
-        const { input } = this.props;
+        
         return (
             <div className="wr-uploader col s12">
-                {input.value ? (
-                    <div className="wr-images">
-                        {input.value.map((image, index)=> 
-                            <div key={index} className="wr-image-list">
-                                <label>
-                                    {image.main_flag === "1" ? (
-                                        <input type="radio" className="with-gap"
-                                        defaultChecked
-                                        onChange = {this.handleCover.bind(this, image.path)}
-                                        name="file"
-                                        />   
-                                    ):(
-                                        <input type="radio" className="with-gap"
-                                        onChange = {this.handleCover.bind(this, image.path)}
-                                        name="file"
-                                        />
-                                    )}
-                                    <span>
-                                        <div className="overlay">
-                                            <button type="button" className="close"
-                                            onClick={this.removeDroppedFile.bind(this, image.path)}
-                                            >REMOVE</button>
-                                        </div>
-                                        <img src={`/storage/${image.path}`} alt=""/>
-                                    </span>
-                                </label>
-                            </div>
-                        )}
-                    </div>
-                ): null}
                 <div className="wr-dropzone-wrapper">
                     <DropZone
                         onDropAccepted={this.onDrop.bind(this)}

@@ -39,10 +39,14 @@ class OptionsListContainer extends Component {
 
     // submit function for new data
     submitOption(values) {
+        let formValues = {
+            option_desc: values.option_desc.toLowerCase(),
+            oc_id: values.oc_id
+        } 
         const pageNumber = this.props.activePage;
         let sorted_column = this.state.sorted_column
         let order = this.state.order
-        this.props.requestSubmitOptions(values, pageNumber, sorted_column, order); 
+        this.props.requestSubmitOptions(formValues, pageNumber, sorted_column, order); 
     }
 
     // submit function to update data
@@ -111,7 +115,7 @@ class OptionsListContainer extends Component {
         return (
             <div>
                 <div className="row">
-                    <div className="col s12 m3 l3 mt-3">
+                    <div className="col s12 m4 l4 mt-3">
                         {this.state.isEditing ? (
                             <EditOptions onSubmit = {this.submitEditOption.bind(this)} editId = {this.state.isEditing} optionLists = {this.props.optionCategories}/>
                         ): (
@@ -119,20 +123,16 @@ class OptionsListContainer extends Component {
                         )}
                        
                     </div>
-                    <div className="col s12 m9 l9">
+                    <div className="col s12 m8 l8">
                         {this.props.fetching ? (
                             <Loading/>
                         ): (
                             <div className="wr-not-loading"></div>
                         )}
-                        <table>
+                        <table className="wr-master-table">
                             <thead>
                                 <tr>
-                                    <th onClick={()=>this.sortByColumn('id')}>S.N
-                                        {this.state.order==='desc'?
-                                            <i className="material-icons wr-sorting-icon">arrow_drop_down</i>
-                                        :<i className="material-icons wr-sorting-icon">arrow_drop_up</i>}
-                                    </th>
+                                    <th>S.N</th>
                                     <th onClick={()=>this.sortByColumn('option_desc')}>Title
                                         {this.state.order==='desc'?
                                             <i className="material-icons wr-sorting-icon">arrow_drop_down</i>
@@ -161,6 +161,8 @@ class OptionsListContainer extends Component {
                                 hideConfirmBox={this.hideDiv} 
                                 deleteOption = {this.props.requestDeleteOptions} 
                                 optionStatus = {this.toggleStatus}
+                                activePage={this.props.activePage}
+                                itemsCountPerPage={this.props.itemsCountPerPage}
                                 />
 
                             ) : (

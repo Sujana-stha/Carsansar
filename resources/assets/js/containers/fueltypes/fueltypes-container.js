@@ -38,10 +38,13 @@ class FueltypesListContainer extends Component {
 
     // submit function for new data
     submitFueltype(values) {
+        let formValues = {
+            fueltype_desc: values.fueltype_desc.toLowerCase()
+        }
         const pageNumber = this.props.activePage;
         let sorted_column = this.state.sorted_column
         let order = this.state.order
-        this.props.requestSubmitFueltypes(values, pageNumber,sorted_column, order);
+        this.props.requestSubmitFueltypes(formValues, pageNumber,sorted_column, order);
     }
 
     // submit function to update data
@@ -125,14 +128,10 @@ class FueltypesListContainer extends Component {
                         ): (
                             <div className="wr-not-loading"></div>
                         )}
-                        <table>
+                        <table className="wr-master-table">
                             <thead>
                                 <tr>
-                                    <th onClick={()=>this.sortByColumn('id')}>S.N
-                                        {this.state.order==='desc'?
-                                            <i className="material-icons wr-sorting-icon">arrow_drop_down</i>
-                                        :<i className="material-icons wr-sorting-icon">arrow_drop_up</i>}
-                                    </th>
+                                    <th>S.N</th>
                                     <th onClick={()=>this.sortByColumn('fueltype_desc')}>Title
                                         {this.state.order==='desc'?
                                             <i className="material-icons wr-sorting-icon">arrow_drop_down</i>
@@ -156,6 +155,8 @@ class FueltypesListContainer extends Component {
                                 hideConfirmBox={this.hideDiv} 
                                 deleteFueltype = {this.props.requestDeleteFueltypes} 
                                 fueltypeStatus = {this.toggleStatus}
+                                activePage={this.props.activePage}
+                                itemsCountPerPage={this.props.itemsCountPerPage}
                                 />
 
                             ) : (

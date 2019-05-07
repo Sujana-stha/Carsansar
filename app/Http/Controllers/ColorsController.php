@@ -26,24 +26,28 @@ class ColorsController extends Controller
  
     public function store(Request $request)
     {
-        // $color = new Color([
-        //     'color_cd' => $request->get('color_cd'),
-        //     'color_desc' => $request->get('color_desc'),
-        //     'created_by' => 1
-        // ]);
-        // $color->save();
-  
-  
-        // return response()->json('Color Added Successfully.', 201);
-        $color = Color::create($request->all());
+        $errormsg = "";
+        $result = false;
+        $errorcode="";
+        try{
+            if($request->get('color_desc')!=null){
+                $color = Color::create($request->all());
+                $result = true;
+            }else{
+                $result = false;
+                $errormsg = "Color Description cannot be null";
+            }
+            
+        }catch(\Exception $exception)
+        {
+            //dd($exception);exit;
+            $errormsg = $exception->getMessage();
+            $errorcode = $exception->getCode();
+        }
+        return response()->json(['success'=>$result,'errormsg'=>$errormsg,'errorcode'=>$errorcode]);
+        
  
-        return response()->json($color, 201);
-
-        //var_dump($request);exit;
-        // $request->created_by=1;
-        // $color = Color::create($request->all());
- 
-        // return response()->json($color, 201);
+        //return response()->json($enginesize, 201);
     }
  
     public function update(Request $request, Color $color)

@@ -27,9 +27,28 @@ class VehicleModelsController extends Controller
  
     public function store(Request $request)
     {
-        $model = VehicleModel::create($request->all());
+        $errormsg = "";
+        $result = false;
+        $errorcode="";
+        try{
+            if($request->get('model_desc')!=null){
+                $model = VehicleModel::create($request->all());
+                $result = true;
+            }else{
+                $result = false;
+                $errormsg = "Model Description cannot be null";
+            }
+            
+        }catch(\Exception $exception)
+        {
+            //dd($exception);exit;
+            $errormsg = $exception->getMessage();
+            $errorcode = $exception->getCode();
+        }
+        return response()->json(['success'=>$result,'errormsg'=>$errormsg,'errorcode'=>$errorcode]);
+        
  
-        return response()->json($model, 201);
+        //return response()->json($enginesize, 201);
     }
  
     public function update(Request $request, VehicleModel $model)

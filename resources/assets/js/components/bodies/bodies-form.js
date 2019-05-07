@@ -46,9 +46,9 @@ const BodyForm = props => {
 const validate = (values) => {
     const errors = {}
     if(!values.body_desc) {
-        errors.body_desc = "The Field is empty"
+        errors.body_desc = "This field is empty"
     } else if(values.body_desc.length > 30) {
-        errors.body_desc = "Must be 30 character or Less!"
+        errors.body_desc = "Must be 30 character or less!"
     }
     return errors;
 }

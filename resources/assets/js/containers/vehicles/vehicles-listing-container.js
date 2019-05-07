@@ -2,12 +2,13 @@ import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 import store from '../../store';
 import * as api from '../../api/deals-api';
-import { requestVehicles } from '../../actions/deals-action'
+import { requestVehicles, searchVehicleByTitle } from '../../actions/deals-action'
 import { connect } from 'react-redux';
 
 //COMPONENTS
 import VehicleLists from '../../components/vehicles/vehicles-listing';
-import VehicleSearchComponent from '../../components/vehicles/vehicles-search-form';
+// import VehicleSearchComponent from '../../components/vehicles/vehicles-search-form';
+import Loading from '../../components/loading';
 
 class VehiclesListingContainer extends Component {
     constructor(props) {
@@ -20,6 +21,8 @@ class VehiclesListingContainer extends Component {
     }
     componentDidMount() {
         this.props.requestVehicles();
+        console.log('veh', this.props.vehicles)
+
     }
     searchVehicle(event) {
         const keyword = event.target.value
@@ -31,70 +34,65 @@ class VehiclesListingContainer extends Component {
                     // vehicle.stock_number.toLowerCase().indexOf(keyword.toLowerCase()) > -1
                 )
             })
-            this.setState({
-                filtered: list,
-                keyword
-            })
+            console.log('list',list)
+            this.setState({keyword})
+            this.props.searchVehicleByTitle(list)
         } else {
-            this.setState({
-                filtered: this.props.vehicles,
-                keyword
-            })
+            this.setState({keyword})
+            this.props.requestVehicles()
         }
     }
     render() {
-        console.log('veh', this.props.vehicles)
         return (
             <div>
                 <div className="row">
-                    {/* <div className="col s12 m4 mt-2 mb-2 left-align">
+                    <div className="col s12 m4 mt-4 mb-2 left-align">
                         <input value={this.state.keyword}
                         type="text"
                         placeholder="Search Title.."
-                        onChange={e=>this.searchVehicle(e)}
+                        className="wr-vehicles-search-input"
+                        onChange={e => this.searchVehicle(e)}
                         />
-                    </div> */}
-					<div className="col s12 m12 mt-2 mb-2 right-align">
+                    </div>
+					<div className="col s12 m8 mt-4 mb-2 right-align">
 						<NavLink to="/dashboard/insert-vehicle" className="btn waves-effect waves-light"><i className="material-icons left">add</i><span> Add Vehicle</span></NavLink>
 					</div>
                     
 				</div>
-                <div className="row">
+                {/* <div className="row">
                     <VehicleSearchComponent vehicles={this.props.vehicles}/>                        
-                </div>
+                </div> */}
+                {this.props.fetching ? (
+                    <Loading/>
+                ): (
+                    <div className="wr-not-loading"></div>
+                )}
                 <div className="wr-vehicles-table-wrapper">
                     <table className="bordered responsive-table">
                         <thead>
                             <tr>
-                                <th className="wr-vehicle-sn">S.N</th>
-                                <th >Title</th>
-                                <th className="wr-vehicle-price">VI</th>
-                                <th className="wr-vehicle-stock_number">Stock Number</th>
-                                <th className="wr-vehicle-price">Price</th>
-                                <th>Vehicle Status</th>
-                                <th>Category</th>
-                                <th className="wr-vehicle-stock_number">Make</th>
-                                <th className="wr-vehicle-stock_number">Model</th>
-                                <th className="wr-vehicle-price">Year</th>
-                                <th>Drive</th>
-                                <th>Engines</th>
-                                <th>Transmission</th>
-                                <th>Fueltype</th>
-                                <th className="wr-vehicle-price">Warranty</th>
-                                <th className="wr-vehicles-date">Option</th>
-                                <th className="wr-vehicle-price">Body</th>
-                                <th>Manufacture Color</th>
-                                <th>Exterior Color</th>
-                                <th>Interior Color</th>
-                                <th className="wr-vehicles-date">Images</th>
-                                <th className="wr-vehicle-stock_number">Availability</th>
-                                <th >Added By</th>
+                                <th>S.N</th>
+                                <th className="wr-vehicles-title">Title</th>
+                                <th>Stock #</th>
+                                <th>Price</th>
+                                <th>Condition</th>
+                                <th>Type</th>
+                                <th>Image</th>
+                                <th>Added By</th>
                                 <th className="wr-vehicles-date">Date</th>
-                                <th className="wr-vehicles-date">Status</th>
-                                <th className="wr-vehicle-price">Action</th>
+                                <th>Status</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
-                        <VehicleLists vehicles={this.props.vehicles}/>
+                        {this.props.vehicles.length ? (
+                            <VehicleLists vehicles={this.props.vehicles}/>
+                        ) : (
+                            <tbody>
+                                <tr>
+                                    <td>No Results Found !</td>
+                                </tr>
+                            </tbody>
+                        )}
                     </table>
                 </div>
             </div>
@@ -104,8 +102,9 @@ class VehiclesListingContainer extends Component {
 
 function mapStateToProps(store) {
     return {
-        vehicles: store.dealState.vehicleList
+        vehicles: store.dealState.vehicleList,
+        fetching: store.dealState.fetching
     }
 }
 
-export default connect(mapStateToProps, { requestVehicles })(VehiclesListingContainer);
+export default connect(mapStateToProps, { requestVehicles, searchVehicleByTitle })(VehiclesListingContainer);

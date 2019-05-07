@@ -27,9 +27,28 @@ class EnginesizesController extends Controller
  
     public function store(Request $request)
     {
-        $enginesize = Enginesize::create($request->all());
+        $errormsg = "";
+        $result = false;
+        $errorcode="";
+        try{
+            if($request->get('enginesize_desc')!=null){
+                $enginesize = Enginesize::create($request->all());
+                $result = true;
+            }else{
+                $result = false;
+                $errormsg = "Engine Size Description cannot be null";
+            }
+            
+        }catch(\Exception $exception)
+        {
+            //dd($exception);exit;
+            $errormsg = $exception->getMessage();
+            $errorcode = $exception->getCode();
+        }
+        return response()->json(['success'=>$result,'errormsg'=>$errormsg,'errorcode'=>$errorcode]);
+        
  
-        return response()->json($enginesize, 201);
+        //return response()->json($enginesize, 201);
     }
  
     public function update(Request $request, Enginesize $enginesize)

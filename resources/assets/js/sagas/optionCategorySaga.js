@@ -20,18 +20,21 @@ export function* submitOptCatSaga() {
 }
 function* callOptCatSubmit(action) {
     yield put(startSubmit('PostOptionCategory'));
-    let error = {};
+    let error ={}
     const result =  yield call(api.addOptionsCategories, action.values);
     const resp = result.data
 
-    if (result.errors) {
+    if ((result.errors && !resp.success)|| (result.errors || !resp.success)) {
         yield put({ type: types.REQUEST_OPT_CAT_FAILED, errors: result.error});
-        error = result.error;
-        notify.show("Cannot Add Option Categories!", "error", 5000)
+        if(resp.errorcode==23000) {
+            notify.show("Option Category Description already exists!","error", 5000);
+        }
+        error = result.errors || resp.errormsg
+        notify.show("Cannot create new option category!", "error", 5000)
     } else {
         // yield put({type: types.ADD_OPT_CAT_SUCCESS, resp, message: result.statusText});
         yield put({type: types.REQUEST_OPTION_CATEGORIES})
-        notify.show("Option Category Added Successfully!", "success", 5000)
+        notify.show("Created successfully!", "success", 5000)
     }
     yield put(stopSubmit('PostOptionCategory', error));
     yield put(reset('PostOptionCategory'));
@@ -52,11 +55,11 @@ function* callEditOptCat (action) {
     if (result.errors) {
         yield put({ type: types.REQUEST_OPT_CAT_FAILED, errors: result.error});
         error = result.error;
-        notify.show(`Cannot Update ${resp.optioncategory_desc}`, "error", 5000)
+        notify.show("Update failed!", "error", 5000)
     } else {
         // yield put({type: types.UPDATE_OPT_CAT_SUCCESS, resp, message: result.statusText});
         yield put({type: types.REQUEST_OPTION_CATEGORIES});
-        notify.show(`${resp.optioncategory_desc} Updated Successfully!`, "success", 5000)
+        notify.show("Updated successfully!", "success", 5000)
     }
     yield put(stopSubmit('EditOptionCategory', error));
     yield put(reset('EditOptionCategory'));
@@ -75,11 +78,11 @@ function* callToggleOptCatStatus(action) {
     if (result.errors) {
         yield put({ type: types.REQUEST_OPT_CAT_FAILED, errors: result.error});
         error = result.error;
-        notify.show(`Cannot Change Status of ${resp.optioncategory_desc}`, "error", 5000)
+        notify.show("Cannot update status !", "error", 5000)
     } else {
         // yield put({type: types.OPT_CAT_STATUS_SUCCESS, resp, message: result.statusText});
         yield put({type: types.REQUEST_OPTION_CATEGORIES})
-        notify.show(`Status of ${resp.optioncategory_desc} Updated!`, "success", 5000)
+        notify.show("Status updated successfully!", "success", 5000)
     }
 }
 
@@ -95,11 +98,11 @@ function* callDeleteOptCat(action) {
     if(result.errors) {
         yield put({ type: types.REQUEST_OPT_CAT_FAILED, errors: result.error});
         error = result.error;
-        notify.show("Cannot Delete Option Categories", "error", 5000)
+        notify.show("Delete failed!", "error", 5000)
     } else {
         // yield put(makeOptCatAction.deleteOptionCategoriesSuccess(action.optCatId, result.statusText));
         yield put({type: types.DELETE_OPT_CAT_SUCCESS, optCatId, message: result.statusText});
-        notify.show("Option Category Deleted Successfully", "error", 5000)
+        notify.show("Deleted successfully!", "error", 5000)
     }
 } 
 

@@ -60,9 +60,10 @@ function validate(values) {
     const errors = {}
 
     if(!values.optioncategory_desc) {
-        errors.optioncategory_desc = "The Field is empty"
+        errors.optioncategory_desc = "This field is empty."
+    } else if (values.optioncategory_desc.length > 40) {
+        errors.optioncategory_desc= "Must be 40 character or less!"
     }
-    
     return errors;
 }
 

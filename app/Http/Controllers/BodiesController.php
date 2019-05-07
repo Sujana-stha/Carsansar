@@ -26,12 +26,27 @@ class BodiesController extends Controller
  
     public function store(Request $request)
     {
-        // $this->validate($request, [
-        //     'title' => 'required|unique:bodies|max:255',        
-        // ]);
-        $body = Body::create($request->all());
+        $errormsg = "";
+        $result = false;
+        $errorcode="";
+        try{
+            if($request->get('body_desc')!=null){
+                $body = Body::create($request->all());
+                $result = true;
+            }else{
+                $result = false;
+                $errormsg = "Body Description cannot be null";
+            }
+            
+        }catch(\Exception $exception)
+        {
+            //dd($exception);exit;
+            $errormsg = $exception->getMessage();
+            $errorcode = $exception->getCode();
+        }
+        return response()->json(['success'=>$result,'errormsg'=>$errormsg,'errorcode'=>$errorcode]);
  
-        return response()->json($body, 201);
+        //return response()->json($enginesize, 201);
     }
  
     public function update(Request $request, Body $body)

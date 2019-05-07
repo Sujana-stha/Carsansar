@@ -4,10 +4,10 @@ import React from 'react';
 const OptionsList = (props) => {
     return (
         <tbody>
-            {props.options.map((option) => {
+            {props.options.map((option, index) => {
                 return (
                     <tr key={option.id} className={`row-${option.id}`}>
-                        <td>{option.id}</td>
+                        <td>{((props.activePage-1)*props.itemsCountPerPage)+(index+1)}</td>
                         <td>{option.option_desc== null ? '-': option.option_desc}</td>
                         <td>{option.oc_id == null ? '-': option.oc_id.optioncategory_desc}</td>
                         <td>{option.created_by.name}</td>
@@ -23,14 +23,14 @@ const OptionsList = (props) => {
                         </td>
                         <td>
                             <div className="switch">
-                                <label>Inactive
+                                <label>
                                     {option.status == 1 ? (
                                         <input onClick={() => props.optionStatus(option.id, option.status)} defaultChecked type="checkbox" value={option.status} />
 
                                     ) :
                                         <input onClick={() => props.optionStatus(option.id, option.status)} type="checkbox" value={option.status} />
                                     }
-                                    <span className="lever"></span>Active
+                                    <span className="lever"></span>
                                 </label>
                             </div>
                         </td>

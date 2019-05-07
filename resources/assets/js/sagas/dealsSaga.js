@@ -31,7 +31,7 @@ function* callVehiclesSaga() {
     if (response.errors) {
         yield put({ type: types.REQUEST_VEHICLES_FAILED, errors: response.error});
         error = response.error;
-        notify.show("Cannot Get all Vehicles", "error", 5000)
+        notify.show("Cannot get all vehicles", "error", 5000)
     } else {
         yield put({type: types.GET_VEHICLES_SUCCESS, vehicles});
     }
@@ -59,10 +59,10 @@ function* callVehicleSubmit(action) {
     if (result.errors) {
         yield put({ type: types.REQUEST_VEHICLES_FAILED, errors: result.error});
         error = result.error;
-        notify.show("Cannot Add Vehicles!", "error", 5000)
+        notify.show("Creation failed!", "error", 5000)
     } else {
         yield put({type: types.ADD_VEHICLES_SUCCESS, resp});
-        notify.show("Vehicle Added Successfully!", "success", 5000);
+        notify.show("Vehicle created successfully!", "success", 5000);
     }
     yield put(stopSubmit('PostVehicles', error));
     yield put(reset('PostVehicles'));
@@ -81,40 +81,18 @@ function* callVehicleUpdate(action) {
     const resp = result.data;
     if (result.errors) {
         yield put({ type: types.REQUEST_VEHICLES_FAILED, errors: result.errors});
-        notify.show(`Cannot Update ${resp.title}!`,"error", 5000);
+        notify.show(`Update failed!`,"error", 5000);
         error = result.errors
 
     } else {
         // yield put({type: types.UPDATE_MAKES_SUCCESS, resp, message: result.statusText});
         yield put ({type: types.REQUEST_VEHICLES})
-        notify.show(`${resp.title} Vehicle Updated Successfully!`, "success", 5000);
+        notify.show(`Updated successfully!`, "success", 5000);
 
     }
     yield put(stopSubmit('EditVehicles', error));
     yield put(reset('EditVehicles'));
     // yield put(push('/dashboard/vehicles'));
-}
-
-
-//saga for search vehicles by attr
-export function* SearchVehicleSaga() {
-    yield takeLatest(types.REQUEST_VEHICLES_ATTR_SEARCH, callVehiclesSearch);
-}
-
-function* callVehiclesSearch(action) {
-    yield put(startSubmit('VehicleSearchForm'));
-    let error = {}
-    try {
-        const resp = response.data
-        if(response.status === 200 ) {
-            yield put({type: types.VEHICLES_ATTR_SEARCH_SUCCESS, resp})
-        }
-    } 
-    catch (error) {
-        yield put({type: types.REQUEST_VEHICLES_FAILED})
-    }
-    yield put(stopSubmit('VehicleSearchForm', error));
-    yield put(reset('VehicleSearchForm'));
 }
 
 // saga for creating vehicles attr

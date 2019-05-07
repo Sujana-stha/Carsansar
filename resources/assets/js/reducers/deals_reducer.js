@@ -1,7 +1,6 @@
 import * as types from '../actions/action-types';
 
 const initialState = {
-    searchText: '',
     vehicleList: [],
     fetching: false,
     optionList: [],
@@ -11,20 +10,26 @@ const initialState = {
 
 const dropdownList =  function(state = initialState, action) {
     switch(action.type) {
+        //reducer to get vehicles
         case types.REQUEST_VEHICLES:
             return {...state, fetching: true}
         
         case types.GET_VEHICLES_SUCCESS:
-            console.log('acc', action)
             return Object.assign({}, state, {
-                vehicleList: action.vehicles
-            });
-        case types.ADD_VEHICLES_SUCCESS:
-            // console.log("action", action)
-            return Object.assign({}, state, {
-                vehicleList: [...state.vehicleList, action.resp]
+                vehicleList: action.vehicles,
+                fetching: false
             });
         
+        //reducer to add vehicles
+        case types.REQUEST_VEHICLES_SUBMIT:
+            return {...state, sending: true}
+        case types.ADD_VEHICLES_SUCCESS:
+            return Object.assign({}, state, {
+                vehicleList: [...state.vehicleList, action.resp],
+                sending: false
+            });
+        
+        //reducer to update vehicles
         case types.REQUEST_VEHICLES_UPDATE:
             return Object.assign({}, state, {
                 sending: true
@@ -42,13 +47,17 @@ const dropdownList =  function(state = initialState, action) {
                 sending: false
             };
 
-        case types.VEHICLES_ATTR_SEARCH_SUCCESS:
-            return Object.assign({}, state, {
-                vehicleList: [...state.vehicleList, action.resp]
-            })
+        // reducer to search vehicles by title
+        case types.SEARCH_VEHICLE_BY_TITLE:{
+            console.log('act=', action.values)
+            return {
+                ...state, 
+                vehicleList: action.values
+            }
+        }
 
+        //reducer to add vehicles attributes
         case types.ADD_VEHICLES_ATTR_SUCCESS:
-            console.log("actRed", action)
             var newOption = null
             if(action.apiName=="makes") {
                 newOption = new Object({label: action.resp.make_desc, value:action.resp.id})

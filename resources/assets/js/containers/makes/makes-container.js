@@ -36,10 +36,13 @@ class MakesListContainer extends Component {
 
     // submit function for new data
     submitMake(values) {
+        let formValues = {
+            make_desc : values.make_desc.toLowerCase()
+        }
         const pageNumber = this.props.activePage;
         let sorted_column = this.state.sorted_column
         let order = this.state.order
-        this.props.requestSubmitMake(values,pageNumber,sorted_column,order);
+        this.props.requestSubmitMake(formValues, pageNumber, sorted_column,order);
     }
 
     // submit function to update data
@@ -123,14 +126,10 @@ class MakesListContainer extends Component {
                         ): (
                             <div className="wr-not-loading"></div>
                         )}
-                        <table className="Highlight bordered responsive-table">
+                        <table className="Highlight bordered responsive-table wr-master-table">
                             <thead>
                                 <tr>
-                                    <th onClick={()=>this.sortByColumn('id')}>S.N 
-                                        {this.state.order==='desc'?
-                                            <i className="material-icons wr-sorting-icon">arrow_drop_down</i>
-                                        :<i className="material-icons wr-sorting-icon">arrow_drop_up</i>}
-                                    </th>
+                                    <th>S.N </th>
                                     <th onClick={()=>this.sortByColumn('make_desc')}>Title
                                         {this.state.order==='desc'?
                                             <i className="material-icons wr-sorting-icon">arrow_drop_down</i>
@@ -154,6 +153,8 @@ class MakesListContainer extends Component {
                                 hideConfirmBox={this.hideDiv}
                                 deleteMake = {this.props.requestDeleteMakes}
                                 makeStatus = {this.toggleStatus}
+                                activePage={this.props.activePage}
+                                itemsCountPerPage={this.props.itemsCountPerPage}
                                 />
                             ): (
                                 <tbody>

@@ -97,24 +97,24 @@ function validate(values) {
     } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
         errors.email = 'Invalid email address'
     } else if (values.email.length > 191) {
-        errors.email = "Must be 191 character or Less!"
+        errors.email = "Must be 191 character or less!"
     }
 
     if(!values.password) {
-        errors.password = 'You must have Password'
+        errors.password = 'You must havepPassword'
     } else if(values.password.length > 191) {
-        errors.password = "Must be 191 character or Less!"
+        errors.password = "Must be 191 character or less!"
     }
     if (!values.password_confirmation) {
-        errors.password_confirmation = "You must Confirm your password!"
+        errors.password_confirmation = "You must confirm your password!"
     } else if(values.password_confirmation != values.password) {
         errors.password_confirmation = "Password Mismatched!"
     }
     if(!values.role) {
-        errors.role = "This Field is Empty!"
+        errors.role = "This field is empty!"
     }
     if(!values.company_id) {
-        errors.company_id ="This Field is Empty!"
+        errors.company_id ="This field is empty!"
     }
     return errors;
 }

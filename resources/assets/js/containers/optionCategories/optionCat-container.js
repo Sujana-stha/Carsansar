@@ -34,7 +34,10 @@ class OptionCategoryListContainer extends Component {
 
     // submit function for new data
     submitOptionCategory(values) {
-        this.props.requestSubmitOptionCategories(values);
+        let formValues = {
+            optioncategory_desc: values.optioncategory_desc.toLowerCase()
+        }
+        this.props.requestSubmitOptionCategories(formValues);
         this.setState ({
             hide: true
         })
@@ -97,7 +100,7 @@ class OptionCategoryListContainer extends Component {
                         ): (
                             <div className="wr-not-loading"></div>
                         )}
-                        <table>
+                        <table className="wr-master-table">
                             <thead>
                                 <tr>
                                     <th>S.N</th>

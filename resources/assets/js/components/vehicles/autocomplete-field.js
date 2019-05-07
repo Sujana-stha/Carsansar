@@ -46,32 +46,34 @@ class AutocompleteField extends Component {
         const { itemList, input } = this.props
         return (
             <div className="col s12 wr-select-field">
-                <label>{this.props.label}</label>
-                <CreatableSelect
-                className="wr-select-box"
-                {...input}
-                isClearable
-                placeholder={this.state.placeholderText}
-                onFocus={() => {
-                    const option = Object.keys(itemList).map((item) => ({label:itemList[item], value: item }))
-                    const optionsList = [...option, this.props.newOptions]
-                    this.setState({
-                        options: optionsList,
-                        placeholderText: 'Type new here...'
-                    })
-                }}
-                onBlur={() => {
-                    this.setState({
-                        placeholderText: 'Select one...'
-                    })
-                }}
-                isDisabled={this.state.loading}
-                isLoading={this.state.loading}
-                onChange={this.handleChange.bind(this)}
-                onCreateOption={this.handleCreate.bind(this)}
-                options={this.state.options}
-                defaultValue={input.value =="" ? this.state.value : input.value}
-                />
+                <label className="col s12 m4">{this.props.label} :</label>
+                <div className="col s12 m8">
+                    <CreatableSelect
+                    className="wr-select-box"
+                    {...input}
+                    isClearable
+                    placeholder={this.state.placeholderText}
+                    onFocus={() => {
+                        const option = Object.keys(itemList).map((item) => ({label:itemList[item], value: item }))
+                        const optionsList = [...option, this.props.newOptions]
+                        this.setState({
+                            options: optionsList,
+                            placeholderText: 'Type new here...'
+                        })
+                    }}
+                    onBlur={() => {
+                        this.setState({
+                            placeholderText: 'Select one...'
+                        })
+                    }}
+                    isDisabled={this.state.loading}
+                    isLoading={this.state.loading}
+                    onChange={this.handleChange.bind(this)}
+                    onCreateOption={this.handleCreate.bind(this)}
+                    options={this.state.options}
+                    value={this.state.value ? this.state.value : input.value }
+                    /> 
+                </div> 
             </div>
         );
     }

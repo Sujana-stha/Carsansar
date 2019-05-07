@@ -15,12 +15,12 @@ function* addUserFlow(action) {
         const resp = response.data
         if(response.status === 200 ) {
             yield put({type: types.REGISTER_SUCCESS, resp})
-            notify.show("Users Added Successfully!","success", 5000)
+            notify.show("Users created successfully!","success", 5000)
         }
     } 
     catch (error) {
         yield put({type: types.REGISTER_ERROR})
-        notify.show("Cannot add Users!","error",5000)
+        notify.show("Cannot add user!","error",5000)
     }
     yield put(stopSubmit('RegisterForm'));
     yield put(reset('RegisterForm'));
@@ -39,6 +39,6 @@ function* getLoggedUserFlow() {
             yield put({type: types.GET_LOGGED_USER, resp})
         }
     } catch (error) {
-        notify.show("Cannot get User Details!","error",5000)
+        notify.show("Cannot get user details!","error",5000)
     }
 }

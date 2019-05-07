@@ -3,10 +3,10 @@ import React from 'react';
 const CategoriesList = (props) => {
     return (
         <tbody>
-            {props.categories.map((category) => {
+            {props.categories.map((category, index) => {
                 return (
                     <tr key={category.id} className={`row-${category.id}`}>
-                        <td>{category.id}</td>
+                        <td>{((props.activePage-1)*props.itemsCountPerPage)+(index+1)}</td>
                         <td>{category.category_desc == null ? '-': category.category_desc}</td>
                         <td>{category.created_by.name}</td>
                         <td className="action">
@@ -21,14 +21,14 @@ const CategoriesList = (props) => {
                         </td>
                         <td>
                             <div className="switch">
-                                <label>Inactive
+                                <label>
                                     {category.status== 1 ? (
                                         <input onClick = {()=> props.categoryStatus(category.id, category.status) } defaultChecked type="checkbox" value={category.status}/>
 
                                     ):
                                         <input onClick = {()=> props.categoryStatus(category.id, category.status) }  type="checkbox" value={category.status}/>
                                     }
-                                    <span className="lever"></span>Active
+                                    <span className="lever"></span>
                                 </label>
                             </div>
                         </td>

@@ -5,10 +5,10 @@ const EnginesizesList = (props) => {
     return (
         <tbody>
             {
-                props.enginesizes.map((enginesize) => {
+                props.enginesizes.map((enginesize, index) => {
                     return (
                         <tr key={enginesize.id} className={`row-${enginesize.id}`}>
-                            <td>{enginesize.id}</td>
+                            <td>{((props.activePage-1)*props.itemsCountPerPage)+(index+1)}</td>
                             <td>{enginesize.enginesize_desc == null ? '-': enginesize.enginesize_desc}</td>
                             <td>{enginesize.created_by.name}</td>
                             <td className="action">
@@ -23,14 +23,14 @@ const EnginesizesList = (props) => {
                             </td>
                             <td>
                                 <div className="switch">
-                                    <label>Inactive
+                                    <label>
                                         {enginesize.status == 1 ? (
                                             <input onClick={() => props.enginesizeStatus(enginesize.id, enginesize.status)} defaultChecked type="checkbox" value={enginesize.status} />
 
                                         ) :
                                             <input onClick={() => props.enginesizeStatus(enginesize.id, enginesize.status)} type="checkbox" value={enginesize.status} />
                                         }
-                                        <span className="lever"></span>Active
+                                        <span className="lever"></span>
                                     </label>
                                 </div>
                             </td>

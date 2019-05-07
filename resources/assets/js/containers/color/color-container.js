@@ -38,10 +38,14 @@ class ColorListContainer extends Component {
 
     // submit function for new data
     submitColor(values) {
+        let formValues = {
+            color_desc : values.color_desc.toLowerCase(),
+            color_cd: values.color_cd
+        }
         const pageNumber = this.props.activePage;
         let sorted_column = this.state.sorted_column
         let order = this.state.order
-        this.props.requestSubmitColor(values, pageNumber, sorted_column, order);
+        this.props.requestSubmitColor(formValues, pageNumber, sorted_column, order);
     }
 
     // submit function to update data
@@ -111,7 +115,6 @@ class ColorListContainer extends Component {
     render(){
         return(
             <div className="row"> 
-                
                 <div className="col s12 m3 l3 mt-3">
                     {this.state.isEditing ? (
                         <EditColor onSubmit = {this.submitEditColor.bind(this)} editId = {this.state.isEditing} />
@@ -127,19 +130,11 @@ class ColorListContainer extends Component {
                         <div className="wr-not-loading"></div>
                     )}
                         
-                    <table>
+                    <table className="wr-master-table">
                         <thead>
                             <tr>
-                                <th onClick={()=>this.sortByColumn('id')}>S.N
-                                    {this.state.order==='desc'?
-                                        <i className="material-icons wr-sorting-icon">arrow_drop_down</i>
-                                    :<i className="material-icons wr-sorting-icon">arrow_drop_up</i>}
-                                </th>
-                                <th onClick={()=>this.sortByColumn('color_cd')}>Hex Code
-                                    {this.state.order==='desc'?
-                                        <i className="material-icons wr-sorting-icon">arrow_drop_down</i>
-                                    :<i className="material-icons wr-sorting-icon">arrow_drop_up</i>}
-                                </th>
+                                <th>S.N</th>
+                                
                                 <th onClick={()=>this.sortByColumn('color_desc')}>Color Name
                                     {this.state.order==='desc'?
                                         <i className="material-icons wr-sorting-icon">arrow_drop_down</i>
@@ -165,6 +160,8 @@ class ColorListContainer extends Component {
                                 hideConfirmBox={this.hideDiv} 
                                 deleteColor = {this.props.requestDeleteColors} 
                                 colorStatus = {this.toggleStatus}
+                                activePage={this.props.activePage}
+                                itemsCountPerPage={this.props.itemsCountPerPage}
                             />
 
                             ): (

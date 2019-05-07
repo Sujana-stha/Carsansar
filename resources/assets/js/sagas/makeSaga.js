@@ -14,7 +14,7 @@ function* MakeSaga(action) {
     const makes = response.data
     if (response.errors) {
         yield put({ type: types.REQUEST_FAILED});
-        notify.show("Cannot Get All Makes", "error", 5000);
+        notify.show("Cannot get all makes", "error", 5000);
     } else {
         yield put({type: types.GET_MAKES_SUCCESS, makes});
     }
@@ -31,15 +31,19 @@ function* callMakesSubmit(action) {
     const pageNumber= action.pageNumber
     const sorted_column=action.sorted_column
     const order= action.order
-    let error = {};
-    if (result.errors) {
+    let error = {}
+    if ((result.errors && !resp.success)|| (result.errors || !resp.success)) {
         yield put({ type: types.REQUEST_FAILED});
-        notify.show("Cannot Add Makes!","error", 5000);
-        error = result.errors
+        error = result.errors || resp.errormsg
+        if(resp.errorcode==23000) {
+            notify.show("Make Description already exists!","error", 5000);
+        }
+        notify.show("Cannot create new make!","error", 5000);
+    
     } else {
         // yield put({type: types.ADD_MAKES_SUCCESS, resp, message: result.statusText});
         yield put({type: types.REQUEST_MAKES, pageNumber, sorted_column, order});
-        notify.show(`${resp.make_desc} Make Added Successfully!`, "success", 5000);
+        notify.show("Created successfully!", "success", 5000);
     }
     yield put(stopSubmit('PostMakes', error));
     yield put(reset('PostMakes'));
@@ -60,13 +64,13 @@ function* callEditMake (action) {
     const order=action.order
     if (result.errors) {
         yield put({ type: types.REQUEST_FAILED, errors: result.errors});
-        notify.show(`Cannot Update ${resp.make_desc}!`,"error", 5000);
+        notify.show("Update failed!","error", 5000);
         error = result.errors
 
     } else {
         // yield put({type: types.UPDATE_MAKES_SUCCESS, resp, message: result.statusText});
         yield put ({type: types.REQUEST_MAKES, pageNumber, sorted_column, order})
-        notify.show(`${resp.make_desc} Make Updated Successfully!`, "success", 5000);
+        notify.show("Updated successfully!", "success", 5000);
 
     }
     yield put(stopSubmit('EditMakes', error));
@@ -87,12 +91,12 @@ function* callToggleStatus(action) {
     const order = action.order
     if (result.errors) {
         yield put({ type: types.REQUEST_FAILED, errors: result.error});
-        notify.show(`Cannot Change Status of ${resp.make_desc}!`,"error", 5000);
+        notify.show("Cannot update status !","error", 5000);
 
     } else {
         // yield put({type: types.MAKES_STATUS_SUCCESS, resp});
         yield put ({type: types.REQUEST_MAKES, pageNumber, sorted_column, order})
-        notify.show(`Status of ${resp.make_desc} Updated!`, "success",5000);
+        notify.show("Status updated successfully!", "success",5000);
     }
 }
 
@@ -108,11 +112,11 @@ function* callDeleteMake(action) {
     if(result.errors) {
         yield put({ type: types.REQUEST_FAILED, errors: result.error});
         error = result.error;
-        notify.show("Cannot Delete Make!","error", 5000);
+        notify.show("Delete failed!","error", 5000);
 
     } else {
         yield put(makeAction.deleteMakesSuccess(action.makeId, result.statusText));
-        notify.show("Make Deleted Successfully!", "error", 5000);
+        notify.show("Deleted successfully!", "error", 5000);
     }
 } 
 

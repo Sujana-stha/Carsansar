@@ -4,11 +4,11 @@ const MakesList = (props) => {
 
     return (
         <tbody>
-            {props.makes.map((make) => {
+            {props.makes.map((make, index) => {
                 return (
                     <tr key={make.id} className={`row-${make.id}`}>
 
-                        <td>{make.id}</td>
+                        <td>{((props.activePage-1)*props.itemsCountPerPage)+(index+1)}</td>
                         <td>{make.make_desc==null ? '-': make.make_desc}</td>
                         <td>{make.created_by.name}</td>
                         <td className="action">
@@ -23,14 +23,14 @@ const MakesList = (props) => {
                         </td>
                         <td>
                             <div className="switch">
-                                <label>Inactive
+                                <label>
                                     {make.status == 1 ? (
                                         <input onClick={() => props.makeStatus(make.id, make.status)} defaultChecked type="checkbox" value={make.status} />
 
                                     ) :
                                         <input onClick={() => props.makeStatus(make.id, make.status)} type="checkbox" value={make.status} />
                                     }
-                                    <span className="lever"></span>Active
+                                    <span className="lever"></span>
                                 </label>
                             </div>
                         </td>

@@ -4,11 +4,11 @@ const FueltypesList = (props) => {
     return (
         <tbody>
             {
-                props.fueltypes.map((fueltype) => {
+                props.fueltypes.map((fueltype, index) => {
                     return (
                         <tr key={fueltype.id} className={`row-${fueltype.id}`}>
 
-                            <td>{fueltype.id}</td>
+                            <td>{((props.activePage-1)*props.itemsCountPerPage)+(index+1)}</td>
                             <td>{fueltype.fueltype_desc == null ? '-': fueltype.fueltype_desc}</td>
                             <td>{fueltype.created_by.name}</td>
                             <td className="action">
@@ -24,14 +24,14 @@ const FueltypesList = (props) => {
                             </td>
                             <td>
                                 <div className="switch">
-                                    <label>Inactive
+                                    <label>
                                         {fueltype.status == 1 ? (
                                             <input onClick={() =>props.fueltypeStatus(fueltype.id, fueltype.status)} defaultChecked type="checkbox" value={fueltype.status} />
 
                                         ) :
                                             <input onClick={() => props.fueltypeStatus(fueltype.id, fueltype.status)} type="checkbox" value={fueltype.status} />
                                         }
-                                        <span className="lever"></span>Active
+                                        <span className="lever"></span>
                                     </label>
                                 </div>
                             </td>

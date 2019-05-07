@@ -61,7 +61,9 @@ function validate(values) {
     const errors = {}
 
     if(!values.enginesize_desc) {
-        errors.enginesize_desc = "The Field is empty"
+        errors.enginesize_desc = "This field is empty!"
+    } else if (values.enginesize_desc > 30) {
+        errors.enginesize_desc = "Must be 30 character or less!"
     }
     
     return errors;

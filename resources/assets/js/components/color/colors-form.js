@@ -26,18 +26,17 @@ const ColorForm =props => {
 					<div className="row">
                         <form className="col s12" onSubmit= { handleSubmit  } >
                             <Field 
-                                label="Enter Color Code"
-                                name="color_cd"
-                                type="text"
-                                component={renderInputField} 
-                            />
-                            <Field 
                                 label="Enter Color Name"
                                 name="color_desc"
                                 type="text"
                                 component={renderInputField} 
                             />
-                            
+                            <Field 
+                                label="Enter Color Code"
+                                name="color_cd"
+                                type="text"
+                                component={renderInputField} 
+                            />
                             <div className="row">
                                 <div className="col s12">
                                     {props.sending ? (
