@@ -64,14 +64,14 @@ class EditColor extends Component {
 function validate(values) {
     const errors = {}
     if(!values.color_cd) {
-        errors.color_cd = "The Field is Empty!"
+        errors.color_cd = "This field is empty!"
     } else if (values.color_cd.length > 20) {
-        errors.color_cd = "Must be 20 Character or less!"
+        errors.color_cd = "Must be 20 character or less!"
     }
     if(!values.color_desc) {
-        errors.color_desc = "The Field is empty"
+        errors.color_desc = "This field is empty."
     } else if (values.color_desc.length > 20) {
-        errors.color_desc = "Must be 20 Character or less!"
+        errors.color_desc = "Must be 20 character or less!"
     }
     return errors;
 }

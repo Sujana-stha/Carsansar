@@ -49,7 +49,8 @@
 	    <!-- BEGIN VENDOR JS-->
 		<script src="{{asset('js/materialize-admin/vendors.min.js')}}" type="text/javascript"></script>
 		<!-- BEGIN VENDOR JS-->
-		
+		<!-- TinyMCE editor link -->
+		<script src="https://cloud.tinymce.com/5/tinymce.min.js"></script>
 		<!-- BEGIN THEME  JS-->
 		<script src="{{asset('js/materialize-admin/plugins.js')}}" type="text/javascript"></script>
 		<script src="{{asset('js/materialize-admin/custom/custom-script.js')}}" type="text/javascript"></script>

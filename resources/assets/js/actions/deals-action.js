@@ -52,16 +52,10 @@ export function requestVehicleFailed() {
     }
 }
 
-//Search by Vehicles Attriburetes
-export function requestVehicleAttrSearch(values) {
+//Search by Vehicles titls
+export function searchVehicleByTitle(values) {
     return {
-        type: types.REQUEST_VEHICLES_ATTR_SEARCH,
-        values
-    }
-}
-export function searchVehicleAttrSuccess(values) {
-    return {
-        type: types.VEHICLES_ATTR_SEARCH_SUCCESS,
+        type: types.SEARCH_VEHICLE_BY_TITLE,
         values
     }
 }

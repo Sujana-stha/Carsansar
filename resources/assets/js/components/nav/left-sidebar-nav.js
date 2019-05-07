@@ -46,7 +46,7 @@ const LeftSidebarNav = (props) => {
 								<NavLink to="/dashboard/insert-vehicle-attribute" className="collapsible-body" data-i18n=""><i className="material-icons">radio_button_unchecked</i><span>Add Custom Attributes</span></NavLink>
 							</li>
 							<li>
-								<NavLink to="/dashboard/color" className="collapsible-body" data-i18n=""><i className="material-icons">radio_button_unchecked</i><span>Color</span></NavLink>
+								<NavLink to="/dashboard/colors" className="collapsible-body" data-i18n=""><i className="material-icons">radio_button_unchecked</i><span>Colors</span></NavLink>
 							</li>
 							<li>
 								<NavLink to="/dashboard/makes" className="collapsible-body" data-i18n=""><i className="material-icons">radio_button_unchecked</i><span>Makes</span></NavLink>

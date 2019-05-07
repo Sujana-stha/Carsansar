@@ -49,9 +49,9 @@ const ModelForm =props=> {
 function validate(values) {
     const errors = {}
     if(!values.model_desc) {
-        errors.model_desc = "The Field is empty"
+        errors.model_desc = "This field is empty."
     } else if (values.model_desc.length > 30) {
-        errors.model_desc ="Must be 30 character or Less!"
+        errors.model_desc ="Must be 30 character or less!"
     }
     return errors;
 }

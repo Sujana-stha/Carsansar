@@ -15,7 +15,7 @@ function* CompanySaga(action) {
     if (response.errors) {
         yield put({ type: types.REQUEST_COMPANIES_FAILED, errors: response.error});
         error = response.error;
-        notify.show("Cannot Get all Company", "error", 5000)
+        notify.show("Cannot get all company", "error", 5000)
     } else {
         yield put({type: types.GET_COMPANIES_SUCCESS, companies});
     }
@@ -33,14 +33,17 @@ function* callCompanySubmit(action) {
     const pageNumber= action.pageNumber
     const sorted_column=action.sorted_column
     const order= action.order
-    if (result.errors) {
+    if ((result.errors && !resp.success)|| (result.errors || !resp.success)) {
         yield put({ type: types.REQUEST_COMPANIES_FAILED, errors: result.error});
-        error = result.error;
-        notify.show("Cannot Add Company!", "error", 5000)
+        error = result.error|| resp.errormsg;
+        if(resp.errorcode==23000) {
+            notify.show("Company already exists!","error", 5000);
+        }
+        notify.show("Cannot create new Company!", "error", 5000)
     } else {
         // yield put({type: types.ADD_COMPANIES_SUCCESS, resp, message: result.statusText});
         yield put({type: types.REQUEST_COMPANIES, pageNumber, sorted_column, order})
-        notify.show(`${resp.name} Company Added Successfully!`, "success", 5000);
+        notify.show(`Created successfully!`, "success", 5000);
     }
     yield put(stopSubmit('PostCompanies', error));
     yield put(reset('PostCompanies'));
@@ -62,11 +65,11 @@ function* callEditCompany (action) {
     if (result.errors) {
         yield put({ type: types.REQUEST_COMPANIES_FAILED, errors: result.error});
         error = result.error;
-        notify.show(`Cannot Update ${resp.name}!`, "error", 5000)
+        notify.show(`Update failed!`, "error", 5000)
     } else {
         // yield put({type: types.UPDATE_COMPANIES_SUCCESS, resp, message: result.statusText});
         yield put({type: types.REQUEST_COMPANIES, pageNumber, sorted_column, order})
-        notify.show(`${resp.name} Company Updated Successfully!`, "success", 5000);
+        notify.show(`Updated successfully!`, "success", 5000);
     }
     yield put(stopSubmit('EditCompanies', error));
     yield put(reset('EditCompanies'));
@@ -87,12 +90,12 @@ function* callCompanyToggleStatus(action) {
     if (result.errors) {
         yield put({ type: types.REQUEST_COMPANIES_FAILED, errors: result.error});
         error = result.error;
-        notify.show(`Cannot Change Status of ${resp.name}!`, "error", 5000)
+        notify.show(`Status update failed!`, "error", 5000)
 
     } else {
         // yield put({type: types.COMPANIES_STATUS_SUCCESS, resp, message: result.statusText});
         yield put({type: types.REQUEST_COMPANIES, pageNumber, sorted_column, order})
-        notify.show(`Status of ${resp.name} Changed Successfully!`, "success", 5000);
+        notify.show(`Status updates Successfully!`, "success", 5000);
     }
 }
 
@@ -107,10 +110,10 @@ function* callDeleteCompany(action) {
     if(result.errors) {
         yield put({ type: types.REQUEST_COMPANIES_FAILED, errors: result.error});
         error = result.error;
-        notify.show("Cannot Delete Company!", "error", 5000)
+        notify.show("Delete failed!", "error", 5000)
     } else {
         yield put(companyAction.deleteCompaniesSuccess(action.companyId, result.statusText));
-        notify.show("Company Deleted Successfully", "error", 5000);
+        notify.show("Deleted successfully", "error", 5000);
     }
 } 
 

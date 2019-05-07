@@ -26,9 +26,28 @@ class MakesController extends Controller
  
     public function store(Request $request)
     {
-        $make = Make::create($request->all());
+        $errormsg = "";
+        $result = false;
+        $errorcode="";
+        try{
+            if($request->get('make_desc')!=null){
+                $make = Make::create($request->all());
+                $result = true;
+            }else{
+                $result = false;
+                $errormsg = "Make Description cannot be null";
+            }
+            
+        }catch(\Exception $exception)
+        {
+            //dd($exception);exit;
+            $errormsg = $exception->getMessage();
+            $errorcode = $exception->getCode();
+        }
+        return response()->json(['success'=>$result,'errormsg'=>$errormsg,'errorcode'=>$errorcode]);
+        
  
-        return response()->json($make, 201);
+        //return response()->json($enginesize, 201);
     }
  
     public function update(Request $request, Make $make)

@@ -157,16 +157,21 @@ export function getSingleVehicles (vehicleId) {
     });
 }
 
-// POST VEHICLES API
-export function addVehicles(values) {
-    const access_token = window.localStorage.getItem('access_token')
-    const headers = getHeaders(access_token)
-    let images = values.images
+function formValues(values) {
+    let images = values.files
+
     var formData = new FormData();
     //Form Data
     formData.append('title', values.title);
     if(values.vehicle_status){formData.append('vehicle_status', values.vehicle_status)}
     if(values.vin){formData.append('vin', values.vin)}
+    if(values.ad_desc){formData.append('ad_desc', values.ad_desc)}
+    if(values.vehicle_description){formData.append('vehicle_description', values.vehicle_description)}
+    if(values.tech_specification){formData.append('tech_specification', values.tech_specification)}
+    if(values.trim){formData.append('trim', values.trim)}
+    if(values.kms){formData.append('kms', values.kms)}
+    if(values.doors){formData.append('doors', values.doors)}
+    if(values.passenger){formData.append('passenger', values.passenger)}
     //MASTERS TABLE
     if(values.year){formData.append('year', values.year)}
     if(values.make_id){formData.append('make_id', values.make_id)}
@@ -181,12 +186,17 @@ export function addVehicles(values) {
     if(values.fueltype_id){formData.append('fueltype_id', values.fueltype_id)}
     if(values.category_id){formData.append('category_id', values.category_id)}
     if(values.option_id){formData.append('option_id', values.option_id)}
+    if(values.fuel_economy){formData.append('fuel_economy', values.fuel_economy)}
+    if(values.mileage){formData.append('mileage', values.mileage)}
+    if(values.city_mpg){formData.append('city_mpg', values.city_mpg)}
+    if(values.highway_mpg){formData.append('highway_mpg', values.highway_mpg)}
     if(images) { images.map(image=>{
             formData.append('files[]', image)
             formData.append('imagemeta[]',image['main_flag'])
         })
     }
     if(values.price){formData.append('price', values.price)}
+    if(values.selling_price){formData.append('selling_price', values.selling_price)}
     //FINANCE
     if(values.financing_flag){formData.append('financing_flag', values.financing_flag)}
     if(values.type){formData.append('type', values.type)}
@@ -200,10 +210,33 @@ export function addVehicles(values) {
     //WARRANTY
     if(values.warranty_flag){formData.append('warranty_flag', values.warranty_flag)}
     if(values.warranty_desc){formData.append('warranty_desc', values.warranty_desc)}
+    return formData;
+}
 
-    return axios.post('/api/vehicles', formData,{headers})
+// POST VEHICLES API
+export function addVehicles(values) {
+    const access_token = window.localStorage.getItem('access_token')
+    const headers = getHeaders(access_token)
+    const data = formValues(values)
+    
+    return axios.post('/api/vehicles', data,{headers})
     .catch(error=> {
         console.log("eeee",error)
+        return {
+            errors: error
+        }
+    });
+}
+
+//UPDATES VEHICLES API
+export function updateVehicles(vehicleId, values) {
+    const access_token = window.localStorage.getItem('access_token')
+    const headers = getHeaders(access_token)
+    const data = formValues(values)
+
+    return axios.put('/api/vehicles'+vehicleId, data,{headers})
+    .catch(error=> {
+        console.log(error)
         return {
             errors: error
         }
@@ -245,15 +278,3 @@ export function vehicleAttr(values, apiName) {
     })
 }
 
-//UPDATES VEHICLES API
-export function updateVehicles(vehicleId, values) {
-    const access_token = window.localStorage.getItem('access_token')
-    const headers = getHeaders(access_token)
-    return axios.put('/api/vehicles'+vehicleId, values,{headers})
-    .catch(error=> {
-        console.log(error)
-        return {
-            errors: error
-        }
-    });
-}

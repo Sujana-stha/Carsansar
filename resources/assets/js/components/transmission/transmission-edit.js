@@ -62,7 +62,9 @@ function validate(values) {
     const errors = {}
 
     if(!values.transmission_desc) {
-        errors.transmission_desc = "The Field is empty"
+        errors.transmission_desc = "This field is empty."
+    } else if (values.transmission_desc.length > 30) {
+        errors.transmission_desc ="Must be 30 character or less!"
     }
     
     return errors;

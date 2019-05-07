@@ -39,10 +39,13 @@ class EnginesizesListContainer extends Component {
 
     // submit function for new data
     submitEnginesize(values) {
+        let formValues = {
+            enginesize_desc: values.enginesize_desc.toLowerCase()
+        }
         const pageNumber = this.props.activePage
         let sorted_column = this.state.sorted_column
         let order = this.state.order
-        this.props.requestSubmitEnginesizes(values, pageNumber, sorted_column, order);
+        this.props.requestSubmitEnginesizes(formValues, pageNumber, sorted_column, order);
         this.setState ({
             hide: true
         })
@@ -129,14 +132,10 @@ class EnginesizesListContainer extends Component {
                         ): (
                             <div className="wr-not-loading"></div>
                         )}
-                        <table>
+                        <table className="wr-master-table">
                             <thead>
                                 <tr>
-                                    <th onClick={()=>this.sortByColumn('id')}>S.N
-                                        {this.state.order==='desc'?
-                                            <i className="material-icons wr-sorting-icon">arrow_drop_down</i>
-                                        :<i className="material-icons wr-sorting-icon">arrow_drop_up</i>}
-                                    </th>
+                                    <th>S.N</th>
                                     <th onClick={()=>this.sortByColumn('enginesize_desc')}>Title
                                         {this.state.order==='desc'?
                                             <i className="material-icons wr-sorting-icon">arrow_drop_down</i>
@@ -160,6 +159,8 @@ class EnginesizesListContainer extends Component {
                                 hideConfirmBox={this.hideDiv} 
                                 deleteEnginesize = {this.props.requestDeleteEnginesizes} 
                                 enginesizeStatus = {this.toggleStatus}
+                                activePage={this.props.activePage}
+                                itemsCountPerPage={this.props.itemsCountPerPage}
                                 />
 
                             ) : (

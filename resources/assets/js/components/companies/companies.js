@@ -4,14 +4,14 @@ const CompaniesList = (props) => {
     return (
         <tbody>
             {
-                props.companies.map((company) => {
+                props.companies.map((company, index) => {
                     return (
                         <tr key={company.id} className={`row-${company.id}`}>
-                            <td>{company.id}</td>
+                            <td>{((props.activePage-1)*props.itemsCountPerPage)+(index+1)}</td>
                             <td>{company.company_cd == null ? '-': company.company_cd}</td>
                             <td>{company.name == null ? '': company.name}</td>
                             <td>{company.address == null ? '-' : company. address}</td>
-                            <td>{company.email == null ? '-' : company.email}</td>
+                            <td className="wr-company-email">{company.email == null ? '-' : company.email}</td>
                             <td>{company.contact_no == null ? '-': company.contact_no}</td>
                             <td>{company.created_by.name}</td>
                             <td className="action">

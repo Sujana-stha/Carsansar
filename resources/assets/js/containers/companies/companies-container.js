@@ -28,10 +28,10 @@ class CompaniesListContainer extends Component {
         this.hideDiv =  this.hideDiv.bind(this)
     }
     componentWillMount() {
-        loadjs('/js/materialize-admin/vendors.min.js', function() {
+        
             loadjs('/js/materialize-admin/plugins.js', function() {
                 loadjs('/js/materialize-admin/custom/custom-script.js');
-            });
+          
         });
     }
     componentDidMount() {
@@ -65,12 +65,10 @@ class CompaniesListContainer extends Component {
 
     //function to call form of edit
     editCompanies(values) {
-        $('.collapsible').collapsible('open', 0);
-    
         this.setState ({
             isEditing : values
         })
-        
+        $('.collapsible').collapsible('open', 0);
     }
 
     deleteCompanyAction(companyId) {
@@ -120,18 +118,19 @@ class CompaniesListContainer extends Component {
     }
     render() {
         return (
-            <div>
+            <div className="wr-company-container">
                 <div className="row">
                     {this.props.fetching ? (
                         <Loading/>
                     ): (
                         <div className="wr-not-loading"></div>
                     )}
-                    <ul className="collapsible" data-collapsible="accordion">
+                    <div className="col s12 mt-2 mb-2">
+                        <ul className="collapsible" data-collapsible="accordion">
                             {this.state.isEditing ? (
                                 <li className="active">
                                     <div className="collapsible-header">
-                                        <a className="btn right"><i className="material-icons left">add</i><span> Update Color</span></a>
+                                        <a className="btn cyan waves-effect waves-light right"><i className="material-icons left">add</i><span> Update Company</span></a>
                                     </div>
                                     <div className="collapsible-body col s12 m12 l12">
                                         <EditCompany onSubmit = {this.submitEditCompany.bind(this)} editId = {this.state.isEditing} />
@@ -148,17 +147,14 @@ class CompaniesListContainer extends Component {
                                     </div>
                                 </li>
                             )}
-                    </ul>
+                        </ul>   
+                    </div>
                     <div className="col s12 m12 l12 mt-2 mb-2">
                         
-                        <table>
+                        <table className="wr-master-table">
                             <thead>
                                 <tr>
-                                    <th onClick={()=>this.sortByColumn('id')}>S.N
-                                        {this.state.order==='desc'?
-                                            <i className="material-icons wr-sorting-icon">arrow_drop_down</i>
-                                        :<i className="material-icons wr-sorting-icon">arrow_drop_up</i>}
-                                    </th>
+                                    <th>S.N</th>
                                     <th onClick={()=>this.sortByColumn('company_cd')}>Company Code
                                         {this.state.order==='desc'?
                                             <i className="material-icons wr-sorting-icon">arrow_drop_down</i>
@@ -202,6 +198,8 @@ class CompaniesListContainer extends Component {
                                 hideConfirmBox={this.hideDiv}
                                 deleteCompany = {this.props.requestDeleteCompanies} 
                                 companyStatus = {this.toggleStatus}
+                                activePage={this.props.activePage}
+                                itemsCountPerPage={this.props.itemsCountPerPage}
                                 />
 
                             ) : (

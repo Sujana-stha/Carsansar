@@ -37,10 +37,13 @@ class CategoriesListContainer extends Component {
 
     // submit function for new data
     submitCategory(values) {
+        let formValues = {
+            category_desc: values.category_desc.toLowerCase()
+        }
         const pageNumber = this.props.activePage;
         let sorted_column = this.state.sorted_column
         let order = this.state.order
-        this.props.requestSubmitCategories(values, pageNumber, sorted_column, order);
+        this.props.requestSubmitCategories(formValues, pageNumber, sorted_column, order);
     }
 
     // submit function to update data
@@ -109,7 +112,6 @@ class CategoriesListContainer extends Component {
     render() {
         return (
             <div>
-                
                 <div className="row">
                     <div className="col s12 m3 l3 mt-3">
                         {this.state.isEditing ? (
@@ -127,14 +129,10 @@ class CategoriesListContainer extends Component {
                         ): (
                             <div className="wr-not-loading"></div>
                         )}
-                        <table>
+                        <table className="wr-master-table">
                             <thead>
                                 <tr>
-                                    <th onClick={()=>this.sortByColumn('id')}>S.N
-                                        {this.state.order==='desc'?
-                                            <i className="material-icons wr-sorting-icon">arrow_drop_down</i>
-                                        :<i className="material-icons wr-sorting-icon">arrow_drop_up</i>}
-                                    </th>
+                                    <th>S.N</th>
                                     <th onClick={()=>this.sortByColumn('category_desc')}>Title
                                         {this.state.order==='desc'?
                                             <i className="material-icons wr-sorting-icon">arrow_drop_down</i>
@@ -158,6 +156,8 @@ class CategoriesListContainer extends Component {
                                     hideConfirmBox={this.hideDiv} 
                                     deleteCategory = {this.props.requestDeleteCategories} 
                                     categoryStatus = {this.toggleStatus}
+                                    activePage={this.props.activePage}
+                                    itemsCountPerPage={this.props.itemsCountPerPage}
                                 />
 
                             ) : (

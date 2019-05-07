@@ -18515,6 +18515,58 @@ h4.wr-header2 {
   padding: 0 8px;
 }
 
+.wr-master-table tbody tr td {
+  text-transform: capitalize;
+}
+
+.wr-master-table tbody tr td.wr-company-email {
+  text-transform: none;
+}
+
+.wr-company-container .collapsible {
+  border: none;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+}
+
+.wr-company-container .collapsible .collapsible-header {
+  border: none;
+  background-color: transparent;
+}
+
+.wr-features-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  width: 100%;
+}
+
+.wr-features-container .wr-options-list {
+  width: 33%;
+  margin-bottom: 25px;
+}
+
+.wr-features-container .wr-options-list h4 {
+  font-size: 18px;
+  font-weight: bold;
+  color: #000;
+}
+
+.wr-select-field {
+  margin: 15px 0;
+}
+
+.wr-select-field label {
+  font-size: 15px;
+  color: #000;
+}
+
+.wr-select-field .wr-select-box input {
+  height: 1.5rem !important;
+}
+
 .wr-uploader .drop-zone {
   width: 100%;
   height: 150px;
@@ -18609,37 +18661,15 @@ h4.wr-header2 {
   background: rgba(255, 255, 255, 0.2);
 }
 
-.wr-vehicles-attr-field {
-  padding-left: 0 !important;
-  padding-right: 8px !important;
-}
-
-.wr-vehicles-attr-field .wr-vehicles-attr-select,
-.wr-vehicles-attr-field .wr-vehicles-attr-input {
+.wr-vehicles-search-input {
   border: 1px solid #bdbdbd;
   border-radius: 5px;
   height: 45px;
 }
 
-.wr-vehicles-attr-field .wr-vehicles-attr-input {
+.wr-vehicles-search-input {
   padding: 0 10px;
   width: 100%;
-}
-
-.wr-column-1 {
-  width: 115px !important;
-}
-
-.wr-column-2 {
-  width: 160px !important;
-}
-
-.wr-select-field {
-  margin: 10px 0;
-}
-
-.wr-select-field .wr-select-box input {
-  height: 1.5rem !important;
 }
 
 .wr-vehicles-image-thumbnail {
@@ -18672,36 +18702,19 @@ h4.wr-header2 {
 
 .wr-vehicles-table-wrapper {
   width: 100%;
-  overflow-x: scroll;
 }
 
-.wr-vehicles-table-wrapper table {
-  width: 100%;
-  table-layout: fixed;
-}
-
-.wr-vehicles-table-wrapper table th {
-  width: 150px;
-}
-
-.wr-vehicles-table-wrapper table .wr-vehicle-sn {
-  width: 50px;
-}
-
-.wr-vehicles-table-wrapper table .wr-vehicle-stock_number {
-  width: 110px;
-}
-
-.wr-vehicles-table-wrapper table .wr-vehicle-price {
-  width: 80px;
-}
-
-.wr-vehicles-table-wrapper table .wr-vehicles-date {
+.wr-vehicles-table-wrapper table th.wr-vehicles-date,
+.wr-vehicles-table-wrapper table th.wr-vehicles-title {
   width: 180px;
 }
 
 .wr-sorting-icon {
   vertical-align: bottom;
   cursor: pointer;
+}
+
+.tox-notifications-container {
+  display: none !important;
 }
 

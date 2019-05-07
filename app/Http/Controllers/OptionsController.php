@@ -50,9 +50,28 @@ class OptionsController extends Controller
  
     public function store(Request $request)
     {
-        $option = Option::create($request->all());
+        $errormsg = "";
+        $result = false;
+        $errorcode="";
+        try{
+            if($request->get('option_desc')!=null){
+                $option = Option::create($request->all());
+                $result = true;
+            }else{
+                $result = false;
+                $errormsg = "Option Description cannot be null";
+            }
+            
+        }catch(\Exception $exception)
+        {
+            //dd($exception);exit;
+            $errormsg = $exception->getMessage();
+            $errorcode = $exception->getCode();
+        }
+        return response()->json(['success'=>$result,'errormsg'=>$errormsg,'errorcode'=>$errorcode]);
+        
  
-        return response()->json($option, 201);
+        //return response()->json($enginesize, 201);
     }
  
     public function update(Request $request, Option $option)

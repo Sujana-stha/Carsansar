@@ -14,7 +14,7 @@ function* ColorSaga(action) {
     const colors = response.data
     if (response.errors) {
         yield put({ type: types.REQUEST_COLORS_FAILED});
-        notify.show("Cannot Get all Colors!", "error",5000)
+        notify.show("Cannot get all colors!", "error",5000)
     } else {
         yield put({type: types.GET_COLORS_SUCCESS, colors});
     }
@@ -31,15 +31,18 @@ function* callColorsSubmit(action) {
     const pageNumber= action.pageNumber
     const sorted_column=action.sorted_column
     const order= action.order
-    let error = {};
-    if (result.errors) {
+    let error ={}
+    if ((result.errors && !resp.success)|| (result.errors || !resp.success)) {
         yield put({ type: types.REQUEST_COLORS_FAILED});
-        notify.show("Cannot Add Colors!","error", 5000);
-        error = result.errors
+        error = result.errors || resp.errormsg
+        if(resp.errorcode==23000) {
+            notify.show("Color Description already exists!","error", 5000);
+        }
+        notify.show("Cannot create new color!","error", 5000);
     } else {
         // yield put({type: types.ADD_MAKES_SUCCESS, resp, message: result.statusText});
         yield put({type: types.REQUEST_COLORS, pageNumber, sorted_column, order});
-        notify.show(`${resp.color_desc} Color Added Successfully!`, "success", 5000);
+        notify.show("Color created successfully!", "success", 5000);
     }
     yield put(stopSubmit('PostColors', error));
     yield put(reset('PostColors'));
@@ -60,13 +63,13 @@ function* callEditColor (action) {
     const order= action.order
     if (result.errors) {
         yield put({ type: types.REQUEST_COLORS_FAILED, errors: result.errors});
-        notify.show(`Cannot Update ${resp.color_desc}!`,"error", 5000);
+        notify.show(`Update failed!`,"error", 5000);
         error = result.errors
 
     } else {
         // yield put({type: types.UPDATE_MAKES_SUCCESS, resp, message: result.statusText});
         yield put ({type: types.REQUEST_COLORS, pageNumber, sorted_column, order})
-        notify.show(`${resp.color_desc} Color Updated Successfully!`, "success", 5000);
+        notify.show(`Updated successfully!`, "success", 5000);
 
     }
     yield put(stopSubmit('EditColors', error));
@@ -86,12 +89,12 @@ function* callColorToggleStatus(action) {
     const order= action.order
     if (result.errors) {
         yield put({ type: types.REQUEST_COLORS_FAILED, errors: result.error});
-        notify.show(`Cannot Change Status of ${resp.color_desc}!`,"error", 5000);
+        notify.show(`Status update failed!`,"error", 5000);
 
     } else {
         // yield put({type: types.MAKES_STATUS_SUCCESS, resp});
         yield put ({type: types.REQUEST_COLORS, pageNumber, sorted_column, order})
-        notify.show(`Status of ${resp.color_desc} Updated!`, "success",5000);
+        notify.show(`Status Updated!`, "success",5000);
     }
 }
 
@@ -106,11 +109,11 @@ function* callDeleteColor(action) {
     if(result.errors) {
         yield put({ type: types.REQUEST_COLORS_FAILED, errors: result.error});
         error = result.error;
-        notify.show("Cannot Delete Color!","error", 5000);
+        notify.show("Delete failed","error", 5000);
 
     } else {
         yield put(colorAction.deleteColorsSuccess(action.colorId));
-        notify.show("Color Deleted Successfully!", "error", 5000);
+        notify.show("Deleted successfully!", "error", 5000);
 
     }
 } 

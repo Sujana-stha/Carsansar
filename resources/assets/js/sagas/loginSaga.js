@@ -57,13 +57,13 @@ function* logoutFlow() {
             yield put(push('/auth/login'));
             yield put(push('/login'));
 
-            notify.show("You are successfully Logout!", "success", 5000)
+            notify.show("You are successfully logged out!", "success", 5000)
         } else if(response.errors) {
             notify.show("Something went wrong. Please try again", )
         }
     } 
     catch (error) {
         yield put({type: types.LOGOUT_ERROR, error})
-        notify.show("Something went Wrong. Please Try Again!", "error", 5000)
+        notify.show("Something went wrong. Please try again!", "error", 5000)
     }
 }

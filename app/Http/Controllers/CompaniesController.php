@@ -27,9 +27,28 @@ class CompaniesController extends Controller
  
     public function store(Request $request)
     {
-        $company = Company::create($request->all());
+        $errormsg = "";
+        $result = false;
+        $errorcode="";
+        try{
+            if($request->get('name') && $request->get('address') && $request('email')!=null){
+                $company = Company::create($request->all());
+                $result = true;
+            }else{
+                $result = false;
+                $errormsg = "Company name, address and email cannot be null";
+            }
+            
+        }catch(\Exception $exception)
+        {
+            //dd($exception);exit;
+            $errormsg = $exception->getMessage();
+            $errorcode = $exception->getCode();
+        }
+        return response()->json(['success'=>$result,'errormsg'=>$errormsg,'errorcode'=>$errorcode]);
+        
  
-        return response()->json($company, 201);
+        //return response()->json($enginesize, 201);
     }
  
     public function update(Request $request, Company $company)

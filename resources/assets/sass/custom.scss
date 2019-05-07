@@ -80,7 +80,56 @@ h4.wr-header2 {
     }
 }
 
+.wr-master-table {
+    tbody {
+        tr {
+            td {
+                text-transform: capitalize;
+            }
+            td.wr-company-email {
+                text-transform: none;
+            }
+        }
+    }
+}
 
+.wr-company-container {
+    .collapsible {
+        border: none;
+        box-shadow: none;
+        .collapsible-header {
+            border: none;
+            background-color: transparent;
+        }
+    }
+}
+
+.wr-features-container {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    .wr-options-list {
+        width: 33%;
+        margin-bottom: 25px;
+        h4 {
+            font-size: 18px;
+            font-weight: bold;
+            color: #000;
+        }
+    }
+}
+.wr-select-field {
+    margin: 15px 0;
+    label {
+        font-size: 15px;
+        color: #000;
+    }
+    .wr-select-box {
+        input {
+            height: 1.5rem !important;
+        }
+    }
+}
 .wr-uploader {
     .drop-zone {
         width: 100%;
@@ -170,33 +219,15 @@ h4.wr-header2 {
     }
 }
 
-.wr-vehicles-attr-field {
-    padding-left: 0 !important;
-    padding-right: 8px !important;
-    .wr-vehicles-attr-select,
-    .wr-vehicles-attr-input {
-        border: 1px solid #bdbdbd;
-        border-radius: 5px;
-        height: 45px;
-    }
-    .wr-vehicles-attr-input {
-        padding: 0 10px;
-        width: 100%;
-    }
+
+.wr-vehicles-search-input {
+    border: 1px solid #bdbdbd;
+    border-radius: 5px;
+    height: 45px;
 }
-.wr-column-1 {
-    width: 115px !important;
-}
-.wr-column-2 {
-    width: 160px !important;
-}
-.wr-select-field {
-    margin: 10px 0;
-    .wr-select-box {
-        input {
-            height: 1.5rem !important;
-        }
-    }
+.wr-vehicles-search-input {
+    padding: 0 10px;
+    width: 100%;
 }
 
 .wr-vehicles-image-thumbnail {
@@ -206,6 +237,7 @@ h4.wr-header2 {
     margin-left: 4px;
 }
 
+//gallery dropzone
 @-webkit-keyframes stripes {
     from {
       background-position: 0 0; }
@@ -220,31 +252,21 @@ h4.wr-header2 {
       background-position: 60px 30px; } 
 }
 
+//VEHICLES TABLE
 .wr-vehicles-table-wrapper {
     width: 100%;
-    overflow-x: scroll;
     table {
-        width: 100%;
-        table-layout: fixed;
-        th {
-            width: 150px;
-        }
-        .wr-vehicle-sn {
-            width: 50px;
-        }
-        .wr-vehicle-stock_number {
-            width: 110px;
-        }
-        .wr-vehicle-price {
-            width: 80px;
-        }
-        .wr-vehicles-date {
+        th.wr-vehicles-date,
+        th.wr-vehicles-title {
             width: 180px;
         }
     }
-
 }
 .wr-sorting-icon {
     vertical-align: bottom;
     cursor: pointer;
+}
+
+.tox-notifications-container {
+    display: none !important;
 }

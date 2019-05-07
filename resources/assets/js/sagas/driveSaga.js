@@ -16,7 +16,7 @@ function* DriveSaga(action) {
     if (response.errors) {
         yield put({ type: types.REQUEST_DRIVES_FAILED, errors: response.error});
         error = response.error;
-        notify.show("Cannot Get all Drives", "error", 5000)
+        notify.show("Cannot get all drives", "error", 5000)
     } else {
         yield put({type: types.GET_DRIVES_SUCCESS, drives});
     }
@@ -34,14 +34,17 @@ function* callDriveSubmit(action) {
     const pageNumber= action.pageNumber
     const sorted_column=action.sorted_column
     const order= action.order
-    if (result.errors) {
+    if ((result.errors && !resp.success)|| (result.errors || !resp.success)) {
         yield put({ type: types.REQUEST_DRIVES_FAILED, errors: result.error});
-        error = result.error;
-        notify.show("Cannot Add Drive!", "error",5000)
+        error = result.error|| resp.errormsg;
+        if(resp.errorcode==23000) {
+            notify.show("Drive Description already exists!","error", 5000);
+        }
+        notify.show("Cannot create new drive!", "error",5000)
     } else {
         // yield put({type: types.ADD_DRIVES_SUCCESS, resp, message: result.statusText});
         yield put({type: types.REQUEST_DRIVES, pageNumber, sorted_column, order})
-        notify.show(`${resp.drive_desc} Drive Added Successfully!`, "success", 5000)
+        notify.show(`Created successfully!`, "success", 5000)
     }
     yield put(stopSubmit('PostDrives', error));
     yield put(reset('PostDrives'));
@@ -63,12 +66,12 @@ function* callEditDrive (action) {
     if (result.errors) {
         yield put({ type: types.REQUEST_DRIVES_FAILED, errors: result.error});
         error = result.error;
-        notify.show(`Cannot Update ${resp.drive_desc}!`, "error",5000)
+        notify.show(`Update failed!`, "error",5000)
 
     } else {
         // yield put({type: types.UPDATE_DRIVES_SUCCESS, resp, message: result.statusText});
         yield put({type: types.REQUEST_DRIVES, pageNumber, sorted_column, order})
-        notify.show(`${resp.drive_desc} Updated Successfully!`, "success", 5000)
+        notify.show(`Updated successfully!`, "success", 5000)
     }
     yield put(stopSubmit('EditDrives', error));
     yield put(reset('EditDrives'));
@@ -88,7 +91,7 @@ function* callDriveToggleStatus(action) {
     if (result.errors) {
         yield put({ type: types.REQUEST_DRIVES_FAILED, errors: result.error});
         error = result.error;
-        notify.show(`Cannot Change Status of ${resp.drive_desc}!`, "error",5000)
+        notify.show(`Update failed!`, "error",5000)
 
     } else {
         // yield put({type: types.DRIVES_STATUS_SUCCESS, resp, message: result.statusText});
@@ -108,10 +111,10 @@ function* callDeleteDrive(action) {
     if(result.errors) {
         yield put({ type: types.REQUEST_DRIVES_FAILED, errors: result.error});
         error = result.error;
-        notify.show("Cannot Delete Drive!", "error", 5000)
+        notify.show("Delete failed!", "error", 5000)
     } else {
         yield put(driveAction.deleteDrivesSuccess(action.driveId, result.statusText));
-        notify.show("Drive Deleted Successfully!", "error", 5000)
+        notify.show("Deleted successfully!", "error", 5000)
     }
 } 
 

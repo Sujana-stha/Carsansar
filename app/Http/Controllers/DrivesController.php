@@ -26,9 +26,28 @@ class DrivesController extends Controller
  
     public function store(Request $request)
     {
-        $drive = Drive::create($request->all());
+        $errormsg = "";
+        $result = false;
+        $errorcode="";
+        try{
+            if($request->get('drive_desc')!=null){
+                $drive = Drive::create($request->all());
+                $result = true;
+            }else{
+                $result = false;
+                $errormsg = "Drive Description cannot be null";
+            }
+            
+        }catch(\Exception $exception)
+        {
+            //dd($exception);exit;
+            $errormsg = $exception->getMessage();
+            $errorcode = $exception->getCode();
+        }
+        return response()->json(['success'=>$result,'errormsg'=>$errormsg,'errorcode'=>$errorcode]);
+        
  
-        return response()->json($drive, 201);
+        //return response()->json($enginesize, 201);
     }
  
     public function update(Request $request, Drive $drive)

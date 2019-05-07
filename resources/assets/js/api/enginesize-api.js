@@ -12,10 +12,10 @@ export function getEnginesizes(pageNumber, sorted_column, order) {
 export function addEnginesizes(values) {
     const access_token = window.localStorage.getItem('access_token')
     const headers = getHeaders(access_token)
-    values.created_by = 1;
+    // values.created_by = 1;
     return axios.post('/api/enginesizes', values,{headers})
     .catch(error=> {
-        console.log(error)
+        console.log('error',  error)
         return {
             errors: error
         }

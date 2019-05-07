@@ -4,10 +4,10 @@ const TransmissionList = (props) => {
     return (
         <tbody>
             {
-                props.transmissions.map((transmission) => {
+                props.transmissions.map((transmission, index) => {
                     return (
                         <tr key={transmission.id} className={`row-${transmission.id}`}>
-                            <td>{transmission.id}</td>
+                            <td>{((props.activePage-1)*props.itemsCountPerPage)+(index+1)}</td>
                             <td>{transmission.transmission_desc == null ? '-': transmission.transmission_desc}</td>
                             <td>{transmission.created_by.name}</td>
                             <td className="action">
@@ -22,14 +22,14 @@ const TransmissionList = (props) => {
                             </td>
                             <td>
                                 <div className="switch">
-                                    <label>Inactive
+                                    <label>
                                         {transmission.status== 1 ? (
                                             <input onClick = {()=> props.transmissionStatus(transmission.id, transmission.status) } defaultChecked type="checkbox" value={transmission.status}/>
 
                                         ):
                                             <input onClick = {()=> props.transmissionStatus(transmission.id, transmission.status) }  type="checkbox" value={transmission.status}/>
                                         }
-                                        <span className="lever"></span>Active
+                                        <span className="lever"></span>
                                     </label>
                                 </div>
                             </td>

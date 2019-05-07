@@ -19,9 +19,28 @@ class OptionsCategoriesController extends Controller
  
     public function store(Request $request)
     {
-        $optionCategories = OptionCategory::create($request->all());
+        $errormsg = "";
+        $result = false;
+        $errorcode="";
+        try{
+            if($request->get('optioncategory_desc')!=null){
+                $optionCategories = OptionCategory::create($request->all());
+                $result = true;
+            }else{
+                $result = false;
+                $errormsg = "Option Category Description cannot be null";
+            }
+            
+        }catch(\Exception $exception)
+        {
+            //dd($exception);exit;
+            $errormsg = $exception->getMessage();
+            $errorcode = $exception->getCode();
+        }
+        return response()->json(['success'=>$result,'errormsg'=>$errormsg,'errorcode'=>$errorcode]);
+        
  
-        return response()->json($optionCategories, 201);
+        //return response()->json($enginesize, 201);
     }
  
     public function update(Request $request, OptionCategory $optionCategories)

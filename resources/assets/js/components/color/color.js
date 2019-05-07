@@ -1,14 +1,12 @@
 import React from 'react';
 
 const ColorsList =(props)=> {
-  
     return (
         <tbody>
-            {props.colors.map((color) => {
+            {props.colors.map((color, index) => {
                 return (
                     <tr key={color.id} className={`row-${color.id}`}>                  
-                        <td>{color.id}</td>
-                        <td>{color.color_cd==null ? '-':color.color_cd}</td>
+                        <td>{((props.activePage-1)*props.itemsCountPerPage)+(index+1)}</td>
                         <td>{color.color_desc ==null ? '-': color.color_desc}</td>
                         <td>{color.created_by.name}</td>
                         <td>99</td>
@@ -24,13 +22,13 @@ const ColorsList =(props)=> {
                         </td>
                         <td>
                             <div className="switch">
-                                <label>Inactive
+                                <label>
                                     {color.status=== 1 ? (
                                         <input onClick = {()=> props.colorStatus(color.id, color.status) } defaultChecked type="checkbox" value={color.status}/>
                                     ):
                                         <input onClick = {()=> props.colorStatus(color.id, color.status) }  type="checkbox" value={color.status}/>
                                     }
-                                        <span className="lever"></span>Active
+                                        <span className="lever"></span>
                                 </label>
                             </div>
                         </td>

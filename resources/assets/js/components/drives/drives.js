@@ -5,10 +5,10 @@ const DrivesList = (props) => {
     return (
         <tbody>
             {
-                props.drives.map((drive) => {
+                props.drives.map((drive, index) => {
                     return (
                         <tr key={drive.id} className={`row-${drive.id}`}>
-                            <td>{drive.id}</td>
+                            <td>{((props.activePage-1)*props.itemsCountPerPage)+(index+1)}</td>
                             <td>{drive.drive_desc}</td>
                             <td>{drive.created_by.name}</td>
                             <td className="action">
@@ -23,14 +23,14 @@ const DrivesList = (props) => {
                             </td>
                             <td>
                                 <div className="switch">
-                                    <label>Inactive
+                                    <label>
                                         {drive.status == 1 ? (
                                             <input onClick={() => props.driveStatus(drive.id, drive.status)} defaultChecked type="checkbox" value={drive.status} />
 
                                         ) :
                                             <input onClick={() => props.driveStatus(drive.id, drive.status)} type="checkbox" value={drive.status} />
                                         }
-                                        <span className="lever"></span>Active
+                                        <span className="lever"></span>
                                     </label>
                                 </div>
                             </td>
