@@ -1,6 +1,7 @@
 import React from 'react';
 
 const ModelList = (props) => {
+    const authUser = window.Laravel.super_admin
     return (
         <tbody>
             {
@@ -12,7 +13,9 @@ const ModelList = (props) => {
                             <td>{model.created_by.name}</td>
                             <td className="action">
                                 <a href="javascript:void(0);" onClick={props.onEditModel.bind(null, model.id)} className="tooltipped" data-position="top" data-delay="50" data-tooltip="Edit"><i className="material-icons">edit</i></a>
-                                <a className="tooltip" href="javascript:void(0);" onClick={props.showConfirmBox.bind(null,model.id)} data-tooltip="Delete"><i className="material-icons">delete</i></a>
+                                {props.userRole.name == authUser ? (
+                                    <a className="tooltip" href="javascript:void(0);" onClick={props.showConfirmBox.bind(null,model.id)} data-tooltip="Delete"><i className="material-icons">delete</i></a>
+                                ): null }
                                 {props.confirmText == model.id ? (
                                     <span className="confirm tooltip-text">Are you sure?&nbsp;
                                         <a onClick={props.deleteModel.bind(null, model.id)} href="javascript:void(0);">Yes</a> &nbsp;

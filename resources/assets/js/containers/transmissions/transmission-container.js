@@ -4,7 +4,7 @@ import Pagination from "react-js-pagination";
 import TransmissionList from '../../components/transmission/transmissions';
 import store from '../../store';
 import { requestTransmissions, requestDeleteTransmission, requestSubmitTransmission,requestUpdateTransmission, requestTransmissionStatus } from  '../../actions/transmissons-actions';
-
+import {requestLoggedUser} from '../../actions/users-action';
 
 //COMPONENT
 import TransmissionForm from '../../components/transmission/transmission-form';
@@ -34,6 +34,7 @@ class TransmissionsListContainer extends Component {
         let sorted_column = this.state.sorted_column
         let order = this.state.order
         this.props.requestTransmissions(pageNumber, sorted_column, order);
+        this.props.requestLoggedUser();
     }
 
     // submit function for new data
@@ -151,6 +152,7 @@ class TransmissionsListContainer extends Component {
                             {this.props.transmissions.length ? (
                                 <TransmissionList 
                                 transmissions= {this.props.transmissions} 
+                                userRole ={ this.props.loggedUser}
                                 onEditTransmission = {this.editTransmission} 
                                 confirmText={this.state.confirmText} 
                                 showConfirmBox={this.deleteItem} 
@@ -189,6 +191,7 @@ class TransmissionsListContainer extends Component {
 
 function mapStateToProps(store) {
     return {
+        loggedUser: store.userState.loggedUser,
         transmissions: store.transmissionState.transmissions,
         fetching: store.transmissionState.fetching,
         activePage: store.transmissionState.activePage,
@@ -198,4 +201,4 @@ function mapStateToProps(store) {
     }
 }
 
-export default connect(mapStateToProps, { requestTransmissions, requestDeleteTransmission, requestSubmitTransmission,requestUpdateTransmission, requestTransmissionStatus })(TransmissionsListContainer);
+export default connect(mapStateToProps, { requestLoggedUser, requestTransmissions, requestDeleteTransmission, requestSubmitTransmission,requestUpdateTransmission, requestTransmissionStatus })(TransmissionsListContainer);

@@ -35,6 +35,7 @@ function* getLoggedUserFlow() {
     try {
         const result = yield call(api.getLoggedUser)
         const resp = result.data
+        console.log('res', resp)
         if(result.status==200) {
             yield put({type: types.GET_LOGGED_USER, resp})
         }

@@ -32,6 +32,7 @@ class EnginesizesController extends Controller
         $errorcode="";
         try{
             if($request->get('enginesize_desc')!=null){
+                $request->merge(['created_by'=>auth()->id()]);
                 $enginesize = Enginesize::create($request->all());
                 $result = true;
             }else{

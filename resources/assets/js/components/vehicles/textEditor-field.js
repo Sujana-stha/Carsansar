@@ -18,9 +18,10 @@ class TextEditorField extends Component {
             <div className="col s12">
                 <p>{this.props.label}</p>
                 <Editor
-                    initialValue={input.value == "" ? "<p>This is the initial content of the editor</p>": input.value}
+                    initialValue={input.value == "" ? "": input.value}
+                    value ={input.value == "" ? "": input.value}
                     init={{
-                        height: 350,
+                        height: 250,
                         plugins: 'advlist link image code help lists wordcount insertdatetime',
                         toolbar: 'undo redo | bold italic | alignleft aligncenter alignright | formatselect | bullist numlist outdent indent | code | help'
                     }}

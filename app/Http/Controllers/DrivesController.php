@@ -31,6 +31,7 @@ class DrivesController extends Controller
         $errorcode="";
         try{
             if($request->get('drive_desc')!=null){
+                $request->merge(['created_by'=>auth()->id()]);
                 $drive = Drive::create($request->all());
                 $result = true;
             }else{

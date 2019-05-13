@@ -31,6 +31,7 @@ class MakesController extends Controller
         $errorcode="";
         try{
             if($request->get('make_desc')!=null){
+                $request->merge(['created_by'=>auth()->id()]);
                 $make = Make::create($request->all());
                 $result = true;
             }else{

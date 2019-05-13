@@ -4,7 +4,7 @@ import Pagination from "react-js-pagination";
 import DrivesList from '../../components/drives/drives';
 import store from '../../store';
 import { requestDrives, requestDeleteDrives, requestSubmitDrives,requestUpdateDrives, requestDrivesStatus } from  '../../actions/drives-action';
-
+import {requestLoggedUser} from '../../actions/users-action';
 
 //COMPONENT
 import DriveForm from '../../components/drives/drives-form';
@@ -34,6 +34,7 @@ class DrivesListContainer extends Component {
         let sorted_column = this.state.sorted_column
         let order = this.state.order
         this.props.requestDrives(pageNumber, sorted_column, order);
+        this.props.requestLoggedUser();
     }
 
     // submit function for new data
@@ -151,6 +152,7 @@ class DrivesListContainer extends Component {
                             {this.props.drives.length ? (
                                 <DrivesList 
                                 drives= {this.props.drives} 
+                                userRole ={ this.props.loggedUser}
                                 onEditDrive = {this.editDrives} 
                                 confirmText={this.state.confirmText} 
                                 showConfirmBox={this.deleteItem} 
@@ -189,6 +191,7 @@ class DrivesListContainer extends Component {
 
 function mapStateToProps(store) {
     return {
+        loggedUser: store.userState.loggedUser,
         drives: store.driveState.drives,
         fetching: store.driveState.fetching,
         activePage: store.driveState.activePage,
@@ -198,4 +201,4 @@ function mapStateToProps(store) {
     }
 }
 
-export default connect(mapStateToProps, {requestDrives, requestDeleteDrives, requestSubmitDrives,requestUpdateDrives, requestDrivesStatus})(DrivesListContainer);
+export default connect(mapStateToProps, { requestLoggedUser, requestDrives, requestDeleteDrives, requestSubmitDrives,requestUpdateDrives, requestDrivesStatus})(DrivesListContainer);

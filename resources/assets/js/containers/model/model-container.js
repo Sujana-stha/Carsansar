@@ -4,7 +4,7 @@ import Pagination from "react-js-pagination";
 import ModelList from '../../components/models/models';
 import store from '../../store';
 import { requestModel, requestDeleteModel, requestSubmitModel, requestUpdateModel, requestModelStatus } from  '../../actions/model-action';
-
+import {requestLoggedUser} from '../../actions/users-action';
 
 //COMPONENT
 import ModelForm from '../../components/models/models-form';
@@ -34,6 +34,7 @@ class ModelsListContainer extends Component {
         let sorted_column = this.state.sorted_column
         let order = this.state.order
         this.props.requestModel(pageNumber, sorted_column, order);
+        this.props.requestLoggedUser();
     }
 
     // submit function for new data
@@ -149,6 +150,7 @@ class ModelsListContainer extends Component {
                             {this.props.models.length ? (
                                 <ModelList 
                                 models= {this.props.models} 
+                                userRole ={ this.props.loggedUser}
                                 onEditModel = {this.editModels} 
                                 confirmText={this.state.confirmText} 
                                 showConfirmBox={this.deleteItem} 
@@ -186,6 +188,7 @@ class ModelsListContainer extends Component {
 
 function mapStateToProps(store) {
     return {
+        loggedUser: store.userState.loggedUser,
         models: store.modelState.models,
         fetching: store.modelState.fetching,
         activePage: store.modelState.activePage,
@@ -195,4 +198,4 @@ function mapStateToProps(store) {
     }
 }
 
-export default connect(mapStateToProps, {requestModel, requestDeleteModel, requestSubmitModel, requestUpdateModel, requestModelStatus })(ModelsListContainer);
+export default connect(mapStateToProps, { requestLoggedUser, requestModel, requestDeleteModel, requestSubmitModel, requestUpdateModel, requestModelStatus })(ModelsListContainer);

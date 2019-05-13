@@ -13,7 +13,6 @@ export function getTransmission(pageNumber, sorted_column, order) {
 export function addTransmission(values) {
     const access_token = window.localStorage.getItem('access_token')
     const headers = getHeaders(access_token)
-    values.created_by = 1;
     return axios.post('/api/transmissions', values,{headers})
     .catch(error=> {
         console.log(error)

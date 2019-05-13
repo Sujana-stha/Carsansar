@@ -31,6 +31,7 @@ class TransmissionsController extends Controller
         $errorcode="";
         try{
             if($request->get('transmission_desc')!=null){
+                $request->merge(['created_by'=>auth()->id()]);
                 $transmission = Transmission::create($request->all());
                 $result = true;
             }else{

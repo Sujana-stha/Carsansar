@@ -2,6 +2,7 @@ import React from 'react';
 
 
 const DrivesList = (props) => {
+    const authUser = window.Laravel.super_admin
     return (
         <tbody>
             {
@@ -13,7 +14,9 @@ const DrivesList = (props) => {
                             <td>{drive.created_by.name}</td>
                             <td className="action">
                                 <a href="javascript:void(0);" onClick={props.onEditDrive.bind(null, drive.id)} className="tooltipped" data-position="top" data-delay="50" data-tooltip="Edit"><i className="material-icons">edit</i></a>
-                                <a className="tooltip" href="javascript:void(0);" onClick={() => props.showConfirmBox(drive.id)} data-tooltip="Delete"><i className="material-icons">delete</i></a>
+                                {props.userRole.name == authUser ? (
+                                    <a className="tooltip" href="javascript:void(0);" onClick={() => props.showConfirmBox(drive.id)} data-tooltip="Delete"><i className="material-icons">delete</i></a>
+                                ): null }
                                 {props.confirmText == drive.id ? (
                                     <span className="confirm tooltip-text">Are you sure?&nbsp;
                                             <a onClick={props.deleteDrive.bind(null, drive.id)} href="javascript:void(0);">Yes</a> &nbsp;

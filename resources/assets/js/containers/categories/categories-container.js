@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Pagination from "react-js-pagination";
 import store from '../../store';
 import { requestCategories, requestDeleteCategories, requestSubmitCategories,requestUpdateCategories, requestCategoriesStatus } from  '../../actions/categories-action';
-
+import {requestLoggedUser} from '../../actions/users-action';
 
 //COMPONENT
 import CategoryForm from '../../components/categories/categories-form';
@@ -33,6 +33,7 @@ class CategoriesListContainer extends Component {
         let sorted_column = this.state.sorted_column
         let order = this.state.order
         this.props.requestCategories(pageNumber, sorted_column, order);
+        this.props.requestLoggedUser();
     }
 
     // submit function for new data
@@ -150,6 +151,7 @@ class CategoriesListContainer extends Component {
                             {this.props.categories.length ? (
                                 <CategoriesList 
                                     categories= {this.props.categories} 
+                                    userRole ={ this.props.loggedUser}
                                     onEditCategory = {this.editCategories} 
                                     confirmText={this.state.confirmText} 
                                     showConfirmBox={this.deleteItem} 
@@ -188,6 +190,7 @@ class CategoriesListContainer extends Component {
 
 function mapStateToProps(store) {
     return {
+        loggedUser: store.userState.loggedUser,
         categories: store.categoryState.categories,
         fetching: store.categoryState.fetching,
         activePage: store.categoryState.activePage,
@@ -197,4 +200,4 @@ function mapStateToProps(store) {
     }
 }
 
-export default connect(mapStateToProps, { requestCategories, requestDeleteCategories, requestSubmitCategories,requestUpdateCategories, requestCategoriesStatus})(CategoriesListContainer);
+export default connect(mapStateToProps, { requestLoggedUser, requestCategories, requestDeleteCategories, requestSubmitCategories,requestUpdateCategories, requestCategoriesStatus})(CategoriesListContainer);

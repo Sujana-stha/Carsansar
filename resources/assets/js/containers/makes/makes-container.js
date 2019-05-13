@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Pagination from "react-js-pagination";
-import MakesList from '../../components/makes/makes';
 import store from '../../store';
+import MakesList from '../../components/makes/makes';
 import { requestMakes, requestDeleteMakes, requestSubmitMake,requestUpdateMakes, requestMakesStatus } from  '../../actions/makes-action';
+import {requestLoggedUser} from '../../actions/users-action';
 
 //COMPONENT
 import MakeForm from '../../components/makes/makes-form';
@@ -32,6 +33,7 @@ class MakesListContainer extends Component {
         let order = this.state.order
         let pageNumber = this.props.activePage
         this.props.requestMakes(pageNumber,sorted_column, order);
+        this.props.requestLoggedUser();
     }
 
     // submit function for new data
@@ -147,6 +149,7 @@ class MakesListContainer extends Component {
                             {this.props.makes.length ? (
                                 <MakesList 
                                 makes= {this.props.makes} 
+                                userRole ={ this.props.loggedUser}
                                 onEdit = {this.editMakes} 
                                 confirmText={this.state.confirmText} 
                                 showConfirmBox={this.deleteItem} 
@@ -161,7 +164,6 @@ class MakesListContainer extends Component {
                                     <tr><td>No Results Found!</td></tr>
                                 </tbody>
                             )}
-
 
                         </table>
                         <div className="col s12 mt-2 mb-2 left-align">
@@ -184,6 +186,7 @@ class MakesListContainer extends Component {
 
 function mapStateToProps(store) {
     return {
+        loggedUser: store.userState.loggedUser,
         makes: store.makeState.makes,
         activePage: store.makeState.activePage,
         itemsCountPerPage: store.makeState.itemsCountPerPage,
@@ -193,4 +196,4 @@ function mapStateToProps(store) {
     }
 }
 
-export default connect(mapStateToProps, {requestMakes,requestDeleteMakes, requestSubmitMake, requestUpdateMakes, requestMakesStatus})(MakesListContainer);
+export default connect(mapStateToProps, { requestLoggedUser, requestMakes, requestDeleteMakes, requestSubmitMake, requestUpdateMakes, requestMakesStatus})(MakesListContainer);

@@ -4,7 +4,7 @@ import Pagination from "react-js-pagination";
 import BodiesList from '../../components/bodies/bodies';
 import store from '../../store';
 import { requestBodies, requestDeleteBodies, requestSubmitBodies,requestUpdateBodies, requestBodiesStatus } from  '../../actions/bodies-action';
-
+import {requestLoggedUser} from '../../actions/users-action';
 
 //COMPONENT
 import BodyForm from '../../components/bodies/bodies-form';
@@ -33,6 +33,7 @@ class BodiesListContainer extends Component {
         let sorted_column = this.state.sorted_column
         let order = this.state.order
         this.props.requestBodies(pageNumber, sorted_column, order);
+        this.props.requestLoggedUser();
     }
 
     // submit function for new data
@@ -148,6 +149,7 @@ class BodiesListContainer extends Component {
                             {this.props.bodies.length ? (
                                 <BodiesList 
                                     bodies= {this.props.bodies} 
+                                    userRole ={ this.props.loggedUser}
                                     onEditBody = {this.editBodies} 
                                     confirmText={this.state.confirmText} 
                                     showConfirmBox={this.deleteItem} 
@@ -186,6 +188,7 @@ class BodiesListContainer extends Component {
 
 function mapStateToProps(store) {
     return {
+        loggedUser: store.userState.loggedUser,
         bodies: store.bodyState.bodies,
         fetching: store.bodyState.fetching,
         activePage: store.bodyState.activePage,
@@ -195,4 +198,4 @@ function mapStateToProps(store) {
     }
 }
 
-export default connect(mapStateToProps, {requestBodies, requestDeleteBodies, requestSubmitBodies,requestUpdateBodies, requestBodiesStatus})(BodiesListContainer);
+export default connect(mapStateToProps, { requestLoggedUser, requestBodies, requestDeleteBodies, requestSubmitBodies,requestUpdateBodies, requestBodiesStatus})(BodiesListContainer);

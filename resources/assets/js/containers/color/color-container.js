@@ -4,7 +4,7 @@ import Pagination from "react-js-pagination";
 import { connect } from 'react-redux';
 import store from '../../store';
 import { requestColors, requestDeleteColors, requestSubmitColor,requestUpdateColors, requestColorStatus } from  '../../actions/color-actions';
-
+import {requestLoggedUser} from '../../actions/users-action';
 
 //COMPONENTS
 import ColorList from '../../components/color/color';
@@ -46,6 +46,7 @@ class ColorListContainer extends Component {
         let sorted_column = this.state.sorted_column
         let order = this.state.order
         this.props.requestSubmitColor(formValues, pageNumber, sorted_column, order);
+        this.props.requestLoggedUser();
     }
 
     // submit function to update data
@@ -154,6 +155,7 @@ class ColorListContainer extends Component {
                         {this.props.colors.length ? (
                             <ColorList 
                                 colors= {this.props.colors} 
+                                userRole ={ this.props.loggedUser}
                                 onEditColor = {this.editColors} 
                                 confirmText={this.state.confirmText} 
                                 showConfirmBox={this.deleteItem} 
@@ -193,6 +195,7 @@ class ColorListContainer extends Component {
 
 function mapStateToProps(store) {
     return {
+        loggedUser: store.userState.loggedUser,
         colors: store.colorState.colors,
         activePage: store.colorState.activePage,
         itemsCountPerPage: store.colorState.itemsCountPerPage,
@@ -203,4 +206,4 @@ function mapStateToProps(store) {
     }
 }
 
-export default connect(mapStateToProps, {requestColors, requestDeleteColors, requestSubmitColor,requestUpdateColors, requestColorStatus})(ColorListContainer);
+export default connect(mapStateToProps, { requestLoggedUser, requestColors, requestDeleteColors, requestSubmitColor,requestUpdateColors, requestColorStatus})(ColorListContainer);

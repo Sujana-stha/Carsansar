@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import OptionCategoryList from '../../components/OptionCategory/optionCategory';
 import store from '../../store';
 import { requestOptionCategories, requestDeleteOptionCategories, requestSubmitOptionCategories, requestUpdateOptionCategories, requestOptionCategoriesStatus } from  '../../actions/option_cat-action';
-
+import {requestLoggedUser} from '../../actions/users-action';
 
 //COMPONENT
 import OptionCategoryForm from '../../components/OptionCategory/optionCategory-form';
@@ -30,6 +30,7 @@ class OptionCategoryListContainer extends Component {
     componentDidMount() {
         // call action to run the relative saga
         this.props.requestOptionCategories();
+        this.props.requestLoggedUser();
     }
 
     // submit function for new data
@@ -113,6 +114,7 @@ class OptionCategoryListContainer extends Component {
                             {this.props.optionCategories.length ? (
                                 <OptionCategoryList 
                                 optionCategories= {this.props.optionCategories} 
+                                userRole ={ this.props.loggedUser}
                                 onEditOptionCategory = {this.editOptionCategory} 
                                 confirmText={this.state.confirmText} 
                                 showConfirmBox={this.deleteItem} 
@@ -138,9 +140,10 @@ class OptionCategoryListContainer extends Component {
 
 function mapStateToProps(store) {
     return {
+        loggedUser: store.userState.loggedUser,
         optionCategories: store.OptCatState.optionCategories,
         fetching: store.OptCatState.fetching
     }
 }
 
-export default connect(mapStateToProps, {requestOptionCategories, requestDeleteOptionCategories, requestSubmitOptionCategories, requestUpdateOptionCategories, requestOptionCategoriesStatus })(OptionCategoryListContainer);
+export default connect(mapStateToProps, { requestLoggedUser, requestOptionCategories, requestDeleteOptionCategories, requestSubmitOptionCategories, requestUpdateOptionCategories, requestOptionCategoriesStatus })(OptionCategoryListContainer);

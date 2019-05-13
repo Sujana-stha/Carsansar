@@ -1,6 +1,7 @@
 import React from 'react';
 
 const TransmissionList = (props) => {
+    const authUser = window.Laravel.super_admin
     return (
         <tbody>
             {
@@ -12,7 +13,11 @@ const TransmissionList = (props) => {
                             <td>{transmission.created_by.name}</td>
                             <td className="action">
                                 <a href="javascript:void(0);" onClick={props.onEditTransmission.bind(null, transmission.id)} className="tooltipped" data-position="top" data-delay="50" data-tooltip="Edit"><i className="material-icons">edit</i></a>
+                                
+                                {props.userRole.name == authUser ? (
                                 <a href="javascript:void(0);" onClick={props.showConfirmBox.bind(null,transmission.id)} className="tooltip"  data-tooltip="Delete"><i className="material-icons">delete</i></a>
+                                ): null }
+
                                 {props.confirmText==transmission.id ? (
                                     <span className="confirm tooltip-text">Are you sure?&nbsp; 
                                         <a onClick={props.deleteTransmission.bind(null, transmission.id)} href="javascript:void(0);">Yes</a> &nbsp;

@@ -1,9 +1,10 @@
 import * as types from '../actions/action-types';
 
 //GET VEHICLES LIST
-export function requestVehicles() {
+export function requestVehicles(pageNumber, sorted_column, order) {
     return {
-        type: types.REQUEST_VEHICLES
+        type: types.REQUEST_VEHICLES,
+        pageNumber, sorted_column, order
     }
 }
 
@@ -30,17 +31,17 @@ export function addVehicleSuccess(values) {
 }
 
 //edit vehicles
-export function requestVehiclesUpdate(values) {
+export function requestVehiclesUpdate(vehicleId, values) {
     return {    
         type: types.REQUEST_VEHICLES_UPDATE,
-        values
+        vehicleId,  values
     }
 }
 
-export function UpdateVehiclesSuccess(values) {
+export function UpdateVehiclesSuccess(vehicleId, values) {
     return {
         type: types.UPDATE_VEHICLES_SUCCESS,
-        values
+        vehicleId, values
     }
 }
 
