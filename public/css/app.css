@@ -18476,6 +18476,10 @@ Intro
   text-align: center;
 }
 
+.wr-no-results {
+  width: 100%;
+}
+
 .wr-not-loading {
   height: 4px;
   margin: 0.5rem 0 1rem 0;

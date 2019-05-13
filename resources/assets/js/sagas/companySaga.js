@@ -30,6 +30,7 @@ function* callCompanySubmit(action) {
     let error = {};
     const result =  yield call(Api.addCompanies, action.values);
     const resp = result.data
+    
     const pageNumber= action.pageNumber
     const sorted_column=action.sorted_column
     const order= action.order

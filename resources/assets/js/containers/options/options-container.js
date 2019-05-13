@@ -5,6 +5,7 @@ import OptionsList from '../../components/options/options';
 import store from '../../store';
 import { requestOptions, requestDeleteOptions, requestSubmitOptions,requestUpdateOptions, requestOptionsStatus } from  '../../actions/options-actions';
 import {requestOptionCategories} from '../../actions/option_cat-action';
+import {requestLoggedUser} from '../../actions/users-action';
 
 //COMPONENT
 import EditOptions from '../../components/options/options-edit';
@@ -35,6 +36,7 @@ class OptionsListContainer extends Component {
         const pageNumber = this.props.activePage;
         this.props.requestOptions(pageNumber, sorted_column, order);
         this.props.requestOptionCategories();
+        this.props.requestLoggedUser();
     }
 
     // submit function for new data
@@ -155,6 +157,7 @@ class OptionsListContainer extends Component {
                             {this.props.options.length ? (
                                 <OptionsList 
                                 options= {this.props.options} 
+                                userRole ={ this.props.loggedUser}
                                 onEditOptions = {this.editOptions} 
                                 confirmText={this.state.confirmText} 
                                 showConfirmBox={this.deleteItem} 
@@ -193,6 +196,7 @@ class OptionsListContainer extends Component {
 
 function mapStateToProps(store) {
     return {
+        loggedUser: store.userState.loggedUser,
         options: store.optionState.options,
         fetching: store.optionState.fetching,
         activePage: store.optionState.activePage,
@@ -203,4 +207,4 @@ function mapStateToProps(store) {
     }
 }
 
-export default connect(mapStateToProps, {requestOptions,requestOptionCategories, requestDeleteOptions, requestSubmitOptions,requestUpdateOptions, requestOptionsStatus})(OptionsListContainer);
+export default connect(mapStateToProps, { requestLoggedUser, requestOptions,requestOptionCategories, requestDeleteOptions, requestSubmitOptions,requestUpdateOptions, requestOptionsStatus})(OptionsListContainer);

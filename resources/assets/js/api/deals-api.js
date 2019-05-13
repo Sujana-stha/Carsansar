@@ -132,10 +132,10 @@ export function getOptionsDesc(optionId) {
 }
 
 //GET VEHICLES LISTS
-export function getVehicles() {
+export function getVehicles(pageNumber, sorted_column, order) {
     const access_token = window.localStorage.getItem('access_token')
     const headers = getHeaders(access_token)
-    return axios.get('api/vehicles', {headers})
+    return axios.get(`api/vehicles?page=${pageNumber}&column=${sorted_column}&order=${order}`, {headers})
     .catch(error=> {
         console.log(error)
         return {
@@ -232,9 +232,10 @@ export function addVehicles(values) {
 export function updateVehicles(vehicleId, values) {
     const access_token = window.localStorage.getItem('access_token')
     const headers = getHeaders(access_token)
+    console.log('values', values)
     const data = formValues(values)
 
-    return axios.put('/api/vehicles'+vehicleId, data,{headers})
+    return axios.put('/api/vehicles/'+ vehicleId, data,{headers})
     .catch(error=> {
         console.log(error)
         return {

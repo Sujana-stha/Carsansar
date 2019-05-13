@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
+import store from '../../store';
+//action
+import {  requestSubmitVehicle} from '../../actions/deals-action'
+
 //api
 import * as api from '../../api/deals-api';
 import * as optCatapi from '../../api/option_cat-api';
 //components
 import InsertVehicle from '../../components/vehicles/insert-vehicle-form'
-//action
-import {  requestSubmitVehicle} from '../../actions/deals-action'
 
 
 class VehicleFormContainer extends Component {
@@ -29,40 +31,66 @@ class VehicleFormContainer extends Component {
         };
     }
     componentDidMount() {
+		this.mounted =  true
         api.getMakesList().then((response)=> {
+			if(this.mounted) {
 			this.setState({ makes: response.data })
+			}
 		})
 		api.getModelsList().then((response) => {
+			if(this.mounted) {
 			this.setState({ models: response.data })
+			}
 		})
 		api.getBodiesList().then((response) => {
+			if(this.mounted) {
 			this.setState({ bodies: response.data })
+			}
 		})
 		api.getEnginesizeList().then((response) => {
+			if(this.mounted) {
 			this.setState({ enginesizes: response.data })
+			}
 		})
 		api.getTransmissionList().then((response) => {
+			if(this.mounted) {
 			this.setState({ transmissions: response.data })
+			}
 		})
 		api.getColorsList().then((response)=> {
+			if(this.mounted) {
 			this.setState({ colors: response.data })
+			}
 		})
 		api.getFueltypesList().then((response)=> {
+			if(this.mounted) {
 			this.setState({ fueltypes: response.data })
+			}
 		})
 		api.getDRivesist().then((response)=> {
+			if(this.mounted) {
 			this.setState({drives: response.data })
+			}
 		})
 		api.getCategoriesList().then((response)=> {
+			if(this.mounted) {
 			this.setState({categories: response.data})
+			}
 		})
 		api.getOptionsList().then((response)=> {
+			if(this.mounted) {
 			this.setState({options: response.data})
+			}
 		})
 		optCatapi.getOptionsCategories().then((response) => {
+			if(this.mounted) {
 			this.setState({optCategories: response.data})
+			}
 		})
-    }
+	}
+	componentWillUnmount() {
+		this.mounted = false;
+	}
     onSubmit(values) {
         this.props.requestSubmitVehicle(values);
     }
@@ -76,7 +104,7 @@ class VehicleFormContainer extends Component {
 					</div>
 				</div>
 				<h4 className="header2">Add New Vehicle</h4>
-                <InsertVehicle 
+				<InsertVehicle 
                 makes={this.state.makes}
                 models={this.state.models}
                 categories={this.state.categories}
@@ -96,5 +124,4 @@ class VehicleFormContainer extends Component {
     }
 }
 
-
-export default connect(null, {requestSubmitVehicle})(VehicleFormContainer);
+export default connect(null, {requestSubmitVehicle})(VehicleFormContainer)

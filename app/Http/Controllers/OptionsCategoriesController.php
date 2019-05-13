@@ -24,6 +24,7 @@ class OptionsCategoriesController extends Controller
         $errorcode="";
         try{
             if($request->get('optioncategory_desc')!=null){
+                $request->merge(['created_by'=>auth()->id()]);
                 $optionCategories = OptionCategory::create($request->all());
                 $result = true;
             }else{

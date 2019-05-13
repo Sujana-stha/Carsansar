@@ -31,6 +31,7 @@ class CategoriesController extends Controller
         $errorcode="";
         try{
             if($request->get('category_desc')!=null){
+                $request->merge(['created_by'=>auth()->id()]);
                 $category = Category::create($request->all());
                 $result = true;
             }else{

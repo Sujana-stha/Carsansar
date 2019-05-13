@@ -4,7 +4,7 @@ import Pagination from "react-js-pagination";
 import EnginesizesList from '../../components/enginesizes/enginesizes';
 import store from '../../store';
 import { requestEnginesizes, requestDeleteEnginesizes, requestSubmitEnginesizes,requestUpdateEnginesizes, requestEnginesizesStatus } from  '../../actions/enginesizes-action';
-
+import {requestLoggedUser} from '../../actions/users-action';
 
 //COMPONENT
 import EnginesizeForm from '../../components/enginesizes/enginesizes-form';
@@ -35,6 +35,7 @@ class EnginesizesListContainer extends Component {
         let sorted_column = this.state.sorted_column
         let order = this.state.order
         this.props.requestEnginesizes(pageNumber, sorted_column, order);
+        this.props.requestLoggedUser();
     }
 
     // submit function for new data
@@ -153,6 +154,7 @@ class EnginesizesListContainer extends Component {
                             {this.props.enginesizes.length ? (
                                 <EnginesizesList 
                                 enginesizes= {this.props.enginesizes} 
+                                userRole ={ this.props.loggedUser}
                                 onEditEnginesize = {this.editEnginesizes} 
                                 confirmText={this.state.confirmText} 
                                 showConfirmBox={this.deleteItem} 
@@ -191,6 +193,7 @@ class EnginesizesListContainer extends Component {
 
 function mapStateToProps(store) {
     return {
+        loggedUser: store.userState.loggedUser,
         enginesizes: store.enginesizeState.enginesizes,
         fetching: store.enginesizeState.fetching,
         activePage: store.enginesizeState.activePage,
@@ -200,4 +203,4 @@ function mapStateToProps(store) {
     }
 }
 
-export default connect(mapStateToProps, { requestEnginesizes, requestDeleteEnginesizes, requestSubmitEnginesizes,requestUpdateEnginesizes, requestEnginesizesStatus })(EnginesizesListContainer);
+export default connect(mapStateToProps, { requestLoggedUser, requestEnginesizes, requestDeleteEnginesizes, requestSubmitEnginesizes,requestUpdateEnginesizes, requestEnginesizesStatus })(EnginesizesListContainer);

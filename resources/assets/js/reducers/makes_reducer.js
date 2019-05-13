@@ -14,7 +14,7 @@ const initialState = {
 const makeReducer =  function(state = initialState, action) {
     switch(action.type) {
         case types.REQUEST_MAKES: 
-            return {...state, fetching: true};
+            return {...state, fetching: true, sending: false };
            
         case types.GET_MAKES_SUCCESS:
             return Object.assign({}, state, {

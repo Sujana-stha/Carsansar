@@ -32,6 +32,7 @@ class VehicleModelsController extends Controller
         $errorcode="";
         try{
             if($request->get('model_desc')!=null){
+                $request->merge(['created_by'=>auth()->id()]);
                 $model = VehicleModel::create($request->all());
                 $result = true;
             }else{

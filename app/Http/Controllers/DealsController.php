@@ -15,9 +15,12 @@ use DB;
 
 class DealsController extends Controller
 {
+
     private $user_id = 1;
-    public function index()
+    public function index(Request $request)
     {
+       $user = $request->user();
+        // echo $user;
         return Deal::with('vehicleInfo.categoryId:id,category_desc',
                         'vehicleInfo.makeId:id,make_desc',
                         'vehicleInfo.modelId:id,model_desc',
@@ -32,7 +35,7 @@ class DealsController extends Controller
                         'attribute.bodyId:id,body_desc',
                         'financing',
                         'images',
-                        'createdBy:id,name')->get();
+                        'createdBy:id,name')->orderBy($request->column, $request->order)->paginate(4);
     }
  
     public function show($id)
@@ -135,14 +138,18 @@ class DealsController extends Controller
 
         DB::beginTransaction();
         try {
-            $vehicle = VehicleInfo::where('vin', '=', $vehicle_info->vin)->first();
-            $vi_id="";
-            if ($vehicle === null) {            
-                $vehicle_info->save();
-                $vi_id=$vehicle_info->id;
-            }else{
-                $vi_id=$vehicle->id;
-            }         
+            $vi_id=null;
+            if($vehicle_info->vin != null){
+                $vehicle = VehicleInfo::where('vin', '=', $vehicle_info->vin)->first();
+                
+                if ($vehicle === null) {            
+                    $vehicle_info->save();
+                    $vi_id=$vehicle_info->id;
+                }else{
+                    $vi_id=$vehicle->id;
+                }         
+
+            }
             
             $deal->vi_id = $vi_id;
             $deal->save();

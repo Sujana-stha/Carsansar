@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import Pagination from "react-js-pagination";
 import store from '../../store';
 import { requestCompanies, requestDeleteCompanies, requestSubmitCompanies,requestUpdateCompanies, requestCompaniesStatus } from  '../../actions/companies-action';
+import {requestLoggedUser} from '../../actions/users-action';
 import loadjs from 'loadjs'
 
 //COMPONENT
@@ -40,6 +41,7 @@ class CompaniesListContainer extends Component {
         let sorted_column = this.state.sorted_column
         let order = this.state.order
         this.props.requestCompanies(pageNumber, sorted_column, order);
+        this.props.requestLoggedUser();
     }
 
     // submit function for new data
@@ -191,7 +193,8 @@ class CompaniesListContainer extends Component {
                             </thead>
                             {this.props.companies.length ? (
                                 <CompaniesList 
-                                companies= {this.props.companies} 
+                                companies= {this.props.companies}
+                                userRole ={ this.props.loggedUser} 
                                 onEditCompany = {this.editCompanies} 
                                 confirmText={this.state.confirmText} 
                                 showConfirmBox={this.deleteItem} 
@@ -231,6 +234,7 @@ class CompaniesListContainer extends Component {
 function mapStateToProps(store) {
     return {
         companies: store.companyState.companies,
+        loggedUser: store.userState.loggedUser,
         fetching: store.companyState.fetching,
         activePage: store.companyState.activePage,
         itemsCountPerPage: store.companyState.itemsCountPerPage,
@@ -239,4 +243,4 @@ function mapStateToProps(store) {
     }
 }
 
-export default connect(mapStateToProps, {requestCompanies, requestDeleteCompanies, requestSubmitCompanies,requestUpdateCompanies, requestCompaniesStatus})(CompaniesListContainer);
+export default connect(mapStateToProps, { requestLoggedUser, requestCompanies, requestDeleteCompanies, requestSubmitCompanies,requestUpdateCompanies, requestCompaniesStatus})(CompaniesListContainer);

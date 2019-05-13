@@ -31,7 +31,8 @@ class CompaniesController extends Controller
         $result = false;
         $errorcode="";
         try{
-            if($request->get('name') && $request->get('address') && $request('email')!=null){
+            if($request->get('name') && $request->get('address') && $request->get('email')!=null){
+                $request->merge(['created_by'=>auth()->id()]);
                 $company = Company::create($request->all());
                 $result = true;
             }else{

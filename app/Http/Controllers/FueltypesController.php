@@ -32,6 +32,7 @@ class FueltypesController extends Controller
         $errorcode="";
         try{
             if($request->get('fueltype_desc')!=null){
+                $request->merge(['created_by'=>auth()->id()]);
                 $fueltype = Fueltype::create($request->all());
                 $result = true;
             }else{

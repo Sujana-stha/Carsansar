@@ -4,7 +4,7 @@ import Pagination from "react-js-pagination";
 import FueltypesList from '../../components/fueltypes/fueltypes';
 import store from '../../store';
 import { requestFueltypes, requestDeleteFueltypes, requestSubmitFueltypes,requestUpdateFueltypes, requestFueltypesStatus } from  '../../actions/fueltypes-action';
-
+import {requestLoggedUser} from '../../actions/users-action';
 
 //COMPONENT
 import FueltypeForm from '../../components/fueltypes/fueltypes-form';
@@ -34,6 +34,7 @@ class FueltypesListContainer extends Component {
         let sorted_column = this.state.sorted_column
         let order = this.state.order
         this.props.requestFueltypes(pageNumber, sorted_column, order);
+        this.props.requestLoggedUser();
     }
 
     // submit function for new data
@@ -149,6 +150,7 @@ class FueltypesListContainer extends Component {
                             {this.props.fueltypes.length ? (
                                 <FueltypesList 
                                 fueltypes= {this.props.fueltypes} 
+                                userRole ={ this.props.loggedUser}
                                 onEditFueltype = {this.editFueltype} 
                                 confirmText={this.state.confirmText} 
                                 showConfirmBox={this.deleteItem} 
@@ -187,6 +189,7 @@ class FueltypesListContainer extends Component {
 
 function mapStateToProps(store) {
     return {
+        loggedUser: store.userState.loggedUser,
         fueltypes: store.fueltypeState.fueltypes,
         fetching: store.fueltypeState.fetching,
         activePage: store.fueltypeState.activePage,
@@ -196,4 +199,4 @@ function mapStateToProps(store) {
     }
 }
 
-export default connect(mapStateToProps, { requestFueltypes, requestDeleteFueltypes, requestSubmitFueltypes,requestUpdateFueltypes, requestFueltypesStatus })(FueltypesListContainer);
+export default connect(mapStateToProps, { requestLoggedUser, requestFueltypes, requestDeleteFueltypes, requestSubmitFueltypes,requestUpdateFueltypes, requestFueltypesStatus })(FueltypesListContainer);

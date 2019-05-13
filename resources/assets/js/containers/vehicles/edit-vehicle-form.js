@@ -5,6 +5,7 @@ import 'react-web-tabs/dist/react-web-tabs.css';
 import { Field, reduxForm, formValueSelector } from 'redux-form';
 import {  requestVehiclesUpdate} from '../../actions/deals-action'
 import { connect } from 'react-redux';
+import store from '../../store'
 //API
 import * as api from '../../api/deals-api';
 import * as optCatapi from '../../api/option_cat-api';
@@ -32,9 +33,11 @@ class EditVehicles extends Component {
         }
     }
     componentDidMount() {
+		console.log('v==', this.props)
 		let vehicleId =  this.props.match.params.id
 		api.getSingleVehicles(vehicleId).then((response)=> {
 			const data =  response.data;
+			console.log('data', data)
 			const vehicles = {
 				tech_specification: data.tech_specification,
 				trim: data.trim,
@@ -61,17 +64,17 @@ class EditVehicles extends Component {
 				fuel_economy: data.attribute.fuel_economy,
 				highway_mpg: data.attribute.highway_mpg,
 				mileage: data.attribute.mileage,
-
-				category_id: data.vehicle_info.category_id==null ? 'Null':{label:data.vehicle_info.category_id.category_desc, value: data.vehicle_info.category_id.id},
-				drive_id: data.vehicle_info.drive_id==null ? 'Null':{label:data.vehicle_info.drive_id.drive_desc, value:data.vehicle_info.drive_id.id},
-				enginesize_id: data.vehicle_info.enginesize_id==null ? 'Null':{label:data.vehicle_info.enginesize_id.enginesize_desc, value: data.vehicle_info.enginesize_id.id},
-				fueltype_id: data.vehicle_info.fueltype_id==null ? 'Null':{label:data.vehicle_info.fueltype_id.fueltype_desc, value: data.vehicle_info.fueltype_id.id},
-				make_id: data.vehicle_info.make_id==null ? 'Null':{label:data.vehicle_info.make_id.make_desc, value: data.vehicle_info.make_id.id},
-				mfg_exterior_color_id: data.vehicle_info.mfgexteriorcolor_id==null ? 'Null':{label:data.vehicle_info.mfgexteriorcolor_id.color_desc, value: data.vehicle_info.mfgexteriorcolor_id.id},
-				model_id: data.vehicle_info.model_id==null ? 'Null': {label: data.vehicle_info.model_id.model_desc, value: data.vehicle_info.model_id.id},
-				transmission_id: data.vehicle_info.transmission_id==null ? 'Null':{label:data.vehicle_info.transmission_id.transmission_desc, value: data.vehicle_info.transmission_id.id},
-				vin: data.vehicle_info.vin,
-				year: data.vehicle_info.year
+				
+				category_id: ( data.vehicle_info == null||data.vehicle_info.category_id == null)? 'Null':{label:data.vehicle_info.category_id.category_desc, value: data.vehicle_info.category_id.id},
+				drive_id: (data.vehicle_info == null|| data.vehicle_info.drive_id==null) ? 'Null':{label:data.vehicle_info.drive_id.drive_desc, value:data.vehicle_info.drive_id.id},
+				enginesize_id: (data.vehicle_info == null||data.vehicle_info.enginesize_id==null) ? 'Null':{label:data.vehicle_info.enginesize_id.enginesize_desc, value: data.vehicle_info.enginesize_id.id},
+				fueltype_id: (data.vehicle_info == null||data.vehicle_info.fueltype_id==null) ? 'Null':{label:data.vehicle_info.fueltype_id.fueltype_desc, value: data.vehicle_info.fueltype_id.id},
+				make_id: (data.vehicle_info == null||data.vehicle_info.make_id==null) ? 'Null':{label:data.vehicle_info.make_id.make_desc, value: data.vehicle_info.make_id.id},
+				mfg_exterior_color_id: (data.vehicle_info == null||data.vehicle_info.mfgexteriorcolor_id==null) ?'Null':{label:data.vehicle_info.mfgexteriorcolor_id.color_desc, value: data.vehicle_info.mfgexteriorcolor_id.id},
+				model_id: (data.vehicle_info == null||data.vehicle_info.model_id==null) ? 'Null': {label: data.vehicle_info.model_id.model_desc, value: data.vehicle_info.model_id.id},
+				transmission_id: (data.vehicle_info == null||data.vehicle_info.transmission_id==null) ? 'Null':{label:data.vehicle_info.transmission_id.transmission_desc, value: data.vehicle_info.transmission_id.id},
+				vin:  data.vehicle_info == null ? 'Null':data.vehicle_info.vin,
+				year:  data.vehicle_info == null ? 'Null': data.vehicle_info.year
 			}
             this.props.initialize(vehicles);
 		})
@@ -179,6 +182,7 @@ class EditVehicles extends Component {
 	}
 	
 	onSubmit(values) {
+		let vehicleId =  this.props.match.params.id
 		console.log('value', values)
 		if(typeof values.make_id === 'string') {values.make_id= values.make_id} else {values.make_id = values.make_id.value}
 
@@ -202,7 +206,7 @@ class EditVehicles extends Component {
 		
 		if(typeof values.transmission_id === 'string') {values.transmission_id= values.transmission_id} else {values.transmission_id = values.transmission_id.value}
 		
-		this.props.requestVehiclesUpdate(values)
+		this.props.requestVehiclesUpdate(vehicleId, values)
 	}
     render() {
 		// const { handleSubmit } = this.props;
@@ -671,5 +675,9 @@ EditVehicles = connect(state=> {
 	};
 })(EditVehicles)
 
-
-export default connect(null, {requestVehiclesUpdate})(EditVehicles);
+function mapStateToProps(store) {
+	return {
+		vehicles: store.dealState.vehicleList
+	}
+}
+export default connect(mapStateToProps, {requestVehiclesUpdate})(EditVehicles);

@@ -31,6 +31,7 @@ class ColorsController extends Controller
         $errorcode="";
         try{
             if($request->get('color_desc')!=null){
+                $request->merge(['created_by'=>auth()->id()]);
                 $color = Color::create($request->all());
                 $result = true;
             }else{
@@ -52,8 +53,8 @@ class ColorsController extends Controller
  
     public function update(Request $request, Color $color)
     {
+        $color->updated_by = auth()->id();
         $color->update($request->all());
- 
         return response()->json($color, 200);
     }
  

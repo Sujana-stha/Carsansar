@@ -4,7 +4,11 @@ const initialState = {
     vehicleList: [],
     fetching: false,
     optionList: [],
-    sending: false
+    sending: false,
+    activePage: 1,
+    itemsCountPerPage: 3,
+    totalItemsCount: 1,
+    pageRangeDisplayed: 3
 }
 
 
@@ -16,8 +20,12 @@ const dropdownList =  function(state = initialState, action) {
         
         case types.GET_VEHICLES_SUCCESS:
             return Object.assign({}, state, {
-                vehicleList: action.vehicles,
-                fetching: false
+                vehicleList: action.vehicles.data,
+                fetching: false,
+                itemsCountPerPage: action.vehicles.per_page,
+                totalItemsCount: action.vehicles.total,
+                activePage: action.vehicles.current_page,
+                sending: false
             });
         
         //reducer to add vehicles

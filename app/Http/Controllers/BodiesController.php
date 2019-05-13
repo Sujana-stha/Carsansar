@@ -31,6 +31,7 @@ class BodiesController extends Controller
         $errorcode="";
         try{
             if($request->get('body_desc')!=null){
+                $request->merge(['created_by'=>auth()->id()]);
                 $body = Body::create($request->all());
                 $result = true;
             }else{

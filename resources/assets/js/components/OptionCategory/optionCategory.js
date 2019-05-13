@@ -1,6 +1,7 @@
 import React from 'react';
 
 const OptionCategoryList = (props) => {
+    const authUser = window.Laravel.super_admin
     return (
         <tbody>
             {
@@ -13,7 +14,10 @@ const OptionCategoryList = (props) => {
                             <td>{optionCategory.created_by.name}</td>
                             <td className="action">
                                 <a href="javascript:void(0);" onClick={props.onEditOptionCategory.bind(null, optionCategory.id)} className="tooltipped" data-position="top" data-delay="50" data-tooltip="Edit"><i className="material-icons">edit</i></a>
-                                <a className="tooltip" href="javascript:void(0);" onClick={() => props.showConfirmBox(optionCategory.id)} data-tooltip="Delete"><i className="material-icons">delete</i></a>
+                                {props.userRole.name == authUser ? (
+                                    <a className="tooltip" href="javascript:void(0);" onClick={() => props.showConfirmBox(optionCategory.id)} data-tooltip="Delete"><i className="material-icons">delete</i></a>
+                                ): null }
+
                                 {props.confirmText == optionCategory.id ? (
                                     <span className="confirm tooltip-text">Are you sure?&nbsp; &nbsp;
                                         <a onClick={props.deleteOptionCategory.bind(null, optionCategory.id)} href="javascript:void(0);">Yes</a> &nbsp;

@@ -11,23 +11,24 @@ export function* vehiclesWatcher() {
 }
 
 
-function* callVehiclesSaga() {
-    const response = yield call(api.getVehicles);
-    const results = response.data
-    const options = yield all (results.map(result=> 
-        optionDesc(result.attribute.option_ids)
-    ))
-    const vehicles = results.filter(result=>{
-        const opt =  options.filter(option=> {
-            if(results.indexOf(result)===options.indexOf(option)) {
-                return Object.assign(result, {
-                    option_desc: option
-                })
-            }
-        })
-        return opt;
-    })
-    console.log('vehicles', vehicles)
+function* callVehiclesSaga(action) {
+    
+    const response = yield call(api.getVehicles, action.pageNumber, action.sorted_column, action.order);
+    const vehicles = response.data
+    
+    // const options = yield all (results.map(result=> 
+    //     optionDesc(result.attribute.option_ids)
+    // ))
+    // const vehicles = results.filter(result=>{
+    //     const opt =  options.filter(option=> {
+    //         if(results.indexOf(result)===options.indexOf(option)) {
+    //             return Object.assign(result, {
+    //                 option_desc: option
+    //             })
+    //         }
+    //     })
+    //     return opt;
+    // })
     if (response.errors) {
         yield put({ type: types.REQUEST_VEHICLES_FAILED, errors: response.error});
         error = response.error;
@@ -37,12 +38,10 @@ function* callVehiclesSaga() {
     }
 }
 
-function* optionDesc (optionId) {
-    console.log('optionId', optionId)
-    const optionRes = yield call(api.getOptionsDesc, optionId);
-    return optionRes.data;
-}
-
+// function* optionDesc (optionId) {
+//     const optionRes = yield call(api.getOptionsDesc, optionId);
+//     return optionRes.data;
+// }
 
 // saga for add new vehicles
 export function* submitVehicleSaga() {
@@ -52,8 +51,9 @@ export function* submitVehicleSaga() {
 function* callVehicleSubmit(action) {
     yield put(startSubmit('PostVehicles'));
     let error = {};
-   
-    console.log('sagaValue', action.values);
+    const pageNumber = 1
+    const sorted_column = 'id'
+    const order = 'desc'
     const result =  yield call(api.addVehicles, action.values);
     const resp = result.data
     if (result.errors) {
@@ -61,12 +61,12 @@ function* callVehicleSubmit(action) {
         error = result.error;
         notify.show("Creation failed!", "error", 5000)
     } else {
-        yield put({type: types.ADD_VEHICLES_SUCCESS, resp});
+        yield put({type: types.REQUEST_VEHICLES, pageNumber, sorted_column, order});
         notify.show("Vehicle created successfully!", "success", 5000);
     }
     yield put(stopSubmit('PostVehicles', error));
     yield put(reset('PostVehicles'));
-    // yield put(push('/dashboard/vehicles'));
+    yield put(push('/dashboard/vehicles'));
 }
 
 //SAGA TO UPDATE VEHICLES
@@ -76,8 +76,9 @@ export function* editVehicleSaga() {
 
 function* callVehicleUpdate(action) {
     yield put(startSubmit('EditVehicles'));
+    console.log('act', action)
     let error = {};
-    const result = yield call(api.updateVehicles, action.values.id, action.values);
+    const result = yield call(api.updateVehicles, action.vehicleId, action.values);
     const resp = result.data;
     if (result.errors) {
         yield put({ type: types.REQUEST_VEHICLES_FAILED, errors: result.errors});
@@ -101,12 +102,10 @@ export function* createVehiclesAttrSaga() {
 }
 
 function* callVehiclesAttrCreate(action) {
-    console.log('act', action)
     let error ={}
     try {
         const response = yield call(api.vehicleAttr, action.values, action.apiName)
         const resp = response.data
-        console.log('reess', response)
         const apiName = action.apiName
         if(resp) {
             yield put({type: types.ADD_VEHICLES_ATTR_SUCCESS, resp,apiName})

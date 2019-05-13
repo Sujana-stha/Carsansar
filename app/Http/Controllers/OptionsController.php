@@ -55,6 +55,7 @@ class OptionsController extends Controller
         $errorcode="";
         try{
             if($request->get('option_desc')!=null){
+                $request->merge(['created_by'=>auth()->id()]);
                 $option = Option::create($request->all());
                 $result = true;
             }else{
