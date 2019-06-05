@@ -31,10 +31,10 @@ export function addVehicleSuccess(values) {
 }
 
 //edit vehicles
-export function requestVehiclesUpdate(vehicleId, values) {
+export function requestVehiclesUpdate(vehicleId, values, vehicleData) {
     return {    
         type: types.REQUEST_VEHICLES_UPDATE,
-        vehicleId,  values
+        vehicleId,  values, vehicleData
     }
 }
 

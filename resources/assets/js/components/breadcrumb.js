@@ -13,7 +13,7 @@ const BreadcrumbPageTitle =({match, ...rest}) => {
 
 const Breadcrumbs = () => {
   return(
-    <div className="breadcrumbs-wrapper col s12">
+    <div className="breadcrumbs-wrapper container">
       <div className="page-title">
         <Route path='/:path' component={BreadcrumbPageTitle}/>
       </div>

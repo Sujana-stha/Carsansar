@@ -78,7 +78,7 @@ function* callVehicleUpdate(action) {
     yield put(startSubmit('EditVehicles'));
     console.log('act', action)
     let error = {};
-    const result = yield call(api.updateVehicles, action.vehicleId, action.values);
+    const result = yield call(api.updateVehicles, action.vehicleId, action.values, action.vehicleData);
     const resp = result.data;
     if (result.errors) {
         yield put({ type: types.REQUEST_VEHICLES_FAILED, errors: result.errors});

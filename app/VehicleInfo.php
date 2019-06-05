@@ -13,6 +13,7 @@ class VehicleInfo extends Model
     {
         return $this->belongsTo('App\Category', 'category_id', 'id');
     }
+    
     public function makeId()
     {
         return $this->belongsTo('App\Make', 'make_id', 'id');

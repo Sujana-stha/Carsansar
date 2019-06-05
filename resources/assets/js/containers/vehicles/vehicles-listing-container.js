@@ -93,6 +93,7 @@ class VehiclesListingContainer extends Component {
     }
     
     render() {
+        console.log('thi',this.props)
         return (
             <div>
                 <div className="row">

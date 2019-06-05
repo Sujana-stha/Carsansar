@@ -18485,6 +18485,11 @@ Intro
   margin: 0.5rem 0 1rem 0;
 }
 
+.wr-sorting-icon {
+  vertical-align: bottom;
+  cursor: pointer;
+}
+
 h4.wr-header2 {
   margin-top: 3% !important;
   text-transform: capitalize;
@@ -18519,12 +18524,31 @@ h4.wr-header2 {
   padding: 0 8px;
 }
 
+.wr-master-table {
+  width: 100%;
+}
+
 .wr-master-table tbody tr td {
   text-transform: capitalize;
 }
 
-.wr-master-table tbody tr td.wr-company-email {
+.wr-master-table td .wr-company-email,
+.wr-master-table th.wr-company-email {
   text-transform: none;
+  white-space: nowrap;
+  width: 95px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.wr-master-table td .wr-company-email:hover .tooltipped {
+  overflow: visible;
+  position: relative;
+  background: #FFF;
+  -webkit-box-shadow: 0 0 4px 0 black;
+          box-shadow: 0 0 4px 0 black;
+  border-radius: 1px;
+  padding: 5px;
 }
 
 .wr-company-container .collapsible {
@@ -18676,14 +18700,6 @@ h4.wr-header2 {
   width: 100%;
 }
 
-.wr-vehicles-image-thumbnail {
-  width: 50px;
-  height: 50px;
-  -o-object-fit: cover;
-     object-fit: cover;
-  margin-left: 4px;
-}
-
 @-webkit-keyframes stripes {
   from {
     background-position: 0 0;
@@ -18704,6 +18720,14 @@ h4.wr-header2 {
   }
 }
 
+.wr-vehicles-image-thumbnail {
+  width: 50px;
+  height: 50px;
+  -o-object-fit: cover;
+     object-fit: cover;
+  margin-left: 4px;
+}
+
 .wr-vehicles-table-wrapper {
   width: 100%;
 }
@@ -18713,9 +18737,8 @@ h4.wr-header2 {
   width: 180px;
 }
 
-.wr-sorting-icon {
-  vertical-align: bottom;
-  cursor: pointer;
+.wr-vehicles-table-wrapper table tbody tr td {
+  text-transform: capitalize;
 }
 
 .tox-notifications-container {

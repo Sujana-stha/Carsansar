@@ -19,8 +19,17 @@ class DealsController extends Controller
     private $user_id = 1;
     public function index(Request $request)
     {
-       $user = $request->user();
-        // echo $user;
+        // $user = $request->user();
+        // $company_id = $user->company_id;
+        $column= 'column';
+        if($column == 'year') {
+            $column = 'vehicleInfo.year';
+            echo $column ;
+        } else {
+            $column = 'column';
+        }
+        
+        
         return Deal::with('vehicleInfo.categoryId:id,category_desc',
                         'vehicleInfo.makeId:id,make_desc',
                         'vehicleInfo.modelId:id,model_desc',
@@ -35,7 +44,7 @@ class DealsController extends Controller
                         'attribute.bodyId:id,body_desc',
                         'financing',
                         'images',
-                        'createdBy:id,name')->orderBy($request->column, $request->order)->paginate(4);
+                        'createdBy:id,name')->orderBy($request->$column, $request->order)->paginate(3);
     }
  
     public function show($id)
@@ -236,7 +245,8 @@ class DealsController extends Controller
  
     public function update(Request $request, VehicleInfo $vehicleinfo, Deal $deal, Attribute $attribute, Image $image, Financing $financing )
     {
-        
+        dd($request->all());
+        exit;
         $vehicleinfo->update([
             'vin' => $request->get('vin'),
             'category_id' => $request->get('category_id'),
@@ -250,7 +260,7 @@ class DealsController extends Controller
             'transmission_id' => $request->get('transmission_id'),
             'mfg_exterior_color_id' => $request->get('mfg_exterior_color_id'), 
             'updated_by' => $this->user_id,
-            'updated_at' => Carbon::now()
+            // 'updated_at' => Carbon::now()
         ]);
 
         $deal->update([
@@ -266,7 +276,7 @@ class DealsController extends Controller
             'warranty_desc' => $request->get('warranty_desc'),
             'financing_flag' => $request->get('financing_flag'),
             'updated_by' => $this->user_id,
-            'updated_at' => Carbon::now()
+            // 'updated_at' => Carbon::now()
         ]);
 
         $attribute->update([
@@ -277,7 +287,7 @@ class DealsController extends Controller
             'body_id' => $request->get('body_id'),
             'option_ids' => $request->get('option_id'),
             'updated_by' => $this->user_id,
-            'updated_at' => Carbon::now()
+            // 'updated_at' => Carbon::now()
         ]);
 
         $financing->update([            
@@ -290,7 +300,7 @@ class DealsController extends Controller
             'odometer' => $request->get('odometer'),
             'description' => $request->get('description'),
             'updated_by' => $this->user_id,
-            'updated_at' => Carbon::now()
+            // 'updated_at' => Carbon::now()
         ]); 
  
         return response()->json($vehicleinfo,$deal,$attribute,$image,$financing, 200);

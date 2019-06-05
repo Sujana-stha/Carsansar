@@ -31,7 +31,9 @@ const LeftSidebarNav = (props) => {
 						</ul>
 					</div>
 				</li>
-		  		
+		  		<li className="bold">
+				  <NavLink to="/dashboard/import" className="collapsible-body collapsible-header waves-effect waves-cyan"><i className="material-icons">file_upload</i><span>Import</span></NavLink>
+				</li>
 				{props.userRole === props.authUser.name ? ( 
 					<li className="navigation-header">
 						<a className="navigation-header-text">Attributes </a><i className="navigation-header-icon material-icons">more_horiz</i>

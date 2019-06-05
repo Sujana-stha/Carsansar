@@ -19,6 +19,7 @@ class EditVehicles extends Component {
     constructor(props) {
         super(props)
         this.state= {
+			data: [],
             makes: [],
 			models:{},
 			bodies: {},
@@ -33,11 +34,13 @@ class EditVehicles extends Component {
         }
     }
     componentDidMount() {
-		console.log('v==', this.props)
 		let vehicleId =  this.props.match.params.id
 		api.getSingleVehicles(vehicleId).then((response)=> {
 			const data =  response.data;
 			console.log('data', data)
+			this.setState({
+				data: data
+			})
 			const vehicles = {
 				tech_specification: data.tech_specification,
 				trim: data.trim,
@@ -184,6 +187,7 @@ class EditVehicles extends Component {
 	onSubmit(values) {
 		let vehicleId =  this.props.match.params.id
 		console.log('value', values)
+		let vehicleData = this.state.data
 		if(typeof values.make_id === 'string') {values.make_id= values.make_id} else {values.make_id = values.make_id.value}
 
 		if(typeof values.model_id === 'string') {values.model_id= values.model_id} else {values.model_id = values.model_id.value}
@@ -206,7 +210,7 @@ class EditVehicles extends Component {
 		
 		if(typeof values.transmission_id === 'string') {values.transmission_id= values.transmission_id} else {values.transmission_id = values.transmission_id.value}
 		
-		this.props.requestVehiclesUpdate(vehicleId, values)
+		this.props.requestVehiclesUpdate(vehicleId, values, vehicleData)
 	}
     render() {
 		// const { handleSubmit } = this.props;

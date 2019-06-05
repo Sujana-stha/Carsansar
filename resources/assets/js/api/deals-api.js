@@ -1,6 +1,29 @@
 
 import axios, {getHeaders} from './axiosInstance'
 
+//IMPORT DOUCUMENTS FILES
+export function postDocuments(values) {
+    console.log(values)
+    const access_token = window.localStorage.getItem('access_token')
+    const headers = getHeaders(access_token)
+
+    var formData = new FormData();
+    var files =values.import
+    files.map((file) => {
+        formData.append('import', file)
+    })
+    formData.append('import', values.import)
+
+    return axios.post('/api/imports', {headers}, formData)
+    .catch(error => {
+        console.log('err', error)
+        return {
+            errors : error
+        }
+    })
+}
+
+
 //GET LISTS OF MAKES
 export function getMakesList() {
     const access_token = window.localStorage.getItem('access_token')
@@ -158,17 +181,22 @@ export function getSingleVehicles (vehicleId) {
 }
 
 function formValues(values) {
+    
     let images = values.files
-
+    
+    let title = values.title.toLowerCase();
     var formData = new FormData();
     //Form Data
-    formData.append('title', values.title);
+    formData.append('title', title);
     if(values.vehicle_status){formData.append('vehicle_status', values.vehicle_status)}
     if(values.vin){formData.append('vin', values.vin)}
     if(values.ad_desc){formData.append('ad_desc', values.ad_desc)}
     if(values.vehicle_description){formData.append('vehicle_description', values.vehicle_description)}
     if(values.tech_specification){formData.append('tech_specification', values.tech_specification)}
-    if(values.trim){formData.append('trim', values.trim)}
+    if(values.trim){
+        let trim =  values.trim.toLowerCase();
+        formData.append('trim', trim)
+    }
     if(values.kms){formData.append('kms', values.kms)}
     if(values.doors){formData.append('doors', values.doors)}
     if(values.passenger){formData.append('passenger', values.passenger)}
@@ -193,6 +221,15 @@ function formValues(values) {
     if(images) { images.map(image=>{
             formData.append('files[]', image)
             formData.append('imagemeta[]',image['main_flag'])
+        })
+    }
+    if(values.images) {
+        console.log('image', values.images)
+        values.images.map(image => {
+            if(image.preview) {
+                formData.append('newImage', image)
+                formData.append('newImagemeta', image['main_flag'])
+            }
         })
     }
     if(values.price){formData.append('price', values.price)}
@@ -228,14 +265,74 @@ export function addVehicles(values) {
     });
 }
 
+function vehicleDetails(vehicleData, object, oldImage) {
+    console.log('vehicleData', vehicleData)
+    console.log('object==', object)
+    var newVehicleData = vehicleData
+    newVehicleData.title = object.title
+    newVehicleData.ad_desc = object.ad_desc
+    newVehicleData.kms = object.kms
+    newVehicleData.price = object.price
+    newVehicleData.selling_price = object.selling_price
+    newVehicleData.tech_specification = object.tech_specification
+    newVehicleData.trim = object.trim
+    newVehicleData.vehicle_description = object.vehicle_description
+    newVehicleData.vehicle_status = object.vehicle_status
+    newVehicleData.images = oldImage
+    newVehicleData.newImage = object.newImage
+    newVehicleData.newImagemeta = object.newImagemeta
+
+    newVehicleData.attribute.body_id = object.body_id
+    newVehicleData.attribute.city_mpg = object.city_mpg
+    newVehicleData.attribute.doors = object.doors
+    newVehicleData.attribute.exterior_color_id = object.exterior_color_id
+    newVehicleData.attribute.fuel_economy= object.fuel_economy
+    newVehicleData.attribute.highway_mpg = object.highway_mpg
+    newVehicleData.attribute.interior_color_id = object.interior_color_id
+    newVehicleData.attribute.mileage = object.mileage
+    newVehicleData.attribute.option_ids=object.option_id
+    newVehicleData.attribute.passenger=object.passenger
+
+    newVehicleData.vehicle_info.category_id = object.category_id
+    newVehicleData.vehicle_info.drive_id = object.drive_id
+    newVehicleData.vehicle_info.enginesize_id = object.enginesize_id
+    newVehicleData.vehicle_info.fueltype_id = object.fueltype_id
+    newVehicleData.vehicle_info.make_id = object.make_id
+    newVehicleData.vehicle_info.mfg_exterior_color_id = object.mfg_exterior_color_id
+    newVehicleData.vehicle_info.model_id = object.model_id
+    newVehicleData.vehicle_info.transmission_id = object.transmission_id
+    newVehicleData.vehicle_info.vin = object.vin
+    newVehicleData.vehicle_info.year = object.year
+    console.log(newVehicleData)
+    return newVehicleData;
+}
+
 //UPDATES VEHICLES API
-export function updateVehicles(vehicleId, values) {
+export function updateVehicles(vehicleId, values, vehicleData) {
     const access_token = window.localStorage.getItem('access_token')
     const headers = getHeaders(access_token)
-    console.log('values', values)
+    console.log('value=>', values)
+    var oldImage = []
+    if(values.images) {
+        values.images.map(image=> {
+            if(image.path) {
+                console.log('ima', image)
+                oldImage.push(image)
+            } 
+        })
+    }
     const data = formValues(values)
+    console.log('data', data)
+    var object = {}
+    data.forEach((value, key) => {object[key]=value});
+    // var json = JSON.stringify(object)
+    
+    console.log('old', oldImage)
+    console.log('obj=>', object)
 
-    return axios.put('/api/vehicles/'+ vehicleId, data,{headers})
+    var finalData = vehicleDetails(vehicleData, object, oldImage)
+    console.log('final', finalData)
+    return axios.put('/api/vehicles/'+ vehicleId, finalData,{headers})
     .catch(error=> {
         console.log(error)
         return {
