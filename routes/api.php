@@ -14,6 +14,16 @@ use Illuminate\Http\Request;
 */
 
 Route::post('register', 'Auth\RegisterController@register');
+Route::get('vehiclesList', 'DealsController@index');
+Route::get('makesList/getList', 'MakesController@getList');
+Route::get('bodiesList/getList', 'BodiesController@getList');
+Route::get('categoriesList/getList', 'CategoriesController@getList');
+Route::get('colorsList/getList', 'ColorsController@getList');
+Route::get('drivesList/getList', 'DrivesController@getList');
+Route::get('enginesizesList/getList', 'EnginesizesController@getList');
+Route::get('fueltypesList/getList', 'FueltypesController@getList');
+Route::get('modelsList/getList', 'VehicleModelsController@getList');
+Route::get('transmissionsList/getList', 'TransmissionsController@getList');
 
 //Public Route
 //Route::post('/login','AuthenticationController@login')->name('login');
@@ -30,6 +40,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 //Private Route
  Route::middleware('auth:api')->group(function () {
+    //Users
+    Route::get('users','UserController@getUsers');
+
     Route::post('logout', 'UserController@signout');
 
     //makes

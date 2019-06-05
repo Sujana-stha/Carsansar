@@ -12,7 +12,12 @@ const CompaniesList = (props) => {
                             <td>{company.company_cd == null ? '-': company.company_cd}</td>
                             <td>{company.name == null ? '': company.name}</td>
                             <td>{company.address == null ? '-' : company. address}</td>
-                            <td className="wr-company-email">{company.email == null ? '-' : company.email}</td>
+                            <td>
+                                <div className="wr-company-email">
+                                    {company.email == null ? '-' : company.email}
+                                    <span className="tooltipped">{company.email == null ? '-' : company.email}</span>
+                                </div>
+                            </td>
                             <td>{company.contact_no == null ? '-': company.contact_no}</td>
                             <td>{company.created_by.name}</td>
                             <td className="action">

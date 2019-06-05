@@ -92,4 +92,8 @@ class UserController extends Controller
         //Auth::logout();
         
     }
+    public function getUsers() {
+        $users = User::all();
+        return $users;
+    }
 }

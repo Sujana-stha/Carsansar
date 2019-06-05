@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import DropZone from 'react-dropzone';
+    import DropZone from 'react-dropzone';
 import {notify} from 'react-notify-toast';
 
 class ImagesPreview extends Component {

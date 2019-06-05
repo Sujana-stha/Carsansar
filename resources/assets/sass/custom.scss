@@ -1,3 +1,4 @@
+// toast notification
 .toast {
     top: 0px;
 }
@@ -8,6 +9,8 @@
     left: auto !important;
     // left: 100% !important;
 }
+
+// table action column
 .action {
     position: relative;
 }
@@ -42,11 +45,13 @@
     text-decoration: underline;
 }
 
+// loading text
 .loading-text {
     font-size: 20px;
     font-weight: normal;
     text-align: center;
 }
+// no result and not loading
 .wr-no-results {
     width: 100%;
 }
@@ -54,6 +59,12 @@
     height: 4px;
     margin: 0.5rem 0 1rem 0;
 }
+//sorting icons in table
+.wr-sorting-icon {
+    vertical-align: bottom;
+    cursor: pointer;
+}
+// header
 h4.wr-header2 {
     margin-top: 3% !important;
     text-transform: capitalize;
@@ -61,6 +72,7 @@ h4.wr-header2 {
     font-weight: bold;
     color: #6B6F82;
 }
+// breadcrumbs
 .breadcrumbs-wrapper{
     .breadcrumbs-title {
         text-transform: capitalize;
@@ -82,20 +94,35 @@ h4.wr-header2 {
         padding: 0 8px;
     }
 }
-
+// master table
 .wr-master-table {
+    width: 100%;
     tbody {
         tr {
             td {
                 text-transform: capitalize;
             }
-            td.wr-company-email {
-                text-transform: none;
-            }
+            
         }
     }
+    td .wr-company-email, th.wr-company-email {
+        text-transform: none;
+        white-space: nowrap;
+        width: 95px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    
+    td .wr-company-email:hover .tooltipped{
+        overflow: visible;
+        position: relative;
+        background: #FFF;
+        box-shadow: 0 0 4px 0 black;
+        border-radius: 1px;
+        padding: 5px;
+    }
 }
-
+// company table
 .wr-company-container {
     .collapsible {
         border: none;
@@ -106,7 +133,7 @@ h4.wr-header2 {
         }
     }
 }
-
+//Options List and its Categories in Add Vehicles Form 
 .wr-features-container {
     display: flex;
     flex-wrap: wrap;
@@ -121,6 +148,7 @@ h4.wr-header2 {
         }
     }
 }
+// React-select field for master table in Add Vehicles form
 .wr-select-field {
     margin: 15px 0;
     label {
@@ -133,6 +161,7 @@ h4.wr-header2 {
         }
     }
 }
+// Image Uploader Form in Add Vehicles Form
 .wr-uploader {
     .drop-zone {
         width: 100%;
@@ -222,7 +251,7 @@ h4.wr-header2 {
     }
 }
 
-
+// Search field in Add vehicles form
 .wr-vehicles-search-input {
     border: 1px solid #bdbdbd;
     border-radius: 5px;
@@ -233,12 +262,7 @@ h4.wr-header2 {
     width: 100%;
 }
 
-.wr-vehicles-image-thumbnail {
-    width: 50px;
-    height: 50px;
-    object-fit: cover;
-    margin-left: 4px;
-}
+
 
 //gallery dropzone
 @-webkit-keyframes stripes {
@@ -256,6 +280,12 @@ h4.wr-header2 {
 }
 
 //VEHICLES TABLE
+.wr-vehicles-image-thumbnail {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    margin-left: 4px;
+}
 .wr-vehicles-table-wrapper {
     width: 100%;
     table {
@@ -263,13 +293,16 @@ h4.wr-header2 {
         th.wr-vehicles-title {
             width: 180px;
         }
+        tbody {
+            tr {
+                td {
+                    text-transform: capitalize;
+                }
+            }
+        }
     }
 }
-.wr-sorting-icon {
-    vertical-align: bottom;
-    cursor: pointer;
-}
-
+// to hide unregister notification of tinymce editor
 .tox-notifications-container {
     display: none !important;
 }

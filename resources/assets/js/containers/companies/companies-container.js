@@ -172,7 +172,7 @@ class CompaniesListContainer extends Component {
                                             <i className="material-icons wr-sorting-icon">arrow_drop_down</i>
                                         :<i className="material-icons wr-sorting-icon">arrow_drop_up</i>}
                                     </th>
-                                    <th onClick={()=>this.sortByColumn('email')}>Email
+                                    <th width="50px" onClick={()=>this.sortByColumn('email')} className="wr-company-email">Email
                                         {this.state.order==='desc'?
                                             <i className="material-icons wr-sorting-icon">arrow_drop_down</i>
                                         :<i className="material-icons wr-sorting-icon">arrow_drop_up</i>}
