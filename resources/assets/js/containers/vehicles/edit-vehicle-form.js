@@ -20,6 +20,7 @@ class EditVehicles extends Component {
         super(props)
         this.state= {
 			data: [],
+			categories: {},
             makes: [],
 			models:{},
 			bodies: {},
@@ -111,7 +112,9 @@ class EditVehicles extends Component {
 		optCatapi.getOptionsCategories().then((response) => {
 			this.setState({optCategories: response.data})
 		})
-		
+		api.getCategoriesList().then((response)=> {
+			this.setState({categories: response.data})
+		})
     }
     renderInputField({input, label, type, meta: {touched, error}}) {
         return (
@@ -165,9 +168,13 @@ class EditVehicles extends Component {
 									value={option.id}
 									checked={input.value.indexOf(option.id) !== -1}
 									onChange={(event) => {
+										console.log('ev', event)
 										const checkedValues= [...input.value];
+										console.log('new', checkedValues)
 										if(event.target.checked) {
-											checkedValues.push(option.id);
+											console.log('ino', input.value)
+											checkedValues.push(input.value);
+											checkedValues.concat([option.id]);
 										} else {
 											checkedValues.splice(checkedValues.indexOf(option.id), 1);
 										}
