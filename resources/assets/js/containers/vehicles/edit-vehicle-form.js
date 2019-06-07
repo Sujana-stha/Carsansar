@@ -58,9 +58,9 @@ class EditVehicles extends Component {
 				financing: data.financing,
 				financing_flag: data.financing_flag,
 
-				body_id : data.attribute.body_id==null ? 'Null':{label:data.attribute.body_id.body_desc, value:data.attribute.body_id.id},
-				exterior_color_id: data.attribute.exteriorcolor_id==null ? 'Null':{label: data.attribute.exteriorcolor_id.color_desc, value: data.attribute.exteriorcolor_id.id},
-				interior_color_id: data.attribute.interiorcolor_id==null ? 'Null':{label:data.attribute.interiorcolor_id.color_desc, value: data.attribute.interiorcolor_id.id},
+				body_id : data.attribute.body_id==null ? null:{label:data.attribute.body_id.body_desc, value:data.attribute.body_id.id},
+				exterior_color_id: data.attribute.exteriorcolor_id==null ? null :{label: data.attribute.exteriorcolor_id.color_desc, value: data.attribute.exteriorcolor_id.id},
+				interior_color_id: data.attribute.interiorcolor_id==null ? null :{label:data.attribute.interiorcolor_id.color_desc, value: data.attribute.interiorcolor_id.id},
 				option_id: data.attribute.option_ids,
 				doors: data.attribute.doors,
 				passenger: data.attribute.passenger,
@@ -69,16 +69,16 @@ class EditVehicles extends Component {
 				highway_mpg: data.attribute.highway_mpg,
 				mileage: data.attribute.mileage,
 				
-				category_id: ( data.vehicle_info == null||data.vehicle_info.category_id == null)? 'Null':{label:data.vehicle_info.category_id.category_desc, value: data.vehicle_info.category_id.id},
-				drive_id: (data.vehicle_info == null|| data.vehicle_info.drive_id==null) ? 'Null':{label:data.vehicle_info.drive_id.drive_desc, value:data.vehicle_info.drive_id.id},
-				enginesize_id: (data.vehicle_info == null||data.vehicle_info.enginesize_id==null) ? 'Null':{label:data.vehicle_info.enginesize_id.enginesize_desc, value: data.vehicle_info.enginesize_id.id},
-				fueltype_id: (data.vehicle_info == null||data.vehicle_info.fueltype_id==null) ? 'Null':{label:data.vehicle_info.fueltype_id.fueltype_desc, value: data.vehicle_info.fueltype_id.id},
-				make_id: (data.vehicle_info == null||data.vehicle_info.make_id==null) ? 'Null':{label:data.vehicle_info.make_id.make_desc, value: data.vehicle_info.make_id.id},
-				mfg_exterior_color_id: (data.vehicle_info == null||data.vehicle_info.mfgexteriorcolor_id==null) ?'Null':{label:data.vehicle_info.mfgexteriorcolor_id.color_desc, value: data.vehicle_info.mfgexteriorcolor_id.id},
-				model_id: (data.vehicle_info == null||data.vehicle_info.model_id==null) ? 'Null': {label: data.vehicle_info.model_id.model_desc, value: data.vehicle_info.model_id.id},
-				transmission_id: (data.vehicle_info == null||data.vehicle_info.transmission_id==null) ? 'Null':{label:data.vehicle_info.transmission_id.transmission_desc, value: data.vehicle_info.transmission_id.id},
-				vin:  data.vehicle_info == null ? 'Null':data.vehicle_info.vin,
-				year:  data.vehicle_info == null ? 'Null': data.vehicle_info.year
+				category_id: ( data.vehicle_info == null||data.vehicle_info.category_id == null)? null:{label:data.vehicle_info.category_id.category_desc, value: data.vehicle_info.category_id.id},
+				drive_id: (data.vehicle_info == null|| data.vehicle_info.drive_id==null) ? null:{label:data.vehicle_info.drive_id.drive_desc, value:data.vehicle_info.drive_id.id},
+				enginesize_id: (data.vehicle_info == null||data.vehicle_info.enginesize_id==null) ? null :{label:data.vehicle_info.enginesize_id.enginesize_desc, value: data.vehicle_info.enginesize_id.id},
+				fueltype_id: (data.vehicle_info == null||data.vehicle_info.fueltype_id==null) ? null :{label:data.vehicle_info.fueltype_id.fueltype_desc, value: data.vehicle_info.fueltype_id.id},
+				make_id: (data.vehicle_info == null||data.vehicle_info.make_id==null) ? null:{label:data.vehicle_info.make_id.make_desc, value: data.vehicle_info.make_id.id},
+				mfg_exterior_color_id: (data.vehicle_info == null||data.vehicle_info.mfgexteriorcolor_id==null) ? null :{label:data.vehicle_info.mfgexteriorcolor_id.color_desc, value: data.vehicle_info.mfgexteriorcolor_id.id},
+				model_id: (data.vehicle_info == null||data.vehicle_info.model_id==null) ? null: {label: data.vehicle_info.model_id.model_desc, value: data.vehicle_info.model_id.id},
+				transmission_id: (data.vehicle_info == null||data.vehicle_info.transmission_id==null) ? null:{label:data.vehicle_info.transmission_id.transmission_desc, value: data.vehicle_info.transmission_id.id},
+				vin:  data.vehicle_info == null ? null:data.vehicle_info.vin,
+				year:  data.vehicle_info == null ? null: data.vehicle_info.year
 			}
             this.props.initialize(vehicles);
 		})
@@ -168,17 +168,17 @@ class EditVehicles extends Component {
 									value={option.id}
 									checked={input.value.indexOf(option.id) !== -1}
 									onChange={(event) => {
-										console.log('ev', event)
-										const checkedValues= [...input.value];
-										console.log('new', checkedValues)
+										const checkedValues= input.value.split(",");
 										if(event.target.checked) {
-											console.log('ino', input.value)
-											checkedValues.push(input.value);
-											checkedValues.concat([option.id]);
+											var option_id = JSON.stringify(option.id)
+											checkedValues.push(option_id);
 										} else {
-											checkedValues.splice(checkedValues.indexOf(option.id), 1);
+											var option_id = JSON.stringify(option.id)
+											checkedValues.splice(checkedValues.indexOf(option_id), 1);
 										}
-										return input.onChange(checkedValues)
+										var updatedOptions = checkedValues.join()
+										return input.onChange(updatedOptions)
+
 									}}/>
 									<span>{option.option_desc}</span>
 								</label>
