@@ -1,3 +1,9 @@
+//errors
+.error {
+    font-size: 1rem;
+    font-weight: bold;
+}
+
 // toast notification
 .toast {
     top: 0px;
@@ -8,6 +14,17 @@
     right: 0px !important;
     left: auto !important;
     // left: 100% !important;
+}
+
+//add users form
+.wr-users-form {
+    .wr-input-loader {
+        position: absolute;
+        right: 15px;
+        top: 10px;
+        width: 25px;
+        height: 25px;
+    }
 }
 
 // table action column

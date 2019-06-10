@@ -12,22 +12,31 @@ use App\Financing;
 use App\Image as VehicleImage;
 use App\VehicleOption;
 use DB;
+use Carbon\Carbon;
+
 
 class DealsController extends Controller
 {
 
-    private $user_id = 1;
+    //private $user_id = 1;
     public function index(Request $request)
     {
         // $user = $request->user();
         // $company_id = $user->company_id;
-        $column= 'column';
-        if($column == 'year') {
+        $column= 'id';
+        $order= 'desc';
+        if($request->column == 'year') {
             $column = 'vehicleInfo.year';
-            echo $column ;
-        } else {
-            $column = 'column';
         }
+
+        if($request->order == 'asc') {
+            $order = 'asc';
+        }
+
+            //echo $column ;
+        // } else {
+        //     $column = 'column';
+        // }
         
         
         return Deal::with('vehicleInfo.categoryId:id,category_desc',
@@ -44,7 +53,7 @@ class DealsController extends Controller
                         'attribute.bodyId:id,body_desc',
                         'financing',
                         'images',
-                        'createdBy:id,name')->orderBy($request->$column, $request->order)->paginate(3);
+                        'createdBy:id,first_name,last_name')->orderBy($column, $order)->paginate(3);
     }
  
     public function show($id)
@@ -63,7 +72,7 @@ class DealsController extends Controller
         'attribute.bodyId:id,body_desc',
         'financing',
         'images',
-        'createdBy:id,name')->find($id);        
+        'createdBy:id,first_name,last_name')->find($id);        
     }
 
     private function generateStockNo($id){
@@ -72,11 +81,8 @@ class DealsController extends Controller
     }
  
     public function store(Request $request)
-    {
+    {       
         
-        // dd($request->all());
-        // exit;
-        //echo public_path();exit;
         $vehicle_info = new VehicleInfo([
              'vin' => $request->get('vin'),
              'category_id' => $request->get('category_id'),
@@ -89,7 +95,7 @@ class DealsController extends Controller
              'cylinder' => $request->get('cylinder'),
              'transmission_id' => $request->get('transmission_id'),
              'mfg_exterior_color_id' => $request->get('mfg_exterior_color_id'),
-             'created_by' => $this->user_id
+             'created_by' => auth()->id()
         ]);
         $deal = new Deal([
             'title' => $request->get('title'),
@@ -106,7 +112,7 @@ class DealsController extends Controller
             'warranty_flag' => $request->get('warranty_flag'),
             'warranty_desc' => $request->get('warranty_desc'),
             'financing_flag' => $request->get('financing_flag'),
-            'created_by' => $this->user_id
+            'created_by' => auth()->id()
         ]);
 
         $attribute = new Attribute([
@@ -120,7 +126,7 @@ class DealsController extends Controller
             'highway_mpg' => $request->get('highway_mpg'),
             'body_id' => $request->get('body_id'),
             'option_ids' => $request->get('option_id'),
-            'created_by' => $this->user_id
+            'created_by' => auth()->id()
         ]);
 
         $financing = new Financing([            
@@ -132,7 +138,7 @@ class DealsController extends Controller
             'source' => $request->get('source'),
             'odometer' => $request->get('odometer'),
             'description' => $request->get('description'),
-            'created_by' => $this->user_id
+            'created_by' => auth()->id()
         ]); 
 
         //$options_array=$request->get('option_id');
@@ -236,33 +242,23 @@ class DealsController extends Controller
         } catch (\Exception $e) {
            // echo "catch block";exit;
            // DB::rollback(); 
-            dd($e);exit;
+            //dd($e);exit;
             //File::deleteDirectory($path);
             return response()->json($e);          
         }
         
     }
  
-    public function update(Request $request, VehicleInfo $vehicleinfo, Deal $deal, Attribute $attribute, Image $image, Financing $financing )
+    public function update(Request $request)
     {
-        dd($request->all());
-        exit;
-        $vehicleinfo->update([
-            'vin' => $request->get('vin'),
-            'category_id' => $request->get('category_id'),
-            'year' => $request->get('year'),
-            'make_id' => $request->get('make_id'),
-            'model_id' => $request->get('model_id'),
-            'fueltype_id' => $request->get('category_id'),
-            'drive_id' => $request->get('drive_id'),
-            'enginesize_id' => $request->get('enginesize_id'),
-            'cylinder' => $request->get('cylinder'),
-            'transmission_id' => $request->get('transmission_id'),
-            'mfg_exterior_color_id' => $request->get('mfg_exterior_color_id'), 
-            'updated_by' => $this->user_id,
-            // 'updated_at' => Carbon::now()
-        ]);
+        dd($request-> all());
+        $c_vehicle_info = ($request->get('vehicle_info')!= null)?$request->get('vehicle_info'):null;        
+        $c_attribute = ($request->get('attribute')!= null)?$request->get('attribute'):null;
+        $c_financing = ($request->get('financing')!= null)?$request->get('financing'):null;
+        $c_images = ($request->get('images')!= null)?$request->get('images'):null;
 
+        $d_id = $request->get('id');
+        $deal = Deal::find($d_id);
         $deal->update([
             'title' => $request->get('title'),
             'stock_number' => $request->get('stock_number'),
@@ -275,33 +271,60 @@ class DealsController extends Controller
             'warranty_flag' => $request->get('warranty_flag'),
             'warranty_desc' => $request->get('warranty_desc'),
             'financing_flag' => $request->get('financing_flag'),
-            'updated_by' => $this->user_id,
-            // 'updated_at' => Carbon::now()
+            'updated_by' => auth()->id(),
+            'updated_at' => Carbon::now()
         ]);
 
-        $attribute->update([
-            'exterior_color_id' => $request->get('exterior_color_id'),
-            'interior_color_id' => $request->get('interior_color_id'),
-            'doors' => $request->get('doors'),
-            'passenger' => $request->get('passenger'),
-            'body_id' => $request->get('body_id'),
-            'option_ids' => $request->get('option_id'),
-            'updated_by' => $this->user_id,
-            // 'updated_at' => Carbon::now()
-        ]);
-
-        $financing->update([            
-            'type' => $request->get('type'),
-            'payment' => $request->get('payment'),
-            'payment_type' => $request->get('payment_type'),
-            'downpayment' => $request->get('downpayment'),
-            'number_of_payment' => $request->get('number_of_payment'),
-            'source' => $request->get('source'),
-            'odometer' => $request->get('odometer'),
-            'description' => $request->get('description'),
-            'updated_by' => $this->user_id,
-            // 'updated_at' => Carbon::now()
-        ]); 
+        if ($c_vehicle_info){
+            $vi_id = $c_vehicle_info['id'];
+            $vehicleinfo = VehicleInfo::find($vi_id);
+            $vehicleinfo->update([
+                'vin' => $c_vehicle_info['vin'],
+                'category_id' => $c_vehicle_info['category_id'],
+                'year' => $c_vehicle_info['year'],
+                'make_id' => $c_vehicle_info['make_id'],
+                'model_id' => $c_vehicle_info['model_id'],
+                'fueltype_id' => $c_vehicle_info['fueltype_id'],
+                'drive_id' => $c_vehicle_info['drive_id'],
+                'enginesize_id' => $c_vehicle_info['enginesize_id'],
+                'cylinder' => $c_vehicle_info['cylinder'],
+                'transmission_id' => $c_vehicle_info['transmission_id'],
+                'mfg_exterior_color_id' => $c_vehicle_info['mfg_exterior_color_id'], 
+                'updated_by' => auth()->id(),
+                'updated_at' => Carbon::now()
+            ]);
+        }
+        if ($c_attribute){
+            $a_id = $c_attribute['id'];
+            echo $a_id;exit;
+            $attribute = Attribute::find($a_id);
+            // $attribute->update([
+            //     'exterior_color_id' => $c_attribute['exterior_color_id'] != null ? $c_attribute['exterior_color_id'] : null,
+            //     'interior_color_id' => $c_attribute['interior_color_id'],,
+            //     'doors' => $c_attribute['doors'],,
+            //     'passenger' => $c_attribute['passenger'],,
+            //     'body_id' => $c_attribute['body_id'],,
+            //     //'option_ids' => $request->get('option_id'),
+            //     'updated_by' => auth()->id(),
+            //     'updated_at' => Carbon::now()
+            // ]);
+        }
+        if ($c_financing){
+            $f_id = $c_financing['id'];
+            $financing = Financing::find($f_id);
+            $financing->update([            
+                'type' => $financing['type'],
+                'payment' => $financing['payment'],
+                'payment_type' => $financing['payment_type'],
+                'downpayment' => $financing['downpayment'],
+                'number_of_payment' => $financing['number_of_payment'],
+                'source' => $financing['source'],
+                'odometer' => $financing['odometer'],
+                'description' => $financing['description'],
+                'updated_by' => auth()->id(),
+                'updated_at' => Carbon::now()
+            ]);
+        }         
  
         return response()->json($vehicleinfo,$deal,$attribute,$image,$financing, 200);
     }
@@ -311,5 +334,19 @@ class DealsController extends Controller
         // $color->delete();
  
         // return response()->json(null, 204);
+    }
+
+    public function deleteImages($ids,$d_id){
+        $del_ids = VehicleImage::where('d_id',$d_id)->whereNotIn('id',$ids)->get();
+        if(count($del_ids)>0){
+            //$str_ids = implode ( ',' , $ids ); 
+            //for($i=0;$i<count($ids);$i++){
+                // $image = VehicleImage::find([$str_ids]);
+                
+                // if($image){
+                    $del_ids->forceDelete();
+                //}
+            //}
+        }
     }
 }

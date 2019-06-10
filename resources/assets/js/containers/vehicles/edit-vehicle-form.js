@@ -151,7 +151,7 @@ class EditVehicles extends Component {
 			</div>
 		)
 	}
-    renderOptionsList({input, options, optCategories, meta: {touched, error}}) {
+    renderOptionsList({ input, options, optCategories }) {
 		return optCategories.map((optCategory, i)=> {
 			return (
 				<div key={i} className="wr-options-list">
@@ -168,17 +168,20 @@ class EditVehicles extends Component {
 									value={option.id}
 									checked={input.value.indexOf(option.id) !== -1}
 									onChange={(event) => {
-										const checkedValues= input.value.split(",");
+										
+										const checkedValues= input.value=== "" ? [...input.value] : input.value.split(",");
+
+										console.log('beforeChecked', checkedValues)
 										if(event.target.checked) {
 											var option_id = JSON.stringify(option.id)
 											checkedValues.push(option_id);
+											console.log('afterChecked', checkedValues)
 										} else {
 											var option_id = JSON.stringify(option.id)
 											checkedValues.splice(checkedValues.indexOf(option_id), 1);
 										}
 										var updatedOptions = checkedValues.join()
 										return input.onChange(updatedOptions)
-
 									}}/>
 									<span>{option.option_desc}</span>
 								</label>
@@ -195,27 +198,27 @@ class EditVehicles extends Component {
 		let vehicleId =  this.props.match.params.id
 		console.log('value', values)
 		let vehicleData = this.state.data
-		if(typeof values.make_id === 'string') {values.make_id= values.make_id} else {values.make_id = values.make_id.value}
+		if(values.make_id === null || typeof values.make_id === 'string') {values.make_id= values.make_id} else {values.make_id = values.make_id.value}
 
-		if(typeof values.model_id === 'string') {values.model_id= values.model_id} else {values.model_id = values.model_id.value}
+		if(values.model_id === null|| typeof values.model_id === 'string') {values.model_id= values.model_id} else {values.model_id = values.model_id.value}
 
-		if(typeof values.body_id === 'string') {values.body_id= values.body_id} else {values.body_id = values.body_id.value}
+		if(values.body_id === null || typeof values.body_id === 'string') {values.body_id= values.body_id} else {values.body_id = values.body_id.value}
 
-		if(typeof values.category_id === 'string') {values.category_id= values.category_id} else {values.category_id = values.category_id.value}
+		if(values.category_id=== null || typeof values.category_id === 'string') {values.category_id= values.category_id} else {values.category_id = values.category_id.value}
 
-		if(typeof values.drive_id === 'string') {values.drive_id= values.drive_id} else {values.drive_id = values.drive_id.value}
+		if(values.drive_id === null || typeof values.drive_id === 'string') {values.drive_id= values.drive_id} else {values.drive_id = values.drive_id.value}
 
-		if(typeof values.enginesize_id === 'string') {values.enginesize_id= values.enginesize_id} else {values.enginesize_id = values.enginesize_id.value}
+		if(values.enginesize_id === null || typeof values.enginesize_id === 'string') {values.enginesize_id= values.enginesize_id} else {values.enginesize_id = values.enginesize_id.value}
 
-		if(typeof values.exterior_color_id === 'string') {values.exterior_color_id= values.exterior_color_id} else {values.exterior_color_id = values.exterior_color_id.value}
+		if(values.exterior_color_id === null || typeof values.exterior_color_id === 'string') {values.exterior_color_id= values.exterior_color_id} else {values.exterior_color_id = values.exterior_color_id.value}
 
-		if(typeof values.fueltype_id === 'string') {values.fueltype_id= values.fueltype_id} else {values.fueltype_id = values.fueltype_id.value}
+		if(values.fueltype_id === null || typeof values.fueltype_id === 'string') {values.fueltype_id= values.fueltype_id} else {values.fueltype_id = values.fueltype_id.value}
 
-		if(typeof values.interior_color_id === 'string') {values.interior_color_id= values.interior_color_id} else {values.interior_color_id = values.interior_color_id.value}
+		if(values.interior_color_id === null || typeof values.interior_color_id === 'string') {values.interior_color_id= values.interior_color_id} else {values.interior_color_id = values.interior_color_id.value}
 
-		if(typeof values.mfg_exterior_color_id === 'string') {values.mfg_exterior_color_id= values.mfg_exterior_color_id} else {values.mfg_exterior_color_id = values.mfg_exterior_color_id.value}
+		if(values.mfg_exterior_color_id === null || typeof values.mfg_exterior_color_id === 'string') {values.mfg_exterior_color_id= values.mfg_exterior_color_id} else {values.mfg_exterior_color_id = values.mfg_exterior_color_id.value}
 		
-		if(typeof values.transmission_id === 'string') {values.transmission_id= values.transmission_id} else {values.transmission_id = values.transmission_id.value}
+		if(values.transmission_id === null || typeof values.transmission_id === 'string') {values.transmission_id= values.transmission_id} else {values.transmission_id = values.transmission_id.value}
 		
 		this.props.requestVehiclesUpdate(vehicleId, values, vehicleData)
 	}

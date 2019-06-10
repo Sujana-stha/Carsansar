@@ -31,7 +31,7 @@ function* callVehiclesSaga(action) {
     // })
     if (response.errors) {
         yield put({ type: types.REQUEST_VEHICLES_FAILED, errors: response.error});
-        error = response.error;
+        let error = response.error;
         notify.show("Cannot get all vehicles", "error", 5000)
     } else {
         yield put({type: types.GET_VEHICLES_SUCCESS, vehicles});

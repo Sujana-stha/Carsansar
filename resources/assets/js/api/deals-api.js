@@ -265,7 +265,7 @@ export function addVehicles(values) {
     });
 }
 
-function vehicleDetails(vehicleData, object, oldImage) {
+function vehicleDetails(vehicleData, object, oldImage, fileData) {
     console.log('vehicleData', vehicleData)
     console.log('object==', object)
     var newVehicleData = vehicleData
@@ -279,7 +279,7 @@ function vehicleDetails(vehicleData, object, oldImage) {
     newVehicleData.vehicle_description = object.vehicle_description
     newVehicleData.vehicle_status = object.vehicle_status
     newVehicleData.images = oldImage
-    newVehicleData.newImage = object.newImage
+    newVehicleData.newImage = fileData
     newVehicleData.newImagemeta = object.newImagemeta
 
     newVehicleData.attribute.body_id = object.body_id
@@ -293,16 +293,16 @@ function vehicleDetails(vehicleData, object, oldImage) {
     newVehicleData.attribute.option_ids=object.option_id
     newVehicleData.attribute.passenger=object.passenger
 
-    newVehicleData.vehicle_info.category_id = object.category_id
-    newVehicleData.vehicle_info.drive_id = object.drive_id
-    newVehicleData.vehicle_info.enginesize_id = object.enginesize_id
-    newVehicleData.vehicle_info.fueltype_id = object.fueltype_id
-    newVehicleData.vehicle_info.make_id = object.make_id
-    newVehicleData.vehicle_info.mfg_exterior_color_id = object.mfg_exterior_color_id
-    newVehicleData.vehicle_info.model_id = object.model_id
-    newVehicleData.vehicle_info.transmission_id = object.transmission_id
-    newVehicleData.vehicle_info.vin = object.vin
-    newVehicleData.vehicle_info.year = object.year
+    if(newVehicleData.vehicle_info !== null){newVehicleData.vehicle_info.category_id = object.category_id}
+    if(newVehicleData.vehicle_info !== null){newVehicleData.vehicle_info.drive_id = object.drive_id}
+    if(newVehicleData.vehicle_info !== null){newVehicleData.vehicle_info.enginesize_id = object.enginesize_id}
+    if(newVehicleData.vehicle_info !== null){newVehicleData.vehicle_info.fueltype_id = object.fueltype_id}
+    if(newVehicleData.vehicle_info !== null){newVehicleData.vehicle_info.make_id = object.make_id}
+    if(newVehicleData.vehicle_info !== null){newVehicleData.vehicle_info.mfg_exterior_color_id = object.mfg_exterior_color_id}
+    if(newVehicleData.vehicle_info !== null){newVehicleData.vehicle_info.model_id = object.model_id}
+    if(newVehicleData.vehicle_info !== null){newVehicleData.vehicle_info.transmission_id = object.transmission_id}
+    if(newVehicleData.vehicle_info !== null){newVehicleData.vehicle_info.vin = object.vin}
+    if(newVehicleData.vehicle_info !== null){newVehicleData.vehicle_info.year = object.year}
     console.log(newVehicleData)
     return newVehicleData;
 }
@@ -313,12 +313,16 @@ export function updateVehicles(vehicleId, values, vehicleData) {
     const headers = getHeaders(access_token)
     console.log('value=>', values)
     var oldImage = []
+    var fileData= new FormData();
     if(values.images) {
         values.images.map(image=> {
             if(image.path) {
                 console.log('ima', image)
                 oldImage.push(image)
-            } 
+            } else {
+                console.log('newIma', image)
+                fileData.append('newImage[]', image)
+            }
         })
     }
     const data = formValues(values)
@@ -330,7 +334,7 @@ export function updateVehicles(vehicleId, values, vehicleData) {
     console.log('old', oldImage)
     console.log('obj=>', object)
 
-    var finalData = vehicleDetails(vehicleData, object, oldImage)
+    var finalData = vehicleDetails(vehicleData, object, oldImage, fileData)
     console.log('final', finalData)
     return axios.put('/api/vehicles/'+ vehicleId, finalData,{headers})
     .catch(error=> {

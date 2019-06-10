@@ -4,6 +4,24 @@ import * as types from '../actions/action-types';
 import * as api from '../api/users-api';
 import {notify} from 'react-notify-toast';
 
+//to get list of all users
+export function* getUsersWatcher() {
+    yield takeLatest(types.REQUEST_USERS, getUsersListFlow);
+}
+
+function* getUsersListFlow(action) {
+    const response = yield call(api.getUsers, action.pageNumber, action.sorted_column, action.order)
+    const users =  response.data
+    console.log('user', users)
+    if(response.errors) {
+        yield put({type: types.REQUEST_USERS_ERROR, errors: response.errors})
+        notify.show("Cannot get all users !", "error", 5000)
+    } else {
+        yield put({type: types.GET_USERS_SUCCESS, users});
+    }
+}
+
+// to add new user
 export function* addUserWatcher() {
     yield takeLatest(types.REGISTER_REQUEST, addUserFlow)
 }

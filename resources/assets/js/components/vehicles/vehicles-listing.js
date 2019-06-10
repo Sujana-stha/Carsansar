@@ -24,7 +24,7 @@ const VehiclesListing = (props) => {
                             
                         })}</td>
                         
-                        <td>{vehicle.created_by.name}</td>
+                        <td>{vehicle.created_by.first_name} {vehicle.created_by.last_name}</td>
                         <td>{vehicle.created_at}</td>
                         <td>
                             <div className="switch">
@@ -40,7 +40,7 @@ const VehiclesListing = (props) => {
                         </td>
                         <td className="action">
                             <Link to={'/dashboard/edit-vehicle/'+vehicle.id} className="tooltipped" data-position="top" data-delay="50" data-tooltip="Edit"><i className="material-icons">edit</i></Link>
-                            {props.userRole.name == authUser ? (
+                            {props.userRole.username == authUser ? (
                                 <a className="tooltip" href="javascript:void(0);" onClick={()=>props.deleteItem(vehicle.id)} data-tooltip="Delete"><i className="material-icons">delete</i></a>
                             ): null }
                             {props.confirmText==vehicle.id ? (

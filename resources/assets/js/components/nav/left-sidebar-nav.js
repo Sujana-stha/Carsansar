@@ -34,12 +34,12 @@ const LeftSidebarNav = (props) => {
 		  		<li className="bold">
 				  <NavLink to="/dashboard/import" className="collapsible-body collapsible-header waves-effect waves-cyan"><i className="material-icons">file_upload</i><span>Import</span></NavLink>
 				</li>
-				{props.userRole === props.authUser.name ? ( 
+				{props.userRole === props.authUser.username ? ( 
 					<li className="navigation-header">
 						<a className="navigation-header-text">Attributes </a><i className="navigation-header-icon material-icons">more_horiz</i>
 					</li>
 				) : null}
-				{props.userRole === props.authUser.name ? ( 
+				{props.userRole === props.authUser.username ? ( 
 					<li className="bold">
 						<a className="collapsible-header waves-effect waves-cyan " href="#"><i className="material-icons">add_to_queue</i><span className="menu-title" data-i18n="">Vehicles Attributes</span></a>
 						<div className="collapsible-body">
@@ -90,7 +90,7 @@ const LeftSidebarNav = (props) => {
 						</div>
 					</li>
 				): null }
-				{props.userRole === props.authUser.name ? (
+				{props.userRole === props.authUser.username ? (
 					<li className="bold"><a className="collapsible-header waves-effect waves-cyan " href="#"><i className="material-icons">face</i><span className="menu-title" data-i18n="">Users</span></a>
 						<div className="collapsible-body">
 							<ul className="collapsible collapsible-sub" data-collapsible="accordion">

@@ -19,7 +19,6 @@ import RightSidebarNav from '../components/nav/right-sidebar-nav'
 //Components
 
 import DashboardAnalytics from '../components/dashboard/dashboard-analytics'
-import UsersListing from '../components/users/users'
 import UserProfile from '../components/users/user-profile'
 import ImagesPreview from '../components/vehicles/imagePreview'
 
@@ -29,6 +28,7 @@ import InsertVehicleContainer from '../containers/vehicles/insert-vehicle-contai
 import EditVehicleForm from '../containers/vehicles/edit-vehicle-form';
 // import EditVehicleFormContainer from '../containers/vehicles/edit-vehicle-container'
 import ImportFile from '../containers/import-file'
+import UsersListContainer from '../containers/users/users-container'
 import InsertUserContainer from '../containers/users/insertUsers-containers'
 import ColorListContainer from '../containers/color/color-container'
 import MakesListContainer from '../containers/makes/makes-container'
@@ -87,7 +87,7 @@ class DashboardLayout extends Component {
                                     <Route path={`${match.path}/edit-vehicle/:id`} component={EditVehicleForm}/>
                                     <Route path={`${match.path}/import`} component={ImportFile}/>
                                     <Route path={`${match.path}/colors`} component={ColorListContainer}/>
-                                    <Route path={`${match.path}/users`} component={UsersListing}/>
+                                    <Route path={`${match.path}/users`} component={UsersListContainer}/>
                                     <Route path={`${match.path}/insert-user`} component={InsertUserContainer}/>
                                     <Route path={`${match.path}/user-profile`} component={UserProfile}/>
                                     <Route path={`${match.path}/makes`} component={MakesListContainer}/>

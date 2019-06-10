@@ -9,7 +9,7 @@ class CategoriesController extends Controller
 {
     public function index(Request $request)
     {   
-        $category = Category::with('createdBy:id,name')->orderBy($request->column, $request->order)->paginate(3);
+        $category = Category::with('createdBy:id,first_name,last_name')->orderBy($request->column, $request->order)->paginate(3);
         return $category;
     }
 

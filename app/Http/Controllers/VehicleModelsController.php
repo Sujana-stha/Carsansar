@@ -9,7 +9,7 @@ class VehicleModelsController extends Controller
 {
     public function index(Request $request)
     {
-        $model = VehicleModel::with('createdBy:id,name')->orderBy($request->column, $request->order)->paginate(3);
+        $model = VehicleModel::with('createdBy:id,first_name,last_name')->orderBy($request->column, $request->order)->paginate(3);
         return $model;
     }
 

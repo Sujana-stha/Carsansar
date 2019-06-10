@@ -9,7 +9,7 @@ class MakesController extends Controller
 {   
     public function index(Request $request)
     {
-        $make = Make::with('createdBy:id,name')->orderBy($request->column, $request->order)->paginate(3);
+        $make = Make::with('createdBy:id,first_name,last_name')->orderBy($request->column, $request->order)->paginate(3);
         return $make;
     }
  

@@ -18422,6 +18422,11 @@ Intro
   }
 }
 
+.error {
+  font-size: 1rem;
+  font-weight: bold;
+}
+
 .toast {
   top: 0px;
 }
@@ -18431,6 +18436,14 @@ Intro
   margin: 0px !important;
   right: 0px !important;
   left: auto !important;
+}
+
+.wr-users-form .wr-input-loader {
+  position: absolute;
+  right: 15px;
+  top: 10px;
+  width: 25px;
+  height: 25px;
 }
 
 .action {

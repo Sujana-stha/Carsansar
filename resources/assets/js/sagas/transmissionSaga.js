@@ -14,7 +14,7 @@ function* TransmissionSaga(action) {
     const transmissions = response.data
     
     if (response.errors) {
-        yield put({ type: types.REQUEST_TRANSMISSONS_FAILED, errors: response.error});
+        yield put({ type: types.REQUEST_TRANSMISSONS_FAILED, errors: response.errors});
         error = response.error;
         notify.show("Cannot get all transmissions", "error", 5000)
     } else {

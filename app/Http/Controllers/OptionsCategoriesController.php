@@ -9,7 +9,7 @@ class OptionsCategoriesController extends Controller
 {
     public function index(Request $request)
     {
-        return OptionCategory::with('createdBy:id,name')->get();
+        return OptionCategory::with('createdBy:id,first_name,last_name')->get();
     }
  
     public function show(OptionCategory $optionCategories)

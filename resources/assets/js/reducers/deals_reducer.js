@@ -12,7 +12,7 @@ const initialState = {
 }
 
 
-const dropdownList =  function(state = initialState, action) {
+const dealsReducer =  function(state = initialState, action) {
     switch(action.type) {
         //reducer to get vehicles
         case types.REQUEST_VEHICLES:
@@ -97,4 +97,4 @@ const dropdownList =  function(state = initialState, action) {
     }
 }
 
-export default dropdownList;
+export default dealsReducer;

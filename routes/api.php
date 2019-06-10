@@ -41,9 +41,12 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 //Private Route
  Route::middleware('auth:api')->group(function () {
     //Users
-    Route::get('users','UserController@getUsers');
+    Route::get('users', 'UserController@getUsers');
+    Route::get('usersDetail', 'UserController@details');
+    Route::post('getUsername', 'UserController@validateUsername');
 
     Route::post('logout', 'UserController@signout');
+
 
     //makes
     Route::get('makes', 'MakesController@index');

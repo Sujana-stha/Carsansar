@@ -12,7 +12,7 @@ class OptionsController extends Controller
         // return Option::all();
         // $make = Make::with('createdBy:id,name')->orderBy('id', 'desc')->paginate(3);
 
-        $option = Option::with(['ocId:id,optioncategory_desc','createdBy:id,name'])->orderBy($request->column, $request->order)->paginate(3);
+        $option = Option::with(['ocId:id,optioncategory_desc','createdBy:id,first_name,last_name'])->orderBy($request->column, $request->order)->paginate(3);
         return $option;
     }
 
