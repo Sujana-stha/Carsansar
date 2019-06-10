@@ -4,7 +4,7 @@ import Pagination from "react-js-pagination";
 import ModelList from '../../components/models/models';
 import store from '../../store';
 import { requestModel, requestDeleteModel, requestSubmitModel, requestUpdateModel, requestModelStatus } from  '../../actions/model-action';
-
+import {requestLoggedUser} from '../../actions/users-action';
 
 //COMPONENT
 import ModelForm from '../../components/models/models-form';
@@ -15,33 +15,45 @@ class ModelsListContainer extends Component {
     constructor() {
         super();
         this.state= {
-            isEditing: false
+            isEditing: false,
+            confirmText: null,
+            sorted_column: 'id',
+            order: 'desc',
+            current_page: 1
         }
         this.handlePageChange = this.handlePageChange.bind(this)
         this.editModels = this.editModels.bind(this)
         this.toggleStatus = this.toggleStatus.bind(this)
+        this.deleteItem =  this.deleteItem.bind(this)
+        this.hideDiv =  this.hideDiv.bind(this)
     }
-
     
     componentDidMount() {
         // call action to run the relative saga
-        const page = this.props.activePage;
-        this.props.requestModel(page);
+        const pageNumber = this.props.activePage;
+        let sorted_column = this.state.sorted_column
+        let order = this.state.order
+        this.props.requestModel(pageNumber, sorted_column, order);
+        this.props.requestLoggedUser();
     }
 
     // submit function for new data
     submitModel(values) {
-        this.props.requestSubmitModel(values);
-        this.setState ({
-            hide: true
-        })
+        let formValues = {
+            model_desc: values.model_desc.toLowerCase()
+        }
+        const pageNumber = this.props.activePage;
+        let sorted_column = this.state.sorted_column
+        let order = this.state.order
+        this.props.requestSubmitModel(formValues, pageNumber, sorted_column, order);
     }
 
     // submit function to update data
     submitEditModel(values) {
-        const page = this.props.activePage;
-        console.log('pp', page);
-        this.props.requestUpdateModel(values, page);
+        const pageNumber = this.props.activePage;
+        let sorted_column = this.state.sorted_column
+        let order = this.state.order
+        this.props.requestUpdateModel(values, pageNumber, sorted_column, order);
         this.setState({
             isEditing : false
         })
@@ -62,19 +74,43 @@ class ModelsListContainer extends Component {
     // pagination function
     handlePageChange(pageNumber) {
         console.log(`active page is ${pageNumber}`);
-        this.props.requestModel(pageNumber)
+        let sorted_column = this.state.sorted_column
+        let order = this.state.order
+        this.props.requestModel(pageNumber, sorted_column, order)
         
     }
     // toggle status value
     toggleStatus(modelId, status) {
-        const page = this.props.activePage;
-        console.log('pp', page);
+        const pageNumber = this.props.activePage;
+        let sorted_column = this.state.sorted_column
+        let order = this.state.order
         const newModelStatus = {
             status: !status
         }
-        this.props.requestModelStatus(modelId, newModelStatus, page);
+        this.props.requestModelStatus(modelId, newModelStatus, pageNumber, sorted_column, order);
+    }
+    deleteItem(id){
+        this.setState ({
+            confirmText: id
+        })
     }
     
+    hideDiv() {
+        this.setState({confirmText: null})
+    }
+    sortByColumn(column) {
+        if (column === this.state.sorted_column) {
+           this.state.order === 'desc' ? this.setState({order: 'asc'}, ()=>{
+               this.props.requestModel(this.state.current_page, this.state.sorted_column, this.state.order)
+            }):this.setState({order: 'desc'}, ()=>{
+                this.props.requestModel(this.state.current_page, this.state.sorted_column, this.state.order)
+            })
+        } else {
+            this.setState({sorted_column: column, order: 'desc', current_page: 1}, ()=>{
+                this.props.requestModel(this.state.current_page, this.state.sorted_column, this.state.order)
+            })
+        }
+    }
     render() {
         return (
             <div>
@@ -93,19 +129,37 @@ class ModelsListContainer extends Component {
                         ): (
                             <div className="wr-not-loading"></div>
                         )}
-                        <table>
+                        <table className="wr-master-table">
                             <thead>
                                 <tr>
-                                    <th>S.N</th>
-                                    <th>Title</th>
-                                    <th>Added by</th>
+                                    <th>S.N </th>
+                                    <th onClick={()=>this.sortByColumn('model_desc')}>Title
+                                        {this.state.order==='desc'?
+                                            <i className="material-icons wr-sorting-icon">arrow_drop_down</i>
+                                        :<i className="material-icons wr-sorting-icon">arrow_drop_up</i>}
+                                    </th>
+                                    <th onClick={()=>this.sortByColumn('created_by')}>Added by
+                                        {this.state.order==='desc'?
+                                            <i className="material-icons wr-sorting-icon">arrow_drop_down</i>
+                                        :<i className="material-icons wr-sorting-icon">arrow_drop_up</i>}
+                                    </th>
                                     <th>Action</th>
                                     <th>Status</th>
                                 </tr>
                             </thead>
                             {this.props.models.length ? (
-                                <ModelList models= {this.props.models} onEditModel = {this.editModels} deleteModel = {this.props.requestDeleteModel} modelStatus = {this.toggleStatus}/>
-
+                                <ModelList 
+                                models= {this.props.models} 
+                                userRole ={ this.props.loggedUser}
+                                onEditModel = {this.editModels} 
+                                confirmText={this.state.confirmText} 
+                                showConfirmBox={this.deleteItem} 
+                                hideConfirmBox={this.hideDiv} 
+                                deleteModel = {this.props.requestDeleteModel} 
+                                modelStatus = {this.toggleStatus}
+                                activePage={this.props.activePage}
+                                itemsCountPerPage={this.props.itemsCountPerPage}
+                                />
                             ) : (
                                 <tbody>
                                     <tr>
@@ -134,6 +188,7 @@ class ModelsListContainer extends Component {
 
 function mapStateToProps(store) {
     return {
+        loggedUser: store.userState.loggedUser,
         models: store.modelState.models,
         fetching: store.modelState.fetching,
         activePage: store.modelState.activePage,
@@ -143,4 +198,4 @@ function mapStateToProps(store) {
     }
 }
 
-export default connect(mapStateToProps, {requestModel, requestDeleteModel, requestSubmitModel, requestUpdateModel, requestModelStatus })(ModelsListContainer);
+export default connect(mapStateToProps, { requestLoggedUser, requestModel, requestDeleteModel, requestSubmitModel, requestUpdateModel, requestModelStatus })(ModelsListContainer);

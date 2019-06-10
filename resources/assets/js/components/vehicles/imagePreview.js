@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import DropZone from 'react-dropzone';
+    import DropZone from 'react-dropzone';
 import {notify} from 'react-notify-toast';
 
 class ImagesPreview extends Component {
@@ -7,10 +7,10 @@ class ImagesPreview extends Component {
         super(props);
         this.state = {
             images: [],
-            checked: true
+            checked: true,
         }
     }
-
+    
     onDrop(images){
         console.log('tss', images)
         
@@ -57,6 +57,7 @@ class ImagesPreview extends Component {
         this.props.input.onChange(images)
     }
     handleCover(preview, e=null) {
+
         const newImages = this.state.images.filter(image => {
             if(image.preview === preview) {
                 return Object.assign(image, {
@@ -77,7 +78,7 @@ class ImagesPreview extends Component {
         this.props.input.onChange(newImages)
     }
     render() {
-        const { input } = this.props;
+        
         return (
             <div className="wr-uploader col s12">
                 <div className="wr-dropzone-wrapper">
@@ -86,8 +87,6 @@ class ImagesPreview extends Component {
                         onDropRejected={this.onDropRejected.bind(this)}
                         className="drop-zone center-align"
                         accept="image/jpeg, image/png, image/gif, image/bmp"
-                        // onChange= {this.handleChange.bind(this)}
-                        // onChange={input.onChange(this.state.images)}
                     >
                         <i className="material-icons">cloud_upload</i><br/>
                         <span className="dropzone-text">Drag n Drop Images Here !</span>

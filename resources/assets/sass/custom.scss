@@ -1,3 +1,10 @@
+//errors
+.error {
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+// toast notification
 .toast {
     top: 0px;
 }
@@ -8,6 +15,19 @@
     left: auto !important;
     // left: 100% !important;
 }
+
+//add users form
+.wr-users-form {
+    .wr-input-loader {
+        position: absolute;
+        right: 15px;
+        top: 10px;
+        width: 25px;
+        height: 25px;
+    }
+}
+
+// table action column
 .action {
     position: relative;
 }
@@ -42,15 +62,26 @@
     text-decoration: underline;
 }
 
+// loading text
 .loading-text {
     font-size: 20px;
     font-weight: normal;
     text-align: center;
 }
+// no result and not loading
+.wr-no-results {
+    width: 100%;
+}
 .wr-not-loading {
     height: 4px;
     margin: 0.5rem 0 1rem 0;
 }
+//sorting icons in table
+.wr-sorting-icon {
+    vertical-align: bottom;
+    cursor: pointer;
+}
+// header
 h4.wr-header2 {
     margin-top: 3% !important;
     text-transform: capitalize;
@@ -58,6 +89,7 @@ h4.wr-header2 {
     font-weight: bold;
     color: #6B6F82;
 }
+// breadcrumbs
 .breadcrumbs-wrapper{
     .breadcrumbs-title {
         text-transform: capitalize;
@@ -79,8 +111,74 @@ h4.wr-header2 {
         padding: 0 8px;
     }
 }
-
-
+// master table
+.wr-master-table {
+    width: 100%;
+    tbody {
+        tr {
+            td {
+                text-transform: capitalize;
+            }
+            
+        }
+    }
+    td .wr-company-email, th.wr-company-email {
+        text-transform: none;
+        white-space: nowrap;
+        width: 95px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    
+    td .wr-company-email:hover .tooltipped{
+        overflow: visible;
+        position: relative;
+        background: #FFF;
+        box-shadow: 0 0 4px 0 black;
+        border-radius: 1px;
+        padding: 5px;
+    }
+}
+// company table
+.wr-company-container {
+    .collapsible {
+        border: none;
+        box-shadow: none;
+        .collapsible-header {
+            border: none;
+            background-color: transparent;
+        }
+    }
+}
+//Options List and its Categories in Add Vehicles Form 
+.wr-features-container {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    .wr-options-list {
+        width: 33%;
+        margin-bottom: 25px;
+        h4 {
+            font-size: 18px;
+            font-weight: bold;
+            color: #000;
+        }
+    }
+}
+// React-select field for master table in Add Vehicles form
+.wr-select-field {
+    margin: 15px 0;
+    label {
+        font-size: 15px;
+        color: #000;
+    }
+    .wr-select-box {
+        input {
+            height: 1.5rem !important;
+        }
+    }
+}
+// Image Uploader Form in Add Vehicles Form
 .wr-uploader {
     .drop-zone {
         width: 100%;
@@ -170,29 +268,20 @@ h4.wr-header2 {
     }
 }
 
-.wr-vehicles-attr-field {
-    padding-left: 0 !important;
-    padding-right: 8px !important;
-    .wr-vehicles-attr-select {
-        border: 1px solid #bdbdbd;
-        border-radius: 5px;
-        .wr-vehicles-options::after {
-            border-bottom: 1px dotted #bdbdbd;
-        }
-    }
+// Search field in Add vehicles form
+.wr-vehicles-search-input {
+    border: 1px solid #bdbdbd;
+    border-radius: 5px;
+    height: 45px;
 }
-
-.wr-select-field {
-    margin: 10px 0;
-    .wr-select-box {
-        input {
-            height: 1.5rem !important;
-        }
-    }
+.wr-vehicles-search-input {
+    padding: 0 10px;
+    width: 100%;
 }
 
 
 
+//gallery dropzone
 @-webkit-keyframes stripes {
     from {
       background-position: 0 0; }
@@ -206,4 +295,31 @@ h4.wr-header2 {
     to {
       background-position: 60px 30px; } 
 }
-  
+
+//VEHICLES TABLE
+.wr-vehicles-image-thumbnail {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    margin-left: 4px;
+}
+.wr-vehicles-table-wrapper {
+    width: 100%;
+    table {
+        th.wr-vehicles-date,
+        th.wr-vehicles-title {
+            width: 180px;
+        }
+        tbody {
+            tr {
+                td {
+                    text-transform: capitalize;
+                }
+            }
+        }
+    }
+}
+// to hide unregister notification of tinymce editor
+.tox-notifications-container {
+    display: none !important;
+}

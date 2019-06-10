@@ -5,9 +5,6 @@ const Loading = () => {
         <div className="progress">
             <div className="indeterminate"></div>
         </div>
-        // <tbody>
-        //     <tr><td>LOADING...</td></tr>
-        // </tbody>
     );
 };
 

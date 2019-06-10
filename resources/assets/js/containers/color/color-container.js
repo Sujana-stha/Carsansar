@@ -4,7 +4,7 @@ import Pagination from "react-js-pagination";
 import { connect } from 'react-redux';
 import store from '../../store';
 import { requestColors, requestDeleteColors, requestSubmitColor,requestUpdateColors, requestColorStatus } from  '../../actions/color-actions';
-
+import {requestLoggedUser} from '../../actions/users-action';
 
 //COMPONENTS
 import ColorList from '../../components/color/color';
@@ -16,29 +16,45 @@ class ColorListContainer extends Component {
     constructor() {
         super();
         this.state= {
-            isEditing: false
+            isEditing: false,
+            confirmText: null,
+            sorted_column: 'id',
+            order: 'desc'
         }
         this.handlePageChange = this.handlePageChange.bind(this)
         this.editColors = this.editColors.bind(this)
         this.toggleStatus = this.toggleStatus.bind(this)
-
+        this.deleteItem =  this.deleteItem.bind(this)
+        this.hideDiv =  this.hideDiv.bind(this)
     }
 
     componentDidMount(){
         // call action to run the relative saga
-        const page = this.props.activePage;
-        this.props.requestColors(page);         
+        const pageNumber = this.props.activePage;
+        let sorted_column = this.state.sorted_column
+        let order = this.state.order
+        this.props.requestColors(pageNumber, sorted_column, order);         
     } 
 
     // submit function for new data
     submitColor(values) {
-        this.props.requestSubmitColor(values);
+        let formValues = {
+            color_desc : values.color_desc.toLowerCase(),
+            color_cd: values.color_cd
+        }
+        const pageNumber = this.props.activePage;
+        let sorted_column = this.state.sorted_column
+        let order = this.state.order
+        this.props.requestSubmitColor(formValues, pageNumber, sorted_column, order);
+        this.props.requestLoggedUser();
     }
 
     // submit function to update data
     submitEditColor(values) {
-        const page = this.props.activePage;
-        this.props.requestUpdateColors(values, page);
+        const pageNumber = this.props.activePage;
+        let sorted_column = this.state.sorted_column
+        let order = this.state.order
+        this.props.requestUpdateColors(values, pageNumber, sorted_column, order);
         this.setState({
             isEditing : false
         })
@@ -58,23 +74,48 @@ class ColorListContainer extends Component {
     // pagination function
     handlePageChange(pageNumber) {
         console.log(`active page is ${pageNumber}`);
-        this.props.requestColors(pageNumber)
-        
+        let sorted_column = this.state.sorted_column
+        let order = this.state.order
+        this.props.requestColors(pageNumber, sorted_column, order)
     }
     
     toggleStatus (colorId, status) {
-        const page = this.props.activePage;
+        const pageNumber = this.props.activePage;
+        let sorted_column = this.state.sorted_column
+        let order = this.state.order
         const newColorsStatus = {
             status: !status
         }
-        console.log('status', newColorsStatus)
-        this.props.requestColorStatus(colorId, newColorsStatus, page)
+        this.props.requestColorStatus(colorId, newColorsStatus, pageNumber, sorted_column, order)
+    }
+    deleteItem(id){
+        this.setState ({
+            confirmText: id
+        })
+    }
+    
+    hideDiv() {
+        this.setState({confirmText: null})
+    }
+
+    sortByColumn(column) {
+        const pageNumber = this.props.activePage
+        if (column === this.state.sorted_column) {
+           this.state.order === 'desc' ? this.setState({order: 'asc'}, ()=>{
+               this.props.requestColors(pageNumber, this.state.sorted_column, this.state.order)
+            }):this.setState({order: 'desc'}, ()=>{
+                this.props.requestColors(pageNumber, this.state.sorted_column, this.state.order)
+            })
+        } else {
+            this.setState({sorted_column: column, order: 'desc'}, ()=>{
+                this.props.requestColors(pageNumber, this.state.sorted_column, this.state.order)
+            })
+        }
     }
 
     render(){
         return(
             <div className="row"> 
-                
                 <div className="col s12 m3 l3 mt-3">
                     {this.state.isEditing ? (
                         <EditColor onSubmit = {this.submitEditColor.bind(this)} editId = {this.state.isEditing} />
@@ -90,13 +131,21 @@ class ColorListContainer extends Component {
                         <div className="wr-not-loading"></div>
                     )}
                         
-                    <table>
+                    <table className="wr-master-table">
                         <thead>
                             <tr>
                                 <th>S.N</th>
-                                <th>Hex Code</th>
-                                <th>Description</th>                        
-                                <th>User/Added By</th>
+                                
+                                <th onClick={()=>this.sortByColumn('color_desc')}>Color Name
+                                    {this.state.order==='desc'?
+                                        <i className="material-icons wr-sorting-icon">arrow_drop_down</i>
+                                    :<i className="material-icons wr-sorting-icon">arrow_drop_up</i>}
+                                </th>                        
+                                <th onClick={()=>this.sortByColumn('created_by')}>Added By
+                                    {this.state.order==='desc'?
+                                        <i className="material-icons wr-sorting-icon">arrow_drop_down</i>
+                                    :<i className="material-icons wr-sorting-icon">arrow_drop_up</i>}
+                                </th>
                                 <th>Count</th>
                                 <th>Action</th>
                                 <th>Status</th>
@@ -104,7 +153,18 @@ class ColorListContainer extends Component {
                         </thead>
                         {/* <ColorList colors={this.props.colors}/>    */}
                         {this.props.colors.length ? (
-                            <ColorList colors= {this.props.colors} onEditColor = {this.editColors} deleteColor = {this.props.requestDeleteColors} colorStatus = {this.toggleStatus}/>
+                            <ColorList 
+                                colors= {this.props.colors} 
+                                userRole ={ this.props.loggedUser}
+                                onEditColor = {this.editColors} 
+                                confirmText={this.state.confirmText} 
+                                showConfirmBox={this.deleteItem} 
+                                hideConfirmBox={this.hideDiv} 
+                                deleteColor = {this.props.requestDeleteColors} 
+                                colorStatus = {this.toggleStatus}
+                                activePage={this.props.activePage}
+                                itemsCountPerPage={this.props.itemsCountPerPage}
+                            />
 
                             ): (
                             <tbody>
@@ -135,6 +195,7 @@ class ColorListContainer extends Component {
 
 function mapStateToProps(store) {
     return {
+        loggedUser: store.userState.loggedUser,
         colors: store.colorState.colors,
         activePage: store.colorState.activePage,
         itemsCountPerPage: store.colorState.itemsCountPerPage,
@@ -145,4 +206,4 @@ function mapStateToProps(store) {
     }
 }
 
-export default connect(mapStateToProps, {requestColors, requestDeleteColors, requestSubmitColor,requestUpdateColors, requestColorStatus})(ColorListContainer);
+export default connect(mapStateToProps, { requestLoggedUser, requestColors, requestDeleteColors, requestSubmitColor,requestUpdateColors, requestColorStatus})(ColorListContainer);

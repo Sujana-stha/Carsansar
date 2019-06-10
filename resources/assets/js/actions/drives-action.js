@@ -1,22 +1,10 @@
 import * as types from '../actions/action-types';
 
-
-export function requestDrives(pageNumber) {
+//GET DRIVES LIST ACTION
+export function requestDrives(pageNumber,sorted_column, order) {
     return {
         type: types.REQUEST_DRIVES,
-        pageNumber
-    }
-}
-export function requestSubmitDrives(values) {
-    return {
-        type: types.REQUEST_DRIVES_SUBMIT,
-        values
-    }
-}
-
-export function requestDrivesFailed() {
-    return {
-        type: types.REQUEST_DRIVES_FAILED
+        pageNumber,sorted_column, order
     }
 }
 export function getDrivesSuccess(drives) {
@@ -26,6 +14,13 @@ export function getDrivesSuccess(drives) {
     }
 }
 
+//ADD NEW DRIVES ACTION
+export function requestSubmitDrives(values, pageNumber,sorted_column, order) {
+    return {
+        type: types.REQUEST_DRIVES_SUBMIT,
+        values, pageNumber,sorted_column, order
+    }
+}
 export function addDrivesSuccess(values) {
     return {
         type: types.ADD_DRIVES_SUCCESS,
@@ -33,6 +28,14 @@ export function addDrivesSuccess(values) {
     }
 }
 
+//DRIVES FAILED ACTION
+export function requestDrivesFailed() {
+    return {
+        type: types.REQUEST_DRIVES_FAILED
+    }
+}
+
+//DELETE DRIVES ACTIONS
 export function requestDeleteDrives(driveId) {
     return {
         type: types.REQUEST_DRIVES_DELETE,
@@ -47,10 +50,11 @@ export function deleteDrivesSuccess(driveId) {
     }
 }
 
-export function requestUpdateDrives( values, page) {
+//UPDATE DRIVES ACTION
+export function requestUpdateDrives( values, pageNumber,sorted_column, order) {
     return {
         type: types.REQUEST_DRIVES_UPDATE,
-        values, page
+        values, pageNumber,sorted_column, order
     }
 }
 
@@ -62,11 +66,12 @@ export function updateDrivesSuccess(driveId, values) {
     }
 }
 
-export function requestDrivesStatus (driveId,values, page) {
+//DRIVE STATUS CHANGED ACTION
+export function requestDrivesStatus (driveId,values, pageNumber,sorted_column, order) {
     return {
         type: types.REQUEST_DRIVES_STATUS,
         values,
-        driveId, page
+        driveId, pageNumber,sorted_column, order
     }
 }
 

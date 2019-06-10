@@ -7,11 +7,9 @@ use App\OptionCategory;
 
 class OptionsCategoriesController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        
-        return OptionCategory::with('createdBy:id,name')->orderBy('id', 'desc')->get();
-        
+        return OptionCategory::with('createdBy:id,first_name,last_name')->get();
     }
  
     public function show(OptionCategory $optionCategories)
@@ -21,9 +19,29 @@ class OptionsCategoriesController extends Controller
  
     public function store(Request $request)
     {
-        $optionCategories = OptionCategory::create($request->all());
+        $errormsg = "";
+        $result = false;
+        $errorcode="";
+        try{
+            if($request->get('optioncategory_desc')!=null){
+                $request->merge(['created_by'=>auth()->id()]);
+                $optionCategories = OptionCategory::create($request->all());
+                $result = true;
+            }else{
+                $result = false;
+                $errormsg = "Option Category Description cannot be null";
+            }
+            
+        }catch(\Exception $exception)
+        {
+            //dd($exception);exit;
+            $errormsg = $exception->getMessage();
+            $errorcode = $exception->getCode();
+        }
+        return response()->json(['success'=>$result,'errormsg'=>$errormsg,'errorcode'=>$errorcode]);
+        
  
-        return response()->json($optionCategories, 201);
+        //return response()->json($enginesize, 201);
     }
  
     public function update(Request $request, OptionCategory $optionCategories)

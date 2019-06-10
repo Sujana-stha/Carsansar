@@ -1,6 +1,31 @@
 // import axios from 'axios';
 import axios, {getHeaders} from './axiosInstance'
 
+// to get users list
+export function getUsers(pageNumber, sorted_column, order) {
+    const access_token = window.localStorage.getItem('access_token')
+    const headers = getHeaders(access_token);
+    return axios.get(`/api/users?page=${pageNumber}&column=${sorted_column}&order=${order}`, {headers})
+    .catch(error => {
+        return {
+            errors: error
+        }
+    })
+}
+
+//get username
+export function getUsername(values) {
+    console.log('api-value', values)
+    const access_token = window.localStorage.getItem('access_token')
+    const headers = getHeaders(access_token);
+    return axios.post('/api/getUsername',values, {headers})
+    .catch(error => {
+        return {
+            errors: error
+        }
+    })
+}
+
 //register users 
 export function registerUsers(values) {
     return axios.post('/api/register', values)

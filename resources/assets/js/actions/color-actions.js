@@ -1,16 +1,16 @@
 import * as types from '../actions/action-types';
 
 
-export function requestColors(pageNumber) {
+export function requestColors(pageNumber,sorted_column, order) {
   return {
       type: types.REQUEST_COLORS,
-      pageNumber
+      pageNumber,sorted_column, order
   }
 }
-export function requestSubmitColor(values) {
+export function requestSubmitColor(values, pageNumber,sorted_column, order) {
   return {
       type: types.REQUEST_COLORS_SUBMIT,
-      values
+      values, pageNumber,sorted_column, order
   }
 }
 
@@ -47,10 +47,10 @@ export function deleteColorsSuccess(colorId) {
   }
 }
 
-export function requestUpdateColors(values, page) {
+export function requestUpdateColors(values, pageNumber,sorted_column, order) {
   return {
       type: types.REQUEST_COLORS_UPDATE,
-      values, page
+      values, pageNumber,sorted_column, order
   }
 }
 
@@ -62,11 +62,11 @@ export function updateColorsSuccess(colorId, values) {
   }
 }
 
-export function requestColorStatus (colorId,values, page) {
+export function requestColorStatus (colorId,values, pageNumber,sorted_column, order) {
   return {
       type: types.REQUEST_COLORS_STATUS,
       values,
-      colorId, page 
+      colorId, pageNumber,sorted_column, order 
   }
 }
 

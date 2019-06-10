@@ -1,16 +1,16 @@
 import * as types from './action-types';
 
 
-export function requestCategories(pageNumber) {
+export function requestCategories(pageNumber,sorted_column, order) {
     return {
         type: types.REQUEST_CATEGORIES,
-        pageNumber
+        pageNumber,sorted_column, order
     }
 }
-export function requestSubmitCategories(values) {
+export function requestSubmitCategories(values, pageNumber,sorted_column, order) {
     return {
         type: types.REQUEST_CATEGORIES_SUBMIT,
-        values
+        values, pageNumber,sorted_column, order
     }
 }
 
@@ -49,10 +49,10 @@ export function deleteCategoriesSuccess(categoryId, message) {
     }
 }
 
-export function requestUpdateCategories( values, page) {
+export function requestUpdateCategories( values, pageNumber,sorted_column, order) {
     return {
         type: types.REQUEST_CATEGORIES_UPDATE,
-        values, page
+        values, pageNumber,sorted_column, order
     }
 }
 
@@ -65,11 +65,11 @@ export function updateCategoriesSuccess(categoryId, values, message) {
     }
 }
 
-export function requestCategoriesStatus (categoryId,values, page) {
+export function requestCategoriesStatus (categoryId,values, pageNumber,sorted_column, order) {
     return {
         type: types.REQUEST_CATEGORIES_STATUS,
         values,
-        categoryId, page  
+        categoryId, pageNumber,sorted_column, order  
     }
 }
 

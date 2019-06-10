@@ -1,16 +1,16 @@
 import * as types from '../actions/action-types';
 
 
-export function requestBodies(pageNumber) {
+export function requestBodies(pageNumber, sorted_column, order) {
     return {
         type: types.REQUEST_BODIES,
-        pageNumber
+        pageNumber, sorted_column, order
     }
 }
-export function requestSubmitBodies(values) {
+export function requestSubmitBodies(values, pageNumber, sorted_column, order) {
     return {
         type: types.REQUEST_BODIES_SUBMIT,
-        values
+        values, pageNumber, sorted_column, order
     }
 }
 
@@ -48,10 +48,10 @@ export function deleteBodiesSuccess(bodyId, message) {
     }
 }
 
-export function requestUpdateBodies( values, page) {
+export function requestUpdateBodies( values, pageNumber,sorted_column, order) {
     return {
         type: types.REQUEST_BODIES_UPDATE,
-        values, page
+        values, pageNumber,sorted_column, order
     }
 }
 
@@ -63,11 +63,11 @@ export function updateBodiesSuccess(bodyId, values) {
     }
 }
 
-export function requestBodiesStatus (bodyId,values, page) {
+export function requestBodiesStatus (bodyId,values, pageNumber,sorted_column, order) {
     return {
         type: types.REQUEST_BODIES_STATUS,
         values,
-        bodyId , page 
+        bodyId , pageNumber,sorted_column, order 
     }
 }
 

@@ -4,7 +4,7 @@ import Pagination from "react-js-pagination";
 import EnginesizesList from '../../components/enginesizes/enginesizes';
 import store from '../../store';
 import { requestEnginesizes, requestDeleteEnginesizes, requestSubmitEnginesizes,requestUpdateEnginesizes, requestEnginesizesStatus } from  '../../actions/enginesizes-action';
-
+import {requestLoggedUser} from '../../actions/users-action';
 
 //COMPONENT
 import EnginesizeForm from '../../components/enginesizes/enginesizes-form';
@@ -17,22 +17,36 @@ class EnginesizesListContainer extends Component {
     constructor() {
         super();
         this.state= {
-            isEditing: false
+            isEditing: false,
+            confirmText: null,
+            sorted_column: 'id',
+            order: 'desc'
         }
         this.handlePageChange = this.handlePageChange.bind(this)
         this.editEnginesizes = this.editEnginesizes.bind(this)
         this.toggleStatus = this.toggleStatus.bind(this)
+        this.deleteItem =  this.deleteItem.bind(this)
+        this.hideDiv =  this.hideDiv.bind(this)
     }
     
     componentDidMount() {
         // call action to run the relative saga
-        const page = this.props.activePage;
-        this.props.requestEnginesizes(page);
+        const pageNumber = this.props.activePage;
+        let sorted_column = this.state.sorted_column
+        let order = this.state.order
+        this.props.requestEnginesizes(pageNumber, sorted_column, order);
+        this.props.requestLoggedUser();
     }
 
     // submit function for new data
     submitEnginesize(values) {
-        this.props.requestSubmitEnginesizes(values);
+        let formValues = {
+            enginesize_desc: values.enginesize_desc.toLowerCase()
+        }
+        const pageNumber = this.props.activePage
+        let sorted_column = this.state.sorted_column
+        let order = this.state.order
+        this.props.requestSubmitEnginesizes(formValues, pageNumber, sorted_column, order);
         this.setState ({
             hide: true
         })
@@ -40,21 +54,20 @@ class EnginesizesListContainer extends Component {
 
     // submit function to update data
     submitEditEnginesize(values) {
-        const page = this.props.activePage;
-        this.props.requestUpdateEnginesizes(values, page);
+        const pageNumber = this.props.activePage;
+        let sorted_column = this.state.sorted_column
+        let order = this.state.order
+        this.props.requestUpdateEnginesizes(values, pageNumber, sorted_column, order);
         this.setState({
-            isEditing : false,
-           
+            isEditing : false
         })
     }
 
     //function to call form of edit
     editEnginesizes(values) {
-        
         this.setState ({
             isEditing : values
         })
-        
     }
 
     deleteEnginesizeAction(enginesizeId) {
@@ -64,18 +77,44 @@ class EnginesizesListContainer extends Component {
     // pagination function
     handlePageChange(pageNumber) {
         console.log(`active page is ${pageNumber}`);
-        this.props.requestEnginesizes(pageNumber)
-        
+        let sorted_column = this.state.sorted_column
+        let order = this.state.order
+        this.props.requestEnginesizes(pageNumber, sorted_column, order)
     }
     
     toggleStatus (enginesizeId, status) {
-        const page = this.props.activePage;       
+        const pageNumber = this.props.activePage;
+        let sorted_column = this.state.sorted_column
+        let order = this.state.order       
         const newEnginesizesStatus = {
             status: !status
         }
-        this.props.requestEnginesizesStatus(enginesizeId, newEnginesizesStatus, page)
+        this.props.requestEnginesizesStatus(enginesizeId, newEnginesizesStatus, pageNumber, sorted_column, order)
+    }
+    deleteItem(id){
+        this.setState ({
+            confirmText: id
+        })
     }
     
+    hideDiv() {
+        this.setState({confirmText: null})
+    }
+    sortByColumn(column) {
+        const pageNumber = this.props.activePage
+        if (column === this.state.sorted_column) {
+           this.state.order === 'desc' ? this.setState({order: 'asc'}, ()=>{
+               this.props.requestEnginesizes(pageNumber, this.state.sorted_column, this.state.order)
+            }):this.setState({order: 'desc'}, ()=>{
+                this.props.requestEnginesizes(pageNumber, this.state.sorted_column, this.state.order)
+            })
+        } else {
+            this.setState({sorted_column: column, order: 'desc'}, ()=>{
+                this.props.requestEnginesizes(pageNumber, this.state.sorted_column, this.state.order)
+            })
+        }
+    }
+
     render() {
         return (
             <div>
@@ -94,18 +133,37 @@ class EnginesizesListContainer extends Component {
                         ): (
                             <div className="wr-not-loading"></div>
                         )}
-                        <table>
+                        <table className="wr-master-table">
                             <thead>
                                 <tr>
                                     <th>S.N</th>
-                                    <th>Title</th>
-                                    <th>Added by</th>
+                                    <th onClick={()=>this.sortByColumn('enginesize_desc')}>Title
+                                        {this.state.order==='desc'?
+                                            <i className="material-icons wr-sorting-icon">arrow_drop_down</i>
+                                        :<i className="material-icons wr-sorting-icon">arrow_drop_up</i>}
+                                    </th>
+                                    <th onClick={()=>this.sortByColumn('created_by')}>Added by
+                                        {this.state.order==='desc'?
+                                            <i className="material-icons wr-sorting-icon">arrow_drop_down</i>
+                                        :<i className="material-icons wr-sorting-icon">arrow_drop_up</i>}
+                                    </th>
                                     <th>Action</th>
                                     <th>Status</th>
                                 </tr>
                             </thead>
                             {this.props.enginesizes.length ? (
-                                <EnginesizesList enginesizes= {this.props.enginesizes} onEditEnginesize = {this.editEnginesizes} deleteEnginesize = {this.props.requestDeleteEnginesizes} enginesizeStatus = {this.toggleStatus}/>
+                                <EnginesizesList 
+                                enginesizes= {this.props.enginesizes} 
+                                userRole ={ this.props.loggedUser}
+                                onEditEnginesize = {this.editEnginesizes} 
+                                confirmText={this.state.confirmText} 
+                                showConfirmBox={this.deleteItem} 
+                                hideConfirmBox={this.hideDiv} 
+                                deleteEnginesize = {this.props.requestDeleteEnginesizes} 
+                                enginesizeStatus = {this.toggleStatus}
+                                activePage={this.props.activePage}
+                                itemsCountPerPage={this.props.itemsCountPerPage}
+                                />
 
                             ) : (
                                 <tbody>
@@ -135,6 +193,7 @@ class EnginesizesListContainer extends Component {
 
 function mapStateToProps(store) {
     return {
+        loggedUser: store.userState.loggedUser,
         enginesizes: store.enginesizeState.enginesizes,
         fetching: store.enginesizeState.fetching,
         activePage: store.enginesizeState.activePage,
@@ -144,4 +203,4 @@ function mapStateToProps(store) {
     }
 }
 
-export default connect(mapStateToProps, { requestEnginesizes, requestDeleteEnginesizes, requestSubmitEnginesizes,requestUpdateEnginesizes, requestEnginesizesStatus })(EnginesizesListContainer);
+export default connect(mapStateToProps, { requestLoggedUser, requestEnginesizes, requestDeleteEnginesizes, requestSubmitEnginesizes,requestUpdateEnginesizes, requestEnginesizesStatus })(EnginesizesListContainer);

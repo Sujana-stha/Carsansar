@@ -4,7 +4,7 @@ import Pagination from "react-js-pagination";
 import FueltypesList from '../../components/fueltypes/fueltypes';
 import store from '../../store';
 import { requestFueltypes, requestDeleteFueltypes, requestSubmitFueltypes,requestUpdateFueltypes, requestFueltypesStatus } from  '../../actions/fueltypes-action';
-
+import {requestLoggedUser} from '../../actions/users-action';
 
 //COMPONENT
 import FueltypeForm from '../../components/fueltypes/fueltypes-form';
@@ -16,32 +16,44 @@ class FueltypesListContainer extends Component {
     constructor() {
         super();
         this.state= {
-            
-            isEditing: false
+            isEditing: false,
+            confirmText: null,
+            sorted_column: 'id',
+            order: 'desc'
         }
         this.handlePageChange = this.handlePageChange.bind(this)
         this.editFueltype = this.editFueltype.bind(this)
         this.toggleStatus = this.toggleStatus.bind(this)
+        this.deleteItem =  this.deleteItem.bind(this)
+        this.hideDiv =  this.hideDiv.bind(this)
     }
 
     componentDidMount() {
         // call action to run the relative saga
-        const page = this.props.activePage;
-        this.props.requestFueltypes(page);
+        const pageNumber = this.props.activePage;
+        let sorted_column = this.state.sorted_column
+        let order = this.state.order
+        this.props.requestFueltypes(pageNumber, sorted_column, order);
+        this.props.requestLoggedUser();
     }
 
     // submit function for new data
     submitFueltype(values) {
-        this.props.requestSubmitFueltypes(values);
-        this.setState ({
-            hide: true
-        })
+        let formValues = {
+            fueltype_desc: values.fueltype_desc.toLowerCase()
+        }
+        const pageNumber = this.props.activePage;
+        let sorted_column = this.state.sorted_column
+        let order = this.state.order
+        this.props.requestSubmitFueltypes(formValues, pageNumber,sorted_column, order);
     }
 
     // submit function to update data
     submitEditFueltypes(values) {
-        const page = this.props.activePage;
-        this.props.requestUpdateFueltypes(values, page);
+        const pageNumber = this.props.activePage;
+        let sorted_column = this.state.sorted_column
+        let order = this.state.order
+        this.props.requestUpdateFueltypes(values, pageNumber, sorted_column, order);
         this.setState({
             isEditing : false
         })
@@ -49,11 +61,9 @@ class FueltypesListContainer extends Component {
 
     //function to call form of edit
     editFueltype(values) {
-        
         this.setState ({
             isEditing : values
-        })
-        
+        }) 
     }
 
     deleteFueltypeAction(fueltypeId) {
@@ -63,18 +73,44 @@ class FueltypesListContainer extends Component {
     // pagination function
     handlePageChange(pageNumber) {
         console.log(`active page is ${pageNumber}`);
-        this.props.requestFueltypes(pageNumber)
-        
+        let sorted_column = this.state.sorted_column
+        let order = this.state.order
+        this.props.requestFueltypes(pageNumber, sorted_column, order)
     }
     
     toggleStatus (fueltypeId, status) {
-        const page = this.props.activePage;       
+        const pageNumber = this.props.activePage; 
+        let sorted_column = this.state.sorted_column
+        let order = this.state.order      
         const newFueltypeStatus = {
             status: !status
         }
-        this.props.requestFueltypesStatus(fueltypeId, newFueltypeStatus, page)
+        this.props.requestFueltypesStatus(fueltypeId, newFueltypeStatus, pageNumber, sorted_column, order)
+    }
+    deleteItem(id){
+        this.setState ({
+            confirmText: id
+        })
     }
     
+    hideDiv() {
+        this.setState({confirmText: null})
+    }
+    sortByColumn(column) {
+        const pageNumber = this.props.activePage
+        if (column === this.state.sorted_column) {
+           this.state.order === 'desc' ? this.setState({order: 'asc'}, ()=>{
+               this.props.requestFueltypes(pageNumber, this.state.sorted_column, this.state.order)
+            }):this.setState({order: 'desc'}, ()=>{
+                this.props.requestFueltypes(pageNumber, this.state.sorted_column, this.state.order)
+            })
+        } else {
+            this.setState({sorted_column: column, order: 'desc'}, ()=>{
+                this.props.requestFueltypes(pageNumber, this.state.sorted_column, this.state.order)
+            })
+        }
+    }
+
     render() {
         return (
             <div>
@@ -93,18 +129,37 @@ class FueltypesListContainer extends Component {
                         ): (
                             <div className="wr-not-loading"></div>
                         )}
-                        <table>
+                        <table className="wr-master-table">
                             <thead>
                                 <tr>
                                     <th>S.N</th>
-                                    <th>Title</th>
-                                    <th>Added by</th>
+                                    <th onClick={()=>this.sortByColumn('fueltype_desc')}>Title
+                                        {this.state.order==='desc'?
+                                            <i className="material-icons wr-sorting-icon">arrow_drop_down</i>
+                                        :<i className="material-icons wr-sorting-icon">arrow_drop_up</i>}
+                                    </th>
+                                    <th onClick={()=>this.sortByColumn('created_by')}>Added by
+                                        {this.state.order==='desc'?
+                                            <i className="material-icons wr-sorting-icon">arrow_drop_down</i>
+                                        :<i className="material-icons wr-sorting-icon">arrow_drop_up</i>}
+                                    </th>
                                     <th>Action</th>
                                     <th>Status</th>
                                 </tr>
                             </thead>
                             {this.props.fueltypes.length ? (
-                                <FueltypesList fueltypes= {this.props.fueltypes} onEditFueltype = {this.editFueltype} deleteFueltype = {this.props.requestDeleteFueltypes} fueltypeStatus = {this.toggleStatus}/>
+                                <FueltypesList 
+                                fueltypes= {this.props.fueltypes} 
+                                userRole ={ this.props.loggedUser}
+                                onEditFueltype = {this.editFueltype} 
+                                confirmText={this.state.confirmText} 
+                                showConfirmBox={this.deleteItem} 
+                                hideConfirmBox={this.hideDiv} 
+                                deleteFueltype = {this.props.requestDeleteFueltypes} 
+                                fueltypeStatus = {this.toggleStatus}
+                                activePage={this.props.activePage}
+                                itemsCountPerPage={this.props.itemsCountPerPage}
+                                />
 
                             ) : (
                                 <tbody>
@@ -134,6 +189,7 @@ class FueltypesListContainer extends Component {
 
 function mapStateToProps(store) {
     return {
+        loggedUser: store.userState.loggedUser,
         fueltypes: store.fueltypeState.fueltypes,
         fetching: store.fueltypeState.fetching,
         activePage: store.fueltypeState.activePage,
@@ -143,4 +199,4 @@ function mapStateToProps(store) {
     }
 }
 
-export default connect(mapStateToProps, { requestFueltypes, requestDeleteFueltypes, requestSubmitFueltypes,requestUpdateFueltypes, requestFueltypesStatus })(FueltypesListContainer);
+export default connect(mapStateToProps, { requestLoggedUser, requestFueltypes, requestDeleteFueltypes, requestSubmitFueltypes,requestUpdateFueltypes, requestFueltypesStatus })(FueltypesListContainer);

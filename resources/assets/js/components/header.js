@@ -68,8 +68,8 @@ const Header =props=> {
 
 						{/* <!-- profile-dropdown--> */}
 						<ul className="dropdown-content" id="profile-dropdown">
-							<li><a className="grey-text text-darken-1">{props.authUser.name}</a></li>
-							<li><NavLink to="/user-profile" className="grey-text text-darken-1"><i className="material-icons">person_outline</i> Profile</NavLink></li>
+							<li><a className="grey-text text-darken-1">{props.authUser.first_name} {props.authUser.last_name}</a></li>
+							<li><NavLink to="/dashboard/user-profile" className="grey-text text-darken-1"><i className="material-icons">person_outline</i> Profile</NavLink></li>
 							{/* <li><a class="grey-text text-darken-1" href="app-chat.html"><i class="material-icons">chat_bubble_outline</i> Chat</a></li>
 							<li><a class="grey-text text-darken-1" href="page-faq.html"><i class="material-icons">help_outline</i> Help</a></li>
 							<li><a class="grey-text text-darken-1" href="user-lock-screen.html"><i class="material-icons">lock_outline</i> Lock</a></li> */}

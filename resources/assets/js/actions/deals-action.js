@@ -1,5 +1,20 @@
 import * as types from '../actions/action-types';
 
+//GET VEHICLES LIST
+export function requestVehicles(pageNumber, sorted_column, order) {
+    return {
+        type: types.REQUEST_VEHICLES,
+        pageNumber, sorted_column, order
+    }
+}
+
+export function getVehcilesSuccess(vehicles) {
+    return {
+        type: types.GET_VEHICLES_SUCCESS,
+        vehicles
+    }
+}
+
 //ADD VEHICLES
 export function requestSubmitVehicle(values) {
     return {
@@ -15,6 +30,21 @@ export function addVehicleSuccess(values) {
     }
 }
 
+//edit vehicles
+export function requestVehiclesUpdate(vehicleId, values, vehicleData) {
+    return {    
+        type: types.REQUEST_VEHICLES_UPDATE,
+        vehicleId,  values, vehicleData
+    }
+}
+
+export function UpdateVehiclesSuccess(vehicleId, values) {
+    return {
+        type: types.UPDATE_VEHICLES_SUCCESS,
+        vehicleId, values
+    }
+}
+
 //Vehicles failed
 
 export function requestVehicleFailed() {
@@ -23,16 +53,10 @@ export function requestVehicleFailed() {
     }
 }
 
-//Search by Vehicles Attriburetes
-export function requestVehicleAttrSearch(values) {
+//Search by Vehicles titls
+export function searchVehicleByTitle(values) {
     return {
-        type: types.REQUEST_VEHICLES_ATTR_SEARCH,
-        values
-    }
-}
-export function searchVehicleAttrSuccess(values) {
-    return {
-        type: types.VEHICLES_ATTR_SEARCH_SUCCESS,
+        type: types.SEARCH_VEHICLE_BY_TITLE,
         values
     }
 }

@@ -1,16 +1,16 @@
 import * as types from '../actions/action-types';
 
 
-export function requestCompanies(pageNumber) {
+export function requestCompanies(pageNumber,sorted_column, order) {
     return {
         type: types.REQUEST_COMPANIES,
-        pageNumber
+        pageNumber,sorted_column, order
     }
 }
-export function requestSubmitCompanies(values) {
+export function requestSubmitCompanies(values, pageNumber,sorted_column, order) {
     return {
         type: types.REQUEST_COMPANIES_SUBMIT,
-        values
+        values, pageNumber,sorted_column, order
     }
 }
 
@@ -47,14 +47,14 @@ export function deleteCompaniesSuccess(companyId) {
     }
 }
 
-export function requestUpdateCompanies( values, page) {
+export function requestUpdateCompanies( values, pageNumber,sorted_column, order) {
     return {
         type: types.REQUEST_COMPANIES_UPDATE,
-        values, page
+        values, pageNumber,sorted_column, order
     }
 }
 
-export function updateDrivesSuccess(companyId, values) {
+export function updateCompaniesSuccess(companyId, values) {
     return {
         type: types.UPDATE_COMPANIES_SUCCESS,
         values,
@@ -62,11 +62,11 @@ export function updateDrivesSuccess(companyId, values) {
     }
 }
 
-export function requestCompaniesStatus (companyId,values, page) {
+export function requestCompaniesStatus (companyId,values, pageNumber,sorted_column, order) {
     return {
         type: types.REQUEST_COMPANIES_STATUS,
         values,
-        companyId, page
+        companyId, pageNumber,sorted_column, order
     }
 }
 

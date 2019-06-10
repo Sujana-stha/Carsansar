@@ -10,13 +10,13 @@ export function* FueltypeWatcher() {
     yield takeLatest(types.REQUEST_FUELTYPES, FueltypeSaga)
 }
 function* FueltypeSaga(action) {
-    const response = yield call(api.getFueltypes, action.pageNumber);
+    const response = yield call(api.getFueltypes, action.pageNumber, action.sorted_column, action.order);
     const fueltypes = response.data
     
     if (response.errors) {
         yield put({ type: types.REQUEST_FUELTYPES_FAILED, errors: response.error});
         error = response.error;
-        notify.show("Cannot get all Fuels", "error", 5000)
+        notify.show("Cannot get all fuels", "error", 5000)
     } else {
         yield put({type: types.GET_FUELTYPES_SUCCESS, fueltypes});
     }
@@ -31,16 +31,21 @@ function* callFueltypeSubmit(action) {
     let error = {};
     const result =  yield call(api.addFueltypes, action.values);
     const resp = result.data;
-
-    if (result.errors) {
+    const pageNumber= action.pageNumber
+    const sorted_column=action.sorted_column
+    const order= action.order
+    if ((result.errors && !resp.success)|| (result.errors || !resp.success)) {
         yield put({ type: types.REQUEST_FUELTYPES_FAILED, errors: result.error});
-        error = result.error;
-        notify.show("Cannot Add FuelTypes!", "error", 5000)
+        error = result.errors|| resp.errormsg;
+        if(resp.errorcode==23000) {
+            notify.show("Fuel Type already exists!","error", 5000);
+        }
+        notify.show("Cannot create new fule type!", "error", 5000)
 
     } else {
         // yield put({type: types.ADD_FUELTYPES_SUCCESS, resp, message: result.statusText});
-        yield put({type: types.REQUEST_FUELTYPES})
-        notify.show("Fuel Types Added Successfully!", "success", 5000)
+        yield put({type: types.REQUEST_FUELTYPES, pageNumber, sorted_column, order})
+        notify.show("Created successfully!", "success", 5000)
     }
     yield put(stopSubmit('PostFueltypes', error));
     yield put(reset('PostFueltypes'));
@@ -56,16 +61,18 @@ function* callEditFueltype (action) {
     let error = {};
     const result =  yield call(api.updateFueltype, action.values.id, action.values);
     const resp = result.data;
-    const pageNumber = action.page
+    const pageNumber = action.pageNumber
+    const sorted_column=action.sorted_column
+    const order= action.order
     if (result.errors) {
         yield put({ type: types.REQUEST_FUELTYPES_FAILED, errors: result.error});
         error = result.error;
-        notify.show(`Cannot Update ${resp.fueltype_desc}!`, "error", 5000)
+        notify.show("Update failed!", "error", 5000)
 
     } else {
         // yield put({type: types.UPDATE_FUELTYPES_SUCCESS, resp, message: result.statusText});
-        yield put({type: types.REQUEST_FUELTYPES, pageNumber})
-        notify.show(`${resp.fueltype_desc} Updated Successfully!`, "success", 5000)
+        yield put({type: types.REQUEST_FUELTYPES, pageNumber, sorted_column, order})
+        notify.show("Updated successfully!", "success", 5000)
 
     }
     yield put(stopSubmit('EditFueltypes', error));
@@ -80,20 +87,20 @@ export function* toggleFueltypeStatusSaga() {
 function* callToggleFueltypeStatus(action) {
     const result =  yield call(api.updateFueltypeStatus, action.fueltypeId, action.values);
     const resp = result.data;
-    const pageNumber = action.page
+    const pageNumber = action.pageNumber
+    const sorted_column=action.sorted_column
+    const order= action.order
     if (result.errors) {
         yield put({ type: types.REQUEST_FUELTYPES_FAILED, errors: result.error});
         error = result.error;
-        notify.show(`Cannot Change Status of ${resp.fueltype_desc}!`, "error", 5000)
+        notify.show("Cannot update status !", "error", 5000)
 
     } else {
         // yield put({type: types.FUELTYPES_STATUS_SUCCESS, resp, message: result.statusText});
-        yield put({type: types.REQUEST_FUELTYPES, pageNumber})
-        notify.show(`Status of ${resp.fueltype_desc} Changed`, "success", 5000)
-
+        yield put({type: types.REQUEST_FUELTYPES, pageNumber, sorted_column, order})
+        notify.show("Status updated successfully!", "success", 5000)
     }
 }
-
 
 // delete makes data from table
 export function* deleteFueltypeSaga() {
@@ -106,10 +113,9 @@ function* callDeleteFueltype(action) {
     if(result.errors) {
         yield put({ type: types.REQUEST_FUELTYPES_FAILED, errors: result.error});
         error = result.error;
-        notify.show("Cannot Delete FuelTypes!", "error", 5000)
+        notify.show("Delete failed!", "error", 5000)
     } else {
         yield put(fueltypeAction.deleteFueltypesSuccess(action.fueltypeId, result.statusText));
-        notify.show("Fuel Type Deleted Successfully!", "error", 5000)
+        notify.show("Deleted successfully!", "error", 5000)
     }
 } 
-

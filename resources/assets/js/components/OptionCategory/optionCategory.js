@@ -1,70 +1,50 @@
-import React, {Component} from 'react';
+import React from 'react';
 
-class OptionCategoryList extends Component {
-    constructor() {
-        super();
-        this.state = {
-            confirm: false,
-            showItem: null
-        };
-    }
+const OptionCategoryList = (props) => {
+    const authUser = window.Laravel.super_admin
+    return (
+        <tbody>
+            {
+                props.optionCategories.map((optionCategory, index) => {
+                    return (
+                        <tr key={optionCategory.id} className={`row-${optionCategory.id}`}>
 
-    deleteItem(id){
-        this.setState({showItem: id})
-    }
+                            <td>{index+1}</td>
+                            <td>{optionCategory.optioncategory_desc== null ? '-': optionCategory.optioncategory_desc}</td>
+                            <td>{optionCategory.created_by.name}</td>
+                            <td className="action">
+                                <a href="javascript:void(0);" onClick={props.onEditOptionCategory.bind(null, optionCategory.id)} className="tooltipped" data-position="top" data-delay="50" data-tooltip="Edit"><i className="material-icons">edit</i></a>
+                                {props.userRole.name == authUser ? (
+                                    <a className="tooltip" href="javascript:void(0);" onClick={() => props.showConfirmBox(optionCategory.id)} data-tooltip="Delete"><i className="material-icons">delete</i></a>
+                                ): null }
 
-    componentDidMount() {
-        this.setState({
-            confirm: false
-        })
-    }
+                                {props.confirmText == optionCategory.id ? (
+                                    <span className="confirm tooltip-text">Are you sure?&nbsp; &nbsp;
+                                        <a onClick={props.deleteOptionCategory.bind(null, optionCategory.id)} href="javascript:void(0);">Yes</a> &nbsp;
+                                        <a href="javascript:void(0);" onClick={props.hideConfirmBox.bind(this)}>No</a>
+                                    </span>
+                                ) : null}
+                            </td>
+                            <td>
+                                <div className="switch">
+                                    <label>
+                                        {optionCategory.status == 1 ? (
+                                            <input onClick={() => props.optionCategoryStatus(optionCategory.id, optionCategory.status)} defaultChecked type="checkbox" value={optionCategory.status} />
 
-    hideDiv() {
-        this.setState({showItem: null})
-    }
+                                        ) :
+                                            <input onClick={() => props.optionCategoryStatus(optionCategory.id, optionCategory.status)} type="checkbox" value={optionCategory.status} />
+                                        }
+                                        <span className="lever"></span>
+                                    </label>
+                                </div>
+                            </td>
+                        </tr>
+                    )
+                })
+            }
 
-    render() {
-        return (
-            <tbody>
-                {
-                    this.props.optionCategories.map((optionCategory) => {
-                        return (
-                            <tr key={optionCategory.id} className={`row-${optionCategory.id}`}>
-                                            
-                                <td>{optionCategory.id}</td>
-                                <td>{optionCategory.optioncategory_desc}</td>
-                                <td>{optionCategory.created_by.name}</td>
-                                <td className="action">
-                                    <a href="javascript:void(0);" onClick={this.props.onEditOptionCategory.bind(null, optionCategory.id)} className="tooltipped" data-position="top" data-delay="50" data-tooltip="Edit"><i className="material-icons">edit</i></a>
-                                    <a className="tooltip" href="javascript:void(0);" onClick={()=>this.deleteItem(optionCategory.id)} data-tooltip="Delete"><i className="material-icons">delete</i></a>
-                                    {this.state.showItem==optionCategory.id ? (
-                                        <span className="confirm tooltip-text">Are you sure?&nbsp; 
-                                            <a onClick={this.props.deleteOptionCategory.bind(null, optionCategory.id)} href="javascript:void(0);">Yes</a> &nbsp;
-                                            <a href="javascript:void(0);" onClick={this.hideDiv.bind(this)}>No</a>
-                                        </span>
-                                    ): null}
-                                </td>
-                                <td>
-                                    <div className="switch">
-                                        <label>Inactive
-                                            {optionCategory.status== 1 ? (
-                                                <input onClick = {()=> this.props.optionCategoryStatus(optionCategory.id, optionCategory.status) } defaultChecked type="checkbox" value={optionCategory.status}/>
-
-                                            ):
-                                                <input onClick = {()=> this.props.optionCategoryStatus(optionCategory.id, optionCategory.status) }  type="checkbox" value={optionCategory.status}/>
-                                            }
-                                            <span className="lever"></span>Active
-                                        </label>
-                                    </div>
-                                </td>
-                            </tr>
-                        )
-                    })
-                }
-                
-            </tbody>
-        );
-    }
+        </tbody>
+    );
 };
 
 export default OptionCategoryList;

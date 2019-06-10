@@ -7,14 +7,15 @@ use App\VehicleModel;
 
 class VehicleModelsController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $model = VehicleModel::paginate(3);
+        $model = VehicleModel::with('createdBy:id,first_name,last_name')->orderBy($request->column, $request->order)->paginate(3);
         return $model;
     }
 
     public function getList()
     {
+        
         $model = VehicleModel::where('status','1')->pluck('model_desc','id');
         return $model;
     }
@@ -26,9 +27,29 @@ class VehicleModelsController extends Controller
  
     public function store(Request $request)
     {
-        $model = VehicleModel::create($request->all());
+        $errormsg = "";
+        $result = false;
+        $errorcode="";
+        try{
+            if($request->get('model_desc')!=null){
+                $request->merge(['created_by'=>auth()->id()]);
+                $model = VehicleModel::create($request->all());
+                $result = true;
+            }else{
+                $result = false;
+                $errormsg = "Model Description cannot be null";
+            }
+            
+        }catch(\Exception $exception)
+        {
+            //dd($exception);exit;
+            $errormsg = $exception->getMessage();
+            $errorcode = $exception->getCode();
+        }
+        return response()->json(['success'=>$result,'errormsg'=>$errormsg,'errorcode'=>$errorcode]);
+        
  
-        return response()->json($model, 201);
+        //return response()->json($enginesize, 201);
     }
  
     public function update(Request $request, VehicleModel $model)

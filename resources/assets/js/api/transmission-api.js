@@ -3,17 +3,16 @@ import axios, {getHeaders} from './axiosInstance'
 
 
 //GET ALL TRANSMISSION API
-export function getTransmission(pageNumber) {
+export function getTransmission(pageNumber, sorted_column, order) {
     const access_token = window.localStorage.getItem('access_token')
     const headers = getHeaders(access_token)
-    return axios.get(`/api/transmissions?page=${pageNumber}`,{headers})
+    return axios.get(`/api/transmissions?page=${pageNumber}&column=${sorted_column}&order=${order}`,{headers})
 }
 
 // ADD NEW TRANSMISSION API
 export function addTransmission(values) {
     const access_token = window.localStorage.getItem('access_token')
     const headers = getHeaders(access_token)
-    values.created_by = 1;
     return axios.post('/api/transmissions', values,{headers})
     .catch(error=> {
         console.log(error)

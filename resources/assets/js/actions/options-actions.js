@@ -1,16 +1,16 @@
 import * as types from '../actions/action-types';
 
 
-export function requestOptions(pageNumber) {
+export function requestOptions(pageNumber,sorted_column, order) {
     return {
         type: types.REQUEST_OPTIONS,
-        pageNumber
+        pageNumber,sorted_column, order
     }
 }
-export function requestSubmitOptions(values) {
+export function requestSubmitOptions(values, pageNumber,sorted_column, order) {
     return {
         type: types.REQUEST_OPTIONS_SUBMIT,
-        values
+        values, pageNumber,sorted_column, order
     }
 }
 
@@ -47,10 +47,10 @@ export function deleteOptionsSuccess(optionId) {
     }
 }
 
-export function requestUpdateOptions( values, page) {
+export function requestUpdateOptions( values, pageNumber,sorted_column, order) {
     return {
         type: types.REQUEST_OPTIONS_UPDATE,
-        values, page
+        values, pageNumber,sorted_column, order
     }
 }
 
@@ -62,11 +62,11 @@ export function updateOptionsSuccess(optionId, values) {
     }
 }
 
-export function requestOptionsStatus (optionId,values, page) {
+export function requestOptionsStatus (optionId,values, pageNumber,sorted_column, order) {
     return {
         type: types.REQUEST_OPTIONS_STATUS,
         values,
-        optionId, page
+        optionId, pageNumber,sorted_column, order
     }
 }
 

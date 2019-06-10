@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Pagination from "react-js-pagination";
 import store from '../../store';
 import { requestCategories, requestDeleteCategories, requestSubmitCategories,requestUpdateCategories, requestCategoriesStatus } from  '../../actions/categories-action';
-
+import {requestLoggedUser} from '../../actions/users-action';
 
 //COMPONENT
 import CategoryForm from '../../components/categories/categories-form';
@@ -15,32 +15,44 @@ class CategoriesListContainer extends Component {
     constructor() {
         super();
         this.state= {
-            isEditing: false
+            isEditing: false,
+            confirmText: null,
+            sorted_column: 'id',
+            order: 'desc'
         }
         this.handlePageChange = this.handlePageChange.bind(this)
         this.editCategories = this.editCategories.bind(this)
         this.toggleStatus = this.toggleStatus.bind(this)
+        this.deleteItem =  this.deleteItem.bind(this)
+        this.hideDiv =  this.hideDiv.bind(this)
     }
     
     componentDidMount() {
         // call action to run the relative saga
-        const page = this.props.activePage;
-        this.props.requestCategories(page);
+        const pageNumber = this.props.activePage;
+        let sorted_column = this.state.sorted_column
+        let order = this.state.order
+        this.props.requestCategories(pageNumber, sorted_column, order);
+        this.props.requestLoggedUser();
     }
 
     // submit function for new data
     submitCategory(values) {
-        const page = this.props.activePage;
-        this.props.requestSubmitCategories(values, page);
-        this.setState ({
-            hide: true
-        })
+        let formValues = {
+            category_desc: values.category_desc.toLowerCase()
+        }
+        const pageNumber = this.props.activePage;
+        let sorted_column = this.state.sorted_column
+        let order = this.state.order
+        this.props.requestSubmitCategories(formValues, pageNumber, sorted_column, order);
     }
 
     // submit function to update data
     submitEditCategory(values) {
-        const page = this.props.activePage;
-        this.props.requestUpdateCategories(values, page);
+        const pageNumber = this.props.activePage;
+        let sorted_column = this.state.sorted_column
+        let order = this.state.order
+        this.props.requestUpdateCategories(values, pageNumber, sorted_column, order);
         this.setState({
             isEditing : false
         })
@@ -60,26 +72,53 @@ class CategoriesListContainer extends Component {
     // pagination function
     handlePageChange(pageNumber) {
         console.log(`active page is ${pageNumber}`);
-        this.props.requestCategories(pageNumber)
-        
+        let sorted_column = this.state.sorted_column
+        let order = this.state.order
+        this.props.requestCategories(pageNumber, sorted_column, order)
     }
     
     toggleStatus (categoryId, status) {
-        const page = this.props.activePage;
+        const pageNumber = this.props.activePage;
+        let sorted_column = this.state.sorted_column
+        let order = this.state.order
         const newCategoriesStatus = {
             status: !status
         }
-        this.props.requestCategoriesStatus(categoryId, newCategoriesStatus, page)
+        this.props.requestCategoriesStatus(categoryId, newCategoriesStatus, pageNumber, sorted_column, order)
+    }
+    deleteItem(id){
+        this.setState ({
+            confirmText: id
+        })
     }
     
+    hideDiv() {
+        this.setState({confirmText: null})
+    }
+
+    sortByColumn(column) {
+        const pageNumber = this.props.activePage
+        if (column === this.state.sorted_column) {
+           this.state.order === 'desc' ? this.setState({order: 'asc'}, ()=>{
+               this.props.requestCategories(pageNumber, this.state.sorted_column, this.state.order)
+            }):this.setState({order: 'desc'}, ()=>{
+                this.props.requestCategories(pageNumber, this.state.sorted_column, this.state.order)
+            })
+        } else {
+            this.setState({sorted_column: column, order: 'desc'}, ()=>{
+                this.props.requestCategories(pageNumber, this.state.sorted_column, this.state.order)
+            })
+        }
+    }
     render() {
         return (
             <div>
-                
                 <div className="row">
                     <div className="col s12 m3 l3 mt-3">
                         {this.state.isEditing ? (
-                            <EditCategory onSubmit = {this.submitEditCategory.bind(this)} editId = {this.state.isEditing} />
+                            <EditCategory 
+                            onSubmit = {this.submitEditCategory.bind(this)} 
+                            editId = {this.state.isEditing} />
                         ): (
                             <CategoryForm onSubmit = { this.submitCategory.bind(this) }/>
                         )}
@@ -91,18 +130,37 @@ class CategoriesListContainer extends Component {
                         ): (
                             <div className="wr-not-loading"></div>
                         )}
-                        <table>
+                        <table className="wr-master-table">
                             <thead>
                                 <tr>
                                     <th>S.N</th>
-                                    <th>Title</th>
-                                    <th>Added by</th>
+                                    <th onClick={()=>this.sortByColumn('category_desc')}>Title
+                                        {this.state.order==='desc'?
+                                            <i className="material-icons wr-sorting-icon">arrow_drop_down</i>
+                                        :<i className="material-icons wr-sorting-icon">arrow_drop_up</i>}
+                                    </th>
+                                    <th onClick={()=>this.sortByColumn('created_by')}>Added by
+                                        {this.state.order==='desc'?
+                                            <i className="material-icons wr-sorting-icon">arrow_drop_down</i>
+                                        :<i className="material-icons wr-sorting-icon">arrow_drop_up</i>}
+                                    </th>
                                     <th>Action</th>
                                     <th>Status</th>
                                 </tr>
                             </thead>
                             {this.props.categories.length ? (
-                                <CategoriesList categories= {this.props.categories} onEditCategory = {this.editCategories} deleteCategory = {this.props.requestDeleteCategories} categoryStatus = {this.toggleStatus}/>
+                                <CategoriesList 
+                                    categories= {this.props.categories} 
+                                    userRole ={ this.props.loggedUser}
+                                    onEditCategory = {this.editCategories} 
+                                    confirmText={this.state.confirmText} 
+                                    showConfirmBox={this.deleteItem} 
+                                    hideConfirmBox={this.hideDiv} 
+                                    deleteCategory = {this.props.requestDeleteCategories} 
+                                    categoryStatus = {this.toggleStatus}
+                                    activePage={this.props.activePage}
+                                    itemsCountPerPage={this.props.itemsCountPerPage}
+                                />
 
                             ) : (
                                 <tbody>
@@ -132,6 +190,7 @@ class CategoriesListContainer extends Component {
 
 function mapStateToProps(store) {
     return {
+        loggedUser: store.userState.loggedUser,
         categories: store.categoryState.categories,
         fetching: store.categoryState.fetching,
         activePage: store.categoryState.activePage,
@@ -141,4 +200,4 @@ function mapStateToProps(store) {
     }
 }
 
-export default connect(mapStateToProps, { requestCategories, requestDeleteCategories, requestSubmitCategories,requestUpdateCategories, requestCategoriesStatus})(CategoriesListContainer);
+export default connect(mapStateToProps, { requestLoggedUser, requestCategories, requestDeleteCategories, requestSubmitCategories,requestUpdateCategories, requestCategoriesStatus})(CategoriesListContainer);

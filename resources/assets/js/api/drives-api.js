@@ -2,17 +2,16 @@
 import axios, {getHeaders} from './axiosInstance'
 
 //GET ALL DRIVES API
-export function getDrives(pageNumber) {
+export function getDrives(pageNumber, sorted_column, order) {
     const access_token = window.localStorage.getItem('access_token')
     const headers = getHeaders(access_token)
-    return axios.get(`/api/drives?page=${pageNumber}`,{headers})
+    return axios.get(`/api/drives?page=${pageNumber}&column=${sorted_column}&order=${order}`,{headers})
 }
 
 // ADD NEW DRIVES API
 export function addDrives(values) {
     const access_token = window.localStorage.getItem('access_token')
     const headers = getHeaders(access_token)
-    values.created_by = 1;
     return axios.post('/api/drives', values,{headers})
     .catch(error=> {
         console.log(error)

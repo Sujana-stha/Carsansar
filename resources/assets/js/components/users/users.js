@@ -1,94 +1,32 @@
 // Users Listing
 import React from 'react';
-import { NavLink } from 'react-router-dom';
 
-const UsersListing = () => {
-    return(
-	    <div>
-	        <div className="row">
-				<div className="col s12 mt-2 mb-2 right-align">
-					<NavLink to="/dashboard/insert-user" className="btn waves-effect waves-light"><i className="material-icons left">add</i><span> Add User</span></NavLink>
-				</div>
-			</div>
-            <table>
-                <thead>
-                    <tr>
-                    <th data-field="id">#</th>
-                    <th data-field="username">Username</th>
-                    <th data-field="name">Name</th>
-                    <th data-field="email">Email</th>
-                    <th data-field="role">Role</th>
-                    <th data-field="count">Count</th>
-                    <th data-field="action">Action</th>
-                    <th data-field="status">Status</th>
+const UsersListing = (props) => {
+    return (
+        <tbody>
+            {props.users.map((user, index) => {
+                return (
+                    <tr key={user.id} >
+                        <td>{((props.activePage-1)*props.itemsCountPerPage)+(index+1)}</td>
+                        <td>{user.name}</td>
+                        <td>{user.email}</td>
+                        <td>{user.role}</td>
+                        <td>{user.company_id == null ? '-': user.company_id.name}</td>
+                        <td className="action">
+                            <a href="javascript:void(0);" className="tooltipped" data-position="top" data-delay="50" data-tooltip="Edit"><i className="material-icons">edit</i></a>
+                            <a href="javascript:void(0);" onClick={props.showConfirmBox.bind(null,user.id)} className="tooltip" data-tooltip="Delete"><i className="material-icons">delete</i></a>
+                            {props.confirmText == user.id ? (
+                                <span className="confirm tooltip-text">Are you sure?&nbsp;
+                                    <a href="javascript:void(0);">Yes</a> &nbsp;
+                                    <a href="javascript:void(0);" onClick={props.hideConfirmBox.bind(null)}>No</a>
+                                </span>
+                            ) : null}
+                        </td>
+                        
                     </tr>
-                </thead>
-
-                <tbody>
-                    <tr>
-                    <td>1</td>
-                    <td>bmaharjan</td>
-                    <td>Bikash Maharjan</td>
-                    <td>bmaharjan@techtatva.co</td>
-                    <td>Administrator</td>
-                    <td>100</td>
-                    <td>
-                        <a className="tooltipped" data-position="top" data-delay="50" data-tooltip="Edit" href="#"><i className="material-icons">edit</i></a>
-                        <a className="tooltipped" data-position="top" data-delay="50" data-tooltip="Delete" href="#"><i className="material-icons">delete</i></a>
-                    </td>
-                    <td>
-                        <div className="switch"><label>Inactive<input defaultChecked type="checkbox" /><span className="lever"></span>Active</label></div>
-                    </td>
-                    </tr>
-                    <tr>
-                    <td>2</td>
-                    <td>rtamrakar</td>
-                    <td>Rupesh Tamrakar</td>
-                    <td>rtamrakar@techtatva.co</td>
-                    <td>Dealership</td>
-                    <td>100</td>
-                    <td>
-                        <a className="tooltipped" data-position="top" data-delay="50" data-tooltip="Edit" href="#"><i className="material-icons">edit</i></a>
-                        <a className="tooltipped" data-position="top" data-delay="50" data-tooltip="Delete" href="#"><i className="material-icons">delete</i></a>
-                    </td>
-                    <td>
-                        <div className="switch"><label>Inactive<input defaultChecked type="checkbox" /><span className="lever"></span>Active</label></div>
-                    </td>
-                    </tr>
-                    <tr>
-                    <td>1</td>
-                    <td>bmaharjan</td>
-                    <td>Bikash Maharjan</td>
-                    <td>bmaharjan@techtatva.co</td>
-                    <td>Administrator</td>
-                    <td>100</td>
-                    <td>
-                        <a className="tooltipped" data-position="top" data-delay="50" data-tooltip="Edit" href="#"><i className="material-icons">edit</i></a>
-                        <a className="tooltipped" data-position="top" data-delay="50" data-tooltip="Delete" href="#"><i className="material-icons">delete</i></a>
-                    </td>
-                    <td>
-                        <div className="switch"><label>Inactive<input defaultChecked type="checkbox" /><span className="lever"></span>Active</label></div>
-                    </td>
-                    </tr>
-                    <tr>
-                    <td>999</td>
-                    <td>bmaharjan</td>
-                    <td>Bikash Maharjan</td>
-                    <td>bmaharjan@techtatva.co</td>
-                    <td>Administrator</td>
-                    <td>100</td>
-                    <td>
-                        <a className="tooltipped" data-position="top" data-delay="50" data-tooltip="Edit" href="#"><i className="material-icons">edit</i></a>
-                        <a className="tooltipped" data-position="top" data-delay="50" data-tooltip="Delete" href="#"><i className="material-icons">delete</i></a>
-                    </td>
-                    <td>
-                        <div className="switch"><label>Inactive<input defaultChecked type="checkbox" /><span className="lever"></span>Active</label></div>
-                    </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-	    	    
+                )
+            })}
+        </tbody>
     )
 }
 

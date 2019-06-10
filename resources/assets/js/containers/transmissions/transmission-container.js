@@ -4,7 +4,7 @@ import Pagination from "react-js-pagination";
 import TransmissionList from '../../components/transmission/transmissions';
 import store from '../../store';
 import { requestTransmissions, requestDeleteTransmission, requestSubmitTransmission,requestUpdateTransmission, requestTransmissionStatus } from  '../../actions/transmissons-actions';
-
+import {requestLoggedUser} from '../../actions/users-action';
 
 //COMPONENT
 import TransmissionForm from '../../components/transmission/transmission-form';
@@ -16,28 +16,44 @@ class TransmissionsListContainer extends Component {
     constructor() {
         super();
         this.state= {
-            isEditing: false
+            isEditing: false,
+            confirmText: null,
+            sorted_column: 'id',
+            order: 'desc'
         }
         this.handlePageChange = this.handlePageChange.bind(this)
         this.editTransmission = this.editTransmission.bind(this)
         this.toggleStatus = this.toggleStatus.bind(this)
+        this.deleteItem =  this.deleteItem.bind(this)
+        this.hideDiv =  this.hideDiv.bind(this)
     }
 
     componentDidMount() {
         // call action to run the relative saga
-        const page = this.props.activePage;
-        this.props.requestTransmissions(page);
+        const pageNumber = this.props.activePage;
+        let sorted_column = this.state.sorted_column
+        let order = this.state.order
+        this.props.requestTransmissions(pageNumber, sorted_column, order);
+        this.props.requestLoggedUser();
     }
 
     // submit function for new data
     submitTransmission(values) {
-        this.props.requestSubmitTransmission(values);
+        let formValues = { 
+            transmission_desc : values.transmission_desc.toLowerCase()
+        }
+        const pageNumber = this.props.activePage;
+        let sorted_column = this.state.sorted_column
+        let order = this.state.order
+        this.props.requestSubmitTransmission(formValues, pageNumber, sorted_column, order);
     }
 
     // submit function to update data
     submitEditTransmissions(values) {
-        const page = this.props.activePage;
-        this.props.requestUpdateTransmission(values, page);
+        const pageNumber = this.props.activePage;
+        let sorted_column = this.state.sorted_column
+        let order = this.state.order
+        this.props.requestUpdateTransmission(values, pageNumber, sorted_column, order);
         this.setState({
             isEditing : false
         })
@@ -45,11 +61,9 @@ class TransmissionsListContainer extends Component {
 
     //function to call form of edit
     editTransmission(values) {
-
         this.setState ({
             isEditing : values
         })
-        
     }
 
     deleteTransmissionAction(transmissionId) {
@@ -59,16 +73,43 @@ class TransmissionsListContainer extends Component {
     // pagination function
     handlePageChange(pageNumber) {
         console.log(`active page is ${pageNumber}`);
-        this.props.requestTransmissions(pageNumber)
-        
+        let sorted_column = this.state.sorted_column
+        let order = this.state.order
+        this.props.requestTransmissions(pageNumber, sorted_column, order)
     }
     
     toggleStatus (transmissionId, status) {
-        const page = this.props.activePage;
+        const pageNumber = this.props.activePage;
+        let sorted_column = this.state.sorted_column
+        let order = this.state.order
         const newTransmissionStatus = {
             status: !status
         }
-        this.props.requestTransmissionStatus(transmissionId, newTransmissionStatus, page)
+        this.props.requestTransmissionStatus(transmissionId, newTransmissionStatus, pageNumber, sorted_column, order)
+    }
+    
+    deleteItem(id){
+        this.setState ({
+            confirmText: id
+        })
+    }
+    
+    hideDiv() {
+        this.setState({confirmText: null})
+    }
+    sortByColumn(column) {
+        const pageNumber = this.props.activePage
+        if (column === this.state.sorted_column) {
+           this.state.order === 'desc' ? this.setState({order: 'asc'}, ()=>{
+               this.props.requestTransmissions(pageNumber, this.state.sorted_column, this.state.order)
+            }):this.setState({order: 'desc'}, ()=>{
+                this.props.requestTransmissions(pageNumber, this.state.sorted_column, this.state.order)
+            })
+        } else {
+            this.setState({sorted_column: column, order: 'desc'}, ()=>{
+                this.props.requestTransmissions(pageNumber, this.state.sorted_column, this.state.order)
+            })
+        }
     }
     
     render() {
@@ -90,18 +131,37 @@ class TransmissionsListContainer extends Component {
                         ): (
                             <div className="wr-not-loading"></div>
                         )}
-                        <table>
+                        <table className="wr-master-table">
                             <thead>
                                 <tr>
                                     <th>S.N</th>
-                                    <th>Title</th>
-                                    <th>Added by</th>
+                                    <th onClick={()=>this.sortByColumn('transmission_desc')}>Title
+                                        {this.state.order==='desc'?
+                                            <i className="material-icons wr-sorting-icon">arrow_drop_down</i>
+                                        :<i className="material-icons wr-sorting-icon">arrow_drop_up</i>}
+                                    </th>
+                                    <th onClick={()=>this.sortByColumn('created_by')}>Added by
+                                        {this.state.order==='desc'?
+                                            <i className="material-icons wr-sorting-icon">arrow_drop_down</i>
+                                        :<i className="material-icons wr-sorting-icon">arrow_drop_up</i>}
+                                    </th>
                                     <th>Action</th>
                                     <th>Status</th>
                                 </tr>
                             </thead>
                             {this.props.transmissions.length ? (
-                                <TransmissionList transmissions= {this.props.transmissions} onEditTransmission = {this.editTransmission} deleteTransmission = {this.props.requestDeleteTransmission} transmissionStatus = {this.toggleStatus}/>
+                                <TransmissionList 
+                                transmissions= {this.props.transmissions} 
+                                userRole ={ this.props.loggedUser}
+                                onEditTransmission = {this.editTransmission} 
+                                confirmText={this.state.confirmText} 
+                                showConfirmBox={this.deleteItem} 
+                                hideConfirmBox={this.hideDiv} 
+                                deleteTransmission = {this.props.requestDeleteTransmission} 
+                                transmissionStatus = {this.toggleStatus}
+                                activePage={this.props.activePage}
+                                itemsCountPerPage={this.props.itemsCountPerPage}
+                                />
 
                             ) : (
                                 <tbody>
@@ -131,6 +191,7 @@ class TransmissionsListContainer extends Component {
 
 function mapStateToProps(store) {
     return {
+        loggedUser: store.userState.loggedUser,
         transmissions: store.transmissionState.transmissions,
         fetching: store.transmissionState.fetching,
         activePage: store.transmissionState.activePage,
@@ -140,4 +201,4 @@ function mapStateToProps(store) {
     }
 }
 
-export default connect(mapStateToProps, { requestTransmissions, requestDeleteTransmission, requestSubmitTransmission,requestUpdateTransmission, requestTransmissionStatus })(TransmissionsListContainer);
+export default connect(mapStateToProps, { requestLoggedUser, requestTransmissions, requestDeleteTransmission, requestSubmitTransmission,requestUpdateTransmission, requestTransmissionStatus })(TransmissionsListContainer);

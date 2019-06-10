@@ -11,7 +11,9 @@ class VehcilesSearchComponent extends Component {
             models: {},
             bodies: {},
             transmissions: {},
-            prices: {1: "$10,000", 2: "$20,000", 3: "$25,000", 4: "$50,000"}
+            prices: {1: "$10,000", 2: "$20,000", 3: "$25,000", 4: "$50,000"},
+            vehicles: [],
+            filteredVehicles: []
         }
     }
     
@@ -29,9 +31,20 @@ class VehcilesSearchComponent extends Component {
             this.setState({transmissions: response.data})
         })
     }
-    renderSelectField({input, label, children, meta: {touched, error}}) {
+    renderInputField ({input, label,col, type, meta: {touched, error}}) {
         return (
-            <div className="col s12 m2 wr-vehicles-attr-field">
+                <div className={`col s12 m${col}  wr-vehicles-attr-field`}>
+                    <label>{label}</label>
+                    <input type={type} {...input} className="browser-default wr-vehicles-attr-input"/>
+                    <div className="error">
+                        {touched ? error: ''}
+                    </div>
+                </div>
+        )
+    }
+    renderSelectField({input, label,col, children, meta: {touched, error}}) {
+        return (
+            <div className={`col s12 m${col} wr-column-${col} wr-vehicles-attr-field`}>
                 <label>{label}</label>
                 <select {...input} className="browser-default wr-vehicles-attr-select">
                     {children}
@@ -47,8 +60,15 @@ class VehcilesSearchComponent extends Component {
         return (
             <div>
                 <form onSubmit={handleSubmit}>
+                    <Field name ="title"
+                    label="Title"
+                    type="text"
+                    col= "2"
+                    component={this.renderInputField}
+                    />
                     <Field name="years"
                     label="Years"
+                    col="1"
                     component={this.renderSelectField}>
                         <option className="wr-vehicles-options" value="">All Years</option>
                         {Object.keys(this.state.years).map((year, i)=> {
@@ -60,6 +80,7 @@ class VehcilesSearchComponent extends Component {
                     <Field
                     name="makes"
                     label="Makes"
+                    col="1"
                     component={this.renderSelectField}
                     >
                         <option value="">All Makes</option>
@@ -72,6 +93,7 @@ class VehcilesSearchComponent extends Component {
                     <Field
                     name="models"
                     label="Models"
+                    col="1"
                     component={this.renderSelectField}
                     >
                         <option value="">All Models</option>
@@ -84,6 +106,7 @@ class VehcilesSearchComponent extends Component {
                     <Field
                     name="bodies"
                     label="Body Types"
+                    col="2"
                     component={this.renderSelectField}
                     >
                         <option value="">All Body Types</option>
@@ -96,6 +119,7 @@ class VehcilesSearchComponent extends Component {
                     <Field
                     name="transmission"
                     label="Transmissions"
+                    col="2"
                     component={this.renderSelectField}
                     >
                         <option value="">All Transmissions</option>
@@ -107,6 +131,7 @@ class VehcilesSearchComponent extends Component {
                     </Field>
                     <Field name="prices"
                     label="Prices"
+                    col="1"
                     component={this.renderSelectField}>
                         <option value="">All Prices</option>
                         {Object.keys(this.state.prices).map((price, i)=> {
@@ -122,11 +147,10 @@ class VehcilesSearchComponent extends Component {
     }
 }
 
-function validate(values) {
-    console.log('value', values);
-}
+// function validate(values) {
+// }
 
 export default reduxForm({
-    validate,
+    // validate,
     form: 'VehicleSearchForm'
 })(VehcilesSearchComponent)

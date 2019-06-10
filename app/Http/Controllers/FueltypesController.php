@@ -7,10 +7,10 @@ use App\Fueltype;
 
 class FueltypesController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         // return Fueltype::all();
-        $fueltype = Fueltype::with('createdBy:id,name')->orderBy('id', 'desc')->paginate(3);
+        $fueltype = Fueltype::with('createdBy:id,first_name,last_name')->orderBy($request->column, $request->order)->paginate(3);
         return $fueltype;
     }
 
@@ -27,9 +27,29 @@ class FueltypesController extends Controller
  
     public function store(Request $request)
     {
-        $fueltype = Fueltype::create($request->all());
+        $errormsg = "";
+        $result = false;
+        $errorcode="";
+        try{
+            if($request->get('fueltype_desc')!=null){
+                $request->merge(['created_by'=>auth()->id()]);
+                $fueltype = Fueltype::create($request->all());
+                $result = true;
+            }else{
+                $result = false;
+                $errormsg = "Fuel Type Description cannot be null";
+            }
+            
+        }catch(\Exception $exception)
+        {
+            //dd($exception);exit;
+            $errormsg = $exception->getMessage();
+            $errorcode = $exception->getCode();
+        }
+        return response()->json(['success'=>$result,'errormsg'=>$errormsg,'errorcode'=>$errorcode]);
+        
  
-        return response()->json($fueltype, 201);
+        //return response()->json($enginesize, 201);
     }
  
     public function update(Request $request, Fueltype $fueltype)

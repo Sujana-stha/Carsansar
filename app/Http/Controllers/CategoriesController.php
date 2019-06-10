@@ -7,9 +7,9 @@ use App\Category;
 
 class CategoriesController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {   
-        $category = Category::with('createdBy:id,name')->orderBy('id', 'desc')->paginate(3);
+        $category = Category::with('createdBy:id,first_name,last_name')->orderBy($request->column, $request->order)->paginate(3);
         return $category;
     }
 
@@ -26,9 +26,29 @@ class CategoriesController extends Controller
  
     public function store(Request $request)
     {
-        $category = Category::create($request->all());
+        $errormsg = "";
+        $result = false;
+        $errorcode="";
+        try{
+            if($request->get('category_desc')!=null){
+                $request->merge(['created_by'=>auth()->id()]);
+                $category = Category::create($request->all());
+                $result = true;
+            }else{
+                $result = false;
+                $errormsg = "Category Description cannot be null";
+            }
+            
+        }catch(\Exception $exception)
+        {
+            //dd($exception);exit;
+            $errormsg = $exception->getMessage();
+            $errorcode = $exception->getCode();
+        }
+        return response()->json(['success'=>$result,'errormsg'=>$errormsg,'errorcode'=>$errorcode]);
+        
  
-        return response()->json($category, 201);
+        //return response()->json($enginesize, 201);
     }
  
     public function update(Request $request, Category $category)

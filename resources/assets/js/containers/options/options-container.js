@@ -5,6 +5,7 @@ import OptionsList from '../../components/options/options';
 import store from '../../store';
 import { requestOptions, requestDeleteOptions, requestSubmitOptions,requestUpdateOptions, requestOptionsStatus } from  '../../actions/options-actions';
 import {requestOptionCategories} from '../../actions/option_cat-action';
+import {requestLoggedUser} from '../../actions/users-action';
 
 //COMPONENT
 import EditOptions from '../../components/options/options-edit';
@@ -16,37 +17,46 @@ class OptionsListContainer extends Component {
     constructor() {
         super();
         this.state= {
-           
-            isEditing: false
+            isEditing: false,
+            confirmText: null,
+            sorted_column: 'id',
+            order: 'desc'
         }
         this.handlePageChange = this.handlePageChange.bind(this)
         this.editOptions = this.editOptions.bind(this)
         this.toggleStatus = this.toggleStatus.bind(this)
-    }
-
-    hideMessage (e) {
-        e.preventDefault();
-        this.setState ({
-            hide: false
-        })
+        this.deleteItem =  this.deleteItem.bind(this)
+        this.hideDiv =  this.hideDiv.bind(this)
     }
 
     componentDidMount() {
         // call action to run the relative saga
-        const page = this.props.activePage;
-        this.props.requestOptions(page);
+        let sorted_column = this.state.sorted_column
+        let order = this.state.order
+        const pageNumber = this.props.activePage;
+        this.props.requestOptions(pageNumber, sorted_column, order);
         this.props.requestOptionCategories();
+        this.props.requestLoggedUser();
     }
 
     // submit function for new data
     submitOption(values) {
-        this.props.requestSubmitOptions(values); 
+        let formValues = {
+            option_desc: values.option_desc.toLowerCase(),
+            oc_id: values.oc_id
+        } 
+        const pageNumber = this.props.activePage;
+        let sorted_column = this.state.sorted_column
+        let order = this.state.order
+        this.props.requestSubmitOptions(formValues, pageNumber, sorted_column, order); 
     }
 
     // submit function to update data
     submitEditOption(values) {
-        const page = this.props.activePage;
-        this.props.requestUpdateOptions(values, page);
+        const pageNumber = this.props.activePage;
+        let sorted_column = this.state.sorted_column
+        let order = this.state.order
+        this.props.requestUpdateOptions(values, pageNumber, sorted_column, order);
         this.setState({
             isEditing : false
         })
@@ -54,11 +64,9 @@ class OptionsListContainer extends Component {
 
     //function to call form of edit
     editOptions(values) {
-        
         this.setState ({
             isEditing : values
         })
-        
     }
 
     deleteOptionAction(optionId) {
@@ -68,23 +76,48 @@ class OptionsListContainer extends Component {
     // pagination function
     handlePageChange(pageNumber) {
         console.log(`active page is ${pageNumber}`);
-        this.props.requestOptions(pageNumber)
-        
+        let sorted_column = this.state.sorted_column
+        let order = this.state.order
+        this.props.requestOptions(pageNumber, sorted_column, order)
     }
     
     toggleStatus (optionId, status) {
-        const page = this.props.activePage;
+        const pageNumber = this.props.activePage;
+        let sorted_column = this.state.sorted_column
+        let order = this.state.order
         const newOptionsStatus = {
             status: !status
         }
-        this.props.requestOptionsStatus(optionId, newOptionsStatus, page)
+        this.props.requestOptionsStatus(optionId, newOptionsStatus, pageNumber, sorted_column, order)
+    }
+    deleteItem(id){
+        this.setState ({
+            confirmText: id
+        })
     }
     
+    hideDiv() {
+        this.setState({confirmText: null})
+    }
+    sortByColumn(column) {
+        const pageNumber = this.props.activePage
+        if (column === this.state.sorted_column) {
+           this.state.order === 'desc' ? this.setState({order: 'asc'}, ()=>{
+               this.props.requestOptions(pageNumber, this.state.sorted_column, this.state.order)
+            }):this.setState({order: 'desc'}, ()=>{
+                this.props.requestOptions(pageNumber, this.state.sorted_column, this.state.order)
+            })
+        } else {
+            this.setState({sorted_column: column, order: 'desc'}, ()=>{
+                this.props.requestOptions(pageNumber, this.state.sorted_column, this.state.order)
+            })
+        }
+    }
     render() {
         return (
             <div>
                 <div className="row">
-                    <div className="col s12 m3 l3 mt-3">
+                    <div className="col s12 m4 l4 mt-3">
                         {this.state.isEditing ? (
                             <EditOptions onSubmit = {this.submitEditOption.bind(this)} editId = {this.state.isEditing} optionLists = {this.props.optionCategories}/>
                         ): (
@@ -92,25 +125,48 @@ class OptionsListContainer extends Component {
                         )}
                        
                     </div>
-                    <div className="col s12 m9 l9">
+                    <div className="col s12 m8 l8">
                         {this.props.fetching ? (
                             <Loading/>
                         ): (
                             <div className="wr-not-loading"></div>
                         )}
-                        <table>
+                        <table className="wr-master-table">
                             <thead>
                                 <tr>
                                     <th>S.N</th>
-                                    <th>Title</th>
-                                    <th>Categories</th>
-                                    <th>Added by</th>
+                                    <th onClick={()=>this.sortByColumn('option_desc')}>Title
+                                        {this.state.order==='desc'?
+                                            <i className="material-icons wr-sorting-icon">arrow_drop_down</i>
+                                        :<i className="material-icons wr-sorting-icon">arrow_drop_up</i>}
+                                    </th>
+                                    <th onClick={()=>this.sortByColumn('oc_id')}>Categories 
+                                        {this.state.order==='desc'?
+                                            <i className="material-icons wr-sorting-icon">arrow_drop_down</i>
+                                        :<i className="material-icons wr-sorting-icon">arrow_drop_up</i>}
+                                    </th>
+                                    <th onClick={()=>this.sortByColumn('created_by')}>Added by
+                                        {this.state.order==='desc'?
+                                            <i className="material-icons wr-sorting-icon">arrow_drop_down</i>
+                                        :<i className="material-icons wr-sorting-icon">arrow_drop_up</i>}
+                                    </th>
                                     <th>Action</th>
                                     <th>Status</th>
                                 </tr>
                             </thead>
                             {this.props.options.length ? (
-                                <OptionsList options= {this.props.options} onEditOptions = {this.editOptions} deleteOption = {this.props.requestDeleteOptions} optionStatus = {this.toggleStatus}/>
+                                <OptionsList 
+                                options= {this.props.options} 
+                                userRole ={ this.props.loggedUser}
+                                onEditOptions = {this.editOptions} 
+                                confirmText={this.state.confirmText} 
+                                showConfirmBox={this.deleteItem} 
+                                hideConfirmBox={this.hideDiv} 
+                                deleteOption = {this.props.requestDeleteOptions} 
+                                optionStatus = {this.toggleStatus}
+                                activePage={this.props.activePage}
+                                itemsCountPerPage={this.props.itemsCountPerPage}
+                                />
 
                             ) : (
                                 <tbody>
@@ -140,6 +196,7 @@ class OptionsListContainer extends Component {
 
 function mapStateToProps(store) {
     return {
+        loggedUser: store.userState.loggedUser,
         options: store.optionState.options,
         fetching: store.optionState.fetching,
         activePage: store.optionState.activePage,
@@ -150,4 +207,4 @@ function mapStateToProps(store) {
     }
 }
 
-export default connect(mapStateToProps, {requestOptions,requestOptionCategories, requestDeleteOptions, requestSubmitOptions,requestUpdateOptions, requestOptionsStatus})(OptionsListContainer);
+export default connect(mapStateToProps, { requestLoggedUser, requestOptions,requestOptionCategories, requestDeleteOptions, requestSubmitOptions,requestUpdateOptions, requestOptionsStatus})(OptionsListContainer);

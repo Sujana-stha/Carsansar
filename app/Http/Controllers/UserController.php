@@ -43,7 +43,9 @@ class UserController extends Controller
     public function register(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required',
+            'username' => 'required',
+            'first_name' => 'required',
+            'last_name' => 'required',
             'email' => 'required|email',
             'role'=> 'required',
             'password' => 'required',
@@ -60,7 +62,7 @@ class UserController extends Controller
         $input['password'] = bcrypt($input['password']);
         $user = User::create($input);
         $success['token'] =  $user->createToken('whrepo')->accessToken;
-        $success['name'] =  $user->name;
+        $success['username'] =  $user->username;
 
 
         return response()->json(['success'=>$success], $this->successStatus);
@@ -91,5 +93,21 @@ class UserController extends Controller
         }
         //Auth::logout();
         
+    }
+    public function getUsers(Request $request) {
+        $column = "id";
+        $order ="desc";
+        if($request->column && $request->order) {
+            $column = $request->column;
+            $order = $request->order;
+        } 
+        $users = User::with('CompanyId:id,name')->orderBy($column, $order)->paginate(3);
+        return $users;
+    }
+
+    public function validateUsername(Request $request) {
+        $data = $request->get('username');
+        $username = User::where('username', '=', $data)->count();
+        return $username;
     }
 }

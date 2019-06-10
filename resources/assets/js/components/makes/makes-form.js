@@ -54,9 +54,9 @@ const MakeForm =props=> {
 function validate(values) {
     const errors = {}
     if(!values.make_desc) {
-        errors.make_desc = "The Field is empty"
+        errors.make_desc = "This field is empty."
     } else if (values.make_desc.length > 30) {
-        errors.make_desc = "Must be 30 Character or less!"
+        errors.make_desc = "Must be 30 character or less!"
     }
     return errors;
 }

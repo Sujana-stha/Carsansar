@@ -1,17 +1,21 @@
 import * as types from '../actions/action-types';
 
-export function requestUsers() {
+// to get users list
+export function requestUsers(pageNumber,sorted_column, order) {
     return {
-        type: types.REQUEST_USERS
+        type: types.REQUEST_USERS,
+        pageNumber, sorted_column, order
     }
 }
 
-export function getUserSuccess() {
+export function getUserSuccess(users) {
     return {
-        type: types.GET_USERS_SUCCESS
+        type: types.GET_USERS_SUCCESS,
+        users
     }
 }
 
+// to register users
 export function registerUsersRequest(values) {
     return {
         type: types.REGISTER_REQUEST,
@@ -26,12 +30,14 @@ export function registerUserSuccess(values) {
     }
 }
 
+// error in register
 export function registerError() {
     return {
         type: types.REGISTER_ERROR
     }
 }
 
+//to update users
 export function requestUserUpdate(values, userId) {
     return {
         type: types.REQUEST_USERS_UPDATE,

@@ -19,15 +19,16 @@ import RightSidebarNav from '../components/nav/right-sidebar-nav'
 //Components
 
 import DashboardAnalytics from '../components/dashboard/dashboard-analytics'
-import UsersListing from '../components/users/users'
 import UserProfile from '../components/users/user-profile'
-import InsertVehicleAttribute from '../components/vehicles/insert-vehicle-attribute'
-import VehicleAttributes from '../components/vehicles/vehicle-attributes'
 import ImagesPreview from '../components/vehicles/imagePreview'
 
 //Containers
 import VehiclesListingContainer from '../containers/vehicles/vehicles-listing-container'
 import InsertVehicleContainer from '../containers/vehicles/insert-vehicle-containers'
+import EditVehicleForm from '../containers/vehicles/edit-vehicle-form';
+// import EditVehicleFormContainer from '../containers/vehicles/edit-vehicle-container'
+import ImportFile from '../containers/import-file'
+import UsersListContainer from '../containers/users/users-container'
 import InsertUserContainer from '../containers/users/insertUsers-containers'
 import ColorListContainer from '../containers/color/color-container'
 import MakesListContainer from '../containers/makes/makes-container'
@@ -72,48 +73,47 @@ class DashboardLayout extends Component {
                 {/* END: SideNav */}
 
                 { /* BEGIN: Page Main */}
-                    <div id="main">
-                        <div className="row">
-                            {/* <div className="content-wrapper-before blue-grey lighten-5"></div> */}
-                            <div className="col s12">
-                                <Breadcrumb/>
-                                {/* start container */}
-                                <div className="container">
-                                    <Switch>
-                                        <Route exact path={`${match.path}`} component={DashboardAnalytics}/>
-                                        <Route path={`${match.path}/vehicles`} component={VehiclesListingContainer}/>
-                                        <Route path={`${match.path}/insert-vehicle`} component={InsertVehicleContainer}/>
-                                        <Route path={`${match.path}/vehicle-attributes`} component={VehicleAttributes}/>
-                                        <Route path={`${match.path}/insert-vehicle-attribute`} component={InsertVehicleAttribute}/>
-                                        <Route path={`${match.path}/color`} component={ColorListContainer}/>
-                                        <Route path={`${match.path}/users`} component={UsersListing}/>
-                                        <Route path={`${match.path}/insert-user`} component={InsertUserContainer}/>
-                                        <Route path={`${match.path}/user-profile`} component={UserProfile}/>
-                                        <Route path={`${match.path}/makes`} component={MakesListContainer}/>
-                                        <Route path={`${match.path}/models`} component={ModelListContainer}/>
-                                        <Route path={`${match.path}/options-categories`} component={OptionCategoriesContainer}/>
-                                        <Route path={`${match.path}/categories`} component={CategoriesContainer}/>
-                                        <Route path={`${match.path}/drives`} component={DrivesContainer}/>
-                                        <Route path={`${match.path}/bodies`} component={BodiesContainer}/>
-                                        <Route path={`${match.path}/enginesizes`} component={EnginesizesContainer}/>
-                                        <Route path={`${match.path}/fueltypes`} component={FueltypesContainer}/>
-                                        <Route path={`${match.path}/transmissions`} component={TransmissionContainer}/>
-                                        <Route path={`${match.path}/companies`} component={CompaniesContainer}/>
-                                        <Route path={`${match.path}/options`} component={OptionsContainer}/>
-                                        <Redirect to={`${match.url}`} />
-                                    </Switch>
-                                    <RightSidebarNav />
-                                </div>
-                                {/* end container */}
+                <div id="main">
+                    <div className="row">
+                        {/* <div className="content-wrapper-before blue-grey lighten-5"></div> */}
+                        <div className="col s12">
+                            <Breadcrumb/>
+                            {/* start container */}
+                            <div className="container">
+                                <Switch>
+                                    <Route exact path={`${match.path}`} component={DashboardAnalytics}/>
+                                    <Route path={`${match.path}/vehicles`} component={VehiclesListingContainer}/>
+                                    <Route path={`${match.path}/insert-vehicle`} component={InsertVehicleContainer}/>
+                                    <Route path={`${match.path}/edit-vehicle/:id`} component={EditVehicleForm}/>
+                                    <Route path={`${match.path}/import`} component={ImportFile}/>
+                                    <Route path={`${match.path}/colors`} component={ColorListContainer}/>
+                                    <Route path={`${match.path}/users`} component={UsersListContainer}/>
+                                    <Route path={`${match.path}/insert-user`} component={InsertUserContainer}/>
+                                    <Route path={`${match.path}/user-profile`} component={UserProfile}/>
+                                    <Route path={`${match.path}/makes`} component={MakesListContainer}/>
+                                    <Route path={`${match.path}/models`} component={ModelListContainer}/>
+                                    <Route path={`${match.path}/options-categories`} component={OptionCategoriesContainer}/>
+                                    <Route path={`${match.path}/categories`} component={CategoriesContainer}/>
+                                    <Route path={`${match.path}/drives`} component={DrivesContainer}/>
+                                    <Route path={`${match.path}/bodies`} component={BodiesContainer}/>
+                                    <Route path={`${match.path}/enginesizes`} component={EnginesizesContainer}/>
+                                    <Route path={`${match.path}/fueltypes`} component={FueltypesContainer}/>
+                                    <Route path={`${match.path}/transmissions`} component={TransmissionContainer}/>
+                                    <Route path={`${match.path}/companies`} component={CompaniesContainer}/>
+                                    <Route path={`${match.path}/options`} component={OptionsContainer}/>
+                                    <Redirect to={`${match.url}`} />
+                                </Switch>
+                                <RightSidebarNav />
                             </div>
-                            <FloatingActionButton />
-
-                            {/* END WRAPPER */}
+                            {/* end container */}
                         </div>
-                        {/* END MAIN */}
-                    </div>
-                    <Footer />
+                        <FloatingActionButton />
 
+                        {/* END WRAPPER */}
+                    </div>
+                    {/* END MAIN */}
+                </div>
+                <Footer />
             </div>
         )
     }

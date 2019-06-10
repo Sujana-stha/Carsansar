@@ -10,13 +10,13 @@ export function* TransmissionWatcher() {
     yield takeLatest(types.REQUEST_TRANSMISSONS, TransmissionSaga)
 }
 function* TransmissionSaga(action) {
-    const response = yield call(api.getTransmission, action.pageNumber);
+    const response = yield call(api.getTransmission, action.pageNumber, action.sorted_column, action.order);
     const transmissions = response.data
     
     if (response.errors) {
-        yield put({ type: types.REQUEST_TRANSMISSONS_FAILED, errors: response.error});
+        yield put({ type: types.REQUEST_TRANSMISSONS_FAILED, errors: response.errors});
         error = response.error;
-        notify.show("Cannot Get all Transmissions", "error", 5000)
+        notify.show("Cannot get all transmissions", "error", 5000)
     } else {
         yield put({type: types.GET_TRANSMISSONS_SUCCESS, transmissions});
     }
@@ -30,15 +30,21 @@ function* callTransmissionSubmit(action) {
     yield put(startSubmit('PostTransmissions'));
     let error = {};
     const result =  yield call(api.addTransmission, action.values);
-
-    if (result.errors) {
+    const resp = result.data
+    const pageNumber= action.pageNumber
+    const sorted_column=action.sorted_column
+    const order= action.order
+    if ((result.errors && !resp.success)|| (result.errors || !resp.success)) {
         yield put({ type: types.REQUEST_TRANSMISSONS_FAILED, errors: result.error});
         error = result.error;
-        notify.show("Cannot Add Transmission!", "error", 5000)
+        if(resp.errorcode==23000) {
+            notify.show("Transmissioin Description already exists!","error", 5000);
+        }
+        notify.show("Cannot create new Transmission!","error", 5000);
     } else {
         // yield put({type: types.ADD_TRANSMISSONS_SUCCESS, resp, message: result.statusText});
-        yield put({type: types.REQUEST_TRANSMISSONS})
-        notify.show("Transmission Added Successfully!", "success", 5000)
+        yield put({type: types.REQUEST_TRANSMISSONS,pageNumber, sorted_column, order})
+        notify.show("Created successfully!", "success", 5000)
     }
     yield put(stopSubmit('PostTransmissions', error));
     yield put(reset('PostTransmissions'));
@@ -54,15 +60,17 @@ function* callEditTransmission (action) {
     let error = {};
     const result =  yield call(api.updateTransmission, action.values.id, action.values);
     const resp = result.data;
-    const pageNumber = action.page
+    const pageNumber = action.pageNumber
+    const sorted_column=action.sorted_column
+    const order= action.order
     if (result.errors) {
         yield put({ type: types.REQUEST_TRANSMISSONS_FAILED, errors: result.error});
         error = result.error;
-        notify.show(`Cannot Update ${resp.transmission_desc}!`, "error", 5000)
+        notify.show("Update failed!","error", 5000);
     } else {
         // yield put({type: types.UPDATE_TRANSMISSONS_SUCCESS, resp, message: result.statusText});
-        yield put({type: types.REQUEST_TRANSMISSONS, pageNumber})
-        notify.show(`${resp.transmission_desc} Updated Successfully!`, "success", 5000)
+        yield put({type: types.REQUEST_TRANSMISSONS, pageNumber, sorted_column, order})
+        notify.show("Updated successfully!", "success", 5000)
     }
     yield put(stopSubmit('EditTransmissions', error));
     yield put(reset('EditTransmissions'));
@@ -76,15 +84,17 @@ export function* toggleTransmissionStatusSaga() {
 function* callToggleTransmissionStatus(action) {
     const result =  yield call(api.updateTransmissionStatus, action.transmissionId, action.values);
     const resp = result.data;
-    const pageNumber = action.page
+    const pageNumber = action.pageNumber
+    const sorted_column=action.sorted_column
+    const order= action.order
     if (result.errors) {
         yield put({ type: types.REQUEST_TRANSMISSONS_FAILED, errors: result.error});
         error = result.error;
-        notify.show(`Cannot Change Status of ${resp.transmission_desc}!`, "error", 5000)
+        notify.show("Cannot update status !","error", 5000);
     } else {
         // yield put({type: types.TRANSMISSONS_STATUS_SUCCESS, resp, message: result.statusText});
-        yield put({type: types.REQUEST_TRANSMISSONS, pageNumber})
-        notify.show(`Status of ${resp.transmission_desc} Updated!`, "success", 5000)
+        yield put({type: types.REQUEST_TRANSMISSONS, pageNumber, sorted_column, order})
+        notify.show("Status updated successfully!", "success", 5000)
     }
 }
 
@@ -100,9 +110,9 @@ function* callDeleteTransmission(action) {
     if(result.errors) {
         yield put({ type: types.REQUEST_TRANSMISSONS_FAILED, errors: result.error});
         error = result.error;
-        notify.show("Cannot Delete Transmission!", "error", 5000)
+        notify.show("Delete failed!", "error", 5000)
     } else {
         yield put(transmissionAction.deleteTransmissionSuccess(action.transmissionId, result.statusText));
-        notify.show("Transmissioin Deleted Successfully!", "error", 5000)
+        notify.show("Deleted successfully!", "error", 5000)
     }
 } 

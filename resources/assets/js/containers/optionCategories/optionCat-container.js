@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Pagination from "react-js-pagination";
 import OptionCategoryList from '../../components/OptionCategory/optionCategory';
 import store from '../../store';
 import { requestOptionCategories, requestDeleteOptionCategories, requestSubmitOptionCategories, requestUpdateOptionCategories, requestOptionCategoriesStatus } from  '../../actions/option_cat-action';
-
+import {requestLoggedUser} from '../../actions/users-action';
 
 //COMPONENT
 import OptionCategoryForm from '../../components/OptionCategory/optionCategory-form';
@@ -16,22 +15,30 @@ class OptionCategoryListContainer extends Component {
     constructor() {
         super();
         this.state= {
-            isEditing: false
+            isEditing: false,
+            confirmText: null,
+            sorted_column: 'id',
+            order: 'desc'
         }
         // this.handlePageChange = this.handlePageChange.bind(this)
         this.editOptionCategory = this.editOptionCategory.bind(this)
         this.toggleStatus = this.toggleStatus.bind(this)
-
+        this.deleteItem =  this.deleteItem.bind(this)
+        this.hideDiv =  this.hideDiv.bind(this)
     }
 
     componentDidMount() {
         // call action to run the relative saga
         this.props.requestOptionCategories();
+        this.props.requestLoggedUser();
     }
 
     // submit function for new data
     submitOptionCategory(values) {
-        this.props.requestSubmitOptionCategories(values);
+        let formValues = {
+            optioncategory_desc: values.optioncategory_desc.toLowerCase()
+        }
+        this.props.requestSubmitOptionCategories(formValues);
         this.setState ({
             hide: true
         })
@@ -67,7 +74,15 @@ class OptionCategoryListContainer extends Component {
         }
         this.props.requestOptionCategoriesStatus(optCatId, newOptCatStatus)
     }
+    deleteItem(id){
+        this.setState ({
+            confirmText: id
+        })
+    }
     
+    hideDiv() {
+        this.setState({confirmText: null})
+    }
     render() {
         return (
             <div>
@@ -86,7 +101,7 @@ class OptionCategoryListContainer extends Component {
                         ): (
                             <div className="wr-not-loading"></div>
                         )}
-                        <table>
+                        <table className="wr-master-table">
                             <thead>
                                 <tr>
                                     <th>S.N</th>
@@ -97,8 +112,16 @@ class OptionCategoryListContainer extends Component {
                                 </tr>
                             </thead>
                             {this.props.optionCategories.length ? (
-                                <OptionCategoryList optionCategories= {this.props.optionCategories} onEditOptionCategory = {this.editOptionCategory} deleteOptionCategory = {this.props.requestDeleteOptionCategories} optionCategoryStatus={this.toggleStatus}/>
-
+                                <OptionCategoryList 
+                                optionCategories= {this.props.optionCategories} 
+                                userRole ={ this.props.loggedUser}
+                                onEditOptionCategory = {this.editOptionCategory} 
+                                confirmText={this.state.confirmText} 
+                                showConfirmBox={this.deleteItem} 
+                                hideConfirmBox={this.hideDiv} 
+                                deleteOptionCategory = {this.props.requestDeleteOptionCategories} 
+                                optionCategoryStatus={this.toggleStatus}
+                                />
                             ) : (
                                 <tbody>
                                     <tr>
@@ -117,10 +140,10 @@ class OptionCategoryListContainer extends Component {
 
 function mapStateToProps(store) {
     return {
+        loggedUser: store.userState.loggedUser,
         optionCategories: store.OptCatState.optionCategories,
-        fetching: store.OptCatState.fetching,
-        
+        fetching: store.OptCatState.fetching
     }
 }
 
-export default connect(mapStateToProps, {requestOptionCategories, requestDeleteOptionCategories, requestSubmitOptionCategories, requestUpdateOptionCategories, requestOptionCategoriesStatus })(OptionCategoryListContainer);
+export default connect(mapStateToProps, { requestLoggedUser, requestOptionCategories, requestDeleteOptionCategories, requestSubmitOptionCategories, requestUpdateOptionCategories, requestOptionCategoriesStatus })(OptionCategoryListContainer);

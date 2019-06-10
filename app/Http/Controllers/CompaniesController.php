@@ -7,10 +7,10 @@ use App\Company;
 
 class CompaniesController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         // return Company::all();
-        $company = Company::with('createdBy:id,name')->orderby('id', 'desc')->paginate(3);
+        $company = Company::with('createdBy:id,first_name,last_name')->orderby($request->column, $request->order)->paginate(3);
         return $company;
     }
 
@@ -27,9 +27,29 @@ class CompaniesController extends Controller
  
     public function store(Request $request)
     {
-        $company = Company::create($request->all());
+        $errormsg = "";
+        $result = false;
+        $errorcode="";
+        try{
+            if($request->get('name') && $request->get('address') && $request->get('email')!=null){
+                $request->merge(['created_by'=>auth()->id()]);
+                $company = Company::create($request->all());
+                $result = true;
+            }else{
+                $result = false;
+                $errormsg = "Company name, address and email cannot be null";
+            }
+            
+        }catch(\Exception $exception)
+        {
+            //dd($exception);exit;
+            $errormsg = $exception->getMessage();
+            $errorcode = $exception->getCode();
+        }
+        return response()->json(['success'=>$result,'errormsg'=>$errormsg,'errorcode'=>$errorcode]);
+        
  
-        return response()->json($company, 201);
+        //return response()->json($enginesize, 201);
     }
  
     public function update(Request $request, Company $company)

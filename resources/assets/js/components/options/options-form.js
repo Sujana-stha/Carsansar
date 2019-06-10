@@ -16,7 +16,8 @@ const renderInputField=({input, label, type, meta: {touched, error}})=> {
 }
 const renderSelectField=({input, label, meta: {touched, error}, defaultValue, children})=> {
     return (
-        <div>
+        <div className="row">
+        <div className="col s12">
             <label>{label}</label>
             <select value={defaultValue} {...input} className="browser-default">
                 {children}
@@ -24,6 +25,7 @@ const renderSelectField=({input, label, meta: {touched, error}, defaultValue, ch
             <div className="error">
                 {touched ? error: ''}
             </div>
+        </div>
         </div>
     )
 }
@@ -55,7 +57,8 @@ const OptionsForm = props => {
                                     )
                                 })}
                             </Field>
-                            <div className="row">
+
+                            <div className="row mt-10">
                                 <div className="col s12">
                                     <button className="btn cyan waves-effect waves-light" type="submit" name="action">Add
                                         <i className="material-icons right">send</i>
@@ -71,14 +74,13 @@ const OptionsForm = props => {
 
 function validate(values) {
     const errors = {}
-    console.log('values', values)
     if(!values.option_desc) {
-        errors.option_desc = "The Field is empty"
+        errors.option_desc = "This field is empty."
     } else if (values.option_desc.length > 30) {
-        errors.option_desc = "Must be 30 character or Less!"
+        errors.option_desc = "Must be 30 character or less!"
     }
     if(!values.oc_id) {
-        errors.oc_id = "The Field is empty"
+        errors.oc_id = "This field is empty."
     }
     return errors;
 }

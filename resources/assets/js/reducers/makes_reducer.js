@@ -9,14 +9,12 @@ const initialState = {
     totalItemsCount: 1,
     pageRangeDisplayed: 3,
     sending: false,
-    order: 'desc',
-    sorted_column: 'id'
 }
 
 const makeReducer =  function(state = initialState, action) {
     switch(action.type) {
         case types.REQUEST_MAKES: 
-            return {...state, fetching: true};
+            return {...state, fetching: true, sending: false };
            
         case types.GET_MAKES_SUCCESS:
             return Object.assign({}, state, {
@@ -25,7 +23,7 @@ const makeReducer =  function(state = initialState, action) {
                 itemsCountPerPage: action.makes.per_page,
                 totalItemsCount: action.makes.total,
                 activePage: action.makes.current_page,
-                sending: false
+                sending: false,
             })
         
         

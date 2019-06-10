@@ -2,17 +2,17 @@
 import axios, {getHeaders} from './axiosInstance'
 
 //GET ALL COLORS API
-export function getColors(pageNumber) {
+export function getColors(pageNumber,sorted_column, order) {
     const access_token = window.localStorage.getItem('access_token')
     const headers = getHeaders(access_token)
-    return axios.get(`/api/colors?page=${pageNumber}`,{headers})
+    return axios.get(`/api/colors?page=${pageNumber}&column=${sorted_column}&order=${order}`,{headers})
 }
 
 // ADD NEW COLORS API
 export function addColors(values) {
     const access_token = window.localStorage.getItem('access_token')
     const headers = getHeaders(access_token)
-    values.created_by = 1;
+    // values.created_by = 1;
     return axios.post('/api/colors', values,{headers})
     .catch(error=> {
         console.log(error)
