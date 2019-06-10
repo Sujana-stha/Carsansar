@@ -24,7 +24,7 @@ class DealsController extends Controller
         // $user = $request->user();
         // $company_id = $user->company_id;
         $column= 'id';
-        $order= 'desc';
+        $order= 'dsc';
         if($request->column == 'year') {
             $column = 'vehicleInfo.year';
         }
@@ -251,7 +251,6 @@ class DealsController extends Controller
  
     public function update(Request $request)
     {
-        dd($request-> all());
         $c_vehicle_info = ($request->get('vehicle_info')!= null)?$request->get('vehicle_info'):null;        
         $c_attribute = ($request->get('attribute')!= null)?$request->get('attribute'):null;
         $c_financing = ($request->get('financing')!= null)?$request->get('financing'):null;
