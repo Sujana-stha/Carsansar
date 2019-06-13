@@ -13,6 +13,7 @@ import * as optCatapi from '../../api/option_cat-api';
 // FIELD COMPONENT
 import TextEditorField from '../../components/vehicles/textEditor-field'
 import EditImagePreview from '../../components/vehicles/editImagePreview';
+import EditNewImage from '../../components/vehicles/editNewImage'
 import AutocompleteField from '../../components/vehicles/autocomplete-field';
 
 class EditVehicles extends Component {
@@ -515,6 +516,9 @@ class EditVehicles extends Component {
 											<Field name="images" 
 											component={EditImagePreview} 
 											/>
+											<Field name="files" 
+											component={EditNewImage} 
+											/>
 										</div>
 									</TabPanel>
 									<TabPanel tabId="vehicle-location">
@@ -665,6 +669,7 @@ class EditVehicles extends Component {
 }
 
 function validate(values) {
+	console.log('edit-value', values)
 	const errors = {}
 	if(!values.title) {
         errors.title = "This Field is empty"

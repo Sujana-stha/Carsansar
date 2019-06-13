@@ -67,7 +67,7 @@ class UserController extends Controller
 
         return response()->json(['success'=>$success], $this->successStatus);
     }
-
+    
 
     /**
      * details api

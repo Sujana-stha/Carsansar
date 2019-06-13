@@ -9,11 +9,11 @@ const ColorsList =(props)=> {
                     <tr key={color.id} className={`row-${color.id}`}>                  
                         <td>{((props.activePage-1)*props.itemsCountPerPage)+(index+1)}</td>
                         <td>{color.color_desc ==null ? '-': color.color_desc}</td>
-                        <td>{color.created_by.name}</td>
+                        <td>{color.created_by.first_name} {color.created_by.last_name}</td>
                         <td>99</td>
                         <td className="action">
                             <a href="javascript:void(0);" onClick={props.onEditColor.bind(null, color.id)} className="tooltipped" data-position="top" data-delay="50" data-tooltip="Edit"><i className="material-icons">edit</i></a>
-                            {props.userRole.name == authUser ? (
+                            {props.userRole.username == authUser ? (
                                 <a className="tooltip" href="javascript:void(0);" onClick={props.showConfirmBox.bind(null,color.id)} data-tooltip="Delete"><i className="material-icons">delete</i></a>
                             ): null }
                             

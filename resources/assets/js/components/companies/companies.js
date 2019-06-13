@@ -19,10 +19,10 @@ const CompaniesList = (props) => {
                                 </div>
                             </td>
                             <td>{company.contact_no == null ? '-': company.contact_no}</td>
-                            <td>{company.created_by.name}</td>
+                            <td>{company.created_by.first_name} {company.created_by.last_name}</td>
                             <td className="action">
                                 <a href="javascript:void(0);" onClick={props.onEditCompany.bind(null, company.id)} className="tooltipped" data-position="top" data-delay="50" data-tooltip="Edit"><i className="material-icons">edit</i></a>
-                                {props.userRole.name == authUser ? (
+                                {props.userRole.username == authUser ? (
                                 <a className="tooltip" href="javascript:void(0);" onClick={()=>props.showConfirmBox(company.id)} data-tooltip="Delete"><i className="material-icons">delete</i></a>
                                 ): null }
 

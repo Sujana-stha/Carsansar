@@ -4,25 +4,25 @@ import {notify} from 'react-notify-toast';
 
 class EditImagePreview extends Component {
     
-    onDrop(images){
-        console.log('tss', images)
-        const newImages =  images.map((image) => {
-            return Object.assign(image, {
-                main_flag: false
-            })
-        })
-        const imagesList =  this.props.input.value
+    // onDrop(images){
+    //     console.log('tss', images)
+    //     const newImages =  images.map((image) => {
+    //         return Object.assign(image, {
+    //             main_flag: false
+    //         })
+    //     })
+    //     const imagesList =  this.props.input.value
         
-        const newimagesList = imagesList.concat([...newImages]) 
+    //     const newimagesList = imagesList.concat([...newImages]) 
         
-        console.log('main', newimagesList)
-        this.props.input.onChange(newimagesList);
-    }
-    onDropRejected(images){
-        if(images.length){
-            notify.show("Please upload valid image files.'Invalid MIME type", "error", 5000);
-        }
-    }
+    //     console.log('main', newimagesList)
+    //     this.props.input.onChange(newimagesList);
+    // }
+    // onDropRejected(images){
+    //     if(images.length){
+    //         notify.show("Please upload valid image files.'Invalid MIME type", "error", 5000);
+    //     }
+    // }
     removeDroppedFile(path, e=null){
         console.log('ima', path)
 
@@ -100,7 +100,7 @@ class EditImagePreview extends Component {
                         )}
                     </div>
                 ): null }
-                <div className="wr-dropzone-wrapper">
+                {/* <div className="wr-dropzone-wrapper">
                     <DropZone
                         onDropAccepted={this.onDrop.bind(this)}
                         onDropRejected={this.onDropRejected.bind(this)}
@@ -110,7 +110,7 @@ class EditImagePreview extends Component {
                         <i className="material-icons">cloud_upload</i><br/>
                         <span className="dropzone-text">Drag n Drop Images Here !</span>
                     </DropZone>
-                </div>
+                </div> */}
             </div>
         );
     }

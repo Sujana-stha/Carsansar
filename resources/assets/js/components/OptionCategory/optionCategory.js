@@ -11,10 +11,10 @@ const OptionCategoryList = (props) => {
 
                             <td>{index+1}</td>
                             <td>{optionCategory.optioncategory_desc== null ? '-': optionCategory.optioncategory_desc}</td>
-                            <td>{optionCategory.created_by.name}</td>
+                            <td>{optionCategory.created_by.first_name} {optionCategory.created_by.last_name}</td>
                             <td className="action">
                                 <a href="javascript:void(0);" onClick={props.onEditOptionCategory.bind(null, optionCategory.id)} className="tooltipped" data-position="top" data-delay="50" data-tooltip="Edit"><i className="material-icons">edit</i></a>
-                                {props.userRole.name == authUser ? (
+                                {props.userRole.username == authUser ? (
                                     <a className="tooltip" href="javascript:void(0);" onClick={() => props.showConfirmBox(optionCategory.id)} data-tooltip="Delete"><i className="material-icons">delete</i></a>
                                 ): null }
 
