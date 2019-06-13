@@ -81,8 +81,8 @@ class DealsController extends Controller
     }
  
     public function store(Request $request)
-    {       
-        
+    {  
+             
         $vehicle_info = new VehicleInfo([
              'vin' => $request->get('vin'),
              'category_id' => $request->get('category_id'),

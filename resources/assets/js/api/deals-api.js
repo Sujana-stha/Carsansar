@@ -223,15 +223,7 @@ function formValues(values) {
             formData.append('imagemeta[]',image['main_flag'])
         })
     }
-    if(values.images) {
-        console.log('image', values.images)
-        values.images.map(image => {
-            if(image.preview) {
-                formData.append('newImage', image)
-                formData.append('newImagemeta', image['main_flag'])
-            }
-        })
-    }
+    
     if(values.price){formData.append('price', values.price)}
     if(values.selling_price){formData.append('selling_price', values.selling_price)}
     //FINANCE
@@ -265,7 +257,7 @@ export function addVehicles(values) {
     });
 }
 
-function vehicleDetails(vehicleData, object, oldImage, fileData) {
+function vehicleDetails(vehicleData, object) {
     console.log('vehicleData', vehicleData)
     console.log('object==', object)
     var newVehicleData = vehicleData
@@ -278,9 +270,7 @@ function vehicleDetails(vehicleData, object, oldImage, fileData) {
     newVehicleData.trim = object.trim
     newVehicleData.vehicle_description = object.vehicle_description
     newVehicleData.vehicle_status = object.vehicle_status
-    newVehicleData.images = oldImage
-    newVehicleData.newImage = fileData
-    newVehicleData.newImagemeta = object.newImagemeta
+    newVehicleData.images = object.images
 
     newVehicleData.attribute.body_id = object.body_id
     newVehicleData.attribute.city_mpg = object.city_mpg
@@ -312,31 +302,21 @@ export function updateVehicles(vehicleId, values, vehicleData) {
     const access_token = window.localStorage.getItem('access_token')
     const headers = getHeaders(access_token)
     console.log('value=>', values)
-    var oldImage = []
-    var fileData= new FormData();
-    if(values.images) {
-        values.images.map(image=> {
-            if(image.path) {
-                console.log('ima', image)
-                oldImage.push(image)
-            } else {
-                console.log('newIma', image)
-                fileData.append('newImage[]', image)
-            }
+    
+    var data = vehicleDetails(vehicleData, values)
+    console.log('final', data)
+
+    var formData= new FormData();
+    formData.append('vehicles-detail', JSON.stringify(data));
+    if(values.files) { 
+        values.files.map(image=>{
+            formData.append('files[]', image)
+            formData.append('imagemeta[]', image['main_flag'])
         })
     }
-    const data = formValues(values)
-    console.log('data', data)
-    var object = {}
-    data.forEach((value, key) => {object[key]=value});
-    // var json = JSON.stringify(object)
-    
-    console.log('old', oldImage)
-    console.log('obj=>', object)
+    formData.append('_method', 'PUT')
 
-    var finalData = vehicleDetails(vehicleData, object, oldImage, fileData)
-    console.log('final', finalData)
-    return axios.put('/api/vehicles/'+ vehicleId, finalData,{headers})
+    return axios.post('/api/vehicles/'+ vehicleId, formData, {headers})
     .catch(error=> {
         console.log(error)
         return {

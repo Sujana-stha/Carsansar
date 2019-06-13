@@ -11,10 +11,10 @@ const OptionsList = (props) => {
                         <td>{((props.activePage-1)*props.itemsCountPerPage)+(index+1)}</td>
                         <td>{option.option_desc== null ? '-': option.option_desc}</td>
                         <td>{option.oc_id == null ? '-': option.oc_id.optioncategory_desc}</td>
-                        <td>{option.created_by.name}</td>
+                        <td>{option.created_by.first_name} {option.created_by.last_name}</td>
                         <td className="action">
                             <a href="javascript:void(0);" onClick={props.onEditOptions.bind(null, option.id)} className="tooltipped" data-position="top" data-delay="50" data-tooltip="Edit"><i className="material-icons">edit</i></a>
-                            {props.userRole.name == authUser ? (
+                            {props.userRole.username == authUser ? (
                             <a className="tooltip" href="javascript:void(0);" onClick={() => props.showConfirmBox(option.id)} data-tooltip="Delete"><i className="material-icons">delete</i></a>
                             ) :  null }
                             {props.confirmText == option.id ? (
