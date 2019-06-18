@@ -206,7 +206,7 @@ class DealsController extends Controller
                         $image = new VehicleImage([]);
                         $image->d_id = $d_id;
                         $image->vi_id = $vi_id;
-                        $image->path = 'whrepo/'.$stock_number.'/'.$file[$i]->getClientOriginalName();
+                        $image->path = $stock_number.'/'.$file[$i]->getClientOriginalName();
                         //if(count($imagemeta)>0){
                             if($imagemeta[$i]=='true'){
                                 //echo $imagemeta[$i];exit;
@@ -216,7 +216,7 @@ class DealsController extends Controller
                             }
                         //}
                         $image->order = $i+1;
-                        $image->created_by = $this->user_id;
+                        $image->created_by = auth()->id();
                         $image->save();
                         $filename=pathinfo($file[$i]->getClientOriginalName(),PATHINFO_FILENAME);
                         $extension = pathinfo($file[$i]->getClientOriginalName(),PATHINFO_EXTENSION);
@@ -251,25 +251,36 @@ class DealsController extends Controller
  
     public function update(Request $request)
     {
-        $c_vehicle_info = ($request->get('vehicle_info')!= null)?$request->get('vehicle_info'):null;        
-        $c_attribute = ($request->get('attribute')!= null)?$request->get('attribute'):null;
-        $c_financing = ($request->get('financing')!= null)?$request->get('financing'):null;
-        $c_images = ($request->get('images')!= null)?$request->get('images'):null;
+        
+        $vehicle_detail = $request->get('vehicles-detail');
+        $files = $request->file('files');
+        $image_meta = $request->get('imagemeta');
+        
+        $vehicle_detail = json_decode($vehicle_detail, true);
+            // echo "<pre>";
+            // var_dump($files);
+   
+            // exit();
+        $c_vehicle_info = ($vehicle_detail['vehicle_info']!= null)?$vehicle_detail['vehicle_info']:null;        
+        $c_attribute = ($vehicle_detail['attribute']!= null)?$vehicle_detail['attribute']:null; 
+        $c_financing = ($vehicle_detail['financing']!= null)?$vehicle_detail['financing']:null; 
+        $c_images = ($vehicle_detail['images']!= null)?$vehicle_detail['images']:null;
 
-        $d_id = $request->get('id');
+        $d_id = $vehicle_detail['id'];
+        $vi_id = null;
         $deal = Deal::find($d_id);
         $deal->update([
-            'title' => $request->get('title'),
-            'stock_number' => $request->get('stock_number'),
-            'company_id' => $request->get('company_id'),
-            'kms' => $request->get('kms'),
-            'price' => $request->get('price'),
-            'vehicle_status' => $request->get('vehicle_status'),
-            'trim' => $request->get('trim'),
-            'ad_desc' => $request->get('ad_desc'),
-            'warranty_flag' => $request->get('warranty_flag'),
-            'warranty_desc' => $request->get('warranty_desc'),
-            'financing_flag' => $request->get('financing_flag'),
+            'title' => $vehicle_detail['title'],
+            'stock_number' => $vehicle_detail['stock_number'],
+            'company_id' => $vehicle_detail['company_id'],
+            'kms' => $vehicle_detail['kms'],
+            'price' => $vehicle_detail['price'],
+            'vehicle_status' => $vehicle_detail['vehicle_status'],
+            'trim' => $vehicle_detail['trim'],
+            'ad_desc' => $vehicle_detail['ad_desc'],
+            'warranty_flag' => $vehicle_detail['warranty_flag'],
+            'warranty_desc' => $vehicle_detail['warranty_desc'],
+            'financing_flag' => $vehicle_detail['financing_flag'],
             'updated_by' => auth()->id(),
             'updated_at' => Carbon::now()
         ]);
@@ -295,18 +306,18 @@ class DealsController extends Controller
         }
         if ($c_attribute){
             $a_id = $c_attribute['id'];
-            echo $a_id;exit;
+            //echo $a_id;exit;
             $attribute = Attribute::find($a_id);
-            // $attribute->update([
-            //     'exterior_color_id' => $c_attribute['exterior_color_id'] != null ? $c_attribute['exterior_color_id'] : null,
-            //     'interior_color_id' => $c_attribute['interior_color_id'],,
-            //     'doors' => $c_attribute['doors'],,
-            //     'passenger' => $c_attribute['passenger'],,
-            //     'body_id' => $c_attribute['body_id'],,
-            //     //'option_ids' => $request->get('option_id'),
-            //     'updated_by' => auth()->id(),
-            //     'updated_at' => Carbon::now()
-            // ]);
+            $attribute->update([
+                'exterior_color_id' => $c_attribute['exterior_color_id'] != null ? $c_attribute['exterior_color_id'] : null,
+                'interior_color_id' => $c_attribute['interior_color_id'],
+                'doors' => $c_attribute['doors'],
+                'passenger' => $c_attribute['passenger'],
+                'body_id' => $c_attribute['body_id'],
+                'option_ids' => $c_attribute['option_ids'],
+                'updated_by' => auth()->id(),
+                'updated_at' => Carbon::now()
+            ]);
         }
         if ($c_financing){
             $f_id = $c_financing['id'];
@@ -323,7 +334,90 @@ class DealsController extends Controller
                 'updated_by' => auth()->id(),
                 'updated_at' => Carbon::now()
             ]);
-        }         
+        }  
+        
+        if ($c_images){
+            $old_image_ids = [];
+            for($i=0;$i<count($c_images);$i++){
+                $img_id = $c_images[$i]['id'];
+                $image = VehicleImage::find($img_id);
+                $image->update([
+                    'main_flag' => $c_images[$i]['main_flag']
+                ]);
+                array_push($old_image_ids,$c_images[$i]['id']);
+            }
+            $deleted_images = VehicleImage::where('d_id',$d_id)
+                                ->whereNotIn('id',$old_image_ids)
+                                ->get();
+            
+            for($i=0;$i<count($deleted_images);$i++){
+                $file = explode('.',$deleted_images[$i]['path']);
+                Storage::delete('public/'.$deleted_images[$i]['path']);
+                Storage::delete('public/'.$file[0].'-150X150.'.$file[1]);
+                Storage::delete('public/'.$file[0].'-300X300.'.$file[1]);
+                Storage::delete('public/'.$file[0].'-1024X768.'.$file[1]);
+            }
+            VehicleImage::where('d_id',$d_id)
+                            ->whereNotIn('id', $old_image_ids)
+                            ->delete();
+        }else{
+            $deleted_images = VehicleImage::where('d_id',$d_id)
+                                ->get();
+            for($i=0;$i<count($deleted_images);$i++){
+                $file = explode('.',$deleted_images[$i]['path']);
+                Storage::delete('public/'.$deleted_images[$i]['path']);
+                Storage::delete('public/'.$file[0].'-150X150.'.$file[1]);
+                Storage::delete('public/'.$file[0].'-300X300.'.$file[1]);
+                Storage::delete('public/'.$file[0].'-1024X768.'.$file[1]);
+            }
+
+            VehicleImage::where('d_id',$d_id)                           
+                            ->delete();
+        }
+
+        if(is_array($files)){
+            if(count($files)>0){
+                $stock_number=$vehicle_detail['stock_number'];
+                $max_order = VehicleImage::where('d_id',$d_id)
+                                ->max('order');
+                for($i=0;$i<count($files);$i++){
+                    Storage::putFileAs('public/whrepo/'.$stock_number.'/', $files[$i],$files[$i]->getClientOriginalName());
+                    $image = new VehicleImage([]);
+                    $image->d_id = $d_id;
+                    $image->vi_id = $vi_id;
+                    $image->path = $stock_number.'/'.$files[$i]->getClientOriginalName();
+                    //if(count($imagemeta)>0){
+                        
+                        if($image_meta[$i]=='true'){
+                            //echo $imagemeta[$i];exit;
+                            $image->main_flag = '1';
+                        }else{
+                            $image->main_flag = '0';
+                        }
+                    //}
+                    $image->order = $max_order+1;
+                    $image->created_by = auth()->id();
+                    $image->save();
+                    $filename=pathinfo($files[$i]->getClientOriginalName(),PATHINFO_FILENAME);
+                    $extension = pathinfo($files[$i]->getClientOriginalName(),PATHINFO_EXTENSION);
+                    
+                   
+                    $img = Image::make($files[$i]);
+                    
+                    $img->resize(150, null, function ($constraint) { $constraint->aspectRatio(); } )->encode($extension);
+                    Storage::put('public/whrepo/'.$stock_number.'/'.$filename.'-150X150.'.$extension, $img);
+                    $img->resize(300, null, function ($constraint) { $constraint->aspectRatio(); } )->encode($extension);
+                    Storage::put('public/whrepo/'.$stock_number.'/'.$filename.'-300X300.'.$extension, $img);
+                    $img->resize(1024, null, function ($constraint) { $constraint->aspectRatio(); } )->encode($extension);
+                    Storage::put('public/whrepo/'.$stock_number.'/'.$filename.'-1024X768.'.$extension, $img);
+                    
+                }
+            }
+            
+        }
+
+
+
  
         return response()->json($vehicleinfo,$deal,$attribute,$image,$financing, 200);
     }
