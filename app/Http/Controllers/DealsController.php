@@ -21,21 +21,24 @@ class DealsController extends Controller
     //private $user_id = 1;
     public function index(Request $request)
     {
-       
+        // $user = $request->user();
+        // $company_id = $user->company_id;
         $column= 'id';
         $order= 'dsc';
         if($request->column == 'year') {
             $column = 'vehicleInfo.year';
-        } else {
-            $column = $request->column;
         }
 
         if($request->order == 'asc') {
             $order = 'asc';
-        } else {
-            $order = $request->order;
-        }   
+        }
 
+            //echo $column ;
+        // } else {
+        //     $column = 'column';
+        // }
+        
+        
         return Deal::with('vehicleInfo.categoryId:id,category_desc',
                         'vehicleInfo.makeId:id,make_desc',
                         'vehicleInfo.modelId:id,model_desc',

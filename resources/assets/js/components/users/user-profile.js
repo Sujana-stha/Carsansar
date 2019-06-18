@@ -1,54 +1,28 @@
 // User Profile
 import React, { Component } from 'react';
 // import { NavLink } from 'react-router-dom';
-import loadjs from 'loadjs'
+import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 
+import store from '../../store';
 import * as api from '../../api/users-api';
+import {requestLoggedUser} from '../../actions/users-action';
 
 class UserProfile extends Component {
     constructor() {
         super();
         this.state = {
-            userDetails: []
+            userDetails : {}
         }
     }
     componentDidMount() {
-        
-        api.userDetail().then((response) => {
-            const data = response.data
+        this.props.requestLoggedUser()
+        // console.log('loggedUser', this.props.loggedUser)
+        api.getLoggedUser().then((response)=> {
             console.log('response', response)
-            this.props.initialize(data[0]);
-            loadjs('/js/materialize-admin/custom/custom-script.js');
         })
-    
     }
-    renderInputField ({ input, label,id, type, meta: { touched, error } }) {
-        return (
-            <div className="row">
-                <div className="input-field col s12">
-                    <input id={id} type={type} {...input} />
-                    <label className="active" htmlFor={id}>{label}</label>
-                    <div className="error">
-                        {touched ? error : ''}
-                    </div>
-                </div>
-            </div>
-        )
-    }
-    renderDisabledField({ input, label,id,type, meta: { touched, error }}) {
-        return (
-            <div className="row">
-                <div className="input-field col s12">
-                    <input disabled id={id} type={type} {...input}/>     
-                    <label className="active" htmlFor={id}>{label}</label>
-                </div>
-                <div className="error">
-                    {touched ? error : ''}
-                </div>
-            </div>
-        )
-    }
+
     render() {
         return (
             <div>
@@ -57,89 +31,44 @@ class UserProfile extends Component {
                     <div className="container">
                         <div id="profile-page" className="section">
                             <div className="row">
-                                <div className="col s6">
-                                    <Field
-                                    label="First Name"
-                                    name="first_name"
-                                    type="text"
-                                    id="first_name"
-                                    component={this.renderInputField}
-                                    />
-                                </div>
-                                <div className="col s6">
-                                    <Field
-                                    label="Last Name"
-                                    name="last_name"
-                                    type="text"
-                                    id="last_name"
-                                    component={this.renderInputField}
-                                    />
+                                <div className="form-field col s6">
+                                    <input type="text" defaultValue="Bikash" />
+                                    <label>First Name</label>
                                 </div>
                                 <div className="form-field col s6">
-                                    <Field
-                                    label="Company ID/Dealership ID"
-                                    name="company_id.company_cd"
-                                    type="text"
-                                    id="company_cd"
-                                    component={this.renderInputField}
-                                    />
+                                    <input type="text" defaultValue="Maharjan" />
+                                    <label>Last Name</label>
                                 </div>
                                 <div className="form-field col s6">
-                                    <Field
-                                    label="Company/Dealership Name"
-                                    name="company_id.name"
-                                    type="text"
-                                    id="company_name"
-                                    component={this.renderInputField}
-                                    />
+                                    <input type="text" defaultValue="0338" />
+                                    <label>Company ID/Dealership ID</label>
+                                </div>
+                                <div className="form-field col s6">
+                                    <input type="text" defaultValue="Techtatva" />
+                                    <label>Company/Dealership Name</label>
                                 </div>
                                 <div className="form-field col s12">
-                                    <Field
-                                    label="Username cannot be changed"
-                                    name="username"
-                                    type="text"
-                                    component={this.renderDisabledField}
-                                    id="username"
-                                    />
+                                    <input type="text" defaultValue="bmaharjan" disabled />
+                                    <label>Username cannot be changed</label>
                                 </div>
                                 <button className='btn waves-effect waves-light'>Change Password</button>
                                 <div className="form-field col s12">
-                                    <Field
-                                    label="Current Password"
-                                    name="password"
-                                    type="password"
-                                    id="password"
-                                    component={this.renderInputField}
-                                    />
+                                    <input type="password" />
+                                    <label>Current Password</label>
                                 </div>
                                 <div className="form-field col s12">
-                                    <Field
-                                    label="New Password"
-                                    name="new_password"
-                                    type="password"
-                                    id="new_password"
-                                    component={this.renderInputField}
-                                    />
+                                    <input type="password" />
+                                    <label>New Password</label>
                                 </div>
                                 <div className="form-field col s12">
-                                    <Field
-                                    label="Retype New Password"
-                                    name="c_new_password"
-                                    type="password"
-                                    id="c_new_password"
-                                    component={this.renderInputField}
-                                    />
+                                    <input type="password" />
+                                    <label>Retype New Password</label>
                                 </div>
 
                                 <div className="clearfix"></div>
                                 <div className="form-field col s12">
-                                    <Field
-                                    name="email"
-                                    label="Email"
-                                    type="text"
-                                    id="email"
-                                    component={this.renderInputField}
-                                    />
+                                    <input type="email" defaultValue="bmaharjan@techtatva.co" />
+                                    <label>Email</label>
                                 </div>
                                 <button className='btn waves-effect waves-light'>Update User</button>
                             </div>
@@ -150,11 +79,10 @@ class UserProfile extends Component {
         )
     }
 }
-function validate(values){
-    console.log(values);
-}
 
-export default reduxForm({
-    validate,
-    form: 'UpdateUserProfile'
-})(UserProfile);
+function mapStateToProps(store) {
+    return {
+        loggedUser: store.userState.loggedUser
+    }
+}
+export default connect(mapStateToProps,{requestLoggedUser})(UserProfile);

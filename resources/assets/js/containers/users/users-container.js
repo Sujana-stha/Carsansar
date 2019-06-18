@@ -80,12 +80,7 @@ class UsersListContainer extends Component {
                     <thead>
                         <tr>
                             <th data-field="id">#</th>
-                            <th data-field="name" onClick={()=>this.sortByColumn('first_name')}>First name 
-                                {this.state.order==='desc'?
-                                    <i className="material-icons wr-sorting-icon">arrow_drop_down</i>
-                                :<i className="material-icons wr-sorting-icon">arrow_drop_up</i>}
-                            </th>
-                            <th data-field="name" onClick={()=>this.sortByColumn('last_name')}>Last name 
+                            <th data-field="name" onClick={()=>this.sortByColumn('name')}> Name 
                                 {this.state.order==='desc'?
                                     <i className="material-icons wr-sorting-icon">arrow_drop_down</i>
                                 :<i className="material-icons wr-sorting-icon">arrow_drop_up</i>}

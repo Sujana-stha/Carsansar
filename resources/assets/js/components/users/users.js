@@ -8,8 +8,7 @@ const UsersListing = (props) => {
                 return (
                     <tr key={user.id} >
                         <td>{((props.activePage-1)*props.itemsCountPerPage)+(index+1)}</td>
-                        <td>{user.first_name}</td>
-                        <td>{user.last_name}</td>
+                        <td>{user.name}</td>
                         <td>{user.email}</td>
                         <td>{user.role}</td>
                         <td>{user.company_id == null ? '-': user.company_id.name}</td>
