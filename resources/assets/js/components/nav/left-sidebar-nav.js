@@ -4,20 +4,20 @@ import React from 'react'
 import { NavLink } from 'react-router-dom'
 
 const LeftSidebarNav = (props) => {
-	return(
+	return (
 		<aside className="sidenav-main nav-expanded nav-lock nav-collapsible sidenav-light navbar-full sidenav-active-rounded">
 			<div className="brand-sidebar">
-				<h1 className="logo-wrapper"><NavLink to="/dashboard" className="brand-logo darken-1"><img src="/images/logo/materialize-logo.png" alt="materialize logo"/><span className="logo-text hide-on-med-and-down">Materialize</span></NavLink><a className="navbar-toggler" href="#"><i className="material-icons">radio_button_checked</i></a></h1>
+				<h1 className="logo-wrapper"><NavLink to="/dashboard" className="brand-logo darken-1"><img src="/images/logo/materialize-logo.png" alt="materialize logo" /><span className="logo-text hide-on-med-and-down">Materialize</span></NavLink><a className="navbar-toggler" href="#"><i className="material-icons">radio_button_checked</i></a></h1>
 			</div>
 			<ul className="sidenav sidenav-collapsible leftside-navigation collapsible sidenav-fixed menu-shadow" id="slide-out" data-menu="menu-navigation" data-collapsible="menu-accordion">
-		  		<li className="active bold"><a className="collapsible-header waves-effect waves-cyan " href="#"><i className="material-icons">settings_input_svideo</i><span className="menu-title" data-i18n="">Dashboard</span><span className="badge badge pill orange float-right mr-10">3</span></a>
+				<li className="active bold"><a className="collapsible-header waves-effect waves-cyan " href="#"><i className="material-icons">settings_input_svideo</i><span className="menu-title" data-i18n="">Dashboard</span><span className="badge badge pill orange float-right mr-10">3</span></a>
 					<div className="collapsible-body">
 						<ul className="collapsible collapsible-sub" data-collapsible="accordion">
 							<li className="active"><NavLink to="/dashboard" className="collapsible-body active"><i className="material-icons">radio_button_unchecked</i><span>Dashboard Analytics</span></NavLink>
 							</li>
 						</ul>
 					</div>
-		  		</li>
+				</li>
 				<li className="bold"><a className="collapsible-header waves-effect waves-cyan " href="#"><i className="material-icons">dvr</i><span className="menu-title" data-i18n="">Vehicles</span></a>
 					<div className="collapsible-body">
 						<ul className="collapsible collapsible-sub" data-collapsible="accordion">
@@ -27,19 +27,19 @@ const LeftSidebarNav = (props) => {
 							<li>
 								<NavLink to="/dashboard/insert-vehicle" className="collapsible-body collapsible-header waves-effect waves-cyan"><i className="material-icons">radio_button_unchecked</i><span>Add Vehicle</span></NavLink>
 							</li>
-							
+
 						</ul>
 					</div>
 				</li>
-		  		<li className="bold">
-				  <NavLink to="/dashboard/import" className="collapsible-body collapsible-header waves-effect waves-cyan"><i className="material-icons">file_upload</i><span>Import</span></NavLink>
+				<li className="bold">
+					<NavLink to="/dashboard/import" className="collapsible-body collapsible-header waves-effect waves-cyan"><i className="material-icons">file_upload</i><span>Import</span></NavLink>
 				</li>
-				{props.userRole === props.authUser.username ? ( 
+				{props.userRole === props.authUser.username ? (
 					<li className="navigation-header">
 						<a className="navigation-header-text">Attributes </a><i className="navigation-header-icon material-icons">more_horiz</i>
 					</li>
 				) : null}
-				{props.userRole === props.authUser.username ? ( 
+				{props.userRole === props.authUser.username ? (
 					<li className="bold">
 						<a className="collapsible-header waves-effect waves-cyan " href="#"><i className="material-icons">add_to_queue</i><span className="menu-title" data-i18n="">Vehicles Attributes</span></a>
 						<div className="collapsible-body">
@@ -89,7 +89,7 @@ const LeftSidebarNav = (props) => {
 							</ul>
 						</div>
 					</li>
-				): null }
+				) : null}
 				{props.userRole === props.authUser.username ? (
 					<li className="bold"><a className="collapsible-header waves-effect waves-cyan " href="#"><i className="material-icons">face</i><span className="menu-title" data-i18n="">Users</span></a>
 						<div className="collapsible-body">
@@ -100,16 +100,17 @@ const LeftSidebarNav = (props) => {
 								<li>
 									<NavLink to="/dashboard/insert-user" className="collapsible-body" data-i18n=""><i className="material-icons">radio_button_unchecked</i><span>Add New User</span></NavLink>
 								</li>
-								<li>
-									<NavLink to="/dashboard/user-profile" className="collapsible-body" data-i18n=""><i className="material-icons">radio_button_unchecked</i><span>User Profile</span></NavLink>
-								</li>
+
 							</ul>
 						</div>
 					</li>
-				):null}
+				) : null}
+				<li>
+					<NavLink to="/dashboard/user-profile" className="collapsible-body" data-i18n=""><i className="material-icons">account_circle</i><span>User Profile</span></NavLink>
+				</li>
 			</ul>
 			<div className="navigation-background"></div><a className="sidenav-trigger btn-sidenav-toggle btn-floating btn-medium waves-effect waves-light hide-on-large-only" href="#" data-target="slide-out"><i className="material-icons">menu</i></a>
-	  	</aside>
+		</aside>
 	)
 }
 
