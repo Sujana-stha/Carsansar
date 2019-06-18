@@ -15,7 +15,11 @@ class ImagesPreview extends Component {
         console.log('tss', images)
         
         this.setState({
-            images : this.state.images.concat([...images]),
+            images: images.map((image) => {
+                return Object.assign(image, {
+                    main_flag: false
+                })
+            })
         });
         const imagesList = this.state.images
         console.log('main', imagesList)
