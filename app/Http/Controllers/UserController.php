@@ -76,8 +76,9 @@ class UserController extends Controller
      */
     public function details()
     {
-        $user = Auth::user();
-        return response()->json(['success' => $user], $this->successStatus);
+        // $user = Auth::user();
+        $user = User::with('CompanyId:id,company_cd,name')->find(Auth::user());
+        return response()->json($user);
     }
 
     public function signout()
