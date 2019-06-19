@@ -34,8 +34,9 @@ const UsersReducer = function(state = initialState, action) {
                 
             }) 
         case types.REGISTER_SUCCESS:
+            console.log('action-register', action)
             return Object.assign({}, state, {
-                users: action.users,
+                users: action.resp.data,
                 requesting: false
             }) 
         //to get logged user details

@@ -13,6 +13,19 @@ export function getUsers(pageNumber, sorted_column, order) {
     })
 }
 
+//get details of a logged user
+export function userDetail() {
+    const access_token = window.localStorage.getItem('access_token')
+    const headers = getHeaders(access_token);
+    return axios.get('/api/usersDetail', {headers})
+    .catch(error => {
+        console.log('error', error)
+        return {
+            errors: error
+        }
+    })
+}
+
 //get username
 export function getUsername(values) {
     console.log('api-value', values)
@@ -36,7 +49,7 @@ export function registerUsers(values) {
     })
 }
 
-//get users 
+//get logged user
 export function getLoggedUser() {
     const access_token = window.localStorage.getItem('access_token')
     const headers = getHeaders(access_token);

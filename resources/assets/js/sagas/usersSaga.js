@@ -3,6 +3,7 @@ import { startSubmit, stopSubmit, reset } from 'redux-form';
 import * as types from '../actions/action-types';
 import * as api from '../api/users-api';
 import {notify} from 'react-notify-toast';
+import { push } from 'connected-react-router';
 
 //to get list of all users
 export function* getUsersWatcher() {
@@ -42,6 +43,7 @@ function* addUserFlow(action) {
     }
     yield put(stopSubmit('RegisterForm'));
     yield put(reset('RegisterForm'));
+    yield put(push('/dashboard/users'));
 }
 
 // get logged users
