@@ -34,22 +34,20 @@ const LeftSidebarNav = (props) => {
 				<li className="bold">
 					<NavLink to="/dashboard/import" className="collapsible-body collapsible-header waves-effect waves-cyan"><i className="material-icons">file_upload</i><span>Import</span></NavLink>
 				</li>
-				{props.userRole === props.authUser.username ? (
-					<li className="navigation-header">
-						<a className="navigation-header-text">Attributes </a><i className="navigation-header-icon material-icons">more_horiz</i>
-					</li>
-				) : null}
-				{props.userRole === props.authUser.username ? (
+				<li className="navigation-header">
+					<a className="navigation-header-text">Attributes </a><i className="navigation-header-icon material-icons">more_horiz</i>
+				</li>
+				{props.userRole === props.authUser.username || props.authUser.role == "Manager" ? (
 					<li className="bold">
 						<a className="collapsible-header waves-effect waves-cyan " href="#"><i className="material-icons">add_to_queue</i><span className="menu-title" data-i18n="">Vehicles Attributes</span></a>
 						<div className="collapsible-body">
 							<ul className="collapsible collapsible-sub" data-collapsible="accordion">
-								<li>
+								{/* <li>
 									<NavLink to="/dashboard/vehicle-attributes" className="collapsible-body" data-i18n=""><i className="material-icons">radio_button_unchecked</i><span>Custom Attributes</span></NavLink>
 								</li>
 								<li>
 									<NavLink to="/dashboard/insert-vehicle-attribute" className="collapsible-body" data-i18n=""><i className="material-icons">radio_button_unchecked</i><span>Add Custom Attributes</span></NavLink>
-								</li>
+								</li> */}
 								<li>
 									<NavLink to="/dashboard/colors" className="collapsible-body" data-i18n=""><i className="material-icons">radio_button_unchecked</i><span>Colors</span></NavLink>
 								</li>

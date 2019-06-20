@@ -88,7 +88,7 @@ class EditImagePreview extends Component {
                                             >REMOVE</button>
                                         </div>
                                         {image.path ? (
-                                            <img src={`/storage/${image.path}`} alt=""/>
+                                            <img src={`/storage/whrepo/${image.path}`} alt=""/>
                                             ): (
                                             <img src={image.preview} alt=""/>
                                         )

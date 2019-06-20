@@ -23,14 +23,14 @@ const CompanyForm=props=> {
                 <div className="card-panel">
 					<div className="row">
                         <form className="col s12" onSubmit= { handleSubmit  } >
-                            <div className="col s12 m4 l4">
+                            {/* <div className="col s12 m4 l4">
                                 <Field 
                                     label="Enter Company Code"
                                     name="company_cd"
                                     type="text"
                                     component={renderInputField} 
                                 />
-                            </div>
+                            </div> */}
                             <div className="col s12 m4 l4">
                                 <Field 
                                     label="Enter Company Name"
@@ -81,11 +81,11 @@ const CompanyForm=props=> {
 
 function validate(values) {
     const errors = {}
-    if(!values.company_cd) {
-        errors.company_cd = "The Field is empty"
-    } else if(values.company_cd.length > 25) {
-        errors.company_cd = "Must be 25 character or Less!"
-    }
+    // if(!values.company_cd) {
+    //     errors.company_cd = "The Field is empty"
+    // } else if(values.company_cd.length > 25) {
+    //     errors.company_cd = "Must be 25 character or Less!"
+    // }
 
     if(!values.name) {
         errors.name = "This Fiels is empty"

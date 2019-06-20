@@ -20,16 +20,12 @@ import RightSidebarNav from '../components/nav/right-sidebar-nav'
 
 import DashboardAnalytics from '../components/dashboard/dashboard-analytics'
 import UserProfile from '../components/users/user-profile'
-import ImagesPreview from '../components/vehicles/imagePreview'
+import AuthorizedRoute from './routes'
 
 //Containers
-import VehiclesListingContainer from '../containers/vehicles/vehicles-listing-container'
-import InsertVehicleContainer from '../containers/vehicles/insert-vehicle-containers'
-import EditVehicleForm from '../containers/vehicles/edit-vehicle-form';
-// import EditVehicleFormContainer from '../containers/vehicles/edit-vehicle-container'
+import VehiclesContainer from '../containers/vehicles/vehicles-container'
 import ImportFile from '../containers/import-file'
-import UsersListContainer from '../containers/users/users-container'
-import InsertUserContainer from '../containers/users/insertUsers-containers'
+import UsersContainer from '../containers/users/users-container'
 import ColorListContainer from '../containers/color/color-container'
 import MakesListContainer from '../containers/makes/makes-container'
 import ModelListContainer from '../containers/model/model-container'
@@ -61,6 +57,7 @@ class DashboardLayout extends Component {
     render() {
         const {match} = this.props
         const userName = window.Laravel.super_admin
+        console.log('role', this.props.loggedUser)
         return (
             <div className="app">
                 <Notifications options={{top: '50px', right: '0px', width: '100%', margin:0, left: 'none'}}/>
@@ -80,29 +77,8 @@ class DashboardLayout extends Component {
                             <Breadcrumb/>
                             {/* start container */}
                             <div className="container">
-                                <Switch>
-                                    <Route exact path={`${match.path}`} component={DashboardAnalytics}/>
-                                    <Route path={`${match.path}/vehicles`} component={VehiclesListingContainer}/>
-                                    <Route path={`${match.path}/insert-vehicle`} component={InsertVehicleContainer}/>
-                                    <Route path={`${match.path}/edit-vehicle/:id`} component={EditVehicleForm}/>
-                                    <Route path={`${match.path}/import`} component={ImportFile}/>
-                                    <Route path={`${match.path}/colors`} component={ColorListContainer}/>
-                                    <Route path={`${match.path}/users`} component={UsersListContainer}/>
-                                    <Route path={`${match.path}/insert-user`} component={InsertUserContainer}/>
-                                    <Route path={`${match.path}/user-profile`} component={UserProfile}/>
-                                    <Route path={`${match.path}/makes`} component={MakesListContainer}/>
-                                    <Route path={`${match.path}/models`} component={ModelListContainer}/>
-                                    <Route path={`${match.path}/options-categories`} component={OptionCategoriesContainer}/>
-                                    <Route path={`${match.path}/categories`} component={CategoriesContainer}/>
-                                    <Route path={`${match.path}/drives`} component={DrivesContainer}/>
-                                    <Route path={`${match.path}/bodies`} component={BodiesContainer}/>
-                                    <Route path={`${match.path}/enginesizes`} component={EnginesizesContainer}/>
-                                    <Route path={`${match.path}/fueltypes`} component={FueltypesContainer}/>
-                                    <Route path={`${match.path}/transmissions`} component={TransmissionContainer}/>
-                                    <Route path={`${match.path}/companies`} component={CompaniesContainer}/>
-                                    <Route path={`${match.path}/options`} component={OptionsContainer}/>
-                                    <Redirect to={`${match.url}`} />
-                                </Switch>
+                                <AuthorizedRoute adminUser ={userName} authUser={this.props.loggedUser} match={match}/>
+                                
                                 <RightSidebarNav />
                             </div>
                             {/* end container */}

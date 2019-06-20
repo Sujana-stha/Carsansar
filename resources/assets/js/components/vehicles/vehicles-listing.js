@@ -16,7 +16,7 @@ const VehiclesListing = (props) => {
                         <td>{vehicle.images == null ? '-': vehicle.images.map((image)=> {
                             if(image.main_flag == 1) {
                                 return (
-                                    <img key={image.id} alt="vehicle Images" src={`/storage/`+image.path} className="wr-vehicles-image-thumbnail"/>
+                                    <img key={image.id} alt="vehicle Images" src={`/storage/whrepo/`+image.path} className="wr-vehicles-image-thumbnail"/>
                                 )
                             } else {
                                 return null;
@@ -39,7 +39,7 @@ const VehiclesListing = (props) => {
                             </div>
                         </td>
                         <td className="action">
-                            <Link to={'/dashboard/edit-vehicle/'+vehicle.id} className="tooltipped" data-position="top" data-delay="50" data-tooltip="Edit"><i className="material-icons">edit</i></Link>
+                            <Link to={'/dashboard/edit-vehicle'} onClick={()=> props.onEdit(vehicle.id)} className="tooltipped" data-position="top" data-delay="50" data-tooltip="Edit"><i className="material-icons">edit</i></Link>
                             {props.userRole.username == authUser ? (
                                 <a className="tooltip" href="javascript:void(0);" onClick={()=>props.deleteItem(vehicle.id)} data-tooltip="Delete"><i className="material-icons">delete</i></a>
                             ): null }
