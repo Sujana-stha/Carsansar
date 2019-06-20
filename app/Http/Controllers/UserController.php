@@ -106,6 +106,11 @@ class UserController extends Controller
         return $users;
     }
 
+    public function show($id) {
+        $user = User::with('CompanyId:id,company_cd,name')->find($id);
+        return $user;
+    }
+
     public function validateUsername(Request $request) {
         $data = $request->get('username');
         $username = User::where('username', '=', $data)->count();

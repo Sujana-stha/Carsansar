@@ -61,6 +61,19 @@ export function getLoggedUser() {
     })
 }
 
+// get users detail a/c to id
+export function getSingleUserDetail(userId) {
+    const access_token = window.localStorage.getItem('access_token')
+    const headers = getHeaders(access_token);
+    return axios.get('/api/users/'+userId, {headers})
+    .catch(error => {
+        return {
+            errors: error
+        }
+    })
+}   
+
+
 //GET COMPANIES LIST
 export function getCompaniesList() {
     const access_token = window.localStorage.getItem('access_token')

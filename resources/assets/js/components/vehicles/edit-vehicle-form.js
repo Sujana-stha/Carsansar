@@ -36,8 +36,8 @@ class EditVehicles extends Component {
         }
     }
     componentDidMount() {
-		let vehicleId =  this.props.match.params.id
-		api.getSingleVehicles(vehicleId).then((response)=> {
+		const id =  this.props.editId;
+		api.getSingleVehicles(id).then((response)=> {
 			const data =  response.data;
 			console.log('data', data)
 			this.setState({
@@ -196,7 +196,7 @@ class EditVehicles extends Component {
 	}
 	
 	onSubmit(values) {
-		let vehicleId =  this.props.match.params.id
+		let vehicleId =  this.props.editId
 		console.log('value', values)
 		let vehicleData = this.state.data
 		if(values.make_id === null || typeof values.make_id === 'string') {values.make_id= values.make_id} else {values.make_id = values.make_id.value}
