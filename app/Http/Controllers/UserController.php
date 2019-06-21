@@ -117,4 +117,10 @@ class UserController extends Controller
         $username = User::where('username', '=', $data)->count();
         return $username;
     }
+
+    public function updateUser(Request $request, User $user) {
+        dd($request->all());exit;
+        $user->update($request->all()); 
+        return response()->json($user, 200);
+    }
 }

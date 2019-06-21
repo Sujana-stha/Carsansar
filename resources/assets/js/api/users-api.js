@@ -86,3 +86,16 @@ export function getCompaniesList() {
         }
     })
 }
+
+// UPDATE USER API
+export function updateUser(userId, values) {
+    const access_token = window.localStorage.getItem('access_token')
+    const headers = getHeaders(access_token)
+    return axios.put('/api/users/'+ userId, values,{headers})
+    .catch(error=> {
+        console.log(error)
+        return {
+            errors: error
+        }
+    });
+}

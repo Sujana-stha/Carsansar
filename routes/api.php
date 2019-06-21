@@ -45,6 +45,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     Route::get('usersDetail', 'UserController@details');
     Route::post('getUsername', 'UserController@validateUsername');
     Route:: get('users/{user}', 'UserController@show');
+    Route::put('users/{user}', 'UserController@updateUser');
 
     Route::post('logout', 'UserController@signout');
 
