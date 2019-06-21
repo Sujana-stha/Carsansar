@@ -4,12 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Transmission;
+use Config;
 
 class TransmissionsController extends Controller
 {
     public function index(Request $request)
     {
-        $transmission = Transmission::with('createdBy:id,first_name,last_name')->orderBy($request->column, $request->order)->paginate(3);
+        $transmission = Transmission::with('createdBy:id,first_name,last_name')->orderBy($request->column, $request->order)->paginate(config('app_env.NO_OF_ROWS'));
         return $transmission;
     }
 

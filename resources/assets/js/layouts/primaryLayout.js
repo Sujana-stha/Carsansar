@@ -56,7 +56,8 @@ class DashboardLayout extends Component {
     }
     render() {
         const {match} = this.props
-        const userName = window.Laravel.super_admin
+        //const userName = window.Laravel.super_admin
+        const userName = process.env.MIX_SUPER_ADMIN_NAME;
         console.log('role', this.props.loggedUser)
         return (
             <div className="app">

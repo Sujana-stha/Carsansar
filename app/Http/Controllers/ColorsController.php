@@ -4,12 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Color;
+use Config; 
 
 class ColorsController extends Controller
 {
     public function index(Request $request)
     {
-        $color= Color::with('createdBy:id,first_name,last_name')->orderBy($request->column, $request->order)->paginate(3);
+        $color= Color::with('createdBy:id,first_name,last_name')->orderBy($request->column, $request->order)->paginate(config('app_env.NO_OF_ROWS'));
         return $color;
     }
 

@@ -4,12 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\VehicleModel;
+use Config;
 
 class VehicleModelsController extends Controller
 {
     public function index(Request $request)
     {
-        $model = VehicleModel::with('createdBy:id,first_name,last_name')->orderBy($request->column, $request->order)->paginate(3);
+        $model = VehicleModel::with('createdBy:id,first_name,last_name')->orderBy($request->column, $request->order)->paginate(config('app_env.NO_OF_ROWS'));
         return $model;
     }
 

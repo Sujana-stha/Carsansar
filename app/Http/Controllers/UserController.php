@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 use Validator;
+use Config;
 
 
 class UserController extends Controller
@@ -102,7 +103,7 @@ class UserController extends Controller
             $column = $request->column;
             $order = $request->order;
         } 
-        $users = User::with('CompanyId:id,name')->orderBy($column, $order)->paginate(3);
+        $users = User::with('CompanyId:id,name')->orderBy($column, $order)->paginate(config('app_env.NO_OF_ROWS'));
         return $users;
     }
 

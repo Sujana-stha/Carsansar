@@ -33,8 +33,8 @@
 			window.Laravel = {!! json_encode([
 				'csrfToken' => csrf_token(),
 				'base_url' => env("BASE_URL"),
-				'client_secret' => env("PASSWORD_CLIENT_SECRET"),
-				'super_admin' => env("SUPER_ADMIN_NAME")
+				//'client_secret' => env("PASSWORD_CLIENT_SECRET"),
+				//'super_admin' => env("SUPER_ADMIN_NAME")
 			]) !!}
 		</script>
 		

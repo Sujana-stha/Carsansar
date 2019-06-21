@@ -4,13 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Company;
+use Config;
 
 class CompaniesController extends Controller
 {
     public function index(Request $request)
     {
         // return Company::all();
-        $company = Company::with('createdBy:id,first_name,last_name')->orderby($request->column, $request->order)->paginate(3);
+        $company = Company::with('createdBy:id,first_name,last_name')->orderby($request->column, $request->order)->paginate(config('app_env.NO_OF_ROWS'));
         return $company;
     }
 

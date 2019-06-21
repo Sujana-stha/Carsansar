@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\OptionCategory;
+use Config;
 
 class OptionsCategoriesController extends Controller
 {

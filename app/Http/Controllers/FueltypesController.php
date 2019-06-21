@@ -4,13 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Fueltype;
+use Config;
 
 class FueltypesController extends Controller
 {
     public function index(Request $request)
     {
         // return Fueltype::all();
-        $fueltype = Fueltype::with('createdBy:id,first_name,last_name')->orderBy($request->column, $request->order)->paginate(3);
+        $fueltype = Fueltype::with('createdBy:id,first_name,last_name')->orderBy($request->column, $request->order)->paginate(config('app_env.NO_OF_ROWS'));
         return $fueltype;
     }
 

@@ -15,7 +15,8 @@ function* loginFlow(action) {
     const data = {
         grant_type: "password",
         client_id: "2",
-        client_secret: window.Laravel.client_secret,
+        //client_secret: window.Laravel.client_secret,
+        client_secret: process.env.MIX_PASSWORD_CLIENT_SECRET,
         username: action.data.email,
         password: action.data.password,
         scope: "*"

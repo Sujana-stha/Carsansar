@@ -22,8 +22,9 @@ class TextEditorField extends Component {
                     value ={input.value == "" ? "": input.value}
                     init={{
                         height: 250,
-                        plugins: 'advlist link image code help lists wordcount insertdatetime',
-                        toolbar: 'undo redo | bold italic | alignleft aligncenter alignright | formatselect | bullist numlist outdent indent | code | help'
+                        plugins: 'advlist link image code help lists wordcount insertdatetime',                        
+                        toolbar: 'undo redo | bold italic | alignleft aligncenter alignright | formatselect | bullist numlist outdent indent | code | help',
+                        branding: false
                     }}
                     onChange={this.handleEditorChange.bind(this)}
                 />

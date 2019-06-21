@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Option;
+use Config;
 
 class OptionsController extends Controller
 {
@@ -12,7 +13,7 @@ class OptionsController extends Controller
         // return Option::all();
         // $make = Make::with('createdBy:id,name')->orderBy('id', 'desc')->paginate(3);
 
-        $option = Option::with(['ocId:id,optioncategory_desc','createdBy:id,first_name,last_name'])->orderBy($request->column, $request->order)->paginate(3);
+        $option = Option::with(['ocId:id,optioncategory_desc','createdBy:id,first_name,last_name'])->orderBy($request->column, $request->order)->paginate(config('app_env.NO_OF_ROWS'));
         return $option;
     }
 
