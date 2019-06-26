@@ -19,7 +19,6 @@ export function userDetail() {
     const headers = getHeaders(access_token);
     return axios.get('/api/usersDetail', {headers})
     .catch(error => {
-        console.log('error', error)
         return {
             errors: error
         }
@@ -28,7 +27,6 @@ export function userDetail() {
 
 //get username
 export function getUsername(values) {
-    console.log('api-value', values)
     const access_token = window.localStorage.getItem('access_token')
     const headers = getHeaders(access_token);
     return axios.post('/api/getUsername',values, {headers})
@@ -80,7 +78,6 @@ export function getCompaniesList() {
     const headers = getHeaders(access_token)
     return axios.get('/api/companies/getList',{headers})
     .catch(error=> {
-        console.log(error)
         return {
             errors: error
         }
@@ -91,9 +88,8 @@ export function getCompaniesList() {
 export function updateUser(userId, values) {
     const access_token = window.localStorage.getItem('access_token')
     const headers = getHeaders(access_token)
-    return axios.put('/api/users/'+ userId, values,{headers})
+    return axios.put('/api/users/'+userId, values,{headers})
     .catch(error=> {
-        console.log(error)
         return {
             errors: error
         }

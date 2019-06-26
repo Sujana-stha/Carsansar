@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 import { Tabs, Tab, TabPanel, TabList } from 'react-web-tabs';
 import 'react-web-tabs/dist/react-web-tabs.css';
 import { Field, reduxForm, formValueSelector } from 'redux-form';
-import {  requestVehiclesUpdate} from '../../actions/deals-action'
+import { requestVehiclesUpdate } from '../../actions/deals-action'
 import { connect } from 'react-redux';
 import store from '../../store'
 //API
@@ -17,15 +17,15 @@ import EditNewImage from '../../components/vehicles/editNewImage'
 import AutocompleteField from '../../components/vehicles/autocomplete-field';
 
 class EditVehicles extends Component {
-    constructor(props) {
-        super(props)
-        this.state= {
+	constructor(props) {
+		super(props)
+		this.state = {
 			data: [],
 			categories: {},
-            makes: [],
-			models:{},
+			makes: [],
+			models: {},
 			bodies: {},
-			enginesizes:{},
+			enginesizes: {},
 			transmissions: {},
 			colors: {},
 			fueltypes: {},
@@ -33,13 +33,12 @@ class EditVehicles extends Component {
 			options: [],
 			optCategories: [],
 			showForm: false
-        }
-    }
-    componentDidMount() {
-		const id =  this.props.editId;
-		api.getSingleVehicles(id).then((response)=> {
-			const data =  response.data;
-			console.log('data', data)
+		}
+	}
+	componentDidMount() {
+		const id = this.props.editId;
+		api.getSingleVehicles(id).then((response) => {
+			const data = response.data;
 			this.setState({
 				data: data
 			})
@@ -49,7 +48,7 @@ class EditVehicles extends Component {
 				vehicle_description: data.vehicle_description,
 				ad_desc: data.ad_desc,
 				kms: data.kms,
-				price:data.price,
+				price: data.price,
 				selling_price: data.selling_price,
 				title: data.title,
 				images: data.images,
@@ -59,9 +58,9 @@ class EditVehicles extends Component {
 				financing: data.financing,
 				financing_flag: data.financing_flag,
 
-				body_id : data.attribute.body_id==null ? null:{label:data.attribute.body_id.body_desc, value:data.attribute.body_id.id},
-				exterior_color_id: data.attribute.exteriorcolor_id==null ? null :{label: data.attribute.exteriorcolor_id.color_desc, value: data.attribute.exteriorcolor_id.id},
-				interior_color_id: data.attribute.interiorcolor_id==null ? null :{label:data.attribute.interiorcolor_id.color_desc, value: data.attribute.interiorcolor_id.id},
+				body_id: data.attribute.body_id == null ? null : { label: data.attribute.body_id.body_desc, value: data.attribute.body_id.id },
+				exterior_color_id: data.attribute.exteriorcolor_id == null ? null : { label: data.attribute.exteriorcolor_id.color_desc, value: data.attribute.exteriorcolor_id.id },
+				interior_color_id: data.attribute.interiorcolor_id == null ? null : { label: data.attribute.interiorcolor_id.color_desc, value: data.attribute.interiorcolor_id.id },
 				option_id: data.attribute.option_ids,
 				doors: data.attribute.doors,
 				passenger: data.attribute.passenger,
@@ -69,21 +68,21 @@ class EditVehicles extends Component {
 				fuel_economy: data.attribute.fuel_economy,
 				highway_mpg: data.attribute.highway_mpg,
 				mileage: data.attribute.mileage,
-				
-				category_id: ( data.vehicle_info == null||data.vehicle_info.category_id == null)? null:{label:data.vehicle_info.category_id.category_desc, value: data.vehicle_info.category_id.id},
-				drive_id: (data.vehicle_info == null|| data.vehicle_info.drive_id==null) ? null:{label:data.vehicle_info.drive_id.drive_desc, value:data.vehicle_info.drive_id.id},
-				enginesize_id: (data.vehicle_info == null||data.vehicle_info.enginesize_id==null) ? null :{label:data.vehicle_info.enginesize_id.enginesize_desc, value: data.vehicle_info.enginesize_id.id},
-				fueltype_id: (data.vehicle_info == null||data.vehicle_info.fueltype_id==null) ? null :{label:data.vehicle_info.fueltype_id.fueltype_desc, value: data.vehicle_info.fueltype_id.id},
-				make_id: (data.vehicle_info == null||data.vehicle_info.make_id==null) ? null:{label:data.vehicle_info.make_id.make_desc, value: data.vehicle_info.make_id.id},
-				mfg_exterior_color_id: (data.vehicle_info == null||data.vehicle_info.mfgexteriorcolor_id==null) ? null :{label:data.vehicle_info.mfgexteriorcolor_id.color_desc, value: data.vehicle_info.mfgexteriorcolor_id.id},
-				model_id: (data.vehicle_info == null||data.vehicle_info.model_id==null) ? null: {label: data.vehicle_info.model_id.model_desc, value: data.vehicle_info.model_id.id},
-				transmission_id: (data.vehicle_info == null||data.vehicle_info.transmission_id==null) ? null:{label:data.vehicle_info.transmission_id.transmission_desc, value: data.vehicle_info.transmission_id.id},
-				vin:  data.vehicle_info == null ? null:data.vehicle_info.vin,
-				year:  data.vehicle_info == null ? null: data.vehicle_info.year
+
+				category_id: (data.vehicle_info == null || data.vehicle_info.category_id == null) ? null : { label: data.vehicle_info.category_id.category_desc, value: data.vehicle_info.category_id.id },
+				drive_id: (data.vehicle_info == null || data.vehicle_info.drive_id == null) ? null : { label: data.vehicle_info.drive_id.drive_desc, value: data.vehicle_info.drive_id.id },
+				enginesize_id: (data.vehicle_info == null || data.vehicle_info.enginesize_id == null) ? null : { label: data.vehicle_info.enginesize_id.enginesize_desc, value: data.vehicle_info.enginesize_id.id },
+				fueltype_id: (data.vehicle_info == null || data.vehicle_info.fueltype_id == null) ? null : { label: data.vehicle_info.fueltype_id.fueltype_desc, value: data.vehicle_info.fueltype_id.id },
+				make_id: (data.vehicle_info == null || data.vehicle_info.make_id == null) ? null : { label: data.vehicle_info.make_id.make_desc, value: data.vehicle_info.make_id.id },
+				mfg_exterior_color_id: (data.vehicle_info == null || data.vehicle_info.mfgexteriorcolor_id == null) ? null : { label: data.vehicle_info.mfgexteriorcolor_id.color_desc, value: data.vehicle_info.mfgexteriorcolor_id.id },
+				model_id: (data.vehicle_info == null || data.vehicle_info.model_id == null) ? null : { label: data.vehicle_info.model_id.model_desc, value: data.vehicle_info.model_id.id },
+				transmission_id: (data.vehicle_info == null || data.vehicle_info.transmission_id == null) ? null : { label: data.vehicle_info.transmission_id.transmission_desc, value: data.vehicle_info.transmission_id.id },
+				vin: data.vehicle_info == null ? null : data.vehicle_info.vin,
+				year: data.vehicle_info == null ? null : data.vehicle_info.year
 			}
-            this.props.initialize(vehicles);
+			this.props.initialize(vehicles);
 		})
-		api.getMakesList().then((response)=> {
+		api.getMakesList().then((response) => {
 			this.setState({ makes: response.data })
 		})
 		api.getModelsList().then((response) => {
@@ -98,52 +97,52 @@ class EditVehicles extends Component {
 		api.getTransmissionList().then((response) => {
 			this.setState({ transmissions: response.data })
 		})
-		api.getColorsList().then((response)=> {
+		api.getColorsList().then((response) => {
 			this.setState({ colors: response.data })
 		})
-		api.getFueltypesList().then((response)=> {
+		api.getFueltypesList().then((response) => {
 			this.setState({ fueltypes: response.data })
 		})
-		api.getDRivesist().then((response)=> {
-			this.setState({drives: response.data })
+		api.getDRivesist().then((response) => {
+			this.setState({ drives: response.data })
 		})
-		api.getOptionsList().then((response)=> {
-			this.setState({options: response.data})
+		api.getOptionsList().then((response) => {
+			this.setState({ options: response.data })
 		})
 		optCatapi.getOptionsCategories().then((response) => {
-			this.setState({optCategories: response.data})
+			this.setState({ optCategories: response.data })
 		})
-		api.getCategoriesList().then((response)=> {
-			this.setState({categories: response.data})
+		api.getCategoriesList().then((response) => {
+			this.setState({ categories: response.data })
 		})
-    }
-    renderInputField({input, label, type, meta: {touched, error}}) {
-        return (
+	}
+	renderInputField({ input, label, type, meta: { touched, error } }) {
+		return (
 			<div className="input-field col s12">
-				<input id={input.name} type={type} {...input}/>
+				<input id={input.name} type={type} {...input} />
 				<label className="active" htmlFor={input.name}>{label}</label>
 				<div className="error">
-					{touched ? error: ''}
+					{touched ? error : ''}
 				</div>
 			</div>
-        )
-    }
-    
-    renderSelectField({input, label, meta: {touched, error}, defaultValue, children}) {
-        return (
-            <div className="col s12  mt-2 mb-4">
-                <label className="active">{label}</label>
-                <select value={defaultValue} {...input} className="browser-default">
-                    {children}
-                </select>
-                <div className="error">
-                    {touched ? error: ''}
-                </div>
-            </div>
-        )
+		)
 	}
-	renderCheckboxField({input, label, type, meta: {touched, error}}) {
-		return(
+
+	renderSelectField({ input, label, meta: { touched, error }, defaultValue, children }) {
+		return (
+			<div className="col s12  mt-2 mb-4">
+				<label className="active">{label}</label>
+				<select value={defaultValue} {...input} className="browser-default">
+					{children}
+				</select>
+				<div className="error">
+					{touched ? error : ''}
+				</div>
+			</div>
+		)
+	}
+	renderCheckboxField({ input, label, type, meta: { touched, error } }) {
+		return (
 			<div className="col s6">
 				<label>
 					<input type={type} className="filled-in" {...input} />
@@ -152,121 +151,117 @@ class EditVehicles extends Component {
 			</div>
 		)
 	}
-    renderOptionsList({ input, options, optCategories }) {
-		return optCategories.map((optCategory, i)=> {
+	renderOptionsList({ input, options, optCategories }) {
+		return optCategories.map((optCategory, i) => {
 			return (
 				<div key={i} className="wr-options-list">
 					<h4>{optCategory.optioncategory_desc}</h4>
 					{options.map((option, i) => {
-						return(
-						<div key={i}>
-							{optCategory.id== option.oc_id ? (
-								<label>
-									<input
-									name={`${input.name}`}
-									type="checkbox"
-									className="filled-in"
-									value={option.id}
-									checked={input.value.indexOf(option.id) !== -1}
-									onChange={(event) => {
-										
-										const checkedValues= input.value=== "" ? [...input.value] : input.value.split(",");
+						return (
+							<div key={i}>
+								{optCategory.id == option.oc_id ? (
+									<label>
+										<input
+											name={`${input.name}`}
+											type="checkbox"
+											className="filled-in"
+											value={option.id}
+											checked={input.value.indexOf(option.id) !== -1}
+											onChange={(event) => {
 
-										console.log('beforeChecked', checkedValues)
-										if(event.target.checked) {
-											var option_id = JSON.stringify(option.id)
-											checkedValues.push(option_id);
-											console.log('afterChecked', checkedValues)
-										} else {
-											var option_id = JSON.stringify(option.id)
-											checkedValues.splice(checkedValues.indexOf(option_id), 1);
-										}
-										var updatedOptions = checkedValues.join()
-										return input.onChange(updatedOptions)
-									}}/>
-									<span>{option.option_desc}</span>
-								</label>
-							): null }
-						</div>
+												const checkedValues = input.value === "" ? [...input.value] : input.value.split(",");
+												if (event.target.checked) {
+													var option_id = JSON.stringify(option.id)
+													checkedValues.push(option_id);
+												} else {
+													var option_id = JSON.stringify(option.id)
+													checkedValues.splice(checkedValues.indexOf(option_id), 1);
+												}
+												var updatedOptions = checkedValues.join()
+												return input.onChange(updatedOptions)
+											}} />
+										<span>{option.option_desc}</span>
+									</label>
+								) : null}
+							</div>
 						)
 					})}
 				</div>
 			)
 		})
 	}
-	
+
 	onSubmit(values) {
-		let vehicleId =  this.props.editId
-		console.log('value', values)
+		let vehicleId = this.props.editId
 		let vehicleData = this.state.data
-		if(values.make_id === null || typeof values.make_id === 'string') {values.make_id= values.make_id} else {values.make_id = values.make_id.value}
+		if (values.make_id === null || typeof values.make_id === 'string') { values.make_id = values.make_id } else { values.make_id = values.make_id.value }
 
-		if(values.model_id === null|| typeof values.model_id === 'string') {values.model_id= values.model_id} else {values.model_id = values.model_id.value}
+		if (values.model_id === null || typeof values.model_id === 'string') { values.model_id = values.model_id } else { values.model_id = values.model_id.value }
 
-		if(values.body_id === null || typeof values.body_id === 'string') {values.body_id= values.body_id} else {values.body_id = values.body_id.value}
+		if (values.body_id === null || typeof values.body_id === 'string') { values.body_id = values.body_id } else { values.body_id = values.body_id.value }
 
-		if(values.category_id=== null || typeof values.category_id === 'string') {values.category_id= values.category_id} else {values.category_id = values.category_id.value}
+		if (values.category_id === null || typeof values.category_id === 'string') { values.category_id = values.category_id } else { values.category_id = values.category_id.value }
 
-		if(values.drive_id === null || typeof values.drive_id === 'string') {values.drive_id= values.drive_id} else {values.drive_id = values.drive_id.value}
+		if (values.drive_id === null || typeof values.drive_id === 'string') { values.drive_id = values.drive_id } else { values.drive_id = values.drive_id.value }
 
-		if(values.enginesize_id === null || typeof values.enginesize_id === 'string') {values.enginesize_id= values.enginesize_id} else {values.enginesize_id = values.enginesize_id.value}
+		if (values.enginesize_id === null || typeof values.enginesize_id === 'string') { values.enginesize_id = values.enginesize_id } else { values.enginesize_id = values.enginesize_id.value }
 
-		if(values.exterior_color_id === null || typeof values.exterior_color_id === 'string') {values.exterior_color_id= values.exterior_color_id} else {values.exterior_color_id = values.exterior_color_id.value}
+		if (values.exterior_color_id === null || typeof values.exterior_color_id === 'string') { values.exterior_color_id = values.exterior_color_id } else { values.exterior_color_id = values.exterior_color_id.value }
 
-		if(values.fueltype_id === null || typeof values.fueltype_id === 'string') {values.fueltype_id= values.fueltype_id} else {values.fueltype_id = values.fueltype_id.value}
+		if (values.fueltype_id === null || typeof values.fueltype_id === 'string') { values.fueltype_id = values.fueltype_id } else { values.fueltype_id = values.fueltype_id.value }
 
-		if(values.interior_color_id === null || typeof values.interior_color_id === 'string') {values.interior_color_id= values.interior_color_id} else {values.interior_color_id = values.interior_color_id.value}
+		if (values.interior_color_id === null || typeof values.interior_color_id === 'string') { values.interior_color_id = values.interior_color_id } else { values.interior_color_id = values.interior_color_id.value }
 
-		if(values.mfg_exterior_color_id === null || typeof values.mfg_exterior_color_id === 'string') {values.mfg_exterior_color_id= values.mfg_exterior_color_id} else {values.mfg_exterior_color_id = values.mfg_exterior_color_id.value}
-		
-		if(values.transmission_id === null || typeof values.transmission_id === 'string') {values.transmission_id= values.transmission_id} else {values.transmission_id = values.transmission_id.value}
-		
+		if (values.mfg_exterior_color_id === null || typeof values.mfg_exterior_color_id === 'string') { values.mfg_exterior_color_id = values.mfg_exterior_color_id } else { values.mfg_exterior_color_id = values.mfg_exterior_color_id.value }
+
+		if (values.transmission_id === null || typeof values.transmission_id === 'string') { values.transmission_id = values.transmission_id } else { values.transmission_id = values.transmission_id.value }
+
 		this.props.requestVehiclesUpdate(vehicleId, values, vehicleData)
 	}
-    render() {
+	render() {
 		// const { handleSubmit } = this.props;
-        return (
+		return (
 			<div>
 				<div className="row">
 					<div className="col s12 mt-2 mb-2 right-align">
-						<NavLink to="/dashboard/vehicles" className="btn waves-effect waves-light"><i className="material-icons left">view_list</i><span> All Vehicles</span></NavLink>
+						<NavLink to="/vehicles" className="btn waves-effect waves-light"><i className="material-icons left">view_list</i><span> All Vehicles</span></NavLink>
 					</div>
 				</div>
 				<h4 className="header2">Edit Vehicle</h4>
 				<div className="card-panel">
 					<div className="row">
-						<form onSubmit={ this.props.handleSubmit((event)=>this.onSubmit(event))} className="col s12">
+						<form onSubmit={this.props.handleSubmit((event) => this.onSubmit(event))} className="col s12">
 							<Field
 								label="Vehicle Title"
-								type = "text"
+								type="text"
 								name="title"
 								component={this.renderInputField}
 							></Field>
 
 							<Field
 								name="vehicle_description"
-								label ="Vehicle Description"
+								label="Vehicle Description"
 								id="vehicle_description"
 								component={TextEditorField}
 							/>
 							<div className="col s12 m12 l12 mt-6">
 								<Tabs defaultTab="general" vertical>
 									<TabList>
-										<Tab onClick={tabId => { tabId.preventDefault()}} tabFor="general">General</Tab>
-										<Tab onClick={tabId => { tabId.preventDefault()}} tabFor="vehicle-attributes">Vehicle Attributes</Tab>
-										<Tab onClick={tabId => { tabId.preventDefault()}} tabFor="features-options">Features and Options</Tab>
-										<Tab onClick={tabId => { tabId.preventDefault()}} tabFor="pricing">Pricing</Tab>
-										<Tab onClick={tabId => { tabId.preventDefault()}} tabFor="gallery">Gallery</Tab>
-										<Tab onClick={tabId => { tabId.preventDefault()}} tabFor="vehicle-location">Vehicle Location</Tab>
-										<Tab onClick={tabId => { tabId.preventDefault()}} tabFor="financing">Financing</Tab>
-										<Tab onClick={tabId => { tabId.preventDefault()}} tabFor="information">More Information</Tab>
+										<Tab onClick={tabId => { tabId.preventDefault() }} tabFor="general">General</Tab>
+										<Tab onClick={tabId => { tabId.preventDefault() }} tabFor="vehicle-attributes">Vehicle Attributes</Tab>
+										<Tab onClick={tabId => { tabId.preventDefault() }} tabFor="features-options">Features and Options</Tab>
+										<Tab onClick={tabId => { tabId.preventDefault() }} tabFor="pricing">Pricing</Tab>
+										<Tab onClick={tabId => { tabId.preventDefault() }} tabFor="gallery">Gallery</Tab>
+										<Tab onClick={tabId => { tabId.preventDefault() }} tabFor="vehicle-location">Vehicle Location</Tab>
+										<Tab onClick={tabId => { tabId.preventDefault() }} tabFor="financing">Financing</Tab>
+										<Tab onClick={tabId => { tabId.preventDefault() }} tabFor="information">More Information</Tab>
 									</TabList>
 									<TabPanel tabId="general">
 										<div className="row">
 											<div className="col s6">
 												<Field name="vehicle_status"
-												label="Condition"
-												component={this.renderSelectField}
+													label="Condition"
+													component={this.renderSelectField}
 												>
 													<option value="">Choose your option</option>
 													<option value="Used">Used</option>
@@ -275,200 +270,200 @@ class EditVehicles extends Component {
 											</div>
 											<div className="col s6">
 												<Field
-												name="kms"
-												label="KMS"
-												type="text"
-												component={this.renderInputField}
+													name="kms"
+													label="KMS"
+													type="text"
+													component={this.renderInputField}
 												/>
 											</div>
 											{this.props.isNewVehicle === "New" ? (
 												<div className="input-field col s12">
 													<p>Warranty Detailes</p>
 													<Field
-													name="warranty_flag"
-													component={this.renderCheckboxField}
-													type="checkbox"
-													label="Warranty"
+														name="warranty_flag"
+														component={this.renderCheckboxField}
+														type="checkbox"
+														label="Warranty"
 													/>
 													<Field
-													name="warranty_desc"
-													component={TextEditorField}
-													type="text"
-													label="Warranty Description"
+														name="warranty_desc"
+														component={TextEditorField}
+														type="text"
+														label="Warranty Description"
 													/>
 												</div>
-											): null }
-											<Field 
-											name="trim"
-											label ="Trim"
-											type="text"
-											component={this.renderInputField}
+											) : null}
+											<Field
+												name="trim"
+												label="Trim"
+												type="text"
+												component={this.renderInputField}
 											/>
 
 											<Field
-											name="tech_specification"
-											label="Technical Specifications"
-											id="tech_specification"
-											component={TextEditorField}
+												name="tech_specification"
+												label="Technical Specifications"
+												id="tech_specification"
+												component={TextEditorField}
 											/>
 
 											<Field
-											name="ad_desc"
-											label="Additional Information"
-											id="ad_desc"
-											component={TextEditorField}
+												name="ad_desc"
+												label="Additional Information"
+												id="ad_desc"
+												component={TextEditorField}
 											/>
-												
+
 										</div>
 									</TabPanel>
 									<TabPanel tabId="vehicle-attributes">
 										<div className="row">
 											<div className="col s12 m6">
 												<Field
-												name="vin"
-												label="Vin Number"
-												type="text"
-												id="vin"
-												component={this.renderInputField}
-												/>	
+													name="vin"
+													label="Vin Number"
+													type="text"
+													id="vin"
+													component={this.renderInputField}
+												/>
 											</div>
 											<div className="col s12 m6">
 												<Field
-												name="year"
-												label="Year"
-												value="1"
-												component={this.renderSelectField}
+													name="year"
+													label="Year"
+													value="1"
+													component={this.renderSelectField}
 												>
 													<option value="">Choose your option</option>
 													<option value="2016">2016</option>
 													<option value="2017">2017</option>
 													<option value="2018">2018</option>
-												</Field>	
+												</Field>
 											</div>
 											<div className="col s12 m6">
 												<Field
-												name="doors"
-												label="Doors"
-												type="text"
-												component={this.renderInputField}
+													name="doors"
+													label="Doors"
+													type="text"
+													component={this.renderInputField}
 												/>
 											</div>
 											<div className="col s12 m6">
 												<Field
-												name="passenger"
-												label="Passenger"
-												type="text"
-												component={this.renderInputField}
+													name="passenger"
+													label="Passenger"
+													type="text"
+													component={this.renderInputField}
 												/>
 											</div>
 
 											<Field name="category_id"
-											label="Categories"
-											itemList={this.state.categories}
-											apiName="categories"
-											component={AutocompleteField}
+												label="Categories"
+												itemList={this.state.categories}
+												apiName="categories"
+												component={AutocompleteField}
 											/>
 											<Field name="make_id"
-											label="Makes"
-											itemList={this.state.makes}
-											apiName="makes"
-											component={AutocompleteField}
+												label="Makes"
+												itemList={this.state.makes}
+												apiName="makes"
+												component={AutocompleteField}
 											/>
 
-											<Field name="model_id" 
-											label="Model"
-											itemList={this.state.models}
-											apiName="models"
-											component={AutocompleteField}
-											/>
-
-											<Field 
-											name="body_id"
-											label="Body"
-											itemList={this.state.bodies}
-											apiName="bodies"
-											component={AutocompleteField}
-											/>
-													
-											<Field
-											name="enginesize_id"
-											label="Engine"
-											itemList={this.state.enginesizes}
-											apiName="enginesizes"
-											component={AutocompleteField}
-											/>
-											
-											<Field
-											name="drive_id"
-											label="Drivetrain"
-											itemList={this.state.drives}
-											apiName="drives"
-											component={AutocompleteField}
+											<Field name="model_id"
+												label="Model"
+												itemList={this.state.models}
+												apiName="models"
+												component={AutocompleteField}
 											/>
 
 											<Field
-											name="transmission_id"
-											label="Transmission"
-											itemList={this.state.transmissions}
-											apiName="transmissions"
-											component={AutocompleteField}
-											/>
-											<Field
-											name="mfg_exterior_color_id"
-											label="Manufacture Exterior Color"
-											itemList={this.state.colors}
-											apiName="colors"
-											component={AutocompleteField}
-											/>
-											<Field
-											name="exterior_color_id"
-											label="Exterior Color"
-											itemList={this.state.colors}
-											apiName="colors"
-											component={AutocompleteField}
+												name="body_id"
+												label="Body"
+												itemList={this.state.bodies}
+												apiName="bodies"
+												component={AutocompleteField}
 											/>
 
 											<Field
-											name="interior_color_id"
-											label="Interior Color"
-											itemList={this.state.colors}
-											apiName="colors"
-											component={AutocompleteField}
+												name="enginesize_id"
+												label="Engine"
+												itemList={this.state.enginesizes}
+												apiName="enginesizes"
+												component={AutocompleteField}
 											/>
-												
+
 											<Field
-											name="fueltype_id"
-											label="Fuel Type"
-											itemList={this.state.fueltypes}
-											apiName="fueltypes"
-											component={AutocompleteField}
+												name="drive_id"
+												label="Drivetrain"
+												itemList={this.state.drives}
+												apiName="drives"
+												component={AutocompleteField}
 											/>
-													
-											<div className="col s12">		
+
+											<Field
+												name="transmission_id"
+												label="Transmission"
+												itemList={this.state.transmissions}
+												apiName="transmissions"
+												component={AutocompleteField}
+											/>
+											<Field
+												name="mfg_exterior_color_id"
+												label="Manufacture Exterior Color"
+												itemList={this.state.colors}
+												apiName="colors"
+												component={AutocompleteField}
+											/>
+											<Field
+												name="exterior_color_id"
+												label="Exterior Color"
+												itemList={this.state.colors}
+												apiName="colors"
+												component={AutocompleteField}
+											/>
+
+											<Field
+												name="interior_color_id"
+												label="Interior Color"
+												itemList={this.state.colors}
+												apiName="colors"
+												component={AutocompleteField}
+											/>
+
+											<Field
+												name="fueltype_id"
+												label="Fuel Type"
+												itemList={this.state.fueltypes}
+												apiName="fueltypes"
+												component={AutocompleteField}
+											/>
+
+											<div className="col s12">
 												<Field
-												name="fuel_economy"
-												type="text"
-												label="Fuel Economy"
-												component={this.renderInputField}
+													name="fuel_economy"
+													type="text"
+													label="Fuel Economy"
+													component={this.renderInputField}
 												/>
-											</div>		
+											</div>
 											<div className="col s12">
 												<p>Fuel Efficiency</p>
 											</div>
 											<div className="col s6">
 												<Field
-												name="city_mpg"
-												type="text"
-												label="City MPG"
-												component={this.renderInputField}
+													name="city_mpg"
+													type="text"
+													label="City MPG"
+													component={this.renderInputField}
 												/>
 											</div>
 											<div className="col s6">
 												<Field
-												name="highway_mpg"
-												type="text"
-												label="Highway MPG"
-												component={this.renderInputField}
+													name="highway_mpg"
+													type="text"
+													label="Highway MPG"
+													component={this.renderInputField}
 												/>
 											</div>
 											<div className="col s12">
@@ -484,10 +479,10 @@ class EditVehicles extends Component {
 									<TabPanel tabId="features-options">
 										<div className="wr-features-container">
 											<Field
-											name="option_id"
-											component={this.renderOptionsList}
-											options={this.state.options}
-											optCategories={this.state.optCategories}
+												name="option_id"
+												component={this.renderOptionsList}
+												options={this.state.options}
+												optCategories={this.state.optCategories}
 											/>
 										</div>
 									</TabPanel>
@@ -495,39 +490,39 @@ class EditVehicles extends Component {
 										<div className="row">
 											<div className="col s6">
 												<Field
-												name="price"
-												label="Actual Price"
-												type="text"
-												component={this.renderInputField}
+													name="price"
+													label="Actual Price"
+													type="text"
+													component={this.renderInputField}
 												/>
 											</div>
 											<div className="col s6">
 												<Field
-												name="selling_price"
-												label="Selling Price"
-												type="text"
-												component={this.renderInputField}
+													name="selling_price"
+													label="Selling Price"
+													type="text"
+													component={this.renderInputField}
 												/>
 											</div>
 										</div>
 									</TabPanel>
 									<TabPanel tabId="gallery" className="col s12">
 										<div className="row">
-											<Field name="images" 
-											component={EditImagePreview} 
+											<Field name="images"
+												component={EditImagePreview}
 											/>
-											<Field name="files" 
-											component={EditNewImage} 
+											<Field name="files"
+												component={EditNewImage}
 											/>
 										</div>
 									</TabPanel>
 									<TabPanel tabId="vehicle-location">
 										<div className="row">
 											<Field
-											name="location"
-											label="Location"
-											value="1"
-											component={this.renderSelectField}
+												name="location"
+												label="Location"
+												value="1"
+												component={this.renderSelectField}
 											>
 												<option value="">Choose your option</option>
 												<option value="1">Dealership 1</option>
@@ -536,13 +531,13 @@ class EditVehicles extends Component {
 
 											<div className="col s6">
 												<Field
-												name="latitude"
-												label="Latitude"
-												type="text"
-												component={this.renderInputField}
-													/>
+													name="latitude"
+													label="Latitude"
+													type="text"
+													component={this.renderInputField}
+												/>
 											</div>
-												
+
 											<div className="col s6">
 												<Field
 													name="longitude"
@@ -550,7 +545,7 @@ class EditVehicles extends Component {
 													label="Longitude"
 													component={this.renderInputField}
 												/>
-													
+
 											</div>
 										</div>
 									</TabPanel>
@@ -559,10 +554,10 @@ class EditVehicles extends Component {
 											<div className="col s12">
 												<h4>Finance</h4>
 												<Field name="financing_flag"
-												type="checkbox"
-												label="Financing"
-												component={this.renderCheckboxField}
-												
+													type="checkbox"
+													label="Financing"
+													component={this.renderCheckboxField}
+
 												/>
 											</div>
 										</div>
@@ -570,67 +565,67 @@ class EditVehicles extends Component {
 											<div className="card">
 												<div className="card-content">
 													<h4 className="card-title">Finance Form</h4>
-													<div className="row">	
+													<div className="row">
 														<div className="col s6">
 															<Field name="type"
-															label="Type"
-															type="text"
-															component={this.renderInputField}
+																label="Type"
+																type="text"
+																component={this.renderInputField}
 															/>
 														</div>
 														<div className="col s6">
 															<Field name="payment"
-															label="Payment"
-															type="text"
-															component={this.renderInputField}
+																label="Payment"
+																type="text"
+																component={this.renderInputField}
 															/>
 														</div>
 														<div className="col s6">
 															<Field name="payment_type"
-															label="Payment Type"
-															type="text"
-															component={this.renderInputField}
+																label="Payment Type"
+																type="text"
+																component={this.renderInputField}
 															/>
 														</div>
 														<div className="col s6">
 															<Field name="downpayment"
-															label="Down Payment"
-															type="text"
-															component={this.renderInputField}
+																label="Down Payment"
+																type="text"
+																component={this.renderInputField}
 															/>
 														</div>
 														<div className="col s6">
 															<Field name="number_of_payment"
-															label="Number of Payment"
-															type="text"
-															component={this.renderInputField}
+																label="Number of Payment"
+																type="text"
+																component={this.renderInputField}
 															/>
 														</div>
 														<div className="col s6">
 															<Field name="source"
-															label="Source of Payment"
-															type="text"
-															component={this.renderInputField}
+																label="Source of Payment"
+																type="text"
+																component={this.renderInputField}
 															/>
 														</div>
 														<div className="col s6">
 															<Field name="odometer"
-															label="Odometer"
-															type="text"
-															component={this.renderInputField}
+																label="Odometer"
+																type="text"
+																component={this.renderInputField}
 															/>
 														</div>
 														<div className="col s6">
 															<Field name="description"
-															label="Description"
-															type="text"
-															component={this.renderInputField}
+																label="Description"
+																type="text"
+																component={this.renderInputField}
 															/>
 														</div>
 													</div>
 												</div>
 											</div>
-										):null}
+										) : null}
 									</TabPanel>
 									<TabPanel tabId="information">
 										<div className="row">
@@ -652,7 +647,7 @@ class EditVehicles extends Component {
 									</TabPanel>
 								</Tabs>
 							</div>
-								
+
 							<div className="row">
 								<div className="input-field col s12">
 									<button type="submit" className="btn cyan waves-effect waves-light right" name="action">Update
@@ -664,30 +659,30 @@ class EditVehicles extends Component {
 					</div>
 				</div>
 			</div>
-        );
-    }
+		);
+	}
 }
 
 function validate(values) {
 	console.log('edit-value', values)
 	const errors = {}
-	if(!values.title) {
-        errors.title = "This Field is empty"
-    } else if (values.title.length > 100) {
-        errors.title = "Must be 100 character or Less!"
+	if (!values.title) {
+		errors.title = "This Field is empty"
+	} else if (values.title.length > 100) {
+		errors.title = "Must be 100 character or Less!"
 	}
 	return errors;
 }
 
-EditVehicles =  reduxForm({
+EditVehicles = reduxForm({
 	form: 'EditVehicles',
 	validate
 })(EditVehicles);
 
-const selector =  formValueSelector('EditVehicles');
-EditVehicles = connect(state=> {
+const selector = formValueSelector('EditVehicles');
+EditVehicles = connect(state => {
 	const isNewVehicle = selector(state, 'vehicle_status')
-	const hasFinance =  selector(state, 'financing_flag')
+	const hasFinance = selector(state, 'financing_flag')
 	return {
 		isNewVehicle,
 		hasFinance
@@ -699,4 +694,4 @@ function mapStateToProps(store) {
 		vehicles: store.dealState.vehicleList
 	}
 }
-export default connect(mapStateToProps, {requestVehiclesUpdate})(EditVehicles);
+export default connect(mapStateToProps, { requestVehiclesUpdate })(EditVehicles);

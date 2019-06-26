@@ -75,3 +75,18 @@ export function createVehiclesAttrSuccess(values,apiName) {
         values, apiName
     }
 }
+
+// Import CSV file
+export function requestImports(values) {
+    return {
+        type: types.REQUEST_IMPORTS,
+        values
+    }
+}
+
+export function importsSuccess(values) {
+    return {
+        type: types.IMPORTS_SUCCESS,
+        values
+    }
+}

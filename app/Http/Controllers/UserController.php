@@ -107,8 +107,8 @@ class UserController extends Controller
         return $users;
     }
 
-    public function show($id) {
-        $user = User::with('CompanyId:id,company_cd,name')->find($id);
+    public function show(User $user) {
+        // $user = User::with('CompanyId:id,company_cd,name')->find($id);
         return $user;
     }
 

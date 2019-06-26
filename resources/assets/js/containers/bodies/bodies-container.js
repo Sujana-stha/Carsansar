@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import Pagination from "react-js-pagination";
 import BodiesList from '../../components/bodies/bodies';
 import store from '../../store';
-import { requestBodies, requestDeleteBodies, requestSubmitBodies,requestUpdateBodies, requestBodiesStatus } from  '../../actions/bodies-action';
-import {requestLoggedUser} from '../../actions/users-action';
+import { requestBodies, requestDeleteBodies, requestSubmitBodies, requestUpdateBodies, requestBodiesStatus } from '../../actions/bodies-action';
+import { requestLoggedUser } from '../../actions/users-action';
 
 //COMPONENT
 import BodyForm from '../../components/bodies/bodies-form';
@@ -14,7 +14,7 @@ import Loading from '../../components/loading';
 class BodiesListContainer extends Component {
     constructor() {
         super();
-        this.state= {
+        this.state = {
             isEditing: false,
             confirmText: null,
             sorted_column: 'id',
@@ -23,8 +23,8 @@ class BodiesListContainer extends Component {
         this.handlePageChange = this.handlePageChange.bind(this)
         this.editBodies = this.editBodies.bind(this)
         this.toggleStatus = this.toggleStatus.bind(this)
-        this.deleteItem =  this.deleteItem.bind(this)
-        this.hideDiv =  this.hideDiv.bind(this)
+        this.deleteItem = this.deleteItem.bind(this)
+        this.hideDiv = this.hideDiv.bind(this)
     }
 
     componentDidMount() {
@@ -54,16 +54,16 @@ class BodiesListContainer extends Component {
         let order = this.state.order
         this.props.requestUpdateBodies(values, pageNumber, sorted_column, order);
         this.setState({
-            isEditing : false
+            isEditing: false
         })
     }
 
     //function to call form of edit
     editBodies(values) {
-        this.setState ({
-            isEditing : values
+        this.setState({
+            isEditing: values
         })
-        
+
     }
 
     deleteBodyAction(bodyId) {
@@ -72,13 +72,12 @@ class BodiesListContainer extends Component {
 
     // pagination function
     handlePageChange(pageNumber) {
-        console.log(`active page is ${pageNumber}`);
         let sorted_column = this.state.sorted_column
         let order = this.state.order
         this.props.requestBodies(pageNumber, sorted_column, order)
     }
-    
-    toggleStatus (bodyId, status) {
+
+    toggleStatus(bodyId, status) {
         const pageNumber = this.props.activePage;
         let sorted_column = this.state.sorted_column
         let order = this.state.order
@@ -87,25 +86,25 @@ class BodiesListContainer extends Component {
         }
         this.props.requestBodiesStatus(bodyId, newBodyStatus, pageNumber, sorted_column, order)
     }
-    deleteItem(id){
-        this.setState ({
+    deleteItem(id) {
+        this.setState({
             confirmText: id
         })
     }
-    
+
     hideDiv() {
-        this.setState({confirmText: null})
+        this.setState({ confirmText: null })
     }
     sortByColumn(column) {
         const pageNumber = this.props.activePage
         if (column === this.state.sorted_column) {
-           this.state.order === 'desc' ? this.setState({order: 'asc'}, ()=>{
-               this.props.requestBodies(pageNumber, this.state.sorted_column, this.state.order)
-            }):this.setState({order: 'desc'}, ()=>{
+            this.state.order === 'desc' ? this.setState({ order: 'asc' }, () => {
+                this.props.requestBodies(pageNumber, this.state.sorted_column, this.state.order)
+            }) : this.setState({ order: 'desc' }, () => {
                 this.props.requestBodies(pageNumber, this.state.sorted_column, this.state.order)
             })
         } else {
-            this.setState({sorted_column: column, order: 'desc'}, ()=>{
+            this.setState({ sorted_column: column, order: 'desc' }, () => {
                 this.props.requestBodies(pageNumber, this.state.sorted_column, this.state.order)
             })
         }
@@ -116,67 +115,67 @@ class BodiesListContainer extends Component {
                 <div className="row">
                     <div className="col s12 m3 l3 mt-3">
                         {this.state.isEditing ? (
-                            <EditBody onSubmit = {this.submitEditBody.bind(this)} editId = {this.state.isEditing} />
-                        ): (
-                            <BodyForm onSubmit = { this.submitBody.bind(this) }/>
-                        )}
-                       
+                            <EditBody onSubmit={this.submitEditBody.bind(this)} editId={this.state.isEditing} />
+                        ) : (
+                                <BodyForm onSubmit={this.submitBody.bind(this)} />
+                            )}
+
                     </div>
                     <div className="col s12 m9 l9">
                         {this.props.fetching ? (
-                            <Loading/>
-                        ): (
-                            <div className="wr-not-loading"></div>
-                        )}
+                            <Loading />
+                        ) : (
+                                <div className="wr-not-loading"></div>
+                            )}
                         <table className="wr-master-table">
                             <thead>
                                 <tr>
                                     <th>S.N</th>
-                                    <th onClick={()=>this.sortByColumn('body_desc')}>Title
-                                        {this.state.order==='desc'?
+                                    <th onClick={() => this.sortByColumn('body_desc')}>Title
+                                        {this.state.order === 'desc' ?
                                             <i className="material-icons wr-sorting-icon">arrow_drop_down</i>
-                                        :<i className="material-icons wr-sorting-icon">arrow_drop_up</i>}
+                                            : <i className="material-icons wr-sorting-icon">arrow_drop_up</i>}
                                     </th>
-                                    <th onClick={()=>this.sortByColumn('created_by')}>Added by
-                                        {this.state.order==='desc'?
+                                    <th onClick={() => this.sortByColumn('created_by')}>Added by
+                                        {this.state.order === 'desc' ?
                                             <i className="material-icons wr-sorting-icon">arrow_drop_down</i>
-                                        :<i className="material-icons wr-sorting-icon">arrow_drop_up</i>}
+                                            : <i className="material-icons wr-sorting-icon">arrow_drop_up</i>}
                                     </th>
                                     <th>Action</th>
                                     <th>Status</th>
                                 </tr>
                             </thead>
                             {this.props.bodies.length ? (
-                                <BodiesList 
-                                    bodies= {this.props.bodies} 
-                                    userRole ={ this.props.loggedUser}
-                                    onEditBody = {this.editBodies} 
-                                    confirmText={this.state.confirmText} 
-                                    showConfirmBox={this.deleteItem} 
-                                    hideConfirmBox={this.hideDiv} 
-                                    deleteBody = {this.props.requestDeleteBodies} 
-                                    bodyStatus = {this.toggleStatus}
+                                <BodiesList
+                                    bodies={this.props.bodies}
+                                    userRole={this.props.loggedUser}
+                                    onEditBody={this.editBodies}
+                                    confirmText={this.state.confirmText}
+                                    showConfirmBox={this.deleteItem}
+                                    hideConfirmBox={this.hideDiv}
+                                    deleteBody={this.props.requestDeleteBodies}
+                                    bodyStatus={this.toggleStatus}
                                     activePage={this.props.activePage}
                                     itemsCountPerPage={this.props.itemsCountPerPage}
                                 />
 
                             ) : (
-                                <tbody>
-                                    <tr>
-                                        <td >No Results Found !</td>
-                                    </tr>
-                                </tbody>
-                            )}
+                                    <tbody>
+                                        <tr>
+                                            <td >No Results Found !</td>
+                                        </tr>
+                                    </tbody>
+                                )}
                         </table>
                         <div className="col s12 mt-2 mb-2 left-align">
                             <Pagination
-                            activePage={this.props.activePage}
-                            itemsCountPerPage={this.props.itemsCountPerPage}
-                            totalItemsCount={this.props.totalItemsCount}
-                            pageRangeDisplayed={this.props.pageRangeDisplayed}
-                            onChange={this.handlePageChange}
-                            firstPageText='First'
-                            lastPageText='Last'
+                                activePage={this.props.activePage}
+                                itemsCountPerPage={this.props.itemsCountPerPage}
+                                totalItemsCount={this.props.totalItemsCount}
+                                pageRangeDisplayed={this.props.pageRangeDisplayed}
+                                onChange={this.handlePageChange}
+                                firstPageText='First'
+                                lastPageText='Last'
                             />
                         </div>
                     </div>
@@ -198,4 +197,4 @@ function mapStateToProps(store) {
     }
 }
 
-export default connect(mapStateToProps, { requestLoggedUser, requestBodies, requestDeleteBodies, requestSubmitBodies,requestUpdateBodies, requestBodiesStatus})(BodiesListContainer);
+export default connect(mapStateToProps, { requestLoggedUser, requestBodies, requestDeleteBodies, requestSubmitBodies, requestUpdateBodies, requestBodiesStatus })(BodiesListContainer);

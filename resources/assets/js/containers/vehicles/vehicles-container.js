@@ -164,7 +164,7 @@ class VehiclesListingContainer extends Component {
                 <div>
                     <div className="row">
                         <div className="col s12 mt-2 mb-2 right-align">
-                            <NavLink to="/dashboard/vehicles" className="btn waves-effect waves-light"><i className="material-icons left">view_list</i><span> All Vehicles</span></NavLink>
+                            <NavLink to="/vehicles" className="btn waves-effect waves-light"><i className="material-icons left">view_list</i><span> All Vehicles</span></NavLink>
                         </div>
                     </div>
                     <h4 className="header2">Add New Vehicle</h4>
@@ -197,7 +197,7 @@ class VehiclesListingContainer extends Component {
                         />
                     </div>
 					<div className="col s12 m8 mt-4 mb-2 right-align">
-						<NavLink to="/dashboard/insert-vehicle" className="btn waves-effect waves-light"><i className="material-icons left">add</i><span> Add Vehicle</span></NavLink>
+						<NavLink to="/insert-vehicle" className="btn waves-effect waves-light"><i className="material-icons left">add</i><span> Add Vehicle</span></NavLink>
 					</div>
                     
 				</div>

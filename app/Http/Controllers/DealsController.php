@@ -476,6 +476,7 @@ class DealsController extends Controller
     }
 
     public function import(Request $request){
+        dd($request->all());
         // $normalTimeLimit = ini_get('max_execution_time');
         // echo $normalTimeLimit;exit;
         // $res=file_exists('http://tdrvehicles2.azureedge.net/photos/import/201903/1221/0447/dee9a864-53b1-47b5-8530-44335032e1de.jpg?w=420&h=315');

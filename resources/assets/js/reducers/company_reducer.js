@@ -47,7 +47,6 @@ const companyReducer =  function(state = initialState, action) {
             return {...state, fetching: true}
 
         case types.COMPANIES_STATUS_SUCCESS:
-          console.log('tion', action)
             return {
                 ...state,
                 companies: state.companies.map(company => {

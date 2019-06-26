@@ -1,7 +1,7 @@
 import React from 'react';
 
 const ColorsList =(props)=> {
-    const authUser = window.Laravel.super_admin
+    const authUser = process.env.MIX_SUPER_ADMIN_NAME
     return (
         <tbody>
             {props.colors.map((color, index) => {

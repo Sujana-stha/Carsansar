@@ -17,7 +17,6 @@ const UsersReducer = function(state = initialState, action) {
         case types.REQUEST_USERS:
             return {...state, fetching: true};
         case types.GET_USERS_SUCCESS:
-            console.log('user-action', action)
             return Object.assign({}, state, {
                 users: action.users.data,
                 fetching: false,
@@ -34,11 +33,11 @@ const UsersReducer = function(state = initialState, action) {
                 
             }) 
         case types.REGISTER_SUCCESS:
-            console.log('action-register', action)
             return Object.assign({}, state, {
                 users: action.resp.data,
                 requesting: false
             }) 
+            
         //to get logged user details
         case types.REQUEST_LOGGED_USER:
             return Object.assign({}, state, {
@@ -48,6 +47,22 @@ const UsersReducer = function(state = initialState, action) {
             return Object.assign({}, state, {
                 loggedUser: action.resp
             })
+
+        //to update users
+        case types.REQUEST_USERS_UPDATE: 
+            return {...state, sending: true};
+           
+        case types.USERS_UPDATE_SUCCESS:
+            return {
+                ...state, 
+                users: state.users.map(user => {
+                    if (user.id === action.resp.id) {
+                    return action.resp;
+                    }
+                    return user;
+                }),
+                sending:false
+            };
         default: 
         return state;
     }

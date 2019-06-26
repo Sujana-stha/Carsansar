@@ -16,19 +16,6 @@ function* callVehiclesSaga(action) {
     const response = yield call(api.getVehicles, action.pageNumber, action.sorted_column, action.order);
     const vehicles = response.data
     
-    // const options = yield all (results.map(result=> 
-    //     optionDesc(result.attribute.option_ids)
-    // ))
-    // const vehicles = results.filter(result=>{
-    //     const opt =  options.filter(option=> {
-    //         if(results.indexOf(result)===options.indexOf(option)) {
-    //             return Object.assign(result, {
-    //                 option_desc: option
-    //             })
-    //         }
-    //     })
-    //     return opt;
-    // })
     if (response.errors) {
         yield put({ type: types.REQUEST_VEHICLES_FAILED, errors: response.error});
         let error = response.error;
@@ -38,10 +25,6 @@ function* callVehiclesSaga(action) {
     }
 }
 
-// function* optionDesc (optionId) {
-//     const optionRes = yield call(api.getOptionsDesc, optionId);
-//     return optionRes.data;
-// }
 
 // saga for add new vehicles
 export function* submitVehicleSaga() {
@@ -63,10 +46,11 @@ function* callVehicleSubmit(action) {
     } else {
         yield put({type: types.REQUEST_VEHICLES, pageNumber, sorted_column, order});
         notify.show("Vehicle created successfully!", "success", 5000);
+        yield put(push('/vehicles'));
+
     }
     yield put(stopSubmit('PostVehicles', error));
     yield put(reset('PostVehicles'));
-    yield put(push('/dashboard/vehicles'));
 }
 
 //SAGA TO UPDATE VEHICLES
@@ -76,7 +60,6 @@ export function* editVehicleSaga() {
 
 function* callVehicleUpdate(action) {
     yield put(startSubmit('EditVehicles'));
-    console.log('act', action)
     let error = {};
     const result = yield call(api.updateVehicles, action.vehicleId, action.values, action.vehicleData);
     const resp = result.data;
@@ -86,14 +69,14 @@ function* callVehicleUpdate(action) {
         error = result.errors
 
     } else {
-        // yield put({type: types.UPDATE_MAKES_SUCCESS, resp, message: result.statusText});
+        yield put({type: types.UPDATE_VEHICLES_SUCCESS, resp});
         yield put ({type: types.REQUEST_VEHICLES})
         notify.show(`Updated successfully!`, "success", 5000);
+        yield put(push('/vehicles'));
 
     }
     yield put(stopSubmit('EditVehicles', error));
     yield put(reset('EditVehicles'));
-    // yield put(push('/dashboard/vehicles'));
 }
 
 // saga for creating vehicles attr
@@ -114,4 +97,27 @@ function* callVehiclesAttrCreate(action) {
     } catch (error) {
         
     }
+}
+
+//upload csv files
+export function* uploadFileSaga() {
+    yield takeLatest(types.REQUEST_IMPORTS, importFile)
+}
+
+function* importFile(action) {
+    yield put(startSubmit('ImportFile'));
+    let error = {};
+    const result =  yield call(api.postCSVfile, action.values);
+    const resp = result.data
+    if (result.errors) {
+        yield put({ type: types.REQUEST_VEHICLES_FAILED, errors: result.error});
+        error = result.error;
+        notify.show("Upload failed!", "error", 5000)
+    } else {
+        yield put({type: types.IMPORTS_SUCCESS, resp});
+        notify.show("CSV file uploaded successfully!", "success", 5000);
+
+    }
+    yield put(stopSubmit('ImportFile', error));
+    yield put(reset('ImportFile'));
 }

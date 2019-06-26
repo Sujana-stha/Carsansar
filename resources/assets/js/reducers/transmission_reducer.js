@@ -33,7 +33,6 @@ const transmissionReducer =  function(state = initialState, action) {
             return {...state, sending: true};
            
         case types.UPDATE_TRANSMISSONS_SUCCESS:
-        console.log('acc', action)
             return {
                 ...state, 
                 transmissions: state.transmissions.map(transmission => {
@@ -48,7 +47,6 @@ const transmissionReducer =  function(state = initialState, action) {
             return {...state, fetching: true};
            
         case types.TRANSMISSONS_STATUS_SUCCESS:
-          console.log('tion', action)
             return {
                 ...state,
                 transmissions: state.transmissions.map(transmission => {

@@ -46,7 +46,6 @@ const bodyReducer =  function(state = initialState, action) {
         case types.REQUEST_BODIES_STATUS:
             return {...state, fetching: true}
         case types.BODIES_STATUS_SUCCESS:
-          console.log('tion', action)
             return {
                 ...state,
                 bodies: state.bodies.map(body => {

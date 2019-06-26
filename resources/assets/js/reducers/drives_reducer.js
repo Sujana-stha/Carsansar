@@ -50,7 +50,6 @@ const driveReducer =  function(state = initialState, action) {
             return {...state, fetching: true}
          
         case types.DRIVES_STATUS_SUCCESS:
-          console.log('tion', action)
             return {
                 ...state,
                 drives: state.drives.map(drive => {

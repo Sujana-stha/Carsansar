@@ -12,8 +12,6 @@ class ImagesPreview extends Component {
     }
     
     onDrop(images){
-        console.log('tss', images)
-        
         this.setState({
             images : this.state.images.concat([...images]),
         });
@@ -29,7 +27,6 @@ class ImagesPreview extends Component {
             }
            
         })
-        console.log('main', imagesList)
         this.props.input.onChange(imagesList);
     }
     onDropRejected(images){
@@ -43,10 +40,7 @@ class ImagesPreview extends Component {
             images : newImages
             
         })
-        console.log('ima', this.state.images)
-        console.log('new', newImages)
         this.props.input.onChange(newImages);
-        
     }
     handleChange(e) {
         e.preventDefault();
@@ -72,9 +66,6 @@ class ImagesPreview extends Component {
         this.setState({
             images: newImages
         })
-        console.log('hand', this.props)
-        console.log('dfdf',newImages)
-
         this.props.input.onChange(newImages)
     }
     render() {

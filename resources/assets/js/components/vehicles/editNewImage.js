@@ -12,8 +12,6 @@ class ImagesPreview extends Component {
     }
     
     onDrop(images){
-        console.log('tss', images)
-        
         this.setState({
             images: images.map((image) => {
                 return Object.assign(image, {
@@ -22,7 +20,6 @@ class ImagesPreview extends Component {
             })
         });
         const imagesList = this.state.images
-        console.log('main', imagesList)
         this.props.input.onChange(imagesList);
     }
     onDropRejected(images){
@@ -36,17 +33,13 @@ class ImagesPreview extends Component {
             images : newImages
             
         })
-        console.log('ima', this.state.images)
-        console.log('new', newImages)
         this.props.input.onChange(newImages);
         
     }
     handleChange(e) {
         e.preventDefault();
         const images = this.state.images
-        // if(images.length) {
-        //    return this.props.input.onChange(images)
-        // }
+        
         this.props.input.onChange(images)
     }
     handleCover(preview, e=null) {
@@ -65,8 +58,6 @@ class ImagesPreview extends Component {
         this.setState({
             images: newImages
         })
-        console.log('hand', this.props)
-        console.log('dfdf',newImages)
 
         this.props.input.onChange(newImages)
     }
@@ -79,18 +70,10 @@ class ImagesPreview extends Component {
                         {this.state.images.map((file, index)=>
                             <div key={index} className="wr-image-list">
                                 <label>
-                                    {/* {index === 0 ? (
-                                        <input type="radio" className="with-gap"
-                                        defaultChecked
-                                        onChange = {this.handleCover.bind(this, file.preview)}
-                                        name="file"
-                                        />   
-                                    ):( */}
                                         <input type="radio" className="with-gap"
                                         onChange = {this.handleCover.bind(this, file.preview)}
                                         name="file"
                                         />
-                                    {/* )} */}
                                     <span>
                                         <div className="overlay">
                                             <button type="button" className="close"

@@ -8,7 +8,6 @@ class EditOption extends Component {
     componentDidMount() {
         const id =  this.props.editId;
         Api.getSingleOptions(id).then((response)=> {
-            console.log('respp',response);
             const data =  response.data;
             this.props.initialize(data);
         })

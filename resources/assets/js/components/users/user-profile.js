@@ -10,7 +10,8 @@ class UserProfile extends Component {
     constructor() {
         super();
         this.state = {
-            userDetails: []
+            userDetails: [],
+            cp_flag: 0
         }
     }
     componentDidMount() {
@@ -100,9 +101,9 @@ class UserProfile extends Component {
                                     type="text"
                                     component={this.renderDisabledField}
                                     id="username"
-                                    />
+                                     />
                                 </div>
-                                <button className='btn waves-effect waves-light'>Change Password</button>
+                                <button className='btn waves-effect waves-light'> {this.state.cp_flag == 0 ? <span>Change Password</span> : <span>Update Password</span> } </button>
                                 <div className="form-field col s12">
                                     <Field
                                     label="Current Password"

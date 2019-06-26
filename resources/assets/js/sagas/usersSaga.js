@@ -13,7 +13,6 @@ export function* getUsersWatcher() {
 function* getUsersListFlow(action) {
     const response = yield call(api.getUsers, action.pageNumber, action.sorted_column, action.order)
     const users =  response.data
-    console.log('user', users)
     if(response.errors) {
         yield put({type: types.REQUEST_USERS_ERROR, errors: response.errors})
         notify.show("Cannot get all users !", "error", 5000)
@@ -55,11 +54,36 @@ function* getLoggedUserFlow() {
     try {
         const result = yield call(api.getLoggedUser)
         const resp = result.data
-        console.log('res', resp)
-        if(result.status==200) {
+        if(resp) {
+            window.localStorage.setItem("logged_user", resp.username);
+            window.localStorage.setItem("role", resp.role);
             yield put({type: types.GET_LOGGED_USER, resp})
         }
     } catch (error) {
         notify.show("Cannot get user details!","error",5000)
     }
+}
+
+// to edit user
+export function* editUserSaga() {
+    yield takeLatest(types.REQUEST_USERS_UPDATE, callEditUser);
+}
+
+function* callEditUser (action) {
+    yield put(startSubmit('UpdateUser'));
+    let error = {};
+    const result =  yield call(api.updateUser, action.values.id, action.values);
+    const resp = result.data;
+    
+    if (result.errors) {
+        yield put({ type: types.REQUEST_USERS_ERROR, errors: result.error});
+        error = result.error;
+        notify.show("Update failed!","error", 5000);
+    } else {
+        yield put({type: types.USERS_UPDATE_SUCCESS, resp})
+        notify.show("Updated successfully!", "success", 5000)
+        yield put(push('/users'));
+    }
+    yield put(stopSubmit('UpdateUser', error));
+    yield put(reset('UpdateUser'));
 }

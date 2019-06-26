@@ -48,7 +48,6 @@ const enginesizeReducer =  function(state = initialState, action) {
             return {...state, fetching: true}
                 
         case types.ENGINESIZES_STATUS_SUCCESS:
-          console.log('tion', action)
             return {
                 ...state,
                 enginesize: state.enginesizes.map(enginesize => {
@@ -60,7 +59,6 @@ const enginesizeReducer =  function(state = initialState, action) {
                 fetching: false
             }
         case types.DELETE_ENGINESIZES_SUCCESS:
-        console.log('aa', action)
             const newEnginesize = _.filter(state.enginesizes, enginesize => enginesize.id !== action.enginesizeId);
             return Object.assign({}, state, {
                 enginesizes: newEnginesize,

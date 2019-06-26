@@ -12,7 +12,7 @@ import InsertUsersForm from '../../components/users/insert-user'
 import * as api from '../../api/users-api'
 
 
-class UsersListContainer extends Component {
+class UsersContainer extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -45,7 +45,6 @@ class UsersListContainer extends Component {
 
     // edit functions
     editUser(values) {
-        console.log('user-id', values)
         this.setState ({
             isEditing : values
         })
@@ -87,11 +86,11 @@ class UsersListContainer extends Component {
     }
 
     render() {
-        if (this.props.match.path === "/dashboard/edit-user") {
+        if (this.props.match.path === "/edit-user") {
             return (
-                <EditUser editId= {this.state.isEditing}/>
+                <EditUser companyList={this.state.companies} editId= {this.state.isEditing}/>
             )
-        } else if(this.props.match.path === "/dashboard/insert-user") {
+        } else if(this.props.match.path === "/insert-user") {
             return (
                 <InsertUsersForm companyList={this.state.companies} onSubmit={this.onSubmit.bind(this)}/>
             );
@@ -100,7 +99,7 @@ class UsersListContainer extends Component {
                 <div>
                     <div className="row">
                         <div className="col s12 mt-2 mb-2 right-align">
-                            <NavLink to="/dashboard/insert-user" className="btn waves-effect waves-light"><i className="material-icons left">add</i><span> Add User</span></NavLink>
+                            <NavLink to="/insert-user" className="btn waves-effect waves-light"><i className="material-icons left">add</i><span> Add User</span></NavLink>
                         </div>
                     </div>
                     {this.props.fetching ? (
@@ -188,4 +187,4 @@ function mapStateToProps(store) {
     }
 }
 
-export default connect(mapStateToProps, { requestUsers, registerUsersRequest })(UsersListContainer);
+export default connect(mapStateToProps, { requestUsers, registerUsersRequest })(UsersContainer);

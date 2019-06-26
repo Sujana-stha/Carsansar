@@ -236,6 +236,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 //Route::get('vehicles', 'DealsController@index');
  
 //Route::get('vehicles/{vehicle}', 'DealsController@show');
+Route::post('imports', 'DealsController@import');
  
 Route::get('import','ImportScriptController@ReadCSV');
  

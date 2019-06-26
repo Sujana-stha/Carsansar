@@ -33,7 +33,7 @@ class MakesListContainer extends Component {
         let order = this.state.order
         let pageNumber = this.props.activePage
         this.props.requestMakes(pageNumber,sorted_column, order);
-        this.props.requestLoggedUser();
+        // this.props.requestLoggedUser();
     }
 
     // submit function for new data
@@ -71,7 +71,6 @@ class MakesListContainer extends Component {
 
     // pagination function
     handlePageChange(pageNumber) {
-        console.log(`active page is ${pageNumber}`);
         let sorted_column = this.state.sorted_column
         let order = this.state.order
         this.props.requestMakes(pageNumber, sorted_column,order)

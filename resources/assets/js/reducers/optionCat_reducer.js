@@ -25,7 +25,6 @@ const optionCategoriesReducer =  function(state = initialState, action) {
             return {...state, sending: true};
        
         case types.ADD_OPT_CAT_SUCCESS:
-            console.log('act', action)
             return  Object.assign({}, state, {
                 optionCategories:  [...state.optionCategories, action.resp],
                 fetching: false,
@@ -35,7 +34,6 @@ const optionCategoriesReducer =  function(state = initialState, action) {
             return {...state, sending: true};
        
         case types.UPDATE_OPT_CAT_SUCCESS:
-            console.log('op', action)
             return {
                 ...state, 
                 optionCategories: state.optionCategories.map(optionCategory => {
@@ -51,7 +49,6 @@ const optionCategoriesReducer =  function(state = initialState, action) {
             return {...state, fetching: true};
           
         case types.OPT_CAT_STATUS_SUCCESS:
-          console.log('tion', action)
             return {
                 ...state,
                 optionCategories: state.optionCategories.map(optionCategory => {

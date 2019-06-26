@@ -48,7 +48,7 @@ const InsertUser =props=> {
         <div className="wr-users-form">
             <div className="row">
                 <div className="col s12 mt-2 mb-2 right-align">
-                    <NavLink to="/dashboard/users" className="btn waves-effect waves-light"><i className="material-icons left">add</i><span> All Users</span></NavLink>
+                    <NavLink to="/users" className="btn waves-effect waves-light"><i className="material-icons left">add</i><span> All Users</span></NavLink>
                 </div>
             </div>
 

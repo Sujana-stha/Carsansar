@@ -2,19 +2,17 @@
 import axios, {getHeaders} from './axiosInstance'
 
 //IMPORT DOUCUMENTS FILES
-export function postDocuments(values) {
-    console.log(values)
+export function postCSVfile(values) {
     const access_token = window.localStorage.getItem('access_token')
     const headers = getHeaders(access_token)
-
     var formData = new FormData();
     var files =values.import
-    files.map((file) => {
-        formData.append('import', file)
+    
+    if(files) { files.map(file=>{
+        formData.append('files[]', file)
     })
-    formData.append('import', values.import)
-
-    return axios.post('/api/imports', {headers}, formData)
+}
+    return axios.post('/api/imports',formData, {headers})
     .catch(error => {
         console.log('err', error)
         return {
@@ -258,8 +256,6 @@ export function addVehicles(values) {
 }
 
 function vehicleDetails(vehicleData, object) {
-    console.log('vehicleData', vehicleData)
-    console.log('object==', object)
     var newVehicleData = vehicleData
     newVehicleData.title = object.title
     newVehicleData.ad_desc = object.ad_desc
@@ -293,7 +289,6 @@ function vehicleDetails(vehicleData, object) {
     if(newVehicleData.vehicle_info !== null){newVehicleData.vehicle_info.transmission_id = object.transmission_id}
     if(newVehicleData.vehicle_info !== null){newVehicleData.vehicle_info.vin = object.vin}
     if(newVehicleData.vehicle_info !== null){newVehicleData.vehicle_info.year = object.year}
-    console.log(newVehicleData)
     return newVehicleData;
 }
 
@@ -301,10 +296,8 @@ function vehicleDetails(vehicleData, object) {
 export function updateVehicles(vehicleId, values, vehicleData) {
     const access_token = window.localStorage.getItem('access_token')
     const headers = getHeaders(access_token)
-    console.log('value=>', values)
     
     var data = vehicleDetails(vehicleData, values)
-    console.log('final', data)
 
     var formData= new FormData();
     formData.append('vehicles-detail', JSON.stringify(data));

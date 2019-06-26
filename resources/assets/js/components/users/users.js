@@ -15,7 +15,7 @@ const UsersListing = (props) => {
                         <td>{user.role}</td>
                         <td>{user.company_id == null ? '-': user.company_id.name}</td>
                         <td className="action">
-                            <Link to={'/dashboard/edit-user'} onClick={()=> props.onEdit(user.id)} className="tooltipped" data-position="top" data-delay="50" data-tooltip="Edit"><i className="material-icons">edit</i></Link>
+                            <Link to={'/edit-user'} onClick={()=> props.onEdit(user.id)} className="tooltipped" data-position="top" data-delay="50" data-tooltip="Edit"><i className="material-icons">edit</i></Link>
                             <a href="javascript:void(0);" onClick={props.showConfirmBox.bind(null,user.id)} className="tooltip" data-tooltip="Delete"><i className="material-icons">delete</i></a>
                             {props.confirmText == user.id ? (
                                 <span className="confirm tooltip-text">Are you sure?&nbsp;

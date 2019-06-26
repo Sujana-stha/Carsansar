@@ -28,8 +28,8 @@ function* loginFlow(action) {
             window.localStorage.setItem("access_token", resp.access_token);
             window.localStorage.setItem("refresh_token", resp.refresh_token);
             yield put({ type: types.LOGIN_SUCCESS, resp});
-            yield put(push('/dashboard'));
-            // window.location.reload();
+            yield put({type: types.REQUEST_LOGGED_USER});
+            yield put(push('/'));
             notify.show("Login Successfull!", "success", 5000);
         } else if(result.errors) {
             notify.show("Incorrect Email or Password!","error",5000)
@@ -54,10 +54,10 @@ function* logoutFlow() {
         if(response.status === 200) {
             window.localStorage.removeItem('access_token');
             window.localStorage.removeItem('refresh_token');
+            window.localStorage.removeItem('logged_user');
+            window.localStorage.removeItem('role');
             yield put({type: types.LOGOUT_SUCCESS})
             yield put(push('/auth/login'));
-            yield put(push('/login'));
-
             notify.show("You are successfully logged out!", "success", 5000)
         } else if(response.errors) {
             notify.show("Something went wrong. Please try again", )

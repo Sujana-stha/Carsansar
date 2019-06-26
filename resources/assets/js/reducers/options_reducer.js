@@ -47,7 +47,6 @@ const optionReducer =  function(state = initialState, action) {
             return {...state, fetching: true};
           
         case types.OPTIONS_STATUS_SUCCESS:
-          console.log('tion', action)
             return {
                 ...state,
                 options: state.options.map(option => {

@@ -72,7 +72,6 @@ class FueltypesListContainer extends Component {
 
     // pagination function
     handlePageChange(pageNumber) {
-        console.log(`active page is ${pageNumber}`);
         let sorted_column = this.state.sorted_column
         let order = this.state.order
         this.props.requestFueltypes(pageNumber, sorted_column, order)

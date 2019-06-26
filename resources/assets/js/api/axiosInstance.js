@@ -6,9 +6,6 @@ const axiosInstance = axios.create ({
     headers: {'Authorization':`Bearer ${access_token}`,'X-CSRF-TOKEN': window.Laravel.csrfToken, 'X-Requested-With': 'XMLHttpRequest'}
 })
 
-// export const getHeaders = (access_token) => (
-//     {Accept: "application/json", Authorization: `Bearer ${access_token}`}
-// );
 export const getHeaders = ()=> {
     const access_token = window.localStorage.getItem('access_token')
     return {

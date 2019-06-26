@@ -42,7 +42,6 @@ function* callTransmissionSubmit(action) {
         }
         notify.show("Cannot create new Transmission!","error", 5000);
     } else {
-        // yield put({type: types.ADD_TRANSMISSONS_SUCCESS, resp, message: result.statusText});
         yield put({type: types.REQUEST_TRANSMISSONS,pageNumber, sorted_column, order})
         notify.show("Created successfully!", "success", 5000)
     }
@@ -68,7 +67,6 @@ function* callEditTransmission (action) {
         error = result.error;
         notify.show("Update failed!","error", 5000);
     } else {
-        // yield put({type: types.UPDATE_TRANSMISSONS_SUCCESS, resp, message: result.statusText});
         yield put({type: types.REQUEST_TRANSMISSONS, pageNumber, sorted_column, order})
         notify.show("Updated successfully!", "success", 5000)
     }
@@ -92,7 +90,6 @@ function* callToggleTransmissionStatus(action) {
         error = result.error;
         notify.show("Cannot update status !","error", 5000);
     } else {
-        // yield put({type: types.TRANSMISSONS_STATUS_SUCCESS, resp, message: result.statusText});
         yield put({type: types.REQUEST_TRANSMISSONS, pageNumber, sorted_column, order})
         notify.show("Status updated successfully!", "success", 5000)
     }

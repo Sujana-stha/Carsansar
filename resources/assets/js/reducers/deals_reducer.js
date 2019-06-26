@@ -57,7 +57,6 @@ const dealsReducer =  function(state = initialState, action) {
 
         // reducer to search vehicles by title
         case types.SEARCH_VEHICLE_BY_TITLE:{
-            console.log('act=', action.values)
             return {
                 ...state, 
                 vehicleList: action.values
@@ -88,10 +87,12 @@ const dealsReducer =  function(state = initialState, action) {
             if(action.apiName == "drives") {
                 newOption = new Object ({label: action.resp.drive_desc, value: action.resp.id})
             }
-            console.log('neww', newOption)
             return Object.assign({}, state, {
                 optionList: newOption
             })
+
+        //to upload CSV file
+        
         default: 
         return state;
     }

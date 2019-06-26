@@ -1,9 +1,9 @@
-import React, {Component} from 'react';
-import {Route, Switch, Redirect, withRouter} from 'react-router-dom';
-import {connect} from 'react-redux';
+import React, { Component } from 'react';
+import { Route, Switch, Redirect, withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 import store from '../store'
 import Notifications from 'react-notify-toast';
-import {requestLoggedUser} from '../actions/users-action'
+import { requestLoggedUser } from '../actions/users-action'
 import loadjs from 'loadjs';
 // import PrivateRoute from './privateRouter';
 
@@ -20,11 +20,12 @@ import RightSidebarNav from '../components/nav/right-sidebar-nav'
 
 import DashboardAnalytics from '../components/dashboard/dashboard-analytics'
 import UserProfile from '../components/users/user-profile'
-import AuthorizedRoute from './routes'
+import MasterRoute from './masterRoute'
+import ManagerRoute from './managerRoute'
 
 //Containers
 import VehiclesContainer from '../containers/vehicles/vehicles-container'
-import ImportFile from '../containers/import-file'
+import ImportFileContainer from '../containers/vehicles/importFile-container'
 import UsersContainer from '../containers/users/users-container'
 import ColorListContainer from '../containers/color/color-container'
 import MakesListContainer from '../containers/makes/makes-container'
@@ -40,9 +41,12 @@ import CompaniesContainer from '../containers/companies/companies-container'
 import OptionsContainer from '../containers/options/options-container'
 
 class DashboardLayout extends Component {
+    
     componentWillMount() {
-        loadjs('/js/materialize-admin/vendors.min.js', function() {
-            loadjs('/js/materialize-admin/plugins.js', function() {
+        this.props.requestLoggedUser();
+        
+        loadjs('/js/materialize-admin/vendors.min.js', function () {
+            loadjs('/js/materialize-admin/plugins.js', function () {
                 loadjs('/js/materialize-admin/custom/custom-script.js');
             });
         });
@@ -52,22 +56,21 @@ class DashboardLayout extends Component {
         document.body.classList.remove('1-column')
         document.body.classList.remove('blank-page')
         document.body.classList.add('2-columns');
-        this.props.requestLoggedUser();
     }
     render() {
-        const {match} = this.props
-        //const userName = window.Laravel.super_admin
+        const { match } = this.props
         const userName = process.env.MIX_SUPER_ADMIN_NAME;
-        console.log('role', this.props.loggedUser)
+        const loggedUser = localStorage.logged_user
+        const role = localStorage.role
         return (
             <div className="app">
-                <Notifications options={{top: '50px', right: '0px', width: '100%', margin:0, left: 'none'}}/>
+                <Notifications options={{ top: '50px', right: '0px', width: '100%', margin: 0, left: 'none' }} />
                 {/* BEGIN: Header */}
-                <Header authUser ={ this.props.loggedUser}/>
+                <Header authUser={this.props.loggedUser} />
                 {/* END: Header */}
 
                 {/* BEGIN: SideNav */}
-                <LeftSidebarNav userRole ={userName} authUser ={ this.props.loggedUser}/>
+                <LeftSidebarNav userRole={userName} authUser={this.props.loggedUser} />
                 {/* END: SideNav */}
 
                 { /* BEGIN: Page Main */}
@@ -75,11 +78,37 @@ class DashboardLayout extends Component {
                     <div className="row">
                         {/* <div className="content-wrapper-before blue-grey lighten-5"></div> */}
                         <div className="col s12">
-                            <Breadcrumb/>
+                            <Breadcrumb />
                             {/* start container */}
                             <div className="container">
-                                <AuthorizedRoute adminUser ={userName} authUser={this.props.loggedUser} match={match}/>
-                                
+                                 <Switch>
+                                    <Route exact path={`${match.path}`} component={DashboardAnalytics} />
+                                    <Route path="/vehicles" component={VehiclesContainer} />
+                                    <Route path="/insert-vehicle" component={VehiclesContainer} />
+                                    <Route path="/edit-vehicle" component={VehiclesContainer} />
+                                    <Route path="/import" component={ImportFileContainer} />
+                                    <Route path="/user-profile" component={UserProfile} />
+                                    
+                                    <MasterRoute adminUser={userName} authUser={loggedUser} role={role} path="/users" component={UsersContainer}/>
+                                    <MasterRoute adminUser={userName} authUser={loggedUser} role={role} path="/insert-user" component={UsersContainer}/>
+                                    <MasterRoute adminUser={userName} authUser={loggedUser} role={role} path="/edit-user" component={UsersContainer}/>
+                                    <MasterRoute adminUser={userName} authUser={loggedUser} role={role} path="/companies" component={CompaniesContainer}/>
+                                    
+                                    <ManagerRoute adminUser={userName} authUser={loggedUser} role={role} path="/colors" component={ColorListContainer}/>
+                                    <ManagerRoute adminUser={userName} authUser={loggedUser} role={role} path="/makes" component={MakesListContainer} />
+                                    <ManagerRoute adminUser={userName} authUser={loggedUser} role={role} path="/models" component={ModelListContainer} />
+                                    <ManagerRoute adminUser={userName} authUser={loggedUser} role={role} path="/options-categories" component={OptionCategoriesContainer} />
+                                    <ManagerRoute adminUser={userName} authUser={loggedUser} role={role} path="/categories" component={CategoriesContainer} />
+                                    <ManagerRoute adminUser={userName} authUser={loggedUser} role={role} path="/drives" component={DrivesContainer} />
+                                    <ManagerRoute adminUser={userName} authUser={loggedUser} role={role} path="/bodies" component={BodiesContainer} />
+                                    <ManagerRoute adminUser={userName} authUser={loggedUser} role={role} path="/enginesizes" component={EnginesizesContainer} />
+                                    <ManagerRoute adminUser={userName} authUser={loggedUser} role={role} path="/fueltypes" component={FueltypesContainer} />
+                                    <ManagerRoute adminUser={userName} authUser={loggedUser} role={role} path="/transmissions" component={TransmissionContainer} />
+                                    <ManagerRoute adminUser={userName} authUser={loggedUser} role={role} path="/options" component={OptionsContainer} />
+
+                                    <Redirect to={`${match.url}`} />
+
+                                </Switch>
                                 <RightSidebarNav />
                             </div>
                             {/* end container */}
@@ -97,8 +126,8 @@ class DashboardLayout extends Component {
 }
 function mapStateToProps(store) {
     return {
-		loggedUser: store.userState.loggedUser
-	}
+        loggedUser: store.userState.loggedUser
+    }
 }
 
-export default withRouter(connect(mapStateToProps, { requestLoggedUser})(DashboardLayout));
+export default connect(mapStateToProps, { requestLoggedUser })(DashboardLayout);

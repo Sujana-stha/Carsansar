@@ -7,13 +7,13 @@ const LeftSidebarNav = (props) => {
 	return (
 		<aside className="sidenav-main nav-expanded nav-lock nav-collapsible sidenav-light navbar-full sidenav-active-rounded">
 			<div className="brand-sidebar">
-				<h1 className="logo-wrapper"><NavLink to="/dashboard" className="brand-logo darken-1"><img src="/images/logo/materialize-logo.png" alt="materialize logo" /><span className="logo-text hide-on-med-and-down">Materialize</span></NavLink><a className="navbar-toggler" href="#"><i className="material-icons">radio_button_checked</i></a></h1>
+				<h1 className="logo-wrapper"><NavLink to="/" className="brand-logo darken-1"><img src="/images/logo/materialize-logo.png" alt="materialize logo" /><span className="logo-text hide-on-med-and-down">Materialize</span></NavLink><a className="navbar-toggler" href="#"><i className="material-icons">radio_button_checked</i></a></h1>
 			</div>
 			<ul className="sidenav sidenav-collapsible leftside-navigation collapsible sidenav-fixed menu-shadow" id="slide-out" data-menu="menu-navigation" data-collapsible="menu-accordion">
 				<li className="active bold"><a className="collapsible-header waves-effect waves-cyan " href="#"><i className="material-icons">settings_input_svideo</i><span className="menu-title" data-i18n="">Dashboard</span><span className="badge badge pill orange float-right mr-10">3</span></a>
 					<div className="collapsible-body">
 						<ul className="collapsible collapsible-sub" data-collapsible="accordion">
-							<li className="active"><NavLink to="/dashboard" className="collapsible-body active"><i className="material-icons">radio_button_unchecked</i><span>Dashboard Analytics</span></NavLink>
+							<li className="active"><NavLink to="/" className="collapsible-body active"><i className="material-icons">radio_button_unchecked</i><span>Dashboard Analytics</span></NavLink>
 							</li>
 						</ul>
 					</div>
@@ -22,17 +22,17 @@ const LeftSidebarNav = (props) => {
 					<div className="collapsible-body">
 						<ul className="collapsible collapsible-sub" data-collapsible="accordion">
 							<li>
-								<NavLink to="/dashboard/vehicles" className="collapsible-body collapsible-header waves-effect waves-cyan"><i className="material-icons">radio_button_unchecked</i><span>Vehicles Listing</span></NavLink>
+								<NavLink to="/vehicles" className="collapsible-body collapsible-header waves-effect waves-cyan"><i className="material-icons">radio_button_unchecked</i><span>Vehicles Listing</span></NavLink>
 							</li>
 							<li>
-								<NavLink to="/dashboard/insert-vehicle" className="collapsible-body collapsible-header waves-effect waves-cyan"><i className="material-icons">radio_button_unchecked</i><span>Add Vehicle</span></NavLink>
+								<NavLink to="/insert-vehicle" className="collapsible-body collapsible-header waves-effect waves-cyan"><i className="material-icons">radio_button_unchecked</i><span>Add Vehicle</span></NavLink>
 							</li>
 
 						</ul>
 					</div>
 				</li>
 				<li className="bold">
-					<NavLink to="/dashboard/import" className="collapsible-body collapsible-header waves-effect waves-cyan"><i className="material-icons">file_upload</i><span>Import</span></NavLink>
+					<NavLink to="/import" className="collapsible-body collapsible-header waves-effect waves-cyan"><i className="material-icons">file_upload</i><span>Import</span></NavLink>
 				</li>
 				<li className="navigation-header">
 					<a className="navigation-header-text">Attributes </a><i className="navigation-header-icon material-icons">more_horiz</i>
@@ -43,44 +43,44 @@ const LeftSidebarNav = (props) => {
 						<div className="collapsible-body">
 							<ul className="collapsible collapsible-sub" data-collapsible="accordion">
 								{/* <li>
-									<NavLink to="/dashboard/vehicle-attributes" className="collapsible-body" data-i18n=""><i className="material-icons">radio_button_unchecked</i><span>Custom Attributes</span></NavLink>
+									<NavLink to="/vehicle-attributes" className="collapsible-body" data-i18n=""><i className="material-icons">radio_button_unchecked</i><span>Custom Attributes</span></NavLink>
 								</li>
 								<li>
-									<NavLink to="/dashboard/insert-vehicle-attribute" className="collapsible-body" data-i18n=""><i className="material-icons">radio_button_unchecked</i><span>Add Custom Attributes</span></NavLink>
+									<NavLink to="/insert-vehicle-attribute" className="collapsible-body" data-i18n=""><i className="material-icons">radio_button_unchecked</i><span>Add Custom Attributes</span></NavLink>
 								</li> */}
 								<li>
-									<NavLink to="/dashboard/colors" className="collapsible-body" data-i18n=""><i className="material-icons">radio_button_unchecked</i><span>Colors</span></NavLink>
+									<NavLink to="/colors" className="collapsible-body" data-i18n=""><i className="material-icons">radio_button_unchecked</i><span>Colors</span></NavLink>
 								</li>
 								<li>
-									<NavLink to="/dashboard/makes" className="collapsible-body" data-i18n=""><i className="material-icons">radio_button_unchecked</i><span>Makes</span></NavLink>
+									<NavLink to="/makes" className="collapsible-body" data-i18n=""><i className="material-icons">radio_button_unchecked</i><span>Makes</span></NavLink>
 								</li>
 								<li>
-									<NavLink to="/dashboard/models" className="collapsible-body" data-i18n=""><i className="material-icons">radio_button_unchecked</i><span>Models</span></NavLink>
+									<NavLink to="/models" className="collapsible-body" data-i18n=""><i className="material-icons">radio_button_unchecked</i><span>Models</span></NavLink>
 								</li>
 								<li>
-									<NavLink to="/dashboard/options-categories" className="collapsible-body" data-i18n=""><i className="material-icons">radio_button_unchecked</i><span>Options Categories</span></NavLink>
+									<NavLink to="/options-categories" className="collapsible-body" data-i18n=""><i className="material-icons">radio_button_unchecked</i><span>Options Categories</span></NavLink>
 								</li>
 								<li>
-									<NavLink to="/dashboard/categories" className="collapsible-body" data-i18n=""><i className="material-icons">radio_button_unchecked</i><span>Categories</span></NavLink>
+									<NavLink to="/categories" className="collapsible-body" data-i18n=""><i className="material-icons">radio_button_unchecked</i><span>Categories</span></NavLink>
 								</li>
 								<li>
-									<NavLink to="/dashboard/drives" className="collapsible-body" data-i18n=""><i className="material-icons">radio_button_unchecked</i><span>Drives</span></NavLink>
+									<NavLink to="/drives" className="collapsible-body" data-i18n=""><i className="material-icons">radio_button_unchecked</i><span>Drives</span></NavLink>
 								</li>
 								<li>
-									<NavLink to="/dashboard/bodies" className="collapsible-body" data-i18n=""><i className="material-icons">radio_button_unchecked</i><span>Bodies</span></NavLink>
+									<NavLink to="/bodies" className="collapsible-body" data-i18n=""><i className="material-icons">radio_button_unchecked</i><span>Bodies</span></NavLink>
 								</li>
 								<li>
-									<NavLink to="/dashboard/enginesizes" className="collapsible-body" data-i18n=""><i className="material-icons">radio_button_unchecked</i><span>Enginesizes</span></NavLink>
+									<NavLink to="/enginesizes" className="collapsible-body" data-i18n=""><i className="material-icons">radio_button_unchecked</i><span>Enginesizes</span></NavLink>
 								</li>
 								<li>
-									<NavLink to="/dashboard/fueltypes" className="collapsible-body" data-i18n=""><i className="material-icons">radio_button_unchecked</i><span>Fuel Types</span></NavLink>
+									<NavLink to="/fueltypes" className="collapsible-body" data-i18n=""><i className="material-icons">radio_button_unchecked</i><span>Fuel Types</span></NavLink>
 								</li>
 								<li>
-									<NavLink to="/dashboard/transmissions" className="collapsible-body" data-i18n=""><i className="material-icons">radio_button_unchecked</i><span>Transmissions</span></NavLink>
+									<NavLink to="/transmissions" className="collapsible-body" data-i18n=""><i className="material-icons">radio_button_unchecked</i><span>Transmissions</span></NavLink>
 								</li>
 								
 								<li>
-									<NavLink to="/dashboard/options" className="collapsible-body" data-i18n=""><i className="material-icons">radio_button_unchecked</i><span>Options</span></NavLink>
+									<NavLink to="/options" className="collapsible-body" data-i18n=""><i className="material-icons">radio_button_unchecked</i><span>Options</span></NavLink>
 								</li>
 							</ul>
 						</div>
@@ -91,13 +91,13 @@ const LeftSidebarNav = (props) => {
 						<div className="collapsible-body">
 							<ul className="collapsible collapsible-sub" data-collapsible="accordion">
 								<li>
-									<NavLink to="/dashboard/companies" className="collapsible-body" data-i18n=""><i className="material-icons">radio_button_unchecked</i><span>Companies</span></NavLink>
+									<NavLink to="/companies" className="collapsible-body" data-i18n=""><i className="material-icons">radio_button_unchecked</i><span>Companies</span></NavLink>
 								</li>
 								<li>
-									<NavLink to="/dashboard/users" className="collapsible-body" data-i18n=""><i className="material-icons">radio_button_unchecked</i><span>Users</span></NavLink>
+									<NavLink to="/users" className="collapsible-body" data-i18n=""><i className="material-icons">radio_button_unchecked</i><span>Users</span></NavLink>
 								</li>
 								<li>
-									<NavLink to="/dashboard/insert-user" className="collapsible-body" data-i18n=""><i className="material-icons">radio_button_unchecked</i><span>Add New User</span></NavLink>
+									<NavLink to="/insert-user" className="collapsible-body" data-i18n=""><i className="material-icons">radio_button_unchecked</i><span>Add New User</span></NavLink>
 								</li>
 
 							</ul>
@@ -105,7 +105,7 @@ const LeftSidebarNav = (props) => {
 					</li>
 				) : null}
 				<li>
-					<NavLink to="/dashboard/user-profile" className="collapsible-body" data-i18n=""><i className="material-icons">account_circle</i><span>User Profile</span></NavLink>
+					<NavLink to="/user-profile" className="collapsible-body" data-i18n=""><i className="material-icons">account_circle</i><span>User Profile</span></NavLink>
 				</li>
 			</ul>
 			<div className="navigation-background"></div><a className="sidenav-trigger btn-sidenav-toggle btn-floating btn-medium waves-effect waves-light hide-on-large-only" href="#" data-target="slide-out"><i className="material-icons">menu</i></a>
