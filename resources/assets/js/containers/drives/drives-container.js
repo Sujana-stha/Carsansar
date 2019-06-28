@@ -54,6 +54,8 @@ class DrivesListContainer extends Component {
         const pageNumber = this.props.activePage;
         let sorted_column = this.state.sorted_column
         let order = this.state.order
+        values.drive_desc = values.drive_desc.toLowerCase()
+
         this.props.requestUpdateDrives(values, pageNumber, sorted_column, order);
         this.setState({
             isEditing : false

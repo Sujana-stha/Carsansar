@@ -46,7 +46,7 @@ class OptionCategoryListContainer extends Component {
 
     // submit function to update data
     submitEditOptionCategory(values) {
-        console.log('vvv', values)
+        values.optioncategory_desc = values.optioncategory_desc.toLowerCase()
         this.props.requestUpdateOptionCategories(values);
         this.setState({
             isEditing : false,
@@ -59,7 +59,6 @@ class OptionCategoryListContainer extends Component {
         this.setState ({
             isEditing : values
         })
-        
     }
 
     deleteOptionCategoryAction(optCatId) {

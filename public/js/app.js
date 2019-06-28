@@ -72032,7 +72032,8 @@ var makeReducer = function makeReducer() {
 
     case __WEBPACK_IMPORTED_MODULE_0__actions_action_types__["h" /* ADD_MAKES_SUCCESS */]:
       return Object.assign({}, state, {
-        makes: _toConsumableArray(state.makes)
+        makes: _toConsumableArray(state.makes),
+        sending: false
       });
 
     case __WEBPACK_IMPORTED_MODULE_0__actions_action_types__["_83" /* REQUEST_UPDATE */]:
@@ -74737,11 +74738,18 @@ function callMakesSubmit(action) {
           }
 
           __WEBPACK_IMPORTED_MODULE_6_react_notify_toast__["notify"].show("Cannot create new make!", "error", 5000);
-          _context4.next = 21;
+          _context4.next = 23;
           break;
 
         case 18:
           _context4.next = 20;
+          return Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["d" /* put */])({
+            type: __WEBPACK_IMPORTED_MODULE_3__actions_action_types__["h" /* ADD_MAKES_SUCCESS */],
+            resp: resp
+          });
+
+        case 20:
+          _context4.next = 22;
           return Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["d" /* put */])({
             type: __WEBPACK_IMPORTED_MODULE_3__actions_action_types__["_56" /* REQUEST_MAKES */],
             pageNumber: pageNumber,
@@ -74749,18 +74757,18 @@ function callMakesSubmit(action) {
             order: order
           });
 
-        case 20:
+        case 22:
           __WEBPACK_IMPORTED_MODULE_6_react_notify_toast__["notify"].show("Created successfully!", "success", 5000);
-
-        case 21:
-          _context4.next = 23;
-          return Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["d" /* put */])(Object(__WEBPACK_IMPORTED_MODULE_2_redux_form__["g" /* stopSubmit */])('PostMakes', error));
 
         case 23:
           _context4.next = 25;
-          return Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["d" /* put */])(Object(__WEBPACK_IMPORTED_MODULE_2_redux_form__["e" /* reset */])('PostMakes'));
+          return Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["d" /* put */])(Object(__WEBPACK_IMPORTED_MODULE_2_redux_form__["g" /* stopSubmit */])('PostMakes', error));
 
         case 25:
+          _context4.next = 27;
+          return Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["d" /* put */])(Object(__WEBPACK_IMPORTED_MODULE_2_redux_form__["e" /* reset */])('PostMakes'));
+
+        case 27:
         case "end":
           return _context4.stop();
       }
@@ -74820,11 +74828,18 @@ function callEditMake(action) {
         case 13:
           __WEBPACK_IMPORTED_MODULE_6_react_notify_toast__["notify"].show("Update failed!", "error", 5000);
           error = result.errors;
-          _context6.next = 20;
+          _context6.next = 22;
           break;
 
         case 17:
           _context6.next = 19;
+          return Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["d" /* put */])({
+            type: __WEBPACK_IMPORTED_MODULE_3__actions_action_types__["_101" /* UPDATE_MAKES_SUCCESS */],
+            resp: resp
+          });
+
+        case 19:
+          _context6.next = 21;
           return Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["d" /* put */])({
             type: __WEBPACK_IMPORTED_MODULE_3__actions_action_types__["_56" /* REQUEST_MAKES */],
             pageNumber: pageNumber,
@@ -74832,18 +74847,18 @@ function callEditMake(action) {
             order: order
           });
 
-        case 19:
+        case 21:
           __WEBPACK_IMPORTED_MODULE_6_react_notify_toast__["notify"].show("Updated successfully!", "success", 5000);
-
-        case 20:
-          _context6.next = 22;
-          return Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["d" /* put */])(Object(__WEBPACK_IMPORTED_MODULE_2_redux_form__["g" /* stopSubmit */])('EditMakes', error));
 
         case 22:
           _context6.next = 24;
-          return Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["d" /* put */])(Object(__WEBPACK_IMPORTED_MODULE_2_redux_form__["e" /* reset */])('EditMakes'));
+          return Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["d" /* put */])(Object(__WEBPACK_IMPORTED_MODULE_2_redux_form__["g" /* stopSubmit */])('EditMakes', error));
 
         case 24:
+          _context6.next = 26;
+          return Object(__WEBPACK_IMPORTED_MODULE_1_redux_saga_effects__["d" /* put */])(Object(__WEBPACK_IMPORTED_MODULE_2_redux_form__["e" /* reset */])('EditMakes'));
+
+        case 26:
         case "end":
           return _context6.stop();
       }
@@ -84870,13 +84885,11 @@ function (_Component) {
     value: function render() {
       var _this4 = this;
 
-      console.log('vehicles-props', this.props);
-
-      if (this.props.match.path === "/dashboard/edit-vehicle") {
+      if (this.props.match.path === "/edit-vehicle") {
         return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_11__components_vehicles_edit_vehicle_form__["a" /* default */], {
           editId: this.state.isEditing
         });
-      } else if (this.props.match.path === "/dashboard/insert-vehicle") {
+      } else if (this.props.match.path === "/insert-vehicle") {
         return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("div", null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("div", {
           className: "row"
         }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("div", {
@@ -100824,7 +100837,8 @@ function (_Component) {
     value: function submitEditColor(values) {
       var pageNumber = this.props.activePage;
       var sorted_column = this.state.sorted_column;
-      var order = this.state.order;
+      var order = this.state.values.color_cd = values.color_cd.toLowerCase();
+      values.color_desc = values.color_desc.toLowerCase();
       this.props.requestUpdateColors(values, pageNumber, sorted_column, order);
       this.setState({
         isEditing: false
@@ -101393,6 +101407,8 @@ function (_Component) {
       var pageNumber = this.props.activePage;
       var sorted_column = this.state.sorted_column;
       var order = this.state.order;
+      console.log('value', values);
+      values.make_desc = values.make_desc.toLowerCase();
       this.props.requestUpdateMakes(values, pageNumber, sorted_column, order);
       this.setState({
         isEditing: false
@@ -101946,6 +101962,7 @@ function (_Component) {
       var pageNumber = this.props.activePage;
       var sorted_column = this.state.sorted_column;
       var order = this.state.order;
+      values.model_desc = values.model_desc.toLowerCase();
       this.props.requestUpdateModel(values, pageNumber, sorted_column, order);
       this.setState({
         isEditing: false
@@ -102473,7 +102490,7 @@ function (_Component) {
   }, {
     key: "submitEditOptionCategory",
     value: function submitEditOptionCategory(values) {
-      console.log('vvv', values);
+      values.optioncategory_desc = values.optioncategory_desc.toLowerCase();
       this.props.requestUpdateOptionCategories(values);
       this.setState({
         isEditing: false,
@@ -102944,6 +102961,7 @@ function (_Component) {
       var pageNumber = this.props.activePage;
       var sorted_column = this.state.sorted_column;
       var order = this.state.order;
+      values.category_desc = values.category_desc.toLowerCase();
       this.props.requestUpdateCategories(values, pageNumber, sorted_column, order);
       this.setState({
         isEditing: false
@@ -103484,6 +103502,7 @@ function (_Component) {
       var pageNumber = this.props.activePage;
       var sorted_column = this.state.sorted_column;
       var order = this.state.order;
+      values.drive_desc = values.drive_desc.toLowerCase();
       this.props.requestUpdateDrives(values, pageNumber, sorted_column, order);
       this.setState({
         isEditing: false
@@ -104022,6 +104041,7 @@ function (_Component) {
       var pageNumber = this.props.activePage;
       var sorted_column = this.state.sorted_column;
       var order = this.state.order;
+      values.body_desc = values.body_desc.toLowerCase();
       this.props.requestUpdateBodies(values, pageNumber, sorted_column, order);
       this.setState({
         isEditing: false
@@ -104563,6 +104583,7 @@ function (_Component) {
       var pageNumber = this.props.activePage;
       var sorted_column = this.state.sorted_column;
       var order = this.state.order;
+      values.enginesize_desc = values.enginesize_desc.toLowerCase();
       this.props.requestUpdateEnginesizes(values, pageNumber, sorted_column, order);
       this.setState({
         isEditing: false
@@ -105101,6 +105122,7 @@ function (_Component) {
       var pageNumber = this.props.activePage;
       var sorted_column = this.state.sorted_column;
       var order = this.state.order;
+      values.fueltype_desc = values.fueltype_desc.toLowerCase();
       this.props.requestUpdateFueltypes(values, pageNumber, sorted_column, order);
       this.setState({
         isEditing: false
@@ -105639,6 +105661,7 @@ function (_Component) {
       var pageNumber = this.props.activePage;
       var sorted_column = this.state.sorted_column;
       var order = this.state.order;
+      values.transmission_desc = values.transmission_desc.toLowerCase();
       this.props.requestUpdateTransmission(values, pageNumber, sorted_column, order);
       this.setState({
         isEditing: false
@@ -106897,6 +106920,7 @@ function (_Component) {
       var pageNumber = this.props.activePage;
       var sorted_column = this.state.sorted_column;
       var order = this.state.order;
+      values.option_desc = values.option_desc.toLowerCase();
       this.props.requestUpdateOptions(values, pageNumber, sorted_column, order);
       this.setState({
         isEditing: false

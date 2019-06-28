@@ -53,7 +53,10 @@ class ColorListContainer extends Component {
     submitEditColor(values) {
         const pageNumber = this.props.activePage;
         let sorted_column = this.state.sorted_column
-        let order = this.state.order
+        let order = this.state.
+        values.color_cd = values.color_cd.toLowerCase()
+        values.color_desc = values.color_desc.toLowerCase()
+
         this.props.requestUpdateColors(values, pageNumber, sorted_column, order);
         this.setState({
             isEditing: false

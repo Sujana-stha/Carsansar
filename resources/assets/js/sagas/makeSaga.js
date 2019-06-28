@@ -41,7 +41,7 @@ function* callMakesSubmit(action) {
         notify.show("Cannot create new make!","error", 5000);
     
     } else {
-        // yield put({type: types.ADD_MAKES_SUCCESS, resp, message: result.statusText});
+        yield put({type: types.ADD_MAKES_SUCCESS, resp});
         yield put({type: types.REQUEST_MAKES, pageNumber, sorted_column, order});
         notify.show("Created successfully!", "success", 5000);
     }
@@ -68,7 +68,7 @@ function* callEditMake (action) {
         error = result.errors
 
     } else {
-        // yield put({type: types.UPDATE_MAKES_SUCCESS, resp, message: result.statusText});
+        yield put({type: types.UPDATE_MAKES_SUCCESS, resp});
         yield put ({type: types.REQUEST_MAKES, pageNumber, sorted_column, order})
         notify.show("Updated successfully!", "success", 5000);
 

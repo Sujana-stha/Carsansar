@@ -53,6 +53,8 @@ class TransmissionsListContainer extends Component {
         const pageNumber = this.props.activePage;
         let sorted_column = this.state.sorted_column
         let order = this.state.order
+        values.transmission_desc = values.transmission_desc.toLowerCase()
+
         this.props.requestUpdateTransmission(values, pageNumber, sorted_column, order);
         this.setState({
             isEditing : false

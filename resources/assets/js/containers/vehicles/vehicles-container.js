@@ -154,12 +154,11 @@ class VehiclesListingContainer extends Component {
     }
     
     render() {
-        console.log('vehicles-props',this.props)
-        if(this.props.match.path === "/dashboard/edit-vehicle") {
+        if(this.props.match.path === "/edit-vehicle") {
             return (
                 <EditVehicleForm editId= {this.state.isEditing}/>
             )
-        } else if(this.props.match.path ==="/dashboard/insert-vehicle") {
+        } else if(this.props.match.path ==="/insert-vehicle") {
             return (
                 <div>
                     <div className="row">

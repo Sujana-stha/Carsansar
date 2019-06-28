@@ -52,6 +52,7 @@ class BodiesListContainer extends Component {
         const pageNumber = this.props.activePage;
         let sorted_column = this.state.sorted_column
         let order = this.state.order
+        values.body_desc = values.body_desc.toLowerCase();
         this.props.requestUpdateBodies(values, pageNumber, sorted_column, order);
         this.setState({
             isEditing: false

@@ -34,7 +34,8 @@ const makeReducer =  function(state = initialState, action) {
 
         case types.ADD_MAKES_SUCCESS:
             return  Object.assign({}, state, {
-                makes:  [...state.makes]
+                makes:  [...state.makes],
+                sending: false
             })
         
         case types.REQUEST_UPDATE:

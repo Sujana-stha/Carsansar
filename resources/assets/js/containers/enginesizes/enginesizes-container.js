@@ -57,6 +57,8 @@ class EnginesizesListContainer extends Component {
         const pageNumber = this.props.activePage;
         let sorted_column = this.state.sorted_column
         let order = this.state.order
+        values.enginesize_desc = values.enginesize_desc.toLowerCase();
+
         this.props.requestUpdateEnginesizes(values, pageNumber, sorted_column, order);
         this.setState({
             isEditing : false

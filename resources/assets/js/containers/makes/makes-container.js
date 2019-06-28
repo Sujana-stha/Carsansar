@@ -52,6 +52,8 @@ class MakesListContainer extends Component {
         const pageNumber = this.props.activePage;
         let sorted_column = this.state.sorted_column
         let order = this.state.order
+        console.log('value', values)
+        values.make_desc= values.make_desc.toLowerCase()
         this.props.requestUpdateMakes(values, pageNumber, sorted_column, order);
         this.setState({
             isEditing : false

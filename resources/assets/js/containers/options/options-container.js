@@ -56,6 +56,8 @@ class OptionsListContainer extends Component {
         const pageNumber = this.props.activePage;
         let sorted_column = this.state.sorted_column
         let order = this.state.order
+        values.option_desc= values.option_desc.toLowerCase()
+        
         this.props.requestUpdateOptions(values, pageNumber, sorted_column, order);
         this.setState({
             isEditing : false
