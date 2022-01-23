@@ -37,7 +37,6 @@ class DealsController extends Controller
     public function index(Request $request)
     {
         $user = $request->user();
-        $company_id = $user->company_id;
         $column= 'id';
         $order= 'dsc';
         if($request->column == 'year') {
@@ -46,9 +45,9 @@ class DealsController extends Controller
 
         if($request->order == 'asc') {
             $order = 'asc';
-        }            
+        }           
        //print_r(config('app_env.SUPER_ADMIN_NAME'));exit;
-        if($user->username == config('app_env.SUPER_ADMIN_NAME')){
+        if( $user==null || $user->username == config('app_env.SUPER_ADMIN_NAME')){
             return Deal::with('vehicleInfo.categoryId:id,category_desc',
                             'vehicleInfo.makeId:id,make_desc',
                             'vehicleInfo.modelId:id,model_desc',
@@ -65,6 +64,8 @@ class DealsController extends Controller
                             'images',
                             'createdBy:id,first_name,last_name')->orderBy($column, $order)->paginate(config('app_env.NO_OF_ROWS'));
         }else{
+            $company_id = $user->company_id;
+
             return Deal::where('company_id',$company_id)
                         ->where('status',1)
                         ->with('vehicleInfo.categoryId:id,category_desc',

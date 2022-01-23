@@ -8,6 +8,7 @@ class EditCategory extends Component {
         const id = this.props.editId;
         categoryApi.getSingleCategories(id).then((response)=> {
             const data =  response.data;
+            
             this.props.initialize(data);
         })
     }

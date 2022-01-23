@@ -42,7 +42,7 @@ import OptionsContainer from '../containers/options/options-container'
 
 class DashboardLayout extends Component {
     
-    componentWillMount() {
+    componentWMount() {
         this.props.requestLoggedUser();
         
         loadjs('/js/materialize-admin/vendors.min.js', function () {
@@ -59,6 +59,7 @@ class DashboardLayout extends Component {
     }
     render() {
         const { match } = this.props
+        console.log('match', this.props)
         const userName = process.env.MIX_SUPER_ADMIN_NAME;
         const loggedUser = localStorage.logged_user
         const role = localStorage.role

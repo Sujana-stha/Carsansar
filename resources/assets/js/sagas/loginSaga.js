@@ -55,7 +55,7 @@ function* logoutFlow() {
             window.localStorage.removeItem('access_token');
             window.localStorage.removeItem('refresh_token');
             window.localStorage.removeItem('logged_user');
-            window.localStorage.removeItem('role');
+            window.localStorage.removem('role');
             yield put({type: types.LOGOUT_SUCCESS})
             yield put(push('/auth/login'));
             notify.show("You are successfully logged out!", "success", 5000)

@@ -177,6 +177,7 @@ class CategoriesListContainer extends Component {
                                 totalItemsCount={this.props.totalItemsCount}
                                 pageRangeDisplayed={this.props.pageRangeDisplayed}
                                 onChange={this.handlePageChange}
+                                
                                 firstPageText='First'
                                 lastPageText='Last'
                             />
